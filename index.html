@@ -401,7 +401,8 @@
         .size-dropdown.open { display: block; }
         .size-dropdown-title { padding: 12px 16px 8px; font-size: 11px; font-weight: 700; color: #777; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1px solid #f0f0f0; }
         .size-dropdown-item {
-            display: block; width: 100%; padding: 14px 16px; text-align: left;
+            display: flex; align-items: center; justify-content: space-between;
+            width: 100%; padding: 14px 16px; text-align: left;
             font-size: 13px; font-weight: 500; color: #1a1a1a;
             border-bottom: 1px solid #f5f5f5; transition: background 0.15s;
         }
@@ -494,7 +495,8 @@
         .lightbox.open { display: flex; }
         .lightbox-close { position: absolute; top: 16px; right: 16px; z-index: 301; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; }
         .lightbox-close svg { width: 20px; height: 20px; stroke: #fff; stroke-width: 2.5; }
-        .lightbox-img { width: 100%; height: 100%; object-fit: contain; padding: 40px 0; }
+        .lightbox-img-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; touch-action: manipulation; }
+        .lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.25s ease; transform-origin: center center; }
         .lightbox-counter { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.7); font-size: 12px; font-weight: 600; letter-spacing: 1px; }
 
         /* ===== FAQs ===== */
@@ -638,7 +640,7 @@
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightboxClose"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    <img class="lightbox-img" id="lightboxImg" src="" alt="Product zoom">
+    <div class="lightbox-img-wrap" id="lightboxWrap"><img class="lightbox-img" id="lightboxImg" src="" alt="Product zoom"></div>
     <span class="lightbox-counter" id="lightboxCounter"></span>
 </div>
 
@@ -741,7 +743,7 @@ document.getElementById("appNudgeClose").onclick = function() { document.getElem
 (function() {
     var track = document.getElementById("galleryTrack");
     var thumbs = document.getElementById("galleryThumbs");
-    var startX = 0, currentX = 0, isDragging = false, hasMoved = false;
+    var startX = 0, startY = 0, currentX = 0, isDragging = false, hasMoved = false;
     function render() {
         track.innerHTML = product.images.map(function(src, i) {
             return '<div class="gallery-slide"><img src="' + src + '" alt="View ' + (i+1) + '" draggable="false" loading="' + (i < 2 ? 'eager' : 'lazy') + '"></div>';
@@ -754,8 +756,8 @@ document.getElementById("appNudgeClose").onclick = function() { document.getElem
     render();
     thumbs.addEventListener("click", function(e) { var b = e.target.closest("[data-idx]"); if (b) { state.currentSlide = parseInt(b.dataset.idx); render(); } });
     var main = document.getElementById("galleryMain");
-    main.addEventListener("touchstart", function(e) { startX = e.touches[0].clientX; currentX = startX; isDragging = true; hasMoved = false; track.classList.add("dragging"); }, { passive: true });
-    main.addEventListener("touchmove", function(e) { if (!isDragging) return; currentX = e.touches[0].clientX; var diff = currentX - startX; if (Math.abs(diff) > 8) hasMoved = true; track.style.transform = "translateX(" + (-(state.currentSlide * main.offsetWidth) + diff) + "px)"; }, { passive: true });
+    main.addEventListener("touchstart", function(e) { startX = e.touches[0].clientX; startY = e.touches[0].clientY; currentX = startX; isDragging = true; hasMoved = false; track.classList.add("dragging"); }, { passive: true });
+    main.addEventListener("touchmove", function(e) { if (!isDragging) return; currentX = e.touches[0].clientX; var diffX = currentX - startX; var diffY = e.touches[0].clientY - startY; if (Math.abs(diffX) > 12 || Math.abs(diffY) > 12) hasMoved = true; if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 5) { track.style.transform = "translateX(" + (-(state.currentSlide * main.offsetWidth) + diffX) + "px)"; } }, { passive: true });
     main.addEventListener("touchend", function() {
         isDragging = false; track.classList.remove("dragging");
         var diff = currentX - startX;
@@ -763,34 +765,67 @@ document.getElementById("appNudgeClose").onclick = function() { document.getElem
             if (diff > 50 && state.currentSlide > 0) state.currentSlide--;
             else if (diff < -50 && state.currentSlide < product.images.length - 1) state.currentSlide++;
         }
-        if (!hasMoved) { openLightbox(state.currentSlide); }
         currentX = 0; startX = 0; render();
     });
-    // Desktop click
+    // Only open lightbox on clean tap (no movement)
     main.addEventListener("click", function() { if (!hasMoved) openLightbox(state.currentSlide); });
 })();
 
 // ===== LIGHTBOX =====
 function openLightbox(idx) {
     var lb = document.getElementById("lightbox");
-    document.getElementById("lightboxImg").src = product.images[idx];
+    var img = document.getElementById("lightboxImg");
+    img.src = product.images[idx];
     document.getElementById("lightboxCounter").textContent = (idx + 1) + " / " + product.images.length;
     lb.classList.add("open");
     document.body.style.overflow = "hidden";
-    // Swipe in lightbox
-    var lbStartX = 0, lbCurrentX = 0, lbIdx = idx;
-    lb.ontouchstart = function(e) { lbStartX = e.touches[0].clientX; lbCurrentX = lbStartX; };
-    lb.ontouchmove = function(e) { lbCurrentX = e.touches[0].clientX; };
-    lb.ontouchend = function() {
+    var lbIdx = idx, scale = 1, lastTap = 0;
+
+    // Double tap to zoom
+    lb.addEventListener("click", function(e) {
+        if (e.target === document.getElementById("lightboxClose") || e.target.closest(".lightbox-close")) return;
+        var now = Date.now();
+        if (now - lastTap < 300) {
+            scale = scale > 1 ? 1 : 2.5;
+            img.style.transform = "scale(" + scale + ")";
+        }
+        lastTap = now;
+    });
+
+    // Pinch to zoom
+    var initDist = 0;
+    lb.addEventListener("touchstart", function(e) {
+        if (e.touches.length === 2) {
+            initDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        }
+    }, { passive: true });
+    lb.addEventListener("touchmove", function(e) {
+        if (e.touches.length === 2) {
+            var dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+            scale = Math.min(4, Math.max(1, scale * (dist / initDist)));
+            img.style.transform = "scale(" + scale + ")";
+            initDist = dist;
+        }
+    }, { passive: true });
+
+    // Swipe in lightbox (single finger, not zoomed)
+    var lbStartX = 0, lbCurrentX = 0;
+    lb.ontouchstart = function(e) { if (e.touches.length === 1 && scale <= 1) lbStartX = e.touches[0].clientX; lbCurrentX = lbStartX; };
+    lb.ontouchmove = function(e) { if (e.touches.length === 1) lbCurrentX = e.touches[0].clientX; };
+    lb.ontouchend = function(e) {
+        if (scale > 1) return;
         var diff = lbCurrentX - lbStartX;
         if (diff > 60 && lbIdx > 0) lbIdx--;
         else if (diff < -60 && lbIdx < product.images.length - 1) lbIdx++;
-        document.getElementById("lightboxImg").src = product.images[lbIdx];
+        img.src = product.images[lbIdx];
         document.getElementById("lightboxCounter").textContent = (lbIdx + 1) + " / " + product.images.length;
+        scale = 1; img.style.transform = "scale(1)";
     };
 }
-document.getElementById("lightboxClose").addEventListener("click", function() {
+document.getElementById("lightboxClose").addEventListener("click", function(e) {
+    e.stopPropagation();
     document.getElementById("lightbox").classList.remove("open");
+    document.getElementById("lightboxImg").style.transform = "scale(1)";
     document.body.style.overflow = "";
 });
 
@@ -1009,7 +1044,7 @@ function renderStickyBar() {
         h += '<button class="sticky-size-trigger" id="stickySize"><span id="stickySizeLabel">' + state.selectedSize + '</span><i data-lucide="chevron-up"></i></button>';
     }
     h += '<span class="sticky-spacer"></span>';
-    h += '<button class="btn-add-bag" id="addBagBtn"><i data-lucide="shopping-bag"></i>Add to Bag</button>';
+    h += '<button class="btn-add-bag" id="addBagBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>';
     el.innerHTML = h;
     // Render dropdown outside sticky bar
     var existingDD = document.getElementById("sizeDropdown");
@@ -1019,7 +1054,7 @@ function renderStickyBar() {
         dd.className = "size-dropdown";
         dd.id = "sizeDropdown";
         dd.innerHTML = '<div class="size-dropdown-title">Select Size</div>' + product.sizes.map(function(s) {
-            return '<button class="size-dropdown-item' + (state.selectedSize === s.label && s.inStock ? ' active' : '') + (s.inStock ? '' : ' oos') + '" data-dsize="' + s.label + '" data-dstock="' + s.inStock + '">' + s.label + (s.inStock ? '' : ' (Sold out)') + '</button>';
+            return '<button class="size-dropdown-item' + (state.selectedSize === s.label && s.inStock ? ' active' : '') + (s.inStock ? '' : ' oos') + '" data-dsize="' + s.label + '" data-dstock="' + s.inStock + '" style="display:flex;align-items:center;justify-content:space-between">' + s.label + (s.inStock ? '' : '<span style="font-size:10px;font-weight:600;color:#D14A61">Notify Me</span>') + '</button>';
         }).join("");
         document.body.appendChild(dd);
         dd.querySelectorAll("[data-dsize]").forEach(function(b) {
