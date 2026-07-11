@@ -122,7 +122,7 @@
 
         /* ===== WISHLIST — liquid glass ===== */
         .wishlist-float {
-            position: absolute; top: 12px; right: 12px; z-index: 10;
+            position: absolute; top: 12px; right: 12px; z-index: 20;
             width: 42px; height: 42px; border-radius: 50%;
             background: rgba(255,255,255,0.25);
             backdrop-filter: blur(20px) saturate(1.8);
@@ -208,14 +208,15 @@
         .warranty-row i { width: 14px; height: 14px; color: #22C55E; flex-shrink: 0; }
         .warranty-row span { font-size: 11px; font-weight: 600; color: #15803d; }
         .view-full-details-btn {
-            display: flex; align-items: center; justify-content: center; gap: 6px;
-            width: 100%; margin-top: 10px; padding: 10px;
+            display: flex; align-items: center; justify-content: space-between; gap: 6px;
+            width: 100%; margin-top: 10px; padding: 10px 14px;
             font-size: 12px; font-weight: 600; color: #D14A61;
             border: 1px dashed rgba(209,74,97,0.3); border-radius: 100px;
             transition: all 0.2s; background: rgba(209,74,97,0.03);
         }
         .view-full-details-btn:active { background: rgba(209,74,97,0.08); }
-        .view-full-details-btn i { width: 14px; height: 14px; }
+        .view-full-details-btn svg { width: 13px; height: 13px; stroke: #D14A61; flex-shrink: 0; transition: transform 0.3s; }
+        .view-full-details-btn.open svg { transform: rotate(45deg); }
 
         /* ===== FULL PRODUCT DETAILS ===== */
         .full-details-panel {
@@ -285,7 +286,7 @@
         /* Weight & Size Selection */
         .selection-section { margin-top: 16px; padding-top: 16px; border-top: 1px solid #f0f0f0; }
         .selection-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #555; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
-        .selection-label i { width: 10px; height: 10px; }
+        .selection-label i { width: 7px; height: 7px; }
         .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
         .pill {
             padding: 8px 16px; border-radius: 100px; font-size: 12px; font-weight: 600;
@@ -418,7 +419,7 @@
             display: flex; align-items: center; gap: 5px;
         }
         .btn-add-bag:active { transform: scale(0.96); box-shadow: 0 2px 8px rgba(209,74,97,0.3); }
-        .btn-add-bag i { width: 14px; height: 14px; }
+        .btn-add-bag i { width: 13px; height: 13px; color: #fff !important; }
         @keyframes metallicShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -482,8 +483,9 @@
         .reco-card { min-width: calc((100vw - 44px) / 2.3); max-width: 160px; scroll-snap-align: start; flex-shrink: 0; }
         .reco-card-img { position: relative; aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid #f0f0f0; margin-bottom: 8px; }
         .reco-card-img img { width: 100%; height: 100%; object-fit: cover; }
-        .reco-card-wish { position: absolute; top: 6px; right: 6px; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; }
-        .reco-card-wish i { width: 12px; height: 12px; color: #D14A61 !important; }
+        .reco-card-wish { position: absolute; top: 6px; right: 6px; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(209,74,97,0.3); transition: all 0.2s; }
+        .reco-card-wish svg { width: 12px; height: 12px; stroke: #D14A61; fill: transparent; stroke-width: 1.8; transition: fill 0.2s; }
+        .reco-card-wish.active svg { fill: #D14A61; }
         .reco-card-name { font-size: 11px; color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .reco-card-price { font-size: 12px; font-weight: 700; color: #1a1a1a; margin-top: 2px; }
 
@@ -563,10 +565,10 @@
 
 <!-- IMAGE GALLERY -->
 <section class="gallery-section">
+    <button class="wishlist-float" id="wishlistBtn" aria-label="Add to Wishlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </button>
     <div class="gallery-main" id="galleryMain">
-        <button class="wishlist-float" id="wishlistBtn" aria-label="Add to Wishlist">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </button>
         <div class="gallery-track" id="galleryTrack"></div>
     </div>
     <div class="gallery-thumbnails" id="galleryThumbs"></div>
@@ -744,8 +746,6 @@ document.getElementById("appNudgeClose").onclick = function() { document.getElem
 
 // ===== WISHLIST =====
 var wishBtn = document.getElementById("wishlistBtn");
-wishBtn.addEventListener("touchstart", function(e) { e.stopPropagation(); }, { passive: false });
-wishBtn.addEventListener("touchend", function(e) { e.stopPropagation(); e.preventDefault(); }, { passive: false });
 wishBtn.addEventListener("click", function(e) {
     e.stopPropagation();
     e.preventDefault();
@@ -755,7 +755,7 @@ wishBtn.addEventListener("click", function(e) {
     void this.offsetWidth;
     this.classList.add("pop");
     showToast(state.wishlisted ? "Added to your Wishlist" : "Removed from Wishlist", state.wishlisted ? "success" : "info");
-}, true);
+});
 
 // ===== SHARE =====
 document.getElementById("shareBtn").onclick = function() {
@@ -773,7 +773,7 @@ document.getElementById("shareBtn").onclick = function() {
     h += '<div class="highlight-item"><div class="highlight-icon general-bg"><i data-lucide="scale" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value" style="color:#D14A61">' + product.grossWeight + '</div><div class="hl-label">Gross Weight</div></div></div>';
     h += '</div>';
     h += '<div class="warranty-row"><i data-lucide="shield-check"></i><span>1 Year Warranty &bull; Exchange across 250+ stores</span></div>';
-    h += '<button class="view-full-details-btn" id="viewDetailsBtn"><i data-lucide="plus"></i>View Full Product Details</button>';
+    h += '<button class="view-full-details-btn" id="viewDetailsBtn"><span>View Full Product Details</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>';
     el.innerHTML = h;
 
     var di = document.getElementById("fullDetailsInner");
@@ -786,8 +786,8 @@ document.getElementById("shareBtn").onclick = function() {
     document.getElementById("viewDetailsBtn").onclick = function() {
         state.detailsOpen = !state.detailsOpen;
         document.getElementById("fullDetailsPanel").classList.toggle("open", state.detailsOpen);
-        this.innerHTML = state.detailsOpen ? '<i data-lucide="minus"></i>Hide Product Details' : '<i data-lucide="plus"></i>View Full Product Details';
-        lucide.createIcons({ nodes: [this] });
+        this.querySelector("span").textContent = state.detailsOpen ? "Hide Product Details" : "View Full Product Details";
+        this.classList.toggle("open", state.detailsOpen);
         if (state.detailsOpen) document.getElementById("fullDetailsPanel").scrollIntoView({ behavior: "smooth", block: "nearest" });
     };
 })();
@@ -799,7 +799,7 @@ document.getElementById("shareBtn").onclick = function() {
         var h = '<div class="price-main-row"><span class="price-current price-shimmer">' + fmt(product.price.current) + '</span>';
         if (product.price.original) h += '<span class="price-original">' + fmt(product.price.original) + '</span><span class="price-discount">' + product.price.discount + '% OFF</span>';
         h += '</div><p class="price-tax">Inclusive of all taxes</p>';
-        h += '<button class="price-breakup-toggle' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupToggle"><span><i data-lucide="receipt" style="width:14px;height:14px"></i>Price Breakup</span><i data-lucide="chevron-down" class="toggle-arrow" style="width:14px;height:14px;color:#555"></i></button>';
+        h += '<button class="price-breakup-toggle' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupToggle"><span>Price Breakup</span><i data-lucide="chevron-down" class="toggle-arrow" style="width:14px;height:14px;color:#555"></i></button>';
         h += '<div class="price-breakup-panel' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupPanel"><div class="breakup-content">';
         var b = product.priceBreakup;
         h += '<div class="breakup-row"><div><div class="breakup-label">Total Gold Value</div><div class="breakup-sub">Weight: ' + b.goldValue.weight + ' | Rate: ' + b.goldValue.rate + '</div></div><div class="breakup-value">' + fmt(b.goldValue.amount) + '</div></div>';
@@ -819,12 +819,16 @@ document.getElementById("shareBtn").onclick = function() {
             });
             h += '</div></div>';
         }
+        // Buy Now + Add to Bag CTAs
+        h += '<div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0"><button class="btn-primary" id="priceBuyNow" style="flex:1">Buy Now</button><button style="flex:1;padding:14px;border-radius:100px;font-size:14px;font-weight:700;color:#D14A61;background:#FDF2F4;border:1.5px solid #D14A61;transition:all 0.2s" id="priceAddBag">Add to Bag</button></div>';
         el.innerHTML = h;
         lucide.createIcons({ nodes: [el] });
         document.getElementById("priceBreakupToggle").onclick = function() { state.priceBreakupOpen = !state.priceBreakupOpen; this.classList.toggle("open"); document.getElementById("priceBreakupPanel").classList.toggle("open"); };
         el.querySelectorAll("[data-weight]").forEach(function(b) { b.onclick = function() { state.selectedWeight = this.dataset.weight; render(); }; });
         el.querySelectorAll("[data-size]").forEach(function(b) { b.onclick = function() { if (this.dataset.stock === "false") { openSheet("notify"); renderNotifySheet(this.dataset.size); return; } state.selectedSize = this.dataset.size; render(); renderStickyBar(); }; });
         var sg = document.getElementById("sizeGuideOpen"); if (sg) sg.onclick = function() { openSheet("sizeGuide"); };
+        document.getElementById("priceBuyNow").onclick = function() { showToast("Proceeding to checkout", "success"); };
+        document.getElementById("priceAddBag").onclick = function() { showToast("Added to Bag: " + product.name, "success"); };
     }
     render();
 })();
@@ -913,9 +917,18 @@ function renderRecoSection(id, title, subtitle, products) {
     var el = document.getElementById(id);
     var h = '<div class="reco-header"><h2 class="reco-title font-display">' + title + '</h2><p class="reco-subtitle">' + subtitle + '</p></div><div class="reco-scroll">';
     products.forEach(function(p) {
-        h += '<div class="reco-card"><div class="reco-card-img"><img src="' + p.image + '" alt="' + p.name + '" loading="lazy"><button class="reco-card-wish" aria-label="Wishlist"><i data-lucide="heart"></i></button></div><p class="reco-card-name">' + p.name + '</p><p class="reco-card-price">' + fmt(p.price) + (p.originalPrice ? ' <span style="font-size:10px;color:#999;text-decoration:line-through">' + fmt(p.originalPrice) + '</span>' : '') + '</p></div>';
+        h += '<div class="reco-card"><div class="reco-card-img"><img src="' + p.image + '" alt="' + p.name + '" loading="lazy"><button class="reco-card-wish" aria-label="Wishlist"><svg viewBox="0 0 24 24" fill="transparent" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></div><p class="reco-card-name">' + p.name + '</p><p class="reco-card-price">' + fmt(p.price) + (p.originalPrice ? ' <span style="font-size:10px;color:#999;text-decoration:line-through">' + fmt(p.originalPrice) + '</span>' : '') + '</p></div>';
     });
     h += '</div>'; el.innerHTML = h;
+    // Reco wishlist click handlers
+    el.querySelectorAll(".reco-card-wish").forEach(function(btn) {
+        btn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            this.classList.toggle("active");
+            var isActive = this.classList.contains("active");
+            showToast(isActive ? "Added to Wishlist" : "Removed from Wishlist", isActive ? "success" : "info");
+        });
+    });
 }
 renderRecoSection("recoSection1", "Complete the Set", "Pieces that pair perfectly with your selection", recoProducts.slice(0, 4));
 renderRecoSection("recoSection2", "You May Also Like", "Handpicked based on what others loved", recoProducts.slice(2));
@@ -998,7 +1011,7 @@ document.addEventListener("click", function() { if (state.sizeDropdownOpen) { st
     h += '<div style="margin-bottom:16px"><label class="form-label">Thread Length (Circumference) in MM</label><input type="number" step="0.1" class="form-input" placeholder="e.g. 53.4" id="sizeInput" style="text-align:center;font-size:16px;font-weight:600"></div>';
     h += '<div id="sizeResult" style="display:none;text-align:center;padding:12px;border-radius:12px;background:#FDF2F4;margin-bottom:16px"><p style="font-size:10px;color:#777;margin-bottom:2px">Your Ring Size</p><p style="font-size:20px;font-weight:700;color:#D14A61;font-family:Fraunces,serif" id="sizeResultValue"></p></div>';
     h += '<table style="width:100%;font-size:12px;border-collapse:collapse"><thead><tr><th style="text-align:left;padding:8px 6px;font-size:9px;font-weight:700;color:#999;text-transform:uppercase;border-bottom:2px solid #f0f0f0">Circumference</th><th style="text-align:center;padding:8px 6px;font-size:9px;font-weight:700;color:#999;text-transform:uppercase;border-bottom:2px solid #f0f0f0">Ring Size</th><th style="text-align:right;padding:8px 6px;font-size:9px;font-weight:700;color:#999;text-transform:uppercase;border-bottom:2px solid #f0f0f0">Status</th></tr></thead><tbody>';
-    product.sizes.forEach(function(s) { h += '<tr><td style="padding:10px 6px;border-bottom:1px solid #f8f8f8;font-weight:500">' + s.circumference + '</td><td style="padding:10px 6px;border-bottom:1px solid #f8f8f8;font-weight:700;text-align:center">' + s.label + '</td><td style="padding:10px 6px;border-bottom:1px solid #f8f8f8;text-align:right"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;' + (s.inStock ? 'color:#166534;background:#f0fdf4' : 'color:#991b1b;background:#fef2f2') + '">' + (s.inStock ? 'In Stock' : 'Sold Out') + '</span></td></tr>'; });
+    product.sizes.forEach(function(s) { h += '<tr><td style="padding:10px 6px;border-bottom:1px solid #f8f8f8;font-weight:500">' + s.circumference + '</td><td style="padding:10px 6px;border-bottom:1px solid #f8f8f8;font-weight:700;text-align:center">' + s.label + '</td><td style="padding:10px 6px;border-bottom:1px solid #f8f8f8;text-align:right">' + (s.inStock ? '<span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;color:#166534;background:#f0fdf4">In Stock</span>' : '<span style="font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;color:#D14A61;background:#FDF2F4;cursor:pointer" onclick="closeSheet(\'sizeGuide\');openSheet(\'notify\');renderNotifySheet(\'' + s.label + '\')">Notify Me</span>') + '</td></tr>'; });
     h += '</tbody></table>';
     body.innerHTML = h;
     var sizeMap = product.sizes.map(function(s) { return { circ: parseFloat(s.circumference), label: s.label }; });
