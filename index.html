@@ -23,6 +23,13 @@
             font-size: 14px;
             overflow-x: hidden;
         }
+        /* Force consistent colors - no browser blue defaults */
+        svg { color: inherit; }
+        [data-lucide] { color: #1a1a1a; }
+        button, a, input, select, textarea, option { color: #1a1a1a; }
+        select option { color: #1a1a1a; }
+        ::placeholder { color: #bbb !important; -webkit-text-fill-color: #bbb; }
+        input, select, textarea { -webkit-text-fill-color: #1a1a1a; color: #1a1a1a; }
         button { font-family: inherit; cursor: pointer; border: none; background: none; }
         input, select, textarea { font-family: inherit; }
         img { display: block; max-width: 100%; }
@@ -126,8 +133,9 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .wishlist-float:active { transform: scale(0.88); }
-        .wishlist-float svg { width: 20px; height: 20px; stroke: #D14A61; fill: none; transition: all 0.3s; }
-        .wishlist-float.active svg { fill: #D14A61; stroke: #D14A61; animation: wishlistPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .wishlist-float svg { width: 20px; height: 20px; stroke: #D14A61; fill: transparent; transition: all 0.3s; stroke-width: 1.8; }
+        .wishlist-float.active svg { fill: #D14A61; stroke: #D14A61; }
+        .wishlist-float.pop svg { animation: wishlistPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes wishlistPop {
             0% { transform: scale(1); }
             30% { transform: scale(1.35); }
@@ -167,8 +175,8 @@
             display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
         .highlight-icon.gold-bg { background: rgba(184,134,11,0.1); }
-        .highlight-icon.diamond-bg { background: rgba(209,74,97,0.1); }
-        .highlight-icon.general-bg { background: rgba(59,130,246,0.08); }
+        .highlight-icon.diamond-bg { background: rgba(100,180,220,0.12); }
+        .highlight-icon.general-bg { background: rgba(209,74,97,0.08); }
         .highlight-icon i { width: 14px; height: 14px; }
         .highlight-text { min-width: 0; overflow: hidden; }
         .highlight-text .hl-value { font-size: 11px; font-weight: 700; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -381,19 +389,19 @@
         }
         .sticky-size-trigger i { width: 10px; height: 10px; }
         .sticky-size-trigger:active { background: #f0f0f0; }
-        /* Size dropdown */
+        /* Size dropdown - positioned above sticky bar */
         .size-dropdown {
-            position: fixed; bottom: 72px; left: 12px; right: 12px;
-            background: #fff; border-radius: 14px; border: 1px solid #f0f0f0;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-            overflow: hidden; z-index: 101;
-            opacity: 0; visibility: hidden; transform: translateY(8px);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed; bottom: 70px; left: 12px; right: 12px;
+            background: #fff; border-radius: 16px; border: 1px solid #f0f0f0;
+            box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
+            overflow: hidden; z-index: 150;
+            display: none;
         }
-        .size-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
+        .size-dropdown.open { display: block; }
+        .size-dropdown-title { padding: 12px 16px 8px; font-size: 11px; font-weight: 700; color: #777; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1px solid #f0f0f0; }
         .size-dropdown-item {
-            display: block; width: 100%; padding: 10px 16px; text-align: left;
-            font-size: 12px; font-weight: 500; color: #555;
+            display: block; width: 100%; padding: 14px 16px; text-align: left;
+            font-size: 13px; font-weight: 500; color: #1a1a1a;
             border-bottom: 1px solid #f5f5f5; transition: background 0.15s;
         }
         .size-dropdown-item:last-child { border-bottom: none; }
@@ -475,7 +483,7 @@
         .reco-card-img { position: relative; aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid #f0f0f0; margin-bottom: 8px; }
         .reco-card-img img { width: 100%; height: 100%; object-fit: cover; }
         .reco-card-wish { position: absolute; top: 6px; right: 6px; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; }
-        .reco-card-wish i { width: 12px; height: 12px; color: #555; }
+        .reco-card-wish i { width: 12px; height: 12px; color: #D14A61 !important; }
         .reco-card-name { font-size: 11px; color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .reco-card-price { font-size: 12px; font-weight: 700; color: #1a1a1a; margin-top: 2px; }
 
@@ -735,11 +743,19 @@ document.getElementById("appNudgeClose").onclick = function() { document.getElem
 })();
 
 // ===== WISHLIST =====
-document.getElementById("wishlistBtn").onclick = function() {
+var wishBtn = document.getElementById("wishlistBtn");
+wishBtn.addEventListener("touchstart", function(e) { e.stopPropagation(); }, { passive: false });
+wishBtn.addEventListener("touchend", function(e) { e.stopPropagation(); e.preventDefault(); }, { passive: false });
+wishBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    e.preventDefault();
     state.wishlisted = !state.wishlisted;
     this.classList.toggle("active", state.wishlisted);
+    this.classList.remove("pop");
+    void this.offsetWidth;
+    this.classList.add("pop");
     showToast(state.wishlisted ? "Added to your Wishlist" : "Removed from Wishlist", state.wishlisted ? "success" : "info");
-};
+}, true);
 
 // ===== SHARE =====
 document.getElementById("shareBtn").onclick = function() {
@@ -751,10 +767,10 @@ document.getElementById("shareBtn").onclick = function() {
 (function() {
     var el = document.getElementById("keyHighlights");
     var h = '<div class="highlights-grid">';
-    if (product.diamond) h += '<div class="highlight-item"><div class="highlight-icon diamond-bg"><i data-lucide="diamond" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value diamond-sparkle">' + product.diamond.count + ' ' + product.diamond.type + ' Diamonds</div><div class="hl-label">' + product.diamond.weight + ' certified</div></div></div>';
+    if (product.diamond) h += '<div class="highlight-item"><div class="highlight-icon diamond-bg"><i data-lucide="diamond" style="width:14px;height:14px;color:#4fa8c9"></i></div><div class="highlight-text"><div class="hl-value diamond-sparkle">' + product.diamond.count + ' ' + product.diamond.type + ' Diamonds</div><div class="hl-label">' + product.diamond.weight + ' certified</div></div></div>';
     h += '<div class="highlight-item"><div class="highlight-icon gold-bg"><i data-lucide="circle-dot" style="width:14px;height:14px;color:#b8860b"></i></div><div class="highlight-text"><div class="hl-value gold-shimmer">' + product.gold.purity + ' ' + product.gold.colour + ' Gold</div><div class="hl-label">BIS hallmarked, ' + product.gold.weight + '</div></div></div>';
-    h += '<div class="highlight-item"><div class="highlight-icon general-bg"><i data-lucide="gem" style="width:14px;height:14px;color:#3B82F6"></i></div><div class="highlight-text"><div class="hl-value">' + product.jewelleryType + '</div><div class="hl-label">' + product.occasion + '</div></div></div>';
-    h += '<div class="highlight-item"><div class="highlight-icon general-bg"><i data-lucide="scale" style="width:14px;height:14px;color:#3B82F6"></i></div><div class="highlight-text"><div class="hl-value">' + product.grossWeight + '</div><div class="hl-label">Gross Weight</div></div></div>';
+    h += '<div class="highlight-item"><div class="highlight-icon general-bg"><i data-lucide="gem" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value" style="color:#D14A61">' + product.jewelleryType + '</div><div class="hl-label">' + product.occasion + '</div></div></div>';
+    h += '<div class="highlight-item"><div class="highlight-icon general-bg"><i data-lucide="scale" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value" style="color:#D14A61">' + product.grossWeight + '</div><div class="hl-label">Gross Weight</div></div></div>';
     h += '</div>';
     h += '<div class="warranty-row"><i data-lucide="shield-check"></i><span>1 Year Warranty &bull; Exchange across 250+ stores</span></div>';
     h += '<button class="view-full-details-btn" id="viewDetailsBtn"><i data-lucide="plus"></i>View Full Product Details</button>';
@@ -849,7 +865,7 @@ document.getElementById("shareBtn").onclick = function() {
     var price = product.price.current;
     var activeTier = price >= 300000 ? "D" : price >= 150000 ? "C" : price >= 50000 ? "B" : price >= 10000 ? "A" : null;
     var h = '<div class="promos-header"><span class="promos-badge">FESTIVE OFFER</span><span class="promos-title">Save More, Sparkle More</span></div>';
-    h += '<p class="promos-subtitle">Up to 101% off on Making Charges* -- Buy more, save more</p><div class="promo-tiers">';
+    h += '<p class="promos-subtitle">Up to 101% off on Making Charges* . Buy more, save more</p><div class="promo-tiers">';
     [{ band:"A",range:"\u20B910K \u2013 \u20B949.99K",qty1:"21%",qty2:"31%",qty3:"51%"},{ band:"B",range:"\u20B950K \u2013 \u20B91.49L",qty1:"31%",qty2:"41%",qty3:"61%"},{ band:"C",range:"\u20B91.50L \u2013 \u20B92.99L",qty1:"41%",qty2:"51%",qty3:"71%"},{ band:"D",range:"\u20B93L & Above",qty1:"71%",qty2:"81%",qty3:"101%"}].forEach(function(t) {
         var isA = t.band === activeTier;
         h += '<div class="promo-tier' + (isA ? ' active-tier' : '') + '"><div class="promo-tier-badge">' + t.qty1 + '</div><div class="promo-tier-info"><div class="promo-tier-label">' + t.range + (isA ? ' <span style="font-size:9px;background:#D14A61;color:#fff;padding:1px 6px;border-radius:100px;margin-left:4px">YOUR TIER</span>' : '') + '</div><div class="promo-tier-desc">Qty 2: ' + t.qty2 + ' off | Qty 3+: ' + t.qty3 + ' off on Making Charges</div></div></div>';
@@ -913,7 +929,7 @@ renderRecoSection("recoSection3", "Most Gifted", "Top picks our customers love t
         { q: "Are the diamonds natural and certified?", a: "Yes, all 15 diamonds are natural, brilliant-cut stones. Each stone is authenticated and comes with certification." },
         { q: "What is the return and exchange policy?", a: "We offer 30-day hassle-free returns and lifetime exchange on gold and diamond jewellery at any of our 250+ stores across India." },
         { q: "Is there a warranty?", a: "Yes, all Mia products come with a 1-year warranty covering manufacturing defects. Tata Assured quality guarantee." },
-        { q: "How do I find my ring size?", a: "Use our Size Guide \u2014 wrap a thread around your finger, mark the overlap, measure in mm, and match with our size chart. You can also visit any Mia store for a free sizing." },
+        { q: "How do I find my ring size?", a: "Use our Size Guide. Wrap a thread around your finger, mark the overlap, measure in mm, and match with our size chart. You can also visit any Mia store for a free sizing." },
         { q: "Do you offer free shipping and gift wrapping?", a: "Yes! All orders ship free across India with complimentary gift wrapping available at checkout." }
     ];
     var h = '<h2 class="faq-title font-display"><i data-lucide="help-circle"></i>Frequently Asked Questions</h2>';
@@ -927,25 +943,44 @@ function renderStickyBar() {
     var el = document.getElementById("stickyBar");
     var h = '<span class="sticky-price price-shimmer">' + fmt(product.price.current) + '</span>';
     if (product.isSizeable) {
-        h += '<div class="sticky-size-trigger" id="stickySize"><span id="stickySizeLabel">' + state.selectedSize + '</span><i data-lucide="chevron-up"></i>';
-        h += '<div class="size-dropdown" id="sizeDropdown">';
-        product.sizes.forEach(function(s) {
-            h += '<button class="size-dropdown-item' + (state.selectedSize === s.label && s.inStock ? ' active' : '') + (s.inStock ? '' : ' oos') + '" data-dsize="' + s.label + '" data-dstock="' + s.inStock + '">' + s.label + (s.inStock ? '' : ' (Sold out)') + '</button>';
-        });
-        h += '</div></div>';
+        h += '<button class="sticky-size-trigger" id="stickySize"><span id="stickySizeLabel">' + state.selectedSize + '</span><i data-lucide="chevron-up"></i></button>';
     }
     h += '<span class="sticky-spacer"></span>';
     h += '<button class="btn-add-bag" id="addBagBtn"><i data-lucide="shopping-bag"></i>Add to Bag</button>';
     el.innerHTML = h;
+    // Render dropdown outside sticky bar
+    var existingDD = document.getElementById("sizeDropdown");
+    if (existingDD) existingDD.remove();
+    if (product.isSizeable) {
+        var dd = document.createElement("div");
+        dd.className = "size-dropdown";
+        dd.id = "sizeDropdown";
+        dd.innerHTML = '<div class="size-dropdown-title">Select Size</div>' + product.sizes.map(function(s) {
+            return '<button class="size-dropdown-item' + (state.selectedSize === s.label && s.inStock ? ' active' : '') + (s.inStock ? '' : ' oos') + '" data-dsize="' + s.label + '" data-dstock="' + s.inStock + '">' + s.label + (s.inStock ? '' : ' (Sold out)') + '</button>';
+        }).join("");
+        document.body.appendChild(dd);
+        dd.querySelectorAll("[data-dsize]").forEach(function(b) {
+            b.addEventListener("click", function(e) {
+                e.stopPropagation();
+                if (this.dataset.dstock === "false") { openSheet("notify"); renderNotifySheet(this.dataset.dsize); dd.classList.remove("open"); return; }
+                state.selectedSize = this.dataset.dsize;
+                dd.classList.remove("open");
+                state.sizeDropdownOpen = false;
+                renderStickyBar();
+                showToast("Size changed to " + state.selectedSize, "info");
+            });
+        });
+    }
     lucide.createIcons({ nodes: [el] });
     var trigger = document.getElementById("stickySize");
     if (trigger) {
-        trigger.onclick = function(e) { e.stopPropagation(); state.sizeDropdownOpen = !state.sizeDropdownOpen; document.getElementById("sizeDropdown").classList.toggle("open", state.sizeDropdownOpen); };
+        trigger.addEventListener("click", function(e) {
+            e.stopPropagation();
+            state.sizeDropdownOpen = !state.sizeDropdownOpen;
+            document.getElementById("sizeDropdown").classList.toggle("open", state.sizeDropdownOpen);
+        });
     }
-    el.querySelectorAll("[data-dsize]").forEach(function(b) {
-        b.onclick = function(e) { e.stopPropagation(); if (this.dataset.dstock === "false") { openSheet("notify"); renderNotifySheet(this.dataset.dsize); return; } state.selectedSize = this.dataset.dsize; state.sizeDropdownOpen = false; renderStickyBar(); showToast("Size changed to " + state.selectedSize, "info"); };
-    });
-    document.getElementById("addBagBtn").onclick = function() { showToast("Added to Bag \u2014 " + product.name, "success"); };
+    document.getElementById("addBagBtn").addEventListener("click", function() { showToast("Added to Bag: " + product.name, "success"); });
 }
 renderStickyBar();
 document.addEventListener("click", function() { if (state.sizeDropdownOpen) { state.sizeDropdownOpen = false; var dd = document.getElementById("sizeDropdown"); if (dd) dd.classList.remove("open"); } });
@@ -985,7 +1020,7 @@ function renderGiftSheet() {
     var body = document.getElementById("giftBody");
     var wraps = [{ name: "Mia Blush Wrap", placeholder: "#FDF2F4" }, { name: "Minimal Box", placeholder: "#f5f5f5" }, { name: "Festive Gold Wrap", placeholder: "#fef3cd" }];
     var stickers = ["Happy Birthday", "Congratulations", "With Love", "Just For You", "Best Wishes", "You Deserve This"];
-    var h = '<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:16px;padding:6px 14px;border-radius:100px;background:#f0fdf4;border:1px solid rgba(34,197,94,0.15);width:fit-content;margin-left:auto;margin-right:auto"><i data-lucide="sparkles" style="width:12px;height:12px;color:#22C55E"></i><span style="font-size:11px;font-weight:700;color:#166534">Complimentary Gifting Service - FREE</span></div>';
+    var h = '<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:16px;padding:6px 14px;border-radius:100px;background:#f0fdf4;border:1px solid rgba(34,197,94,0.15);width:fit-content;margin-left:auto;margin-right:auto"><i data-lucide="sparkles" style="width:12px;height:12px;color:#22C55E"></i><span style="font-size:11px;font-weight:700;color:#166534">Complimentary Gifting Service. It\'s on us.</span></div>';
     h += '<div class="form-label">Choose Wrapper</div><div style="display:flex;gap:10px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px">';
     wraps.forEach(function(w, i) { h += '<button class="gift-wrap-option" data-wrap="' + i + '" style="min-width:100px;padding:0;border-radius:14px;border:1.5px solid #e0e0e0;text-align:center;transition:all 0.2s;overflow:hidden"><div style="width:100%;height:80px;background:' + w.placeholder + ';display:flex;align-items:center;justify-content:center"><i data-lucide="gift" style="width:24px;height:24px;color:#bbb"></i></div><div style="padding:8px 6px;font-size:11px;font-weight:600;color:#1a1a1a">' + w.name + '</div></button>'; });
     h += '</div>';
@@ -1006,7 +1041,7 @@ function renderPrebookSheet() {
     h += '<div class="form-label">Choose Delivery Date</div><div style="display:flex;gap:10px;margin-bottom:20px">';
     product.prebookDates.forEach(function(d, i) { h += '<button class="prebook-date-opt" data-date="' + i + '" style="flex:1;padding:14px;border-radius:14px;border:1.5px solid #e0e0e0;text-align:center;font-size:13px;font-weight:600;color:#1a1a1a;transition:all 0.2s">' + d + '</button>'; });
     h += '</div><div style="margin-bottom:16px;padding:12px;border-radius:12px;background:#FAFAFA"><p style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:8px">A Little Pre-Book Prep:</p><ul style="font-size:11px;color:#555;line-height:1.8;padding-left:16px"><li>Once purchased, a pre-booked item cannot be cancelled.</li><li>Choosing "Pre-book" adds a label to all cart items. Remove it anytime.</li><li>You can change the date from cart or product page.</li><li>Pre-book is available for select pincodes and cities only.</li></ul></div>';
-    h += '<button class="btn-primary" id="prebookConfirmBtn">Confirm Pre-Book \u2014 \u20B91,000</button>';
+    h += '<button class="btn-primary" id="prebookConfirmBtn">Confirm Pre-Book for \u20B91,000</button>';
     body.innerHTML = h;
     body.querySelectorAll(".prebook-date-opt").forEach(function(b) { b.onclick = function() { body.querySelectorAll(".prebook-date-opt").forEach(function(x) { x.style.borderColor = "#e0e0e0"; x.style.background = "#fff"; }); this.style.borderColor = "#F59E0B"; this.style.background = "#fffbeb"; state.prebookDate = this.textContent; }; });
     document.getElementById("prebookConfirmBtn").onclick = function() { if (!state.prebookDate) { showToast("Please select a delivery date", "error"); return; } closeSheet("prebook"); showToast("Pre-booked for " + state.prebookDate, "success"); };
