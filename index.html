@@ -80,7 +80,7 @@
         .breadcrumb a { color: #555; font-weight: 500; transition: color 0.15s; }
         .breadcrumb a:hover { color: #D14A61; }
         .breadcrumb .sep { color: #999; display: flex; align-items: center; }
-        .breadcrumb .sep i { width: 14px; height: 14px; }
+        .breadcrumb .sep svg { width: 7px; height: 7px; }
         .breadcrumb .current { color: #1a1a1a; font-weight: 600; }
 
         /* ===== IMAGE GALLERY ===== */
@@ -126,8 +126,8 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .wishlist-float:active { transform: scale(0.88); }
-        .wishlist-float i { width: 20px; height: 20px; color: #1a1a1a; transition: all 0.3s; }
-        .wishlist-float.active i { color: #D14A61; fill: #D14A61; animation: wishlistPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .wishlist-float svg { width: 20px; height: 20px; stroke: #D14A61; fill: none; transition: all 0.3s; }
+        .wishlist-float.active svg { fill: #D14A61; stroke: #D14A61; animation: wishlistPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes wishlistPop {
             0% { transform: scale(1); }
             30% { transform: scale(1.35); }
@@ -149,7 +149,7 @@
             transition: all 0.2s;
         }
         .share-btn:active { transform: scale(0.9); background: #eee; }
-        .share-btn i { width: 16px; height: 16px; color: #555; }
+        .share-btn svg { width: 12px; height: 12px; stroke: #D14A61; }
 
         /* ===== KEY HIGHLIGHTS ===== */
         .key-highlights {
@@ -181,7 +181,7 @@
             -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite;
         }
         .diamond-sparkle {
-            background: linear-gradient(90deg, #1a1a1a 0%, #1a1a1a 30%, #D14A61 42%, #ff8fa3 50%, #D14A61 58%, #1a1a1a 70%, #1a1a1a 100%);
+            background: linear-gradient(90deg, #444 0%, #444 25%, #8ecae6 40%, #ffffff 50%, #8ecae6 60%, #444 75%, #444 100%);
             background-size: 250% auto; -webkit-background-clip: text; background-clip: text;
             -webkit-text-fill-color: transparent; animation: shimmer 3.5s linear infinite;
         }
@@ -276,8 +276,8 @@
 
         /* Weight & Size Selection */
         .selection-section { margin-top: 16px; padding-top: 16px; border-top: 1px solid #f0f0f0; }
-        .selection-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #555; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .selection-label i { width: 14px; height: 14px; }
+        .selection-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #555; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+        .selection-label i { width: 10px; height: 10px; }
         .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
         .pill {
             padding: 8px 16px; border-radius: 100px; font-size: 12px; font-weight: 600;
@@ -288,8 +288,7 @@
         .pill.notify-me { opacity: 0.5; border-style: dashed; cursor: pointer; }
         .pill:active { transform: scale(0.95); }
         .size-guide-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-        .size-guide-btn { font-size: 11px; font-weight: 600; color: #D14A61; display: flex; align-items: center; gap: 4px; text-decoration: underline; text-underline-offset: 2px; }
-        .size-guide-btn i { width: 14px; height: 14px; }
+        .size-guide-btn { font-size: 11px; font-weight: 600; color: #D14A61; text-decoration: underline; text-underline-offset: 2px; }
 
         /* ===== EXCHANGE GOLD ===== */
         .exchange-section { padding: 16px; margin: 8px 16px; background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; }
@@ -371,7 +370,7 @@
             display: flex; align-items: center; gap: 6px;
             overflow: hidden;
         }
-        .sticky-price { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 600; color: #1a1a1a; white-space: nowrap; flex-shrink: 0; }
+        .sticky-price { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600; color: #1a1a1a; white-space: nowrap; flex-shrink: 0; }
         .sticky-size-trigger {
             display: flex; align-items: center; gap: 2px;
             padding: 3px 8px; border-radius: 100px;
@@ -384,10 +383,10 @@
         .sticky-size-trigger:active { background: #f0f0f0; }
         /* Size dropdown */
         .size-dropdown {
-            position: absolute; bottom: calc(100% + 8px); left: 0;
+            position: fixed; bottom: 72px; left: 12px; right: 12px;
             background: #fff; border-radius: 14px; border: 1px solid #f0f0f0;
             box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-            min-width: 140px; overflow: hidden;
+            overflow: hidden; z-index: 101;
             opacity: 0; visibility: hidden; transform: translateY(8px);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -402,7 +401,7 @@
         .size-dropdown-item.oos { color: #bbb; font-style: italic; }
         .sticky-spacer { flex: 1; }
         .btn-add-bag {
-            padding: 10px 18px; border-radius: 100px; font-size: 13px; font-weight: 700;
+            padding: 12px 22px; border-radius: 100px; font-size: 13px; font-weight: 700;
             color: #fff; white-space: nowrap; flex-shrink: 0;
             background: linear-gradient(135deg, #E8668A 0%, #D14A61 30%, #B03A50 60%, #C9506D 80%, #D8607E 100%);
             background-size: 200% 200%; animation: metallicShift 4s ease infinite;
@@ -493,16 +492,20 @@
         .faq-answer-inner { padding: 0 0 14px; font-size: 12px; color: #666; line-height: 1.7; }
 
         /* ===== BOTTOM SHEET ===== */
-        .bottom-sheet-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+        .bottom-sheet-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.4); opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
         .bottom-sheet-overlay.open { opacity: 1; visibility: visible; }
-        .bottom-sheet { position: fixed; bottom: 0; left: 0; right: 0; z-index: 201; background: #fff; border-radius: 24px 24px 0 0; max-height: 85vh; overflow-y: auto; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 -8px 40px rgba(0,0,0,0.12); padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+        .bottom-sheet { position: fixed; bottom: 0; left: 0; right: 0; z-index: 201; background: #fff; border-radius: 24px 24px 0 0; max-height: 85vh; overflow-y: auto; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1); padding-bottom: max(16px, env(safe-area-inset-bottom)); }
         .bottom-sheet.open { transform: translateY(0); }
+        .bs-close-outer { position: fixed; z-index: 202; left: 50%; transform: translateX(-50%); bottom: 85vh; display: none; }
+        .bottom-sheet.open ~ .bs-close-outer-target { display: flex; }
+        .bs-close-float { width: 36px; height: 36px; border-radius: 50%; background: #1a1a1a; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .bs-close-float svg { width: 16px; height: 16px; stroke: #fff; }
         .bottom-sheet-handle { display: flex; justify-content: center; padding: 12px 0 4px; position: sticky; top: 0; background: #fff; z-index: 1; border-radius: 24px 24px 0 0; }
         .bottom-sheet-handle::after { content: ''; width: 36px; height: 4px; border-radius: 100px; background: #ddd; }
-        .bottom-sheet-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 20px 12px; }
+        .bottom-sheet-header { display: flex; align-items: center; justify-content: center; padding: 8px 20px 12px; position: relative; }
         .bottom-sheet-header h3 { font-size: 15px; font-weight: 700; }
-        .bs-close { width: 32px; height: 32px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; }
-        .bs-close i { width: 16px; height: 16px; }
+        .bs-close { position: absolute; top: -48px; left: 50%; transform: translateX(-50%); width: 36px; height: 36px; border-radius: 50%; background: #1a1a1a; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .bs-close svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 2.5; }
         .bottom-sheet-body { padding: 0 20px 20px; }
 
         /* ===== FORM ELEMENTS ===== */
@@ -537,16 +540,16 @@
 <div class="app-nudge" id="appNudge">
     <div class="app-nudge-icon"><i data-lucide="sparkles" style="width:18px;height:18px;color:#D14A61"></i></div>
     <div class="app-nudge-text"><strong>Get the Mia App</strong><span>Exclusive offers & early access</span></div>
-    <button class="app-nudge-install" id="appInstallBtn">Install</button>
+    <button class="app-nudge-install" id="appInstallBtn" onclick="window.open(/iPhone|iPad|iPod/.test(navigator.userAgent)?'https://apps.apple.com/in/app/mia-by-tanishq/id1632160428':'https://play.google.com/store/apps/details?id=com.titancompany.miabytanishqapp&hl=en_IN','_blank')">Install</button>
     <button class="app-nudge-close" id="appNudgeClose" aria-label="Close"><i data-lucide="x" style="width:14px;height:14px;color:#999"></i></button>
 </div>
 
 <!-- BREADCRUMB -->
 <nav class="breadcrumb">
     <a href="#">Home</a>
-    <span class="sep"><i data-lucide="chevron-right"></i></span>
+    <span class="sep"><svg viewBox="0 0 24 24" width="7" height="7" fill="none" stroke="#666" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
     <a href="#">Rings</a>
-    <span class="sep"><i data-lucide="chevron-right"></i></span>
+    <span class="sep"><svg viewBox="0 0 24 24" width="7" height="7" fill="none" stroke="#666" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
     <span class="current" id="breadcrumbName"></span>
 </nav>
 
@@ -554,7 +557,7 @@
 <section class="gallery-section">
     <div class="gallery-main" id="galleryMain">
         <button class="wishlist-float" id="wishlistBtn" aria-label="Add to Wishlist">
-            <i data-lucide="heart"></i>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </button>
         <div class="gallery-track" id="galleryTrack"></div>
     </div>
@@ -565,7 +568,7 @@
 <section class="product-header">
     <div class="product-name-row">
         <h1 class="product-name font-display" id="productName"></h1>
-        <button class="share-btn" id="shareBtn" aria-label="Share"><i data-lucide="share-2"></i></button>
+        <button class="share-btn" id="shareBtn" aria-label="Share"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
     </div>
 </section>
 
@@ -619,25 +622,25 @@
 
 <!-- BOTTOM SHEETS -->
 <div class="bottom-sheet-overlay" id="sizeGuideOverlay"></div>
-<div class="bottom-sheet" id="sizeGuideSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Size Guide</h3><button class="bs-close" id="sizeGuideClose"><i data-lucide="x"></i></button></div><div class="bottom-sheet-body" id="sizeGuideBody"></div></div>
+<div class="bottom-sheet" id="sizeGuideSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Size Guide</h3><button class="bs-close" id="sizeGuideClose"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="bottom-sheet-body" id="sizeGuideBody"></div></div>
 
 <div class="bottom-sheet-overlay" id="exchangeOverlay"></div>
-<div class="bottom-sheet" id="exchangeSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Gold Exchange Calculator</h3><button class="bs-close" id="exchangeClose"><i data-lucide="x"></i></button></div><div class="bottom-sheet-body" id="exchangeBody"></div></div>
+<div class="bottom-sheet" id="exchangeSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Gold Exchange Calculator</h3><button class="bs-close" id="exchangeClose"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="bottom-sheet-body" id="exchangeBody"></div></div>
 
 <div class="bottom-sheet-overlay" id="giftOverlay"></div>
-<div class="bottom-sheet" id="giftSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Gift Options</h3><button class="bs-close" id="giftClose"><i data-lucide="x"></i></button></div><div class="bottom-sheet-body" id="giftBody"></div></div>
+<div class="bottom-sheet" id="giftSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Gift Options</h3><button class="bs-close" id="giftClose"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="bottom-sheet-body" id="giftBody"></div></div>
 
 <div class="bottom-sheet-overlay" id="prebookOverlay"></div>
-<div class="bottom-sheet" id="prebookSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Pre-Book for Festive Season</h3><button class="bs-close" id="prebookClose"><i data-lucide="x"></i></button></div><div class="bottom-sheet-body" id="prebookBody"></div></div>
+<div class="bottom-sheet" id="prebookSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Pre-Book for Festive Season</h3><button class="bs-close" id="prebookClose"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="bottom-sheet-body" id="prebookBody"></div></div>
 
 <div class="bottom-sheet-overlay" id="storeOverlay"></div>
-<div class="bottom-sheet" id="storeSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Find In Store</h3><button class="bs-close" id="storeClose"><i data-lucide="x"></i></button></div><div class="bottom-sheet-body" id="storeBody"></div></div>
+<div class="bottom-sheet" id="storeSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Find In Store</h3><button class="bs-close" id="storeClose"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="bottom-sheet-body" id="storeBody"></div></div>
 
 <div class="bottom-sheet-overlay" id="notifyOverlay"></div>
-<div class="bottom-sheet" id="notifySheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Notify When Available</h3><button class="bs-close" id="notifyClose"><i data-lucide="x"></i></button></div><div class="bottom-sheet-body" id="notifyBody"></div></div>
+<div class="bottom-sheet" id="notifySheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Notify When Available</h3><button class="bs-close" id="notifyClose"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="bottom-sheet-body" id="notifyBody"></div></div>
 
 <div class="bottom-sheet-overlay" id="couponOverlay"></div>
-<div class="bottom-sheet" id="couponSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Coupon Details</h3><button class="bs-close" id="couponClose"><i data-lucide="x"></i></button></div><div class="bottom-sheet-body" id="couponBody"></div></div>
+<div class="bottom-sheet" id="couponSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Coupon Details</h3><button class="bs-close" id="couponClose"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="bottom-sheet-body" id="couponBody"></div></div>
 
 <script>
 // ===== PRODUCT DATA =====
@@ -793,7 +796,7 @@ document.getElementById("shareBtn").onclick = function() {
         product.weights.forEach(function(w) { h += '<button class="pill' + (state.selectedWeight === w.label ? ' active' : '') + '" data-weight="' + w.label + '">' + w.label + '</button>'; });
         h += '</div></div>';
         if (product.isSizeable) {
-            h += '<div class="selection-section" style="margin-top:0;padding-top:12px;border-top:none"><div class="size-guide-row"><div class="selection-label" style="margin-bottom:0"><i data-lucide="ruler" style="color:#555"></i>Choose Size</div><button class="size-guide-btn" id="sizeGuideOpen"><i data-lucide="book-open"></i>Size Guide</button></div><div class="pill-row">';
+            h += '<div class="selection-section" style="margin-top:0;padding-top:12px;border-top:none"><div class="size-guide-row"><div class="selection-label" style="margin-bottom:0"><i data-lucide="ruler" style="color:#555"></i>Choose Size</div><button class="size-guide-btn" id="sizeGuideOpen">Size Guide</button></div><div class="pill-row">';
             product.sizes.forEach(function(s) {
                 var cls = "pill"; if (state.selectedSize === s.label && s.inStock) cls += " active"; if (!s.inStock) cls += " notify-me";
                 h += '<button class="' + cls + '" data-size="' + s.label + '" data-stock="' + s.inStock + '">' + s.label + '</button>';
@@ -861,6 +864,11 @@ document.getElementById("shareBtn").onclick = function() {
     el.innerHTML = '<div class="gift-toggle-row"><div class="gift-label"><i data-lucide="gift"></i><div><span>This Is A Gift</span><br><small>Complimentary wrap & card</small></div></div><div class="toggle-switch' + (state.giftEnabled ? ' active' : '') + '" id="giftToggle"></div></div><div class="gift-selected-badge' + (state.giftEnabled ? ' show' : '') + '" id="giftBadge"><i data-lucide="check" style="width:12px;height:12px"></i>Gift wrap selected</div>';
     document.getElementById("giftToggle").onclick = function() { state.giftEnabled = !state.giftEnabled; this.classList.toggle("active", state.giftEnabled); document.getElementById("giftBadge").classList.toggle("show", state.giftEnabled); if (state.giftEnabled) { openSheet("gift"); renderGiftSheet(); } };
 })();
+
+// Gift sheet close should turn off toggle if not saved
+var _origGiftClose = closeSheet;
+document.getElementById("giftClose").onclick = function() { closeSheet("gift"); state.giftEnabled = false; document.getElementById("giftToggle").classList.remove("active"); document.getElementById("giftBadge").classList.remove("show"); };
+document.getElementById("giftOverlay").onclick = function() { closeSheet("gift"); state.giftEnabled = false; document.getElementById("giftToggle").classList.remove("active"); document.getElementById("giftBadge").classList.remove("show"); };
 
 // ===== PRE-BOOK =====
 (function() {
@@ -975,17 +983,20 @@ function renderExchangeSheet() {
 // ===== GIFT SHEET =====
 function renderGiftSheet() {
     var body = document.getElementById("giftBody");
-    var wraps = [{ name: "Mia Blush Wrap", desc: "Signature pink tissue & ribbon", color: "#FDF2F4" }, { name: "Minimal Box", desc: "Clean matte keepsake box", color: "#f5f5f5" }, { name: "Festive Gold Wrap", desc: "Gold foil with satin bow", color: "#fef3cd" }];
+    var wraps = [{ name: "Mia Blush Wrap", placeholder: "#FDF2F4" }, { name: "Minimal Box", placeholder: "#f5f5f5" }, { name: "Festive Gold Wrap", placeholder: "#fef3cd" }];
     var stickers = ["Happy Birthday", "Congratulations", "With Love", "Just For You", "Best Wishes", "You Deserve This"];
-    var h = '<p style="font-size:12px;color:#555;margin-bottom:16px">Choose your gift packaging and personalisation.</p><div class="form-label">Choose Packaging</div><div style="display:flex;gap:10px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px">';
-    wraps.forEach(function(w, i) { h += '<button class="gift-wrap-option" data-wrap="' + i + '" style="min-width:120px;padding:12px;border-radius:14px;border:1.5px solid #e0e0e0;background:' + w.color + ';text-align:center;transition:all 0.2s"><div style="font-size:12px;font-weight:600;color:#1a1a1a;margin-bottom:2px">' + w.name + '</div><div style="font-size:10px;color:#777">' + w.desc + '</div><div style="font-size:9px;color:#22C55E;font-weight:700;margin-top:4px">FREE</div></button>'; });
-    h += '</div><div class="form-label">Choose a Sticker</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">';
-    stickers.forEach(function(s, i) { h += '<button class="gift-sticker-option" data-sticker="' + i + '" style="padding:10px 8px;border-radius:100px;border:1.5px solid #e0e0e0;font-size:11px;font-weight:600;color:#555;text-align:center;transition:all 0.2s">' + s + '</button>'; });
-    h += '</div><button class="btn-primary" id="giftSaveBtn">Save Gift Details</button>';
+    var h = '<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:16px;padding:6px 14px;border-radius:100px;background:#f0fdf4;border:1px solid rgba(34,197,94,0.15);width:fit-content;margin-left:auto;margin-right:auto"><i data-lucide="sparkles" style="width:12px;height:12px;color:#22C55E"></i><span style="font-size:11px;font-weight:700;color:#166534">Complimentary Gifting Service - FREE</span></div>';
+    h += '<div class="form-label">Choose Wrapper</div><div style="display:flex;gap:10px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px">';
+    wraps.forEach(function(w, i) { h += '<button class="gift-wrap-option" data-wrap="' + i + '" style="min-width:100px;padding:0;border-radius:14px;border:1.5px solid #e0e0e0;text-align:center;transition:all 0.2s;overflow:hidden"><div style="width:100%;height:80px;background:' + w.placeholder + ';display:flex;align-items:center;justify-content:center"><i data-lucide="gift" style="width:24px;height:24px;color:#bbb"></i></div><div style="padding:8px 6px;font-size:11px;font-weight:600;color:#1a1a1a">' + w.name + '</div></button>'; });
+    h += '</div>';
+    h += '<div class="form-label">Choose a Sticker</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">';
+    stickers.forEach(function(s, i) { h += '<button class="gift-sticker-option" data-sticker="' + i + '" style="padding:0;border-radius:12px;border:1.5px solid #e0e0e0;text-align:center;transition:all 0.2s;overflow:hidden"><div style="width:100%;height:56px;background:#FAFAFA;display:flex;align-items:center;justify-content:center"><i data-lucide="sticker" style="width:18px;height:18px;color:#bbb"></i></div><div style="padding:6px 4px;font-size:10px;font-weight:600;color:#555">' + s + '</div></button>'; });
+    h += '</div><button class="btn-primary" id="giftSaveBtn">Make it a Gift & Add to Bag</button>';
     body.innerHTML = h;
+    lucide.createIcons({ nodes: [body] });
     body.querySelectorAll(".gift-wrap-option").forEach(function(b) { b.onclick = function() { body.querySelectorAll(".gift-wrap-option").forEach(function(x) { x.style.borderColor = "#e0e0e0"; }); this.style.borderColor = "#D14A61"; }; });
-    body.querySelectorAll(".gift-sticker-option").forEach(function(b) { b.onclick = function() { body.querySelectorAll(".gift-sticker-option").forEach(function(x) { x.style.borderColor = "#e0e0e0"; x.style.background = "#fff"; x.style.color = "#555"; }); this.style.borderColor = "#D14A61"; this.style.background = "#FDF2F4"; this.style.color = "#D14A61"; }; });
-    document.getElementById("giftSaveBtn").onclick = function() { closeSheet("gift"); showToast("Gift options saved", "success"); };
+    body.querySelectorAll(".gift-sticker-option").forEach(function(b) { b.onclick = function() { body.querySelectorAll(".gift-sticker-option").forEach(function(x) { x.style.borderColor = "#e0e0e0"; }); this.style.borderColor = "#D14A61"; }; });
+    document.getElementById("giftSaveBtn").onclick = function() { closeSheet("gift"); showToast("Gift wrap applied & added to bag", "success"); };
 }
 
 // ===== PREBOOK SHEET =====
@@ -1016,7 +1027,7 @@ function renderNotifySheet(size) {
 }
 
 // ===== SHEET HANDLERS =====
-["sizeGuide", "exchange", "gift", "prebook", "store", "notify", "coupon"].forEach(function(id) {
+["sizeGuide", "exchange", "prebook", "store", "notify", "coupon"].forEach(function(id) {
     document.getElementById(id + "Close").onclick = function() { closeSheet(id); };
     document.getElementById(id + "Overlay").onclick = function() { closeSheet(id); };
 });
