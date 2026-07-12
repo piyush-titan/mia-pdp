@@ -288,7 +288,31 @@
         .trust-item img { height: 30px; width: 80px; object-fit: contain; }
 
         /* ===== PRICE SECTION ===== */
-        .price-section { padding: 16px; margin: 8px 16px; background: linear-gradient(180deg, #FDF2F4, #fff); border-radius: 16px; border: 1px solid #f0f0f0; }
+        .price-section {
+            position: relative; margin: 8px 16px; border-radius: 16px;
+            overflow: hidden; z-index: 1;
+        }
+        .price-section-bg {
+            position: absolute; top: 3px; left: 3px; right: 3px; bottom: 3px;
+            z-index: 2; background: linear-gradient(180deg, #FDF2F4, #fff);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border-radius: 13px; outline: 2px solid rgba(255,255,255,0.8);
+        }
+        .price-section-blob {
+            position: absolute; z-index: 1;
+            top: 50%; left: 50%; width: 120px; height: 120px;
+            border-radius: 50%; background-color: #D14A61;
+            opacity: 0.8; filter: blur(14px);
+            animation: blobBounce 5s infinite ease;
+        }
+        .price-section-content { position: relative; z-index: 3; padding: 16px; }
+        @keyframes blobBounce {
+            0% { transform: translate(-100%, -100%) translate3d(0, 0, 0); }
+            25% { transform: translate(-100%, -100%) translate3d(100%, 0, 0); }
+            50% { transform: translate(-100%, -100%) translate3d(100%, 100%, 0); }
+            75% { transform: translate(-100%, -100%) translate3d(0, 100%, 0); }
+            100% { transform: translate(-100%, -100%) translate3d(0, 0, 0); }
+        }
         .price-main-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
         .price-current { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; }
         .price-original { font-size: 14px; color: #999; text-decoration: line-through; }
@@ -954,7 +978,8 @@ var priceEl = document.getElementById("priceSection");
 function renderPriceSection() {
     var el = priceEl;
     var p = getCurrentPrice();
-    var h = '<div class="price-main-row"><span class="price-current price-shimmer">' + fmt(p.current) + '</span>';
+    var h = '<div class="price-section-bg"></div><div class="price-section-blob"></div><div class="price-section-content">';
+    h += '<div class="price-main-row"><span class="price-current price-shimmer">' + fmt(p.current) + '</span>';
     if (p.original) h += '<span class="price-original">' + fmt(p.original) + '</span><span class="price-discount">' + p.discount + '% OFF</span>';
     h += '</div><p class="price-tax">Inclusive of all taxes</p>';
         h += '<button class="price-breakup-toggle' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupToggle"><span>Price Breakup</span><i data-lucide="chevron-down" class="toggle-arrow" style="width:14px;height:14px;color:#555"></i></button>';
@@ -979,6 +1004,7 @@ function renderPriceSection() {
         }
         // Buy Now + Add to Bag CTAs
         h += '<div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0"><button class="btn-primary" id="priceBuyNow" style="flex:1">Buy Now</button><button style="flex:1;padding:14px;border-radius:100px;font-size:14px;font-weight:700;color:#D14A61;background:#FDF2F4;border:1.5px solid #D14A61;transition:all 0.2s" id="priceAddBag">Add to Bag</button></div>';
+        h += '</div>'; // close price-section-content
         el.innerHTML = h;
         lucide.createIcons({ nodes: [el] });
         document.getElementById("priceBreakupToggle").onclick = function() { state.priceBreakupOpen = !state.priceBreakupOpen; this.classList.toggle("open"); document.getElementById("priceBreakupPanel").classList.toggle("open"); };
