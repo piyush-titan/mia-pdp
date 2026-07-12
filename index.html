@@ -296,10 +296,11 @@
         .price-tax { font-size: 11px; color: #999; margin-top: 4px; }
         .price-breakup-toggle {
             display: flex; align-items: center; justify-content: space-between;
-            width: 100%; margin-top: 14px; padding: 10px 14px;
-            border-radius: 100px; background: #FAFAFA; border: 1px solid #f0f0f0;
+            width: 100%; margin-top: 14px; padding: 10px 16px;
+            border-radius: 100px; background: #fff;
+            border: 1.5px dashed #D14A61;
         }
-        .price-breakup-toggle span { font-size: 12px; font-weight: 600; color: #555; display: flex; align-items: center; gap: 6px; }
+        .price-breakup-toggle span { font-size: 12px; font-weight: 700; color: #D14A61; display: flex; align-items: center; gap: 6px; }
         .price-breakup-toggle .toggle-arrow { transition: transform 0.3s; }
         .price-breakup-toggle.open .toggle-arrow { transform: rotate(180deg); }
         .price-breakup-panel { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -957,7 +958,7 @@ function renderPriceSection() {
     var h = '<div class="price-main-row"><span class="price-current price-shimmer">' + fmt(p.current) + '</span>';
     if (p.original) h += '<span class="price-original">' + fmt(p.original) + '</span><span class="price-discount">' + p.discount + '% OFF</span>';
     h += '</div><p class="price-tax">Inclusive of all taxes</p>';
-        h += '<button class="price-breakup-toggle' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupToggle"><span>Price Breakup</span><i data-lucide="chevron-down" class="toggle-arrow" style="width:14px;height:14px;color:#555"></i></button>';
+        h += '<button class="price-breakup-toggle' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupToggle"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="10" y1="9" x2="10" y2="21"/></svg>Price Breakup</span><svg class="toggle-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>';
         h += '<div class="price-breakup-panel' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupPanel"><div class="breakup-content">';
         var b = product.priceBreakup;
         h += '<div class="breakup-row row-gold"><div><div class="breakup-label">Total Gold Value</div><div class="breakup-sub">Weight: ' + b.goldValue.weight + ' &middot; Rate: ' + b.goldValue.rate + '</div></div><div class="breakup-value">' + fmt(b.goldValue.amount) + '</div></div>';
