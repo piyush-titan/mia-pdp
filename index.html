@@ -251,10 +251,10 @@
         /* ===== FULL PRODUCT DETAILS ===== */
         .full-details-panel {
             max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            margin: 0 16px; background: #fff; border-radius: 0 0 16px 16px;
+            margin-top: 12px;
         }
         .full-details-panel.open { max-height: 3000px; }
-        .full-details-inner { padding: 16px; border: 1px solid #f0f0f0; border-top: none; border-radius: 0 0 16px 16px; }
+        .full-details-inner { padding: 14px; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 14px; }
         .detail-category { margin-bottom: 16px; }
         .detail-category:last-child { margin-bottom: 0; }
         .detail-cat-title {
@@ -626,9 +626,6 @@
 
 <!-- KEY HIGHLIGHTS -->
 <section class="key-highlights" id="keyHighlights"></section>
-<div class="full-details-panel" id="fullDetailsPanel">
-    <div class="full-details-inner" id="fullDetailsInner"></div>
-</div>
 
 <!-- TRUST ELEMENTS -->
 <section class="trust-elements">
@@ -921,6 +918,7 @@ document.getElementById("similarBtn").onclick = function() {
     h += '</div>';
     h += '<div class="warranty-row"><i data-lucide="shield-check" style="color:#22C55E"></i><span>1 Year Warranty &bull; Exchange across 250+ stores</span></div>';
     h += '<button class="view-full-details-btn" id="viewDetailsBtn"><span>View Full Product Details</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>';
+    h += '<div class="full-details-panel" id="fullDetailsPanel"><div class="full-details-inner" id="fullDetailsInner"></div></div>';
     el.innerHTML = h;
 
     var di = document.getElementById("fullDetailsInner");
