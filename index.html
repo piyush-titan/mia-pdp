@@ -549,13 +549,13 @@
         .lightbox-counter { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.7); font-size: 12px; font-weight: 600; letter-spacing: 1px; }
 
         /* ===== FAQs ===== */
-        .faq-section { padding: 16px; margin: 8px 16px 100px; background: linear-gradient(180deg, #FDF2F4, #fff); border-radius: 16px; border: 1px solid #f0f0f0; }
+        .faq-section { padding: 16px; margin: 8px 16px 100px; background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; }
         .faq-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
         .faq-title i { width: 18px; height: 18px; color: #D14A61; }
         .faq-item { border-bottom: 1px solid #f0f0f0; }
         .faq-item:last-child { border-bottom: none; }
         .faq-question { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 14px 0; text-align: left; font-size: 13px; font-weight: 600; color: #1a1a1a; }
-        .faq-question svg { flex-shrink: 0; width: 16px; height: 16px; stroke: #555; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+        .faq-question svg { flex-shrink: 0; width: 16px; height: 16px; stroke: #D14A61; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
         .faq-question.open svg { transform: rotate(180deg); stroke: #D14A61; }
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .faq-answer-inner { padding: 0 0 14px; font-size: 12px; color: #666; line-height: 1.7; }
@@ -1092,7 +1092,7 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
 // ===== FIND IN STORE =====
 (function() {
     var el = document.getElementById("findStoreSection");
-    el.innerHTML = '<svg class="find-store-bg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l2-4h16l2 4"/><path d="M2 7h20"/><rect x="2" y="7" width="4" height="4" rx="1"/><rect x="6" y="7" width="4" height="4" rx="1"/><rect x="10" y="7" width="4" height="4" rx="1"/><rect x="14" y="7" width="4" height="4" rx="1"/><rect x="18" y="7" width="4" height="4" rx="1"/><path d="M2 11v10h20V11"/><path d="M9 21v-7h6v7"/></svg><div class="find-store-title"><span class="icon-pill"><i data-lucide="map-pin" style="color:#D14A61"></i></span>Find In Store</div><p class="find-store-subtitle">Locate this product at a Mia store near you</p><button class="find-store-cta" id="findStoreCta"><i data-lucide="search" style="color:#fff"></i>Check Store Availability</button>';
+    el.innerHTML = '<svg class="find-store-bg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l2-4h16l2 4"/><path d="M2 7h20"/><rect x="2" y="7" width="4" height="4" rx="1"/><rect x="6" y="7" width="4" height="4" rx="1"/><rect x="10" y="7" width="4" height="4" rx="1"/><rect x="14" y="7" width="4" height="4" rx="1"/><rect x="18" y="7" width="4" height="4" rx="1"/><path d="M2 11v10h20V11"/><path d="M9 21v-7h6v7"/></svg><div class="find-store-title"><span class="icon-pill"><i data-lucide="map-pin" style="color:#D14A61"></i></span>Find In Store</div><p class="find-store-subtitle">Locate this product at a Mia store near you</p><button class="find-store-cta" id="findStoreCta"><i data-lucide="search" style="color:#fff;width:14px;height:14px"></i>Check Store Availability</button>';
     document.getElementById("findStoreCta").onclick = function() { openSheet("store"); renderStoreSheet(); };
 })();
 
