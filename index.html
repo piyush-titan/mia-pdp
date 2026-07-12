@@ -530,15 +530,15 @@
         .lightbox-counter { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.7); font-size: 12px; font-weight: 600; letter-spacing: 1px; }
 
         /* ===== FAQs ===== */
-        .faq-section { padding: 16px; margin: 8px 16px 100px; background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; }
+        .faq-section { padding: 16px; margin: 8px 16px 100px; background: linear-gradient(180deg, #FDF2F4, #fff); border-radius: 16px; border: 1px solid #f0f0f0; }
         .faq-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
         .faq-title i { width: 18px; height: 18px; color: #D14A61; }
         .faq-item { border-bottom: 1px solid #f0f0f0; }
         .faq-item:last-child { border-bottom: none; }
         .faq-question { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 14px 0; text-align: left; font-size: 13px; font-weight: 600; color: #1a1a1a; }
-        .faq-question i { flex-shrink: 0; transition: transform 0.3s; width: 16px; height: 16px; }
-        .faq-question.open i { transform: rotate(180deg); }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .faq-question svg { flex-shrink: 0; width: 16px; height: 16px; stroke: #555; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+        .faq-question.open svg { transform: rotate(180deg); stroke: #D14A61; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .faq-answer-inner { padding: 0 0 14px; font-size: 12px; color: #666; line-height: 1.7; }
 
         /* ===== BOTTOM SHEET ===== */
@@ -1091,7 +1091,7 @@ renderRecoSection("recoSection3", "Most Gifted", "Top picks our customers love t
         { q: "Do you offer free shipping and gift wrapping?", a: "Yes! All orders ship free across India with complimentary gift wrapping available at checkout." }
     ];
     var h = '<h2 class="faq-title font-display"><i data-lucide="help-circle"></i>Frequently Asked Questions</h2>';
-    faqs.forEach(function(f, i) { h += '<div class="faq-item"><button class="faq-question" data-faq="' + i + '">' + f.q + '<i data-lucide="chevron-down"></i></button><div class="faq-answer" id="faqA' + i + '"><div class="faq-answer-inner">' + f.a + '</div></div></div>'; });
+    faqs.forEach(function(f, i) { h += '<div class="faq-item"><button class="faq-question" data-faq="' + i + '">' + f.q + '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer" id="faqA' + i + '"><div class="faq-answer-inner">' + f.a + '</div></div></div>'; });
     el.innerHTML = h;
     el.querySelectorAll(".faq-question").forEach(function(btn) { btn.onclick = function() { var idx = this.dataset.faq; var panel = document.getElementById("faqA" + idx); var isOpen = this.classList.contains("open"); el.querySelectorAll(".faq-question").forEach(function(b) { b.classList.remove("open"); }); el.querySelectorAll(".faq-answer").forEach(function(a) { a.style.maxHeight = null; }); if (!isOpen) { this.classList.add("open"); panel.style.maxHeight = panel.scrollHeight + "px"; } }; });
 })();
