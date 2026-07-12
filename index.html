@@ -340,32 +340,42 @@
         .exchange-cta { width: 100%; padding: 12px; border-radius: 100px; font-size: 13px; font-weight: 600; color: #92400e; background: linear-gradient(135deg, #fef3cd, #fde68a); border: 1px solid rgba(184,134,11,0.2); transition: all 0.2s; }
         .exchange-cta:active { transform: scale(0.98); }
 
-        /* ===== COUPONS (carousel) ===== */
-        .coupons-section { padding: 16px 0; margin: 8px 0; }
-        .coupons-header { padding: 0 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        /* ===== COUPONS (stacked carousel) ===== */
+        .coupons-section { padding: 16px; margin: 8px 16px; background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; }
+        .coupons-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
         .coupons-header i { width: 18px; height: 18px; color: #D14A61; }
         .coupons-title { font-size: 13px; font-weight: 700; color: #1a1a1a; }
-        .coupons-scroll {
-            display: flex; gap: 10px; padding: 0 16px; overflow-x: auto;
-            -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory;
-            scroll-padding-left: 16px;
+        .card-stack { position: relative; width: 100%; height: 140px; display: flex; align-items: center; justify-content: center; }
+        .stack-card {
+            position: absolute; width: 82%; max-width: 280px; height: 120px;
+            border-radius: 16px; padding: 14px 16px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(209,74,97,0.15); user-select: none;
         }
-        .coupons-scroll::-webkit-scrollbar { display: none; }
-        .coupon-card {
-            min-width: calc(100vw - 64px); max-width: 300px;
-            padding: 14px 16px; border-radius: 14px; border: 1px solid #f0f0f0;
-            background: #fff; scroll-snap-align: start; flex-shrink: 0;
-            display: flex; align-items: center; gap: 12px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-        }
-        .coupon-left { flex: 1; min-width: 0; }
-        .coupon-code-badge { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 100px; margin-bottom: 4px; }
-        .coupon-code-badge.pink { color: #D14A61; background: #FDF2F4; }
-        .coupon-code-badge.gold { color: #92400e; background: #fef3cd; }
-        .coupon-code-badge.purple { color: #6d28d9; background: #f3e8ff; }
-        .coupon-desc { font-size: 11px; color: #555; line-height: 1.4; }
-        .coupon-view-btn { font-size: 10px; font-weight: 700; color: #D14A61; padding: 6px 14px; border-radius: 100px; border: 1px solid rgba(209,74,97,0.3); white-space: nowrap; transition: all 0.2s; }
-        .coupon-view-btn:active { background: #FDF2F4; }
+        .stack-card.active { z-index: 3; transform: translateX(0) scale(1); opacity: 1; }
+        .stack-card.prev { z-index: 2; transform: translateX(-22%) scale(0.88); opacity: 0.55; filter: brightness(0.85); }
+        .stack-card.next { z-index: 2; transform: translateX(22%) scale(0.88); opacity: 0.55; filter: brightness(0.85); }
+        .stack-card.s0 { background: linear-gradient(145deg, #E8668A, #D14A61, #B03A50); }
+        .stack-card.s1 { background: linear-gradient(145deg, #f472b6, #D14A61, #be123c); }
+        .stack-card.s2 { background: linear-gradient(145deg, #fb7185, #e11d48, #9f1239); }
+        .stack-card::before { content: ''; position: absolute; top: -25px; right: -25px; width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.08); }
+        .stack-card::after { content: ''; position: absolute; bottom: -15px; left: -15px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+        .stack-tag { font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 2px; }
+        .stack-amount { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: #fff; line-height: 1.2; margin-bottom: 2px; }
+        .stack-desc { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.4; }
+        .stack-bottom { display: flex; align-items: center; justify-content: space-between; }
+        .stack-code-row { display: flex; align-items: center; gap: 5px; }
+        .stack-code-label { font-size: 10px; color: rgba(255,255,255,0.75); font-weight: 600; }
+        .stack-code { font-size: 10px; font-weight: 800; color: #D14A61; letter-spacing: 0.8px; padding: 2px 8px; border-radius: 100px; background: #fff; }
+        .stack-view { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.8); text-decoration: underline; text-underline-offset: 2px; }
+        .stack-nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 14px; }
+        .stack-arrow { width: 28px; height: 28px; border-radius: 50%; background: #f5f5f5; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .stack-arrow:active { transform: scale(0.9); background: #eee; }
+        .stack-arrow svg { width: 14px; height: 14px; stroke: #1a1a1a; }
+        .stack-dots { display: flex; align-items: center; gap: 5px; }
+        .stack-dot { width: 6px; height: 6px; border-radius: 50%; background: #ddd; transition: all 0.3s; }
+        .stack-dot.active { width: 16px; border-radius: 100px; background: #D14A61; }
 
         /* ===== PROMOTIONS ===== */
         .promos-section { padding: 16px; margin: 8px 16px; background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; }
@@ -992,26 +1002,50 @@ function renderPriceSection() {
     document.getElementById("exchangeCta").onclick = function() { openSheet("exchange"); renderExchangeSheet(); };
 })();
 
-// ===== COUPONS (horizontal carousel) =====
+// ===== COUPONS (stacked carousel) =====
 (function() {
     var el = document.getElementById("couponsSection");
     var coupons = [
-        { code: "MIA500", desc: "Flat \u20B9500 off on your first purchase", badge: "pink", details: "Use code MIA500 at checkout. Valid on orders above \u20B92,000. One time use per customer. Cannot be combined with other offers." },
-        { code: "BIRTHDAY", desc: "Special birthday month discount", badge: "gold", details: "Up to 15% off during your birthday month. Auto-applied if your birthday is registered. Valid on all categories except coins and gift cards." },
-        { code: "ANNIVERSARY", desc: "Celebrate with up to 20% off", badge: "purple", details: "Up to 20% off on select anniversary designs. Register your anniversary date on your Mia account to unlock. Valid on jewellery above \u20B910,000." }
+        { tag: "MIA 500", amount: "Flat \u20B9500 Off", desc: "Applicable for your first purchase", code: "MIA500", view: false },
+        { tag: "Birthday Special", amount: "Flat \u20B92000 Off", desc: "Applicable on your birthday month", code: "BIRTHDAY500", view: true },
+        { tag: "Anniversary Special", amount: "Flat \u20B92000 Off", desc: "Applicable on your anniversary month", code: "ANNIVERSARY500", view: true }
     ];
-    var h = '<div class="coupons-header"><i data-lucide="ticket"></i><span class="coupons-title">Available Coupons</span></div><div class="coupons-scroll">';
+    var h = '<div class="coupons-header"><i data-lucide="ticket" style="color:#D14A61"></i><span class="coupons-title">Available Coupons</span></div>';
+    h += '<div class="card-stack" id="couponStack">';
     coupons.forEach(function(c, i) {
-        h += '<div class="coupon-card"><div class="coupon-left"><span class="coupon-code-badge ' + c.badge + '">' + c.code + '</span><div class="coupon-desc">' + c.desc + '</div></div><button class="coupon-view-btn" data-coupon="' + i + '">View Details</button></div>';
+        h += '<div class="stack-card s' + i + '" data-cidx="' + i + '"><div><div class="stack-tag">' + c.tag + '</div><div class="stack-amount">' + c.amount + '</div><div class="stack-desc">' + c.desc + '</div></div><div class="stack-bottom"><div class="stack-code-row"><span class="stack-code-label">Use Code:</span><span class="stack-code">' + c.code + '</span></div>' + (c.view ? '<a class="stack-view" data-cv="' + i + '">View Details</a>' : '') + '</div></div>';
     });
     h += '</div>';
+    h += '<div class="stack-nav"><button class="stack-arrow" id="couponPrev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button><div class="stack-dots" id="couponDots">';
+    coupons.forEach(function(_, i) { h += '<span class="stack-dot' + (i === 0 ? ' active' : '') + '"></span>'; });
+    h += '</div><button class="stack-arrow" id="couponNext"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></div>';
     el.innerHTML = h;
-    el.querySelectorAll("[data-coupon]").forEach(function(b) {
-        b.onclick = function() {
-            var c = coupons[parseInt(this.dataset.coupon)];
-            openSheet("coupon");
-            document.getElementById("couponBody").innerHTML = '<div style="text-align:center;margin-bottom:16px"><span class="coupon-code-badge ' + c.badge + '" style="font-size:14px;padding:6px 20px">' + c.code + '</span></div><p style="font-size:13px;color:#555;line-height:1.7;margin-bottom:16px">' + c.details + '</p><button class="btn-primary" onclick="closeSheet(\'coupon\');showToast(\'Coupon code copied\',\'success\')">Copy Code</button>';
-        };
+
+    var cards = el.querySelectorAll(".stack-card");
+    var dots = el.querySelectorAll(".stack-dot");
+    var cur = 0, total = cards.length;
+    function setPos() {
+        cards.forEach(function(c, i) {
+            c.classList.remove("active", "prev", "next");
+            if (i === cur) c.classList.add("active");
+            else if (i === (cur - 1 + total) % total) c.classList.add("prev");
+            else if (i === (cur + 1) % total) c.classList.add("next");
+        });
+        dots.forEach(function(d, i) { d.classList.toggle("active", i === cur); });
+    }
+    setPos();
+    document.getElementById("couponNext").onclick = function() { cur = (cur + 1) % total; setPos(); };
+    document.getElementById("couponPrev").onclick = function() { cur = (cur - 1 + total) % total; setPos(); };
+    // Swipe
+    var sx = 0;
+    var stack = document.getElementById("couponStack");
+    stack.addEventListener("touchstart", function(e) { sx = e.touches[0].clientX; }, { passive: true });
+    stack.addEventListener("touchend", function(e) { var diff = e.changedTouches[0].clientX - sx; if (diff < -30) { cur = (cur + 1) % total; setPos(); } else if (diff > 30) { cur = (cur - 1 + total) % total; setPos(); } });
+    // Tap side cards
+    cards.forEach(function(c) { c.addEventListener("click", function() { var idx = parseInt(this.dataset.cidx); if (idx !== cur) { cur = idx; setPos(); } }); });
+    // View details
+    el.querySelectorAll("[data-cv]").forEach(function(b) {
+        b.onclick = function(e) { e.stopPropagation(); var c = coupons[parseInt(this.dataset.cv)]; openSheet("coupon"); document.getElementById("couponBody").innerHTML = '<div style="text-align:center;margin-bottom:16px"><span style="font-size:14px;font-weight:800;color:#D14A61;padding:6px 20px;border-radius:100px;background:#FDF2F4;display:inline-block">' + c.code + '</span></div><p style="font-size:13px;color:#555;line-height:1.7;margin-bottom:16px">' + c.desc + '</p><button class="btn-primary" onclick="closeSheet(\'coupon\');showToast(\'Coupon code copied\',\'success\')">Copy Code</button>'; };
     });
 })();
 
