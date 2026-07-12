@@ -101,6 +101,13 @@
             clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
             border: 0 solid; overflow: hidden;
         }
+        .product-tag::after {
+            content: ''; position: absolute; top: -50%; left: -75%; width: 50%; height: 200%;
+            background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.5) 45%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.5) 55%, transparent 60%);
+            animation: tagShimmer 3s ease-in-out infinite;
+        }
+        @keyframes tagShimmer { 0% { left: -75%; } 100% { left: 150%; } }
+        }
         .product-tag.new-arrival { background: linear-gradient(135deg, #b8860b, #f5d77a); color: #5c3d0a; }
         .product-tag.bestseller { background: linear-gradient(135deg, #D14A61, #f9a8b8); color: #fff; }
         .product-tag.custom { background: linear-gradient(135deg, #7c3aed, #c4b5fd); color: #fff; }
