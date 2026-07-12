@@ -420,13 +420,13 @@
         .sticky-price { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600; color: #1a1a1a; white-space: nowrap; flex-shrink: 0; }
         .sticky-size-trigger {
             display: flex; align-items: center; gap: 2px;
-            padding: 3px 8px; border-radius: 100px;
+            padding: 3px 6px 3px 8px; border-radius: 100px;
             border: 1px solid #e0e0e0; font-size: 9px; font-weight: 600;
             color: #555; background: #FAFAFA; white-space: nowrap;
             position: relative; cursor: pointer; transition: all 0.2s;
             flex-shrink: 0;
         }
-        .sticky-size-trigger i { width: 10px; height: 10px; }
+        .sticky-size-trigger svg { width: 8px; height: 8px; stroke: #999; stroke-width: 2.5; }
         .sticky-size-trigger:active { background: #f0f0f0; }
         /* Size dropdown - positioned above sticky bar */
         .size-dropdown {
@@ -1113,7 +1113,7 @@ function renderStickyBar() {
     var el = document.getElementById("stickyBar");
     var p = getCurrentPrice();
     var h = '<span class="sticky-price price-shimmer">' + fmt(p.current) + '</span>';
-    h += '<button class="sticky-size-trigger" id="stickySize"><span>' + state.selectedSize + ' &middot; ' + state.selectedWeight + '</span><i data-lucide="chevron-up"></i></button>';
+    h += '<button class="sticky-size-trigger" id="stickySize"><span>' + state.selectedSize.replace(' ', '') + ' &middot; ' + state.selectedWeight.replace(' ', '') + '</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>';
     h += '<span class="sticky-spacer"></span>';
     h += '<button class="btn-add-bag" id="addBagBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>';
     el.innerHTML = h;
