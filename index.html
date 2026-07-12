@@ -179,38 +179,44 @@
 
         /* ===== KEY HIGHLIGHTS ===== */
         .key-highlights {
-            padding: 14px; margin: 8px 16px; border-radius: 16px;
-            background: #fff; border: 1px solid #f0f0f0;
+            padding: 16px; margin: 8px 16px; border-radius: 20px;
+            background: linear-gradient(135deg, #fdf2f4 0%, #f0e6ff 50%, #e8f4fd 100%);
+            position: relative; overflow: hidden;
         }
-        .highlights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .key-highlights::before {
+            content: ''; position: absolute; top: -30%; right: -20%; width: 60%; height: 80%;
+            background: radial-gradient(circle, rgba(209,74,97,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .highlights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; position: relative; z-index: 1; }
         @media (max-width: 359px) { .highlights-grid { grid-template-columns: 1fr; } }
         .highlight-item {
             display: flex; align-items: center; gap: 8px;
-            padding: 8px 10px; border-radius: 12px; background: #FAFAFA; min-width: 0;
+            padding: 10px 12px; border-radius: 14px; min-width: 0;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
+        .highlight-item.diamond-item { background: rgba(224,242,254,0.75); border-color: rgba(147,197,253,0.3); }
+        .highlight-item.gold-item { background: rgba(254,249,235,0.75); border-color: rgba(253,224,71,0.3); }
+        .highlight-item.pink-item { background: rgba(253,242,244,0.75); border-color: rgba(209,74,97,0.15); }
         .highlight-icon {
-            width: 28px; height: 28px; min-width: 28px; border-radius: 8px;
+            width: 28px; height: 28px; min-width: 28px; border-radius: 10px;
             display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
-        .highlight-icon.gold-bg { background: rgba(184,134,11,0.1); }
-        .highlight-icon.diamond-bg { background: rgba(100,180,220,0.12); }
-        .highlight-icon.general-bg { background: rgba(209,74,97,0.08); }
+        .highlight-icon.gold-bg { background: rgba(184,134,11,0.15); }
+        .highlight-icon.diamond-bg { background: rgba(59,130,246,0.12); }
+        .highlight-icon.pink-bg { background: rgba(209,74,97,0.1); }
         .highlight-icon i { width: 14px; height: 14px; }
         .highlight-text { min-width: 0; overflow: hidden; }
-        .highlight-text .hl-value { font-size: 11px; font-weight: 700; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .highlight-text .hl-label { font-size: 9px; color: #999; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .highlight-text .hl-value { font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .highlight-text .hl-value.diamond-text { color: #1e40af; }
+        .highlight-text .hl-value.gold-text { color: #92400e; }
+        .highlight-text .hl-value.pink-text { color: #be123c; }
+        .highlight-text .hl-label { font-size: 9px; color: #777; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         /* Shimmer effects */
-        .gold-shimmer {
-            background: linear-gradient(90deg, #b8860b 0%, #b8860b 30%, #f5d77a 45%, #fff8dc 50%, #f5d77a 55%, #b8860b 70%, #b8860b 100%);
-            background-size: 250% auto; -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite;
-        }
-        .diamond-sparkle {
-            background: linear-gradient(90deg, #444 0%, #444 25%, #8ecae6 40%, #ffffff 50%, #8ecae6 60%, #444 75%, #444 100%);
-            background-size: 250% auto; -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent; animation: shimmer 3.5s linear infinite;
-        }
         .price-shimmer {
             background: linear-gradient(90deg, #1a1a1a 0%, #1a1a1a 28%, #555 40%, #999 50%, #555 60%, #1a1a1a 72%, #1a1a1a 100%);
             background-size: 300% auto; -webkit-background-clip: text; background-clip: text;
@@ -219,20 +225,25 @@
         @keyframes shimmer { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
 
         .warranty-row {
-            display: flex; align-items: center; gap: 8px; margin-top: 10px;
-            padding: 8px 10px; border-radius: 10px; background: #f0fdf4;
-            border: 1px solid rgba(34,197,94,0.15);
+            display: flex; align-items: center; gap: 8px; margin-top: 12px;
+            padding: 10px 12px; border-radius: 12px;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(34,197,94,0.2);
         }
         .warranty-row i { width: 14px; height: 14px; color: #22C55E; flex-shrink: 0; }
-        .warranty-row span { font-size: 11px; font-weight: 600; color: #15803d; }
+        .warranty-row span { font-size: 11px; font-weight: 600; color: #166534; }
         .view-full-details-btn {
             display: flex; align-items: center; justify-content: space-between; gap: 6px;
             width: 100%; margin-top: 10px; padding: 10px 14px;
-            font-size: 12px; font-weight: 600; color: #D14A61;
-            border: 1px dashed rgba(209,74,97,0.3); border-radius: 100px;
-            transition: all 0.2s; background: rgba(209,74,97,0.03);
+            font-size: 12px; font-weight: 700; color: #D14A61;
+            border: none; border-radius: 100px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 2px 8px rgba(209,74,97,0.08);
+            transition: all 0.2s;
         }
-        .view-full-details-btn:active { background: rgba(209,74,97,0.08); }
+        .view-full-details-btn:active { transform: scale(0.98); background: rgba(253,242,244,0.9); }
         .view-full-details-btn svg { width: 13px; height: 13px; stroke: #D14A61; flex-shrink: 0; transition: transform 0.3s; }
         .view-full-details-btn.open svg { transform: rotate(45deg); }
 
@@ -897,10 +908,10 @@ document.getElementById("similarBtn").onclick = function() {
 (function() {
     var el = document.getElementById("keyHighlights");
     var h = '<div class="highlights-grid">';
-    if (product.diamond) h += '<div class="highlight-item"><div class="highlight-icon diamond-bg"><i data-lucide="diamond" style="width:14px;height:14px;color:#4fa8c9"></i></div><div class="highlight-text"><div class="hl-value diamond-sparkle">' + product.diamond.count + ' ' + product.diamond.type + ' Diamonds</div><div class="hl-label">' + product.diamond.weight + ' certified</div></div></div>';
-    h += '<div class="highlight-item"><div class="highlight-icon gold-bg"><i data-lucide="circle-dot" style="width:14px;height:14px;color:#b8860b"></i></div><div class="highlight-text"><div class="hl-value gold-shimmer">' + product.gold.purity + ' ' + product.gold.colour + ' Gold</div><div class="hl-label">BIS hallmarked, ' + product.gold.weight + '</div></div></div>';
-    h += '<div class="highlight-item"><div class="highlight-icon general-bg"><i data-lucide="gem" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value" style="color:#D14A61">' + product.jewelleryType + '</div><div class="hl-label">' + product.occasion + '</div></div></div>';
-    h += '<div class="highlight-item"><div class="highlight-icon general-bg"><i data-lucide="scale" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value" style="color:#D14A61">' + product.grossWeight + '</div><div class="hl-label">Gross Weight</div></div></div>';
+    if (product.diamond) h += '<div class="highlight-item diamond-item"><div class="highlight-icon diamond-bg"><i data-lucide="diamond" style="width:14px;height:14px;color:#2563eb"></i></div><div class="highlight-text"><div class="hl-value diamond-text">' + product.diamond.count + ' ' + product.diamond.type + ' Diamonds</div><div class="hl-label">' + product.diamond.weight + ' certified</div></div></div>';
+    h += '<div class="highlight-item gold-item"><div class="highlight-icon gold-bg"><i data-lucide="circle-dot" style="width:14px;height:14px;color:#b8860b"></i></div><div class="highlight-text"><div class="hl-value gold-text">' + product.gold.purity + ' ' + product.gold.colour + ' Gold</div><div class="hl-label">BIS hallmarked, ' + product.gold.weight + '</div></div></div>';
+    h += '<div class="highlight-item pink-item"><div class="highlight-icon pink-bg"><i data-lucide="gem" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value pink-text">' + product.jewelleryType + '</div><div class="hl-label">' + product.occasion + '</div></div></div>';
+    h += '<div class="highlight-item pink-item"><div class="highlight-icon pink-bg"><i data-lucide="scale" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value pink-text">' + product.grossWeight + '</div><div class="hl-label">Gross Weight</div></div></div>';
     h += '</div>';
     h += '<div class="warranty-row"><i data-lucide="shield-check"></i><span>1 Year Warranty &bull; Exchange across 250+ stores</span></div>';
     h += '<button class="view-full-details-btn" id="viewDetailsBtn"><span>View Full Product Details</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>';
@@ -908,8 +919,8 @@ document.getElementById("similarBtn").onclick = function() {
 
     var di = document.getElementById("fullDetailsInner");
     var dh = '<div class="detail-category"><div class="detail-cat-title general-title">General</div><div class="detail-rows"><div class="detail-row"><span class="dl">Design Code</span><span class="dv">' + product.designCode + '</span></div><div class="detail-row"><span class="dl">Gross Weight</span><span class="dv">' + product.grossWeight + '</span></div><div class="detail-row"><span class="dl">Jewellery Type</span><span class="dv">' + product.jewelleryType + '</span></div><div class="detail-row"><span class="dl">Occasion</span><span class="dv">' + product.occasion + '</span></div><div class="detail-row"><span class="dl">Gender</span><span class="dv">' + product.gender + '</span></div><div class="detail-row"><span class="dl">Brand</span><span class="dv">' + product.brand + '</span></div></div></div>';
-    dh += '<div class="detail-category"><div class="detail-cat-title gold-title">Gold Details</div><div class="detail-rows"><div class="detail-row"><span class="dl">Purity</span><span class="dv gold-shimmer">' + product.gold.purity + '</span></div><div class="detail-row"><span class="dl">Weight</span><span class="dv">' + product.gold.weight + '</span></div><div class="detail-row"><span class="dl">Colour</span><span class="dv gold-shimmer">' + product.gold.colour + '</span></div></div></div>';
-    if (product.diamond) dh += '<div class="detail-category"><div class="detail-cat-title diamond-title">Diamond Details</div><div class="detail-rows"><div class="detail-row"><span class="dl">Type</span><span class="dv">' + product.diamond.type + '</span></div><div class="detail-row"><span class="dl">Count</span><span class="dv diamond-sparkle">' + product.diamond.count + '</span></div><div class="detail-row"><span class="dl">Weight</span><span class="dv">' + product.diamond.weight + '</span></div><div class="detail-row"><span class="dl">Clarity</span><span class="dv">' + product.diamond.clarity + '</span></div><div class="detail-row"><span class="dl">Colour</span><span class="dv">' + product.diamond.colour + '</span></div><div class="detail-row"><span class="dl">Shape</span><span class="dv">' + product.diamond.shape + '</span></div><div class="detail-row"><span class="dl">Setting</span><span class="dv">' + product.diamond.setting + '</span></div></div></div>';
+    dh += '<div class="detail-category"><div class="detail-cat-title gold-title">Gold Details</div><div class="detail-rows"><div class="detail-row"><span class="dl">Purity</span><span class="dv" style="color:#92400e">' + product.gold.purity + '</span></div><div class="detail-row"><span class="dl">Weight</span><span class="dv">' + product.gold.weight + '</span></div><div class="detail-row"><span class="dl">Colour</span><span class="dv" style="color:#92400e">' + product.gold.colour + '</span></div></div></div>';
+    if (product.diamond) dh += '<div class="detail-category"><div class="detail-cat-title diamond-title">Diamond Details</div><div class="detail-rows"><div class="detail-row"><span class="dl">Type</span><span class="dv">' + product.diamond.type + '</span></div><div class="detail-row"><span class="dl">Count</span><span class="dv" style="color:#1e40af">' + product.diamond.count + '</span></div><div class="detail-row"><span class="dl">Weight</span><span class="dv">' + product.diamond.weight + '</span></div><div class="detail-row"><span class="dl">Clarity</span><span class="dv">' + product.diamond.clarity + '</span></div><div class="detail-row"><span class="dl">Colour</span><span class="dv">' + product.diamond.colour + '</span></div><div class="detail-row"><span class="dl">Shape</span><span class="dv">' + product.diamond.shape + '</span></div><div class="detail-row"><span class="dl">Setting</span><span class="dv">' + product.diamond.setting + '</span></div></div></div>';
     dh += '<div class="product-description"><strong style="font-size:11px;letter-spacing:0.5px;text-transform:uppercase;color:#555;display:block;margin-bottom:6px">Description</strong>' + product.description + '</div>';
     di.innerHTML = dh;
 
