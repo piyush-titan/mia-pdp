@@ -1017,7 +1017,7 @@ function renderPriceSection() {
     var h = '<div class="coupons-header"><i data-lucide="ticket" style="color:#D14A61"></i><span class="coupons-title">Available Coupons</span></div>';
     h += '<div class="card-stack" id="couponStack">';
     coupons.forEach(function(c, i) {
-        h += '<div class="stack-card s' + i + '" data-cidx="' + i + '"><div><div class="stack-tag">' + c.tag + '</div><div class="stack-amount">' + c.amount + '</div><div class="stack-desc">' + c.desc + '</div></div><div class="stack-bottom"><div class="stack-code-row"><span class="stack-code-label">Use Code:</span><span class="stack-code">' + c.code + '</span></div>' + (c.view ? '<a class="stack-view" data-cv="' + i + '">View Details</a>' : '') + '</div></div>';
+        h += '<div class="stack-card s' + i + '" data-cidx="' + i + '"><div><div class="stack-tag">' + c.tag + '</div><div class="stack-amount">' + c.amount + '</div><div class="stack-desc">' + c.desc + '</div></div><div class="stack-bottom"><div class="stack-code-row"><span class="stack-code-label">Use Code:</span><span class="stack-code" data-copy="' + c.code + '" style="cursor:pointer">' + c.code + '</span></div>' + (c.view ? '<a class="stack-view" data-cv="' + i + '">View Details</a>' : '') + '</div></div>';
     });
     h += '</div>';
     h += '<div class="stack-nav"><button class="stack-arrow" id="couponPrev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button><div class="stack-dots" id="couponDots">';
@@ -1050,6 +1050,10 @@ function renderPriceSection() {
     // View details
     el.querySelectorAll("[data-cv]").forEach(function(b) {
         b.onclick = function(e) { e.stopPropagation(); var c = coupons[parseInt(this.dataset.cv)]; openSheet("coupon"); document.getElementById("couponBody").innerHTML = '<div style="text-align:center;margin-bottom:16px"><span style="font-size:14px;font-weight:800;color:#D14A61;padding:6px 20px;border-radius:100px;background:#FDF2F4;display:inline-block">' + c.code + '</span></div><p style="font-size:13px;color:#555;line-height:1.7;margin-bottom:16px">' + c.desc + '</p><button class="btn-primary" onclick="closeSheet(\'coupon\');showToast(\'Coupon code copied\',\'success\')">Copy Code</button>'; };
+    });
+    // Copy coupon code
+    el.querySelectorAll("[data-copy]").forEach(function(b) {
+        b.onclick = function(e) { e.stopPropagation(); var code = this.dataset.copy; if (navigator.clipboard) { navigator.clipboard.writeText(code); } showToast("Coupon code " + code + " copied", "success"); };
     });
 })();
 
