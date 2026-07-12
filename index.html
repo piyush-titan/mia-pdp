@@ -233,6 +233,7 @@
         }
         .warranty-row i { width: 14px; height: 14px; color: #22C55E; flex-shrink: 0; }
         .warranty-row span { font-size: 11px; font-weight: 600; color: #166534; }
+        .warranty-row { position: relative; z-index: 1; }
         .view-full-details-btn {
             display: flex; align-items: center; justify-content: space-between; gap: 6px;
             width: 100%; margin-top: 10px; padding: 10px 14px;
@@ -242,6 +243,7 @@
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             box-shadow: 0 2px 8px rgba(209,74,97,0.08);
             transition: all 0.2s;
+            position: relative; z-index: 1;
         }
         .view-full-details-btn:active { transform: scale(0.98); background: rgba(253,242,244,0.9); }
         .view-full-details-btn svg { width: 13px; height: 13px; stroke: #D14A61; flex-shrink: 0; transition: transform 0.3s; }
@@ -250,7 +252,7 @@
         /* ===== FULL PRODUCT DETAILS ===== */
         .full-details-panel {
             max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 12px;
+            margin-top: 12px; position: relative; z-index: 1;
         }
         .full-details-panel.open { max-height: 3000px; }
         .full-details-inner { padding: 14px; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 14px; }
@@ -922,7 +924,7 @@ document.getElementById("similarBtn").onclick = function() {
     h += '<div class="highlight-item pink-item"><div class="highlight-icon pink-bg"><i data-lucide="' + catIcon + '" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value pink-text">' + product.jewelleryType + '</div><div class="hl-label">' + product.occasion + '</div></div></div>';
     h += '<div class="highlight-item pink-item"><div class="highlight-icon pink-bg"><i data-lucide="weight" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value pink-text">' + product.grossWeight + '</div><div class="hl-label">Gross Weight</div></div></div>';
     h += '</div>';
-    h += '<div class="warranty-row"><i data-lucide="repeat-2" style="color:#22C55E"></i><span>Exchange or Return across 250+ stores*</span></div>';
+    h += '<div class="warranty-row"><i data-lucide="refresh-cw" style="color:#22C55E"></i><span>Exchange or Return across 250+ stores*</span></div>';
     h += '<button class="view-full-details-btn" id="viewDetailsBtn"><span>View Full Product Details</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>';
     h += '<div class="full-details-panel" id="fullDetailsPanel"><div class="full-details-inner" id="fullDetailsInner"></div></div>';
     el.innerHTML = h;
