@@ -953,11 +953,11 @@ document.getElementById("similarBtn").onclick = function() {
         h += '<div class="breakup-row"><div><div class="breakup-label">GST (3%)</div></div><div class="breakup-value">' + fmt(b.gst) + '</div></div>';
         h += '<div class="breakup-row breakup-total"><div><div class="breakup-label">Grand Total</div></div><div class="breakup-value">' + fmt(b.grandTotal) + '</div></div>';
         h += '</div></div>';
-        h += '<div class="selection-section"><div class="selection-label"><i data-lucide="weight" style="color:#555"></i>Choose Weight</div><div class="pill-row">';
+        h += '<div class="selection-section"><div class="selection-label"><i data-lucide="weight" style="width:18px;height:18px;color:#555"></i>Choose Weight</div><div class="pill-row">';
         product.weights.forEach(function(w) { h += '<button class="pill' + (state.selectedWeight === w.label ? ' active' : '') + '" data-weight="' + w.label + '">' + w.label + '</button>'; });
         h += '</div></div>';
         if (product.isSizeable) {
-            h += '<div class="selection-section" style="margin-top:0;padding-top:12px;border-top:none"><div class="size-guide-row"><div class="selection-label" style="margin-bottom:0"><i data-lucide="ruler" style="color:#555"></i>Choose Size</div><button class="size-guide-btn" id="sizeGuideOpen">Size Guide</button></div><div class="pill-row">';
+            h += '<div class="selection-section" style="margin-top:0;padding-top:12px;border-top:none"><div class="size-guide-row"><div class="selection-label" style="margin-bottom:0"><i data-lucide="ruler" style="width:18px;height:18px;color:#555"></i>Choose Size</div><button class="size-guide-btn" id="sizeGuideOpen">Size Guide</button></div><div class="pill-row">';
             product.sizes.forEach(function(s) {
                 var cls = "pill"; if (state.selectedSize === s.label && s.inStock) cls += " active"; if (!s.inStock) cls += " notify-me";
                 h += '<button class="' + cls + '" data-size="' + s.label + '" data-stock="' + s.inStock + '">' + s.label + '</button>';
