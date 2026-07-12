@@ -1243,7 +1243,7 @@ function renderExchangeSheet() {
         h += '</div>';
         h += '<button class="btn-primary" id="exchCalcBtn">Calculate Exchange Value</button>';
         h += '<div id="exchLeadForm" style="display:none;margin-top:16px"><div class="form-group"><label class="form-label">Your Name</label><input type="text" class="form-input" placeholder="Enter your name" id="exchName"></div><div class="form-group"><label class="form-label">Mobile Number</label><input type="tel" maxlength="10" class="form-input" placeholder="10-digit number" id="exchPhone"></div><button class="btn-primary" id="exchSubmitBtn">Show Exchange Value</button></div>';
-        h += '<div id="exchResult" style="display:none;margin-top:16px;padding:16px;border-radius:14px;background:#fffbeb;text-align:center"><p style="font-size:11px;color:#92400e;margin-bottom:4px">Approximate Exchange Value</p><p style="font-size:24px;font-weight:700;color:#b8860b;font-family:Fraunces,serif" id="exchValue"></p><p style="font-size:10px;color:#999;margin-top:8px;line-height:1.5">*Final exchange value may vary at the store based on actual purity testing and prevailing rates. This is an indicative estimate only.</p></div>';
+        h += '<div id="exchResult" style="display:none;margin-top:16px"></div>';
         body.innerHTML = h;
         // Tab events
         body.querySelectorAll(".exch-kt-tab").forEach(function(b) {
@@ -1262,8 +1262,24 @@ function renderExchangeSheet() {
         if (submitBtn) submitBtn.onclick = function() {
             var n = document.getElementById("exchName").value, p = document.getElementById("exchPhone").value;
             if (!n || p.length !== 10) { showToast("Please fill valid name and 10-digit number", "error"); return; }
-            document.getElementById("exchValue").textContent = fmt(Math.round(rates[selectedKarat] * weight));
-            document.getElementById("exchResult").style.display = "block";
+            var exchangeValue = Math.round(rates[selectedKarat] * weight);
+            var productPrice = getCurrentPrice().current;
+            var finalPrice = Math.max(0, productPrice - exchangeValue);
+            var resEl = document.getElementById("exchResult");
+            var rh = '<div style="padding:16px;border-radius:14px;background:#fffbeb;text-align:center;margin-bottom:12px">';
+            rh += '<p style="font-size:11px;color:#92400e;margin-bottom:4px">Your Gold Exchange Value*</p>';
+            rh += '<p style="font-size:24px;font-weight:700;color:#b8860b;font-family:Fraunces,serif">' + fmt(exchangeValue) + '</p>';
+            rh += '</div>';
+            rh += '<div style="padding:14px;border-radius:14px;background:#FDF2F4;margin-bottom:12px">';
+            rh += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:11px;color:#555">Product Price</span><span style="font-size:13px;font-weight:700;color:#1a1a1a">' + fmt(productPrice) + '</span></div>';
+            rh += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:11px;color:#555">Exchange Value</span><span style="font-size:13px;font-weight:700;color:#b8860b">- ' + fmt(exchangeValue) + '</span></div>';
+            rh += '<div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1.5px solid rgba(209,74,97,0.2)"><span style="font-size:12px;font-weight:700;color:#D14A61">You Pay*</span><span style="font-size:18px;font-weight:700;color:#D14A61;font-family:Fraunces,serif">' + (finalPrice === 0 ? '\u20B90' : fmt(finalPrice)) + '</span></div>';
+            if (finalPrice === 0) rh += '<p style="font-size:10px;color:#166534;margin-top:8px;font-weight:600">Your exchange value covers this product! You can pick another piece too.</p>';
+            rh += '</div>';
+            rh += '<p style="font-size:9px;color:#999;line-height:1.5;margin-bottom:14px;text-align:center">*This is an approximate value. Final exchange price may vary based on actual purity testing at the store. Visit your nearest Mia store for exact valuation.</p>';
+            rh += '<button class="btn-primary" onclick="closeSheet(\'exchange\');openSheet(\'store\');renderStoreSheet();" style="width:100%">Find Stores Near You</button>';
+            resEl.innerHTML = rh;
+            resEl.style.display = "block";
             document.getElementById("exchLeadForm").style.display = "none";
             showToast("Exchange value calculated", "success");
         };
