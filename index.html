@@ -339,10 +339,10 @@
         .size-guide-btn { font-size: 11px; font-weight: 600; color: #D14A61; text-decoration: underline; text-underline-offset: 2px; }
 
         /* ===== EXCHANGE GOLD ===== */
-        .exchange-section { padding: 16px; margin: 8px 16px; background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; }
+        .exchange-section { padding: 16px; margin: 8px 16px; background: linear-gradient(180deg, #fffbeb, #fff); border-radius: 16px; }
         .exchange-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
         .exchange-icon { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, #fef3cd, #fde68a); display: flex; align-items: center; justify-content: center; }
-        .exchange-icon i { width: 18px; height: 18px; color: #92400e; }
+        .exchange-icon i { width: 18px; height: 18px; color: #78350f; }
         .exchange-title { font-size: 14px; font-weight: 700; color: #1a1a1a; }
         .exchange-subtitle { font-size: 11px; color: #777; }
         .exchange-rate { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 100px; background: #fffbeb; border: 1px solid rgba(245,158,11,0.15); margin-bottom: 12px; font-size: 11px; color: #92400e; }
@@ -1193,11 +1193,53 @@ document.addEventListener("click", function() { if (state.sizeDropdownOpen) { st
 // ===== EXCHANGE SHEET =====
 function renderExchangeSheet() {
     var body = document.getElementById("exchangeBody");
-    body.innerHTML = '<p style="font-size:12px;color:#555;margin-bottom:16px">Calculate the exchange value of your old gold jewellery.</p><div class="form-group"><label class="form-label">Karatage</label><select class="form-select" id="exchKarat"><option value="">Select purity</option><option value="24">24 KT</option><option value="22">22 KT</option><option value="18">18 KT</option><option value="14">14 KT</option><option value="9">9 KT</option></select><p id="exchRateDisplay" style="font-size:11px;color:#92400e;margin-top:6px;display:none"></p></div><div class="form-group"><label class="form-label">Weight (grams)</label><input type="number" step="0.01" class="form-input" placeholder="Enter weight in grams" id="exchWeight"></div><button class="btn-primary" id="exchCalcBtn">Calculate Exchange Value</button><div id="exchLeadForm" style="display:none;margin-top:16px"><div class="form-group"><label class="form-label">Your Name</label><input type="text" class="form-input" placeholder="Enter your name" id="exchName"></div><div class="form-group"><label class="form-label">Mobile Number</label><input type="tel" maxlength="10" class="form-input" placeholder="10-digit number" id="exchPhone"></div><button class="btn-primary" id="exchSubmitBtn">Show Exchange Value</button></div><div id="exchResult" style="display:none;margin-top:16px;padding:16px;border-radius:14px;background:#f0fdf4;border:1px solid rgba(34,197,94,0.2);text-align:center"><p style="font-size:11px;color:#777;margin-bottom:4px">Approximate Exchange Value</p><p style="font-size:24px;font-weight:700;color:#166534;font-family:Fraunces,serif" id="exchValue"></p><p style="font-size:10px;color:#999;margin-top:8px;line-height:1.5">*Final exchange value may vary at the store based on actual purity testing and prevailing rates. This is an indicative estimate only.</p></div>';
-    var rates = { "24": product.goldRate.rate24kt, "22": product.goldRate.rate22kt, "18": product.goldRate.rate18kt, "14": product.goldRate.rate14kt, "9": product.goldRate.rate9kt };
-    document.getElementById("exchKarat").onchange = function() { var d = document.getElementById("exchRateDisplay"); if (this.value && rates[this.value]) { d.style.display = "block"; d.textContent = "Today's " + this.value + " KT rate: \u20B9" + rates[this.value].toLocaleString("en-IN") + "/gm"; } else d.style.display = "none"; };
-    document.getElementById("exchCalcBtn").onclick = function() { if (!document.getElementById("exchKarat").value || !document.getElementById("exchWeight").value) { showToast("Please fill karatage and weight", "error"); return; } document.getElementById("exchLeadForm").style.display = "block"; this.style.display = "none"; };
-    document.getElementById("exchSubmitBtn").onclick = function() { var n = document.getElementById("exchName").value, p = document.getElementById("exchPhone").value; if (!n || p.length !== 10) { showToast("Please fill valid name and 10-digit number", "error"); return; } var k = document.getElementById("exchKarat").value, w = parseFloat(document.getElementById("exchWeight").value); document.getElementById("exchValue").textContent = fmt(Math.round(rates[k] * w)); document.getElementById("exchResult").style.display = "block"; document.getElementById("exchLeadForm").style.display = "none"; showToast("Exchange value calculated", "success"); };
+    var rates = { "9": product.goldRate.rate9kt, "14": product.goldRate.rate14kt, "18": product.goldRate.rate18kt, "22": product.goldRate.rate22kt, "24": product.goldRate.rate24kt };
+    var selectedKarat = "22";
+    var weight = 5;
+    function renderSheet() {
+        var h = '<p style="font-size:12px;color:#555;margin-bottom:16px">Calculate the exchange value of your old gold jewellery.</p>';
+        // Karatage tabs
+        h += '<div class="form-label">Karatage</div><div style="display:flex;gap:6px;margin-bottom:6px">';
+        ["9","14","18","22","24"].forEach(function(k) {
+            h += '<button class="exch-kt-tab" data-kt="' + k + '" style="flex:1;padding:8px 4px;border-radius:100px;font-size:11px;font-weight:700;border:1.5px solid ' + (selectedKarat === k ? '#b8860b' : '#e0e0e0') + ';background:' + (selectedKarat === k ? '#fef3cd' : '#fff') + ';color:' + (selectedKarat === k ? '#78350f' : '#555') + ';transition:all 0.2s">' + k + ' KT</button>';
+        });
+        h += '</div>';
+        h += '<p style="font-size:11px;color:#92400e;margin-bottom:14px">Today\'s ' + selectedKarat + ' KT rate: \u20B9' + rates[selectedKarat].toLocaleString("en-IN") + '/gm</p>';
+        // Weight with +/- buttons
+        h += '<div class="form-label">Weight (grams)</div>';
+        h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">';
+        h += '<button id="exchMinus" style="width:36px;height:36px;border-radius:50%;background:#f5f5f5;border:1px solid #e0e0e0;font-size:18px;font-weight:700;color:#1a1a1a;display:flex;align-items:center;justify-content:center">−</button>';
+        h += '<input type="number" step="0.5" class="form-input" value="' + weight + '" id="exchWeight" style="text-align:center;font-size:16px;font-weight:600;flex:1">';
+        h += '<button id="exchPlus" style="width:36px;height:36px;border-radius:50%;background:#f5f5f5;border:1px solid #e0e0e0;font-size:18px;font-weight:700;color:#1a1a1a;display:flex;align-items:center;justify-content:center">+</button>';
+        h += '</div>';
+        h += '<button class="btn-primary" id="exchCalcBtn">Calculate Exchange Value</button>';
+        h += '<div id="exchLeadForm" style="display:none;margin-top:16px"><div class="form-group"><label class="form-label">Your Name</label><input type="text" class="form-input" placeholder="Enter your name" id="exchName"></div><div class="form-group"><label class="form-label">Mobile Number</label><input type="tel" maxlength="10" class="form-input" placeholder="10-digit number" id="exchPhone"></div><button class="btn-primary" id="exchSubmitBtn">Show Exchange Value</button></div>';
+        h += '<div id="exchResult" style="display:none;margin-top:16px;padding:16px;border-radius:14px;background:#fffbeb;text-align:center"><p style="font-size:11px;color:#92400e;margin-bottom:4px">Approximate Exchange Value</p><p style="font-size:24px;font-weight:700;color:#b8860b;font-family:Fraunces,serif" id="exchValue"></p><p style="font-size:10px;color:#999;margin-top:8px;line-height:1.5">*Final exchange value may vary at the store based on actual purity testing and prevailing rates. This is an indicative estimate only.</p></div>';
+        body.innerHTML = h;
+        // Tab events
+        body.querySelectorAll(".exch-kt-tab").forEach(function(b) {
+            b.onclick = function() { selectedKarat = this.dataset.kt; renderSheet(); };
+        });
+        // +/- events
+        document.getElementById("exchMinus").onclick = function() { weight = Math.max(0.5, weight - 0.5); document.getElementById("exchWeight").value = weight; };
+        document.getElementById("exchPlus").onclick = function() { weight += 0.5; document.getElementById("exchWeight").value = weight; };
+        document.getElementById("exchWeight").onchange = function() { weight = parseFloat(this.value) || 0; };
+        // Calculate
+        document.getElementById("exchCalcBtn").onclick = function() {
+            if (!weight) { showToast("Please enter weight", "error"); return; }
+            document.getElementById("exchLeadForm").style.display = "block"; this.style.display = "none";
+        };
+        var submitBtn = document.getElementById("exchSubmitBtn");
+        if (submitBtn) submitBtn.onclick = function() {
+            var n = document.getElementById("exchName").value, p = document.getElementById("exchPhone").value;
+            if (!n || p.length !== 10) { showToast("Please fill valid name and 10-digit number", "error"); return; }
+            document.getElementById("exchValue").textContent = fmt(Math.round(rates[selectedKarat] * weight));
+            document.getElementById("exchResult").style.display = "block";
+            document.getElementById("exchLeadForm").style.display = "none";
+            showToast("Exchange value calculated", "success");
+        };
+    }
+    renderSheet();
 }
 
 // ===== GIFT SHEET =====
