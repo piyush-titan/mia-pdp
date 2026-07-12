@@ -1145,7 +1145,7 @@ renderRecoSection("recoSection3", "Most Gifted", "Top picks our customers love t
 function renderStickyBar() {
     var el = document.getElementById("stickyBar");
     var p = getCurrentPrice();
-    var h = '<span class="sticky-price">' + fmt(p.current) + '</span>';
+    var h = '<span class="sticky-price" style="font-family:Fraunces,serif;font-size:24px;font-weight:700;color:#1a1a1a;-webkit-text-fill-color:#1a1a1a">' + fmt(p.current) + '</span>';
     h += '<button class="sticky-size-trigger" id="stickySize"><span>' + state.selectedSize.replace(' ', '') + ' &middot; ' + state.selectedWeight.replace(' ', '') + '</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>';
     h += '<span class="sticky-spacer"></span>';
     h += '<button class="btn-add-bag" id="addBagBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>';
