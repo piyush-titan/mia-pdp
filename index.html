@@ -978,7 +978,7 @@ function renderPriceSection() {
             h += '</div></div>';
         }
         // Buy Now + Add to Bag CTAs
-        h += '<div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0"><button class="btn-primary" id="priceBuyNow" style="flex:1">Buy Now</button><button style="flex:1;padding:14px;border-radius:100px;font-size:14px;font-weight:700;color:#D14A61;background:#FDF2F4;border:1.5px solid #D14A61;transition:all 0.2s" id="priceAddBag">Add to Bag</button></div>';
+        h += '<div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0"><button class="btn-primary" id="priceBuyNow" style="flex:1;padding:10px">Buy Now</button><button style="flex:1;padding:10px;border-radius:100px;font-size:14px;font-weight:700;color:#D14A61;background:#FDF2F4;border:1.5px solid #D14A61;transition:all 0.2s" id="priceAddBag">Add to Bag</button></div>';
         el.innerHTML = h;
         lucide.createIcons({ nodes: [el] });
         document.getElementById("priceBreakupToggle").onclick = function() { state.priceBreakupOpen = !state.priceBreakupOpen; this.classList.toggle("open"); document.getElementById("priceBreakupPanel").classList.toggle("open"); };
