@@ -1139,7 +1139,7 @@ renderRecoSection("recoSection3", "Most Gifted", "Top picks our customers love t
 function renderStickyBar() {
     var el = document.getElementById("stickyBar");
     var p = getCurrentPrice();
-    var h = '<span style="font-family:Fraunces,serif;font-size:20px;font-weight:600;color:#1a1a1a;white-space:nowrap;flex-shrink:0;line-height:1;display:inline-block">' + fmt(p.current) + '</span>';
+    var h = '<span style="font-family:Fraunces,serif;font-size:20px;font-weight:600;white-space:nowrap;flex-shrink:0;line-height:1;display:inline-block;background:linear-gradient(90deg,#1a1a1a 0%,#1a1a1a 28%,#555 40%,#999 50%,#555 60%,#1a1a1a 72%,#1a1a1a 100%);background-size:300% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 4s linear infinite">' + fmt(p.current) + '</span>';
     h += '<button class="sticky-size-trigger" id="stickySize"><span>' + state.selectedSize.replace(' ', '') + ' &middot; ' + state.selectedWeight.replace(' ', '') + '</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>';
     h += '<span class="sticky-spacer"></span>';
     h += '<button class="btn-add-bag" id="addBagBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>';
