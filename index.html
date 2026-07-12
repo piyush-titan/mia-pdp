@@ -92,10 +92,18 @@
 
         /* ===== IMAGE GALLERY ===== */
         .gallery-section { position: relative; background: #fff; }
-        .product-tag { position: absolute; top: 12px; left: 12px; z-index: 15; padding: 5px 12px; border-radius: 100px; font-size: 10px; font-weight: 700; letter-spacing: 0.4px; }
-        .product-tag.new-arrival { background: #D14A61; color: #fff; }
-        .product-tag.bestseller { background: #F59E0B; color: #fff; }
-        .product-tag.custom { background: #7c3aed; color: #fff; }
+        .product-tag {
+            position: absolute; top: 12px; left: 12px; z-index: 15;
+            padding: 7px 12px;
+            font-size: 8px; font-weight: 800; letter-spacing: 1.2px;
+            text-transform: uppercase; color: #fff;
+            -webkit-clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+            clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+            border: 0 solid; overflow: hidden;
+        }
+        .product-tag.new-arrival { background: linear-gradient(135deg, #b8860b, #f5d77a); color: #5c3d0a; }
+        .product-tag.bestseller { background: linear-gradient(135deg, #D14A61, #f9a8b8); color: #fff; }
+        .product-tag.custom { background: linear-gradient(135deg, #7c3aed, #c4b5fd); color: #fff; }
         .gallery-main {
             position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden;
             touch-action: pan-y pinch-zoom;
