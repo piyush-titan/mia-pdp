@@ -306,7 +306,7 @@
         .breakup-content { padding: 12px 0 0; }
         .breakup-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 12px; margin-bottom: 6px; border-radius: 10px; border-bottom: none; }
         .breakup-label { font-size: 12px; color: #1a1a1a; font-weight: 600; }
-        .breakup-sub { font-size: 10px; color: #999; margin-top: 2px; }
+        .breakup-sub { font-size: 10px; color: #1a1a1a; margin-top: 2px; }
         .breakup-value { font-size: 12px; font-weight: 700; text-align: right; flex-shrink: 0; }
         .breakup-row.row-gold { background: #f5f5f4; }
         .breakup-row.row-gold .breakup-value { color: #44403c; }
@@ -923,7 +923,7 @@ document.getElementById("similarBtn").onclick = function() {
     h += '<div class="highlight-item pink-item"><div class="highlight-icon pink-bg"><i data-lucide="' + catIcon + '" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value pink-text">' + product.jewelleryType + '</div><div class="hl-label">' + product.occasion + '</div></div></div>';
     h += '<div class="highlight-item pink-item"><div class="highlight-icon pink-bg"><i data-lucide="weight" style="width:14px;height:14px;color:#D14A61"></i></div><div class="highlight-text"><div class="hl-value pink-text">' + product.grossWeight + '</div><div class="hl-label">Gross Weight</div></div></div>';
     h += '</div>';
-    h += '<div class="warranty-row"><i data-lucide="shield-check" style="color:#22C55E"></i><span>1 Year Warranty &bull; Exchange across 250+ stores</span></div>';
+    h += '<div class="warranty-row"><i data-lucide="repeat-2" style="color:#22C55E"></i><span>Exchange or Return across 250+ stores*</span></div>';
     h += '<button class="view-full-details-btn" id="viewDetailsBtn"><span>View Full Product Details</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>';
     h += '<div class="full-details-panel" id="fullDetailsPanel"><div class="full-details-inner" id="fullDetailsInner"></div></div>';
     el.innerHTML = h;
