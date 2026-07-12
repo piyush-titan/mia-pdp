@@ -737,7 +737,7 @@ var product = {
         { label: "18.10 MM", circumference: "56.9 mm", inStock: true },
         { label: "18.90 MM", circumference: "59.4 mm", inStock: false }
     ],
-    weights: [ { label: "1.975 g" }, { label: "2.101 g" } ],
+    weights: [ { label: "1.975 g", price: 43293, original: 52990 }, { label: "2.101 g", price: 46150, original: 56500 } ],
     delivery: { estimate: "Get it by 12 Jul - 14 Jul", fast: "Express delivery available for select pincodes" },
     goldRate: { rate22kt: 7420, rate24kt: 8095, rate18kt: 6073, rate14kt: 4731, rate9kt: 3039 },
     isSizeable: true, isPreBookEnabled: true,
@@ -758,6 +758,10 @@ var state = { currentSlide: 0, wishlisted: false, selectedSize: "16.40 MM", sele
 
 // ===== HELPERS =====
 function fmt(n) { return "\u20B9" + n.toLocaleString("en-IN"); }
+function getCurrentPrice() {
+    var w = product.weights.find(function(x) { return x.label === state.selectedWeight; });
+    return w ? { current: w.price, original: w.original, discount: w.original ? Math.round((1 - w.price / w.original) * 100) : 0 } : product.price;
+}
 function openSheet(id) { document.getElementById(id + "Overlay").classList.add("open"); document.getElementById(id + "Sheet").classList.add("open"); document.body.style.overflow = "hidden"; }
 function closeSheet(id) { document.getElementById(id + "Overlay").classList.remove("open"); document.getElementById(id + "Sheet").classList.remove("open"); document.body.style.overflow = ""; }
 function showToast(msg, type) {
@@ -946,12 +950,13 @@ document.getElementById("similarBtn").onclick = function() {
 })();
 
 // ===== PRICE SECTION =====
-(function() {
-    var el = document.getElementById("priceSection");
-    function render() {
-        var h = '<div class="price-main-row"><span class="price-current price-shimmer">' + fmt(product.price.current) + '</span>';
-        if (product.price.original) h += '<span class="price-original">' + fmt(product.price.original) + '</span><span class="price-discount">' + product.price.discount + '% OFF</span>';
-        h += '</div><p class="price-tax">Inclusive of all taxes</p>';
+var priceEl = document.getElementById("priceSection");
+function renderPriceSection() {
+    var el = priceEl;
+    var p = getCurrentPrice();
+    var h = '<div class="price-main-row"><span class="price-current price-shimmer">' + fmt(p.current) + '</span>';
+    if (p.original) h += '<span class="price-original">' + fmt(p.original) + '</span><span class="price-discount">' + p.discount + '% OFF</span>';
+    h += '</div><p class="price-tax">Inclusive of all taxes</p>';
         h += '<button class="price-breakup-toggle' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupToggle"><span>Price Breakup</span><i data-lucide="chevron-down" class="toggle-arrow" style="width:14px;height:14px;color:#555"></i></button>';
         h += '<div class="price-breakup-panel' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupPanel"><div class="breakup-content">';
         var b = product.priceBreakup;
@@ -977,14 +982,13 @@ document.getElementById("similarBtn").onclick = function() {
         el.innerHTML = h;
         lucide.createIcons({ nodes: [el] });
         document.getElementById("priceBreakupToggle").onclick = function() { state.priceBreakupOpen = !state.priceBreakupOpen; this.classList.toggle("open"); document.getElementById("priceBreakupPanel").classList.toggle("open"); };
-        el.querySelectorAll("[data-weight]").forEach(function(b) { b.onclick = function() { state.selectedWeight = this.dataset.weight; render(); }; });
-        el.querySelectorAll("[data-size]").forEach(function(b) { b.onclick = function() { if (this.dataset.stock === "false") { openSheet("notify"); renderNotifySheet(this.dataset.size); return; } state.selectedSize = this.dataset.size; render(); renderStickyBar(); }; });
+        el.querySelectorAll("[data-weight]").forEach(function(b) { b.onclick = function() { state.selectedWeight = this.dataset.weight; renderPriceSection(); renderStickyBar(); }; });
+        el.querySelectorAll("[data-size]").forEach(function(b) { b.onclick = function() { if (this.dataset.stock === "false") { openSheet("notify"); renderNotifySheet(this.dataset.size); return; } state.selectedSize = this.dataset.size; renderPriceSection(); renderStickyBar(); }; });
         var sg = document.getElementById("sizeGuideOpen"); if (sg) sg.onclick = function() { openSheet("sizeGuide"); };
         document.getElementById("priceBuyNow").onclick = function() { showToast("Proceeding to checkout", "success"); };
         document.getElementById("priceAddBag").onclick = function() { showToast("Added to Bag: " + product.name, "success"); };
     }
-    render();
-})();
+    renderPriceSection();
 
 // ===== EXCHANGE GOLD =====
 (function() {
@@ -1107,45 +1111,58 @@ renderRecoSection("recoSection3", "Most Gifted", "Top picks our customers love t
 // ===== STICKY BAR =====
 function renderStickyBar() {
     var el = document.getElementById("stickyBar");
-    var h = '<span class="sticky-price price-shimmer">' + fmt(product.price.current) + '</span>';
-    if (product.isSizeable) {
-        h += '<button class="sticky-size-trigger" id="stickySize"><span id="stickySizeLabel">' + state.selectedSize + '</span><i data-lucide="chevron-up"></i></button>';
-    }
+    var p = getCurrentPrice();
+    var h = '<span class="sticky-price price-shimmer">' + fmt(p.current) + '</span>';
+    h += '<button class="sticky-size-trigger" id="stickySize"><span>' + state.selectedSize + ' &middot; ' + state.selectedWeight + '</span><i data-lucide="chevron-up"></i></button>';
     h += '<span class="sticky-spacer"></span>';
     h += '<button class="btn-add-bag" id="addBagBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>';
     el.innerHTML = h;
     // Render dropdown outside sticky bar
     var existingDD = document.getElementById("sizeDropdown");
     if (existingDD) existingDD.remove();
-    if (product.isSizeable) {
-        var dd = document.createElement("div");
-        dd.className = "size-dropdown";
-        dd.id = "sizeDropdown";
-        dd.innerHTML = '<div class="size-dropdown-title">Select Size</div>' + product.sizes.map(function(s) {
-            return '<button class="size-dropdown-item' + (state.selectedSize === s.label && s.inStock ? ' active' : '') + (s.inStock ? '' : ' oos') + '" data-dsize="' + s.label + '" data-dstock="' + s.inStock + '" style="display:flex;align-items:center;justify-content:space-between">' + s.label + (s.inStock ? '' : '<span style="font-size:10px;font-weight:600;color:#D14A61">Notify Me</span>') + '</button>';
-        }).join("");
-        document.body.appendChild(dd);
-        dd.querySelectorAll("[data-dsize]").forEach(function(b) {
-            b.addEventListener("click", function(e) {
-                e.stopPropagation();
-                if (this.dataset.dstock === "false") { openSheet("notify"); renderNotifySheet(this.dataset.dsize); dd.classList.remove("open"); return; }
-                state.selectedSize = this.dataset.dsize;
-                dd.classList.remove("open");
-                state.sizeDropdownOpen = false;
-                renderStickyBar();
-                showToast("Size changed to " + state.selectedSize, "info");
-            });
-        });
-    }
-    lucide.createIcons({ nodes: [el] });
-    var trigger = document.getElementById("stickySize");
-    if (trigger) {
-        trigger.addEventListener("click", function(e) {
+    var dd = document.createElement("div");
+    dd.className = "size-dropdown";
+    dd.id = "sizeDropdown";
+    var ddh = '<div style="display:flex;border-bottom:1px solid #f0f0f0">';
+    // Size column
+    ddh += '<div style="flex:1;border-right:1px solid #f0f0f0"><div class="size-dropdown-title">Size</div>';
+    product.sizes.forEach(function(s) {
+        ddh += '<button class="size-dropdown-item' + (state.selectedSize === s.label && s.inStock ? ' active' : '') + (s.inStock ? '' : ' oos') + '" data-dsize="' + s.label + '" data-dstock="' + s.inStock + '" style="display:flex;align-items:center;justify-content:space-between">' + s.label + (s.inStock ? '' : '<span style="font-size:10px;font-weight:600;color:#D14A61">Notify Me</span>') + '</button>';
+    });
+    ddh += '</div>';
+    // Weight column
+    ddh += '<div style="flex:1"><div class="size-dropdown-title">Weight</div>';
+    product.weights.forEach(function(w) {
+        ddh += '<button class="size-dropdown-item' + (state.selectedWeight === w.label ? ' active' : '') + '" data-dweight="' + w.label + '">' + w.label + '</button>';
+    });
+    ddh += '</div></div>';
+    dd.innerHTML = ddh;
+    document.body.appendChild(dd);
+    dd.querySelectorAll("[data-dsize]").forEach(function(b) {
+        b.addEventListener("click", function(e) {
             e.stopPropagation();
-            state.sizeDropdownOpen = !state.sizeDropdownOpen;
-            document.getElementById("sizeDropdown").classList.toggle("open", state.sizeDropdownOpen);
+            if (this.dataset.dstock === "false") { openSheet("notify"); renderNotifySheet(this.dataset.dsize); dd.classList.remove("open"); return; }
+            state.selectedSize = this.dataset.dsize;
+            dd.classList.remove("open"); state.sizeDropdownOpen = false;
+            renderStickyBar(); renderPriceSection();
+            showToast("Size changed to " + state.selectedSize, "info");
         });
-    }
+    });
+    dd.querySelectorAll("[data-dweight]").forEach(function(b) {
+        b.addEventListener("click", function(e) {
+            e.stopPropagation();
+            state.selectedWeight = this.dataset.dweight;
+            dd.classList.remove("open"); state.sizeDropdownOpen = false;
+            renderStickyBar(); renderPriceSection();
+            showToast("Weight changed to " + state.selectedWeight, "info");
+        });
+    });
+    lucide.createIcons({ nodes: [el] });
+    document.getElementById("stickySize").addEventListener("click", function(e) {
+        e.stopPropagation();
+        state.sizeDropdownOpen = !state.sizeDropdownOpen;
+        document.getElementById("sizeDropdown").classList.toggle("open", state.sizeDropdownOpen);
+    });
     document.getElementById("addBagBtn").addEventListener("click", function() { showToast("Added to Bag: " + product.name, "success"); });
 }
 renderStickyBar();
