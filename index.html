@@ -414,10 +414,18 @@
             padding: 10px 10px 10px 16px;
             background: rgba(253,242,244,0.95);
             backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border-radius: 18px; border: none;
+            border-radius: 18px;
+            border: 1.5px solid transparent;
+            background-clip: padding-box;
             box-shadow: 0 8px 40px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
             display: flex; align-items: center; gap: 10px;
-            overflow: hidden;
+            overflow: visible; position: fixed;
+        }
+        .sticky-bar::before {
+            content: ''; position: absolute; inset: -1.5px; border-radius: 19px;
+            background: linear-gradient(135deg, #B03A50, #D14A61, #f9a8b8);
+            z-index: -1;
+        }
         }
         .sticky-price { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: #1a1a1a; white-space: nowrap; flex-shrink: 0; line-height: 1; }
         .sticky-size-trigger {
