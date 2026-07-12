@@ -661,9 +661,6 @@
 <!-- PROMOTIONS -->
 <section class="promos-section section-gap" id="promosSection"></section>
 
-<!-- GIFT OPTION -->
-<section class="gift-section section-gap" id="giftSection"></section>
-
 <!-- PRE-BOOK -->
 <section class="prebook-section section-gap" id="prebookSection"></section>
 
@@ -985,6 +982,8 @@ function renderPriceSection() {
         }
         // Buy Now + Add to Bag CTAs
         h += '<div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0"><button class="btn-primary" id="priceBuyNow" style="flex:1;padding:10px">Buy Now</button><button style="flex:1;padding:10px;border-radius:100px;font-size:14px;font-weight:700;color:#D14A61;background:#FDF2F4;border:1.5px solid #D14A61;transition:all 0.2s" id="priceAddBag">Add to Bag</button></div>';
+        h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px solid #f0f0f0"><div style="display:flex;align-items:center;gap:8px"><i data-lucide="gift" style="width:16px;height:16px;color:#D14A61"></i><span style="font-size:13px;font-weight:600;color:#1a1a1a">Make it a Gift</span></div><div class="toggle-switch' + (state.giftEnabled ? ' active' : '') + '" id="giftToggle"></div></div>';
+        h += '<div class="gift-selected-badge' + (state.giftEnabled ? ' show' : '') + '" id="giftBadge" style="margin-top:8px"><i data-lucide="check" style="width:12px;height:12px"></i>Gift wrap selected</div>';
         h += '<div style="display:flex;align-items:center;justify-content:center;gap:5px;margin-top:12px"><i data-lucide="leaf" style="width:14px;height:14px;color:#22C55E"></i><span style="font-size:10px;font-weight:600;color:#166534">100% Recycled Gold for a Greener World</span></div>';
         el.innerHTML = h;
         lucide.createIcons({ nodes: [el] });
@@ -994,8 +993,13 @@ function renderPriceSection() {
         var sg = document.getElementById("sizeGuideOpen"); if (sg) sg.onclick = function() { openSheet("sizeGuide"); };
         document.getElementById("priceBuyNow").onclick = function() { showToast("Proceeding to checkout", "success"); };
         document.getElementById("priceAddBag").onclick = function() { showToast("Added to Bag: " + product.name, "success"); };
+        document.getElementById("giftToggle").onclick = function() { state.giftEnabled = !state.giftEnabled; this.classList.toggle("active", state.giftEnabled); document.getElementById("giftBadge").classList.toggle("show", state.giftEnabled); if (state.giftEnabled) { openSheet("gift"); renderGiftSheet(); } };
     }
     renderPriceSection();
+
+// Gift sheet close turns off toggle
+document.getElementById("giftClose").onclick = function() { closeSheet("gift"); state.giftEnabled = false; var t = document.getElementById("giftToggle"); if (t) t.classList.remove("active"); var b = document.getElementById("giftBadge"); if (b) b.classList.remove("show"); };
+document.getElementById("giftOverlay").onclick = function() { closeSheet("gift"); state.giftEnabled = false; var t = document.getElementById("giftToggle"); if (t) t.classList.remove("active"); var b = document.getElementById("giftBadge"); if (b) b.classList.remove("show"); };
 
 // ===== EXCHANGE GOLD =====
 (function() {
@@ -1069,18 +1073,6 @@ function renderPriceSection() {
     h += '</div><div class="promo-qty-bonus"><p><i data-lucide="gift" style="width:14px;height:14px;color:#166534"></i> Buy 2 items: Extra 10% off | Buy 3+: Extra 30% off</p><span>Discount applied automatically in cart on Making Charges</span></div>';
     el.innerHTML = h;
 })();
-
-// ===== GIFT OPTION =====
-(function() {
-    var el = document.getElementById("giftSection");
-    el.innerHTML = '<div class="gift-toggle-row"><div class="gift-label"><span class="icon-pill"><i data-lucide="gift" style="color:#D14A61"></i></span><div><span>This Is A Gift</span><br><small>Complimentary wrap & card</small></div></div><div class="toggle-switch' + (state.giftEnabled ? ' active' : '') + '" id="giftToggle"></div></div><div class="gift-selected-badge' + (state.giftEnabled ? ' show' : '') + '" id="giftBadge"><i data-lucide="check" style="width:12px;height:12px"></i>Gift wrap selected</div>';
-    document.getElementById("giftToggle").onclick = function() { state.giftEnabled = !state.giftEnabled; this.classList.toggle("active", state.giftEnabled); document.getElementById("giftBadge").classList.toggle("show", state.giftEnabled); if (state.giftEnabled) { openSheet("gift"); renderGiftSheet(); } };
-})();
-
-// Gift sheet close should turn off toggle if not saved
-var _origGiftClose = closeSheet;
-document.getElementById("giftClose").onclick = function() { closeSheet("gift"); state.giftEnabled = false; document.getElementById("giftToggle").classList.remove("active"); document.getElementById("giftBadge").classList.remove("show"); };
-document.getElementById("giftOverlay").onclick = function() { closeSheet("gift"); state.giftEnabled = false; document.getElementById("giftToggle").classList.remove("active"); document.getElementById("giftBadge").classList.remove("show"); };
 
 // ===== PRE-BOOK =====
 (function() {
