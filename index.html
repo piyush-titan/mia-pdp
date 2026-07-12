@@ -92,6 +92,10 @@
 
         /* ===== IMAGE GALLERY ===== */
         .gallery-section { position: relative; background: #fff; }
+        .product-tag { position: absolute; top: 12px; left: 12px; z-index: 15; padding: 5px 12px; border-radius: 100px; font-size: 10px; font-weight: 700; letter-spacing: 0.4px; }
+        .product-tag.new-arrival { background: #D14A61; color: #fff; }
+        .product-tag.bestseller { background: #F59E0B; color: #fff; }
+        .product-tag.custom { background: #7c3aed; color: #fff; }
         .gallery-main {
             position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden;
             touch-action: pan-y pinch-zoom;
@@ -558,7 +562,7 @@
 
 <!-- APP DOWNLOAD NUDGE -->
 <div class="app-nudge" id="appNudge">
-    <div class="app-nudge-icon"><i data-lucide="sparkles" style="width:18px;height:18px;color:#D14A61"></i></div>
+    <div class="app-nudge-icon"><i data-lucide="smartphone" style="width:18px;height:18px;color:#D14A61"></i></div>
     <div class="app-nudge-text"><strong>Get the Mia App</strong><span>Exclusive offers & early access</span></div>
     <button class="app-nudge-install" id="appInstallBtn" onclick="window.open(/iPhone|iPad|iPod/.test(navigator.userAgent)?'https://apps.apple.com/in/app/mia-by-tanishq/id1632160428':'https://play.google.com/store/apps/details?id=com.titancompany.miabytanishqapp&hl=en_IN','_blank')">Install</button>
     <button class="app-nudge-close" id="appNudgeClose" aria-label="Close"><i data-lucide="x" style="width:14px;height:14px;color:#999"></i></button>
@@ -575,6 +579,7 @@
 
 <!-- IMAGE GALLERY -->
 <section class="gallery-section">
+    <span class="product-tag new-arrival" id="productTag">New Arrival</span>
     <button class="wishlist-float" id="wishlistBtn" aria-label="Add to Wishlist">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
     </button>
