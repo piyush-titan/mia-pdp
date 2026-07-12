@@ -1004,7 +1004,7 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
 // ===== EXCHANGE GOLD =====
 (function() {
     var el = document.getElementById("exchangeSection");
-    el.innerHTML = '<div class="exchange-header"><div class="exchange-icon"><i data-lucide="repeat"></i></div><div><div class="exchange-title">Exchange Old Gold</div><div class="exchange-subtitle">Get up to 100% value on your old gold jewellery</div></div></div><div class="exchange-rate"><i data-lucide="trending-up" style="width:14px;height:14px;color:#F59E0B;flex-shrink:0"></i><span>Today\'s gold rate: <strong>\u20B9' + product.goldRate.rate22kt.toLocaleString("en-IN") + '/gm (22Kt)</strong></span></div><button class="exchange-cta" id="exchangeCta">Check Exchange Value</button>';
+    el.innerHTML = '<div class="exchange-header"><div class="exchange-icon"><i data-lucide="repeat" style="color:#b8860b"></i></div><div><div class="exchange-title">Exchange Old Gold</div><div class="exchange-subtitle">Get up to 100% value on your old gold jewellery</div></div></div><div class="exchange-rate"><i data-lucide="trending-up" style="width:14px;height:14px;color:#F59E0B;flex-shrink:0"></i><span>Today\'s gold rate: <strong>\u20B9' + product.goldRate.rate22kt.toLocaleString("en-IN") + '/gm (22Kt)</strong></span></div><button class="exchange-cta" id="exchangeCta">Check Exchange Value</button>';
     document.getElementById("exchangeCta").onclick = function() { openSheet("exchange"); renderExchangeSheet(); };
 })();
 
