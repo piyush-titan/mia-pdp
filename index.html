@@ -304,26 +304,19 @@
         .price-breakup-panel { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .price-breakup-panel.open { max-height: 600px; }
         .breakup-content { padding: 12px 0 0; }
-        .breakup-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 12px; margin-bottom: 6px; border-radius: 10px; border-bottom: none; position: relative; }
-        .breakup-row .breakup-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; margin-right: 10px; }
-        .breakup-row .breakup-left { display: flex; align-items: flex-start; flex: 1; min-width: 0; }
+        .breakup-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 12px; margin-bottom: 6px; border-radius: 10px; border-bottom: none; }
         .breakup-label { font-size: 12px; color: #1a1a1a; font-weight: 600; }
         .breakup-sub { font-size: 10px; color: #999; margin-top: 2px; }
         .breakup-value { font-size: 12px; font-weight: 700; text-align: right; flex-shrink: 0; }
         .breakup-row.row-gold { background: #f5f5f4; }
-        .breakup-row.row-gold .breakup-dot { background: #78716c; }
         .breakup-row.row-gold .breakup-value { color: #44403c; }
         .breakup-row.row-stone { background: #eff6ff; }
-        .breakup-row.row-stone .breakup-dot { background: #3b82f6; }
         .breakup-row.row-stone .breakup-value { color: #1e40af; }
         .breakup-row.row-making { background: #faf5ff; }
-        .breakup-row.row-making .breakup-dot { background: #8b5cf6; }
         .breakup-row.row-making .breakup-value { color: #6d28d9; }
         .breakup-row.row-gst { background: #f0fdf4; }
-        .breakup-row.row-gst .breakup-dot { background: #22c55e; }
         .breakup-row.row-gst .breakup-value { color: #166534; }
-        .breakup-total { margin-top: 4px; padding: 12px; border-radius: 10px; background: #FDF2F4; }
-        .breakup-total .breakup-dot { background: #D14A61; }
+        .breakup-total { margin-top: 4px; padding: 12px; border-radius: 10px; background: #FDF2F4; border-top: 3px solid #D14A61; }
         .breakup-total .breakup-label { font-weight: 800; color: #D14A61; font-size: 13px; }
         .breakup-total .breakup-value { font-size: 15px; color: #D14A61; font-weight: 800; }
 
@@ -961,11 +954,11 @@ document.getElementById("similarBtn").onclick = function() {
         h += '<button class="price-breakup-toggle' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupToggle"><span>Price Breakup</span><i data-lucide="chevron-down" class="toggle-arrow" style="width:14px;height:14px;color:#555"></i></button>';
         h += '<div class="price-breakup-panel' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupPanel"><div class="breakup-content">';
         var b = product.priceBreakup;
-        h += '<div class="breakup-row row-gold"><div class="breakup-left"><span class="breakup-dot"></span><div><div class="breakup-label">Total Gold Value</div><div class="breakup-sub">Weight: ' + b.goldValue.weight + ' &middot; Rate: ' + b.goldValue.rate + '</div></div></div><div class="breakup-value">' + fmt(b.goldValue.amount) + '</div></div>';
-        h += '<div class="breakup-row row-stone"><div class="breakup-left"><span class="breakup-dot"></span><div><div class="breakup-label">Stone Detail</div><div class="breakup-sub">Count: ' + b.stoneDetail.count + ' &middot; Diamond: ' + b.stoneDetail.diamondWeight + '</div></div></div><div class="breakup-value">' + fmt(b.stoneDetail.amount) + '</div></div>';
-        h += '<div class="breakup-row row-making"><div class="breakup-left"><span class="breakup-dot"></span><div><div class="breakup-label">Making Charges</div></div></div><div class="breakup-value">' + fmt(b.makingCharges) + '</div></div>';
-        h += '<div class="breakup-row row-gst"><div class="breakup-left"><span class="breakup-dot"></span><div><div class="breakup-label">GST (3%)</div></div></div><div class="breakup-value">' + fmt(b.gst) + '</div></div>';
-        h += '<div class="breakup-row breakup-total"><div class="breakup-left"><span class="breakup-dot"></span><div><div class="breakup-label">Grand Total</div></div></div><div class="breakup-value">' + fmt(b.grandTotal) + '</div></div>';
+        h += '<div class="breakup-row row-gold"><div><div class="breakup-label">Total Gold Value</div><div class="breakup-sub">Weight: ' + b.goldValue.weight + ' &middot; Rate: ' + b.goldValue.rate + '</div></div><div class="breakup-value">' + fmt(b.goldValue.amount) + '</div></div>';
+        h += '<div class="breakup-row row-stone"><div><div class="breakup-label">Stone Detail</div><div class="breakup-sub">Count: ' + b.stoneDetail.count + ' &middot; Diamond: ' + b.stoneDetail.diamondWeight + '</div></div><div class="breakup-value">' + fmt(b.stoneDetail.amount) + '</div></div>';
+        h += '<div class="breakup-row row-making"><div><div class="breakup-label">Making Charges</div></div><div class="breakup-value">' + fmt(b.makingCharges) + '</div></div>';
+        h += '<div class="breakup-row row-gst"><div><div class="breakup-label">GST (3%)</div></div><div class="breakup-value">' + fmt(b.gst) + '</div></div>';
+        h += '<div class="breakup-row breakup-total"><div><div class="breakup-label">Grand Total</div></div><div class="breakup-value">' + fmt(b.grandTotal) + '</div></div>';
         h += '</div></div>';
         h += '<div class="selection-section"><div class="selection-label"><i data-lucide="weight" style="width:18px;height:18px;color:#555"></i>Choose Weight</div><div class="pill-row">';
         product.weights.forEach(function(w) { h += '<button class="pill' + (state.selectedWeight === w.label ? ' active' : '') + '" data-weight="' + w.label + '">' + w.label + '</button>'; });
