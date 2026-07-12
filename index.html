@@ -1129,7 +1129,7 @@ renderRecoSection("recoSection3", "Most Gifted", "Top picks our customers love t
         { q: "Do you offer free shipping and gift wrapping?", a: "Yes! All orders ship free across India with complimentary gift wrapping available at checkout." }
     ];
     var h = '<h2 class="faq-title font-display"><span class="icon-pill"><i data-lucide="help-circle" style="color:#D14A61"></i></span>Frequently Asked Questions</h2>';
-    faqs.forEach(function(f, i) { h += '<div class="faq-item"><button class="faq-question" data-faq="' + i + '">' + f.q + '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer" id="faqA' + i + '"><div class="faq-answer-inner">' + f.a + '</div></div></div>'; });
+    faqs.forEach(function(f, i) { h += '<div class="faq-item"><button class="faq-question" data-faq="' + i + '">' + f.q + '<svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer" id="faqA' + i + '"><div class="faq-answer-inner">' + f.a + '</div></div></div>'; });
     el.innerHTML = h;
     el.querySelectorAll(".faq-question").forEach(function(btn) { btn.onclick = function() { var idx = this.dataset.faq; var panel = document.getElementById("faqA" + idx); var isOpen = this.classList.contains("open"); el.querySelectorAll(".faq-question").forEach(function(b) { b.classList.remove("open"); }); el.querySelectorAll(".faq-answer").forEach(function(a) { a.style.maxHeight = null; }); if (!isOpen) { this.classList.add("open"); panel.style.maxHeight = panel.scrollHeight + "px"; } }; });
 })();
