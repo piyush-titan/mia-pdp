@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mia by Tanishq — Gleam Play Diamond Ring (Desktop)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Albert Sans',sans-serif;background:#FAFAFA;color:#1a1a1a;line-height:1.5;font-size:15px;overflow-x:hidden}
+        .font-display{font-family:'Fraunces',serif}
+        img{display:block;max-width:100%}
+        button{font-family:inherit;cursor:pointer;border:none;background:none;transition:all 0.2s}
+        a{text-decoration:none;color:inherit}
+        /* Header */
+        .site-header{height:114px;background:#fff;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;padding:0 60px;position:sticky;top:0;z-index:50}
+        .site-header span{font-family:'Fraunces',serif;font-size:18px;font-weight:500;color:#D14A61}
+        .container{max-width:1600px;margin:0 auto;padding:0 60px}
+        .pdp-main-grid{display:flex;gap:48px;padding:12px 0;align-items:flex-start}
+        /* Gallery: sticky left */
+        .gallery-col{flex:0 0 auto;position:sticky;top:146px;height:fit-content;display:flex;gap:12px}
+        .gallery-main{width:600px;height:600px;position:relative;background:#fff;border-radius:12px;overflow:hidden;cursor:zoom-in;flex-shrink:0}
+        .gallery-main img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s ease}
+        .gallery-main .zoom-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.85);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+        .gallery-main:hover .zoom-icon{opacity:1}
+        .gallery-main.zoomed img{transform-origin:var(--zx,50%) var(--zy,50%);transform:scale(2.2)}
+        .gallery-main.zoomed .zoom-icon{opacity:0}
+        .gallery-main.zoomed{cursor:zoom-out}
+        /* Lightbox */
+        .dt-lightbox{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center}
+        .dt-lightbox.open{display:flex}
+        .dt-lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px}
+        .dt-lightbox-close{position:absolute;top:24px;right:24px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer}
+        .dt-lightbox-close svg{width:20px;height:20px;stroke:#fff;stroke-width:2.5}
+        .gallery-side{width:290px;height:600px;position:relative;overflow:hidden;flex-shrink:0}
+        .gallery-side-scroll{display:flex;flex-direction:column;gap:10px;overflow-y:auto;height:100%;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:y mandatory}
+        .gallery-side-scroll::-webkit-scrollbar{display:none}
+        .gallery-side-img{flex-shrink:0;width:290px;height:295px;border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:all 0.2s;scroll-snap-align:start}
+        .gallery-side-img.active{border-color:#D14A61}
+        .gallery-side-img:hover{opacity:0.85}
+        .gallery-side-img img{width:100%;height:100%;object-fit:cover}
+        .scroll-indicator{position:absolute;bottom:16px;left:16px;width:24px;height:80px;background:rgba(255,255,255,0.9);border-radius:100px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.1);z-index:5}
+        .scroll-track{width:4px;height:56px;background:#e5e5e5;border-radius:100px;position:relative}
+        .scroll-thumb{width:4px;height:16px;background:#D14A61;border-radius:100px;position:absolute;top:0;transition:top 0.15s ease}
+        .product-tag{position:absolute;top:20px;left:20px;z-index:5;padding:8px 16px;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;background:linear-gradient(135deg,#b8860b,#f5d77a);color:#5c3d0a;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px))}
+        .similar-float{position:absolute;top:20px;right:20px;z-index:5;display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:100px;background:rgba(255,255,255,0.95);box-shadow:0 4px 15px rgba(0,0,0,0.1);color:#D14A61;font-size:13px;font-weight:700}
+        /* Right column - scrollable with ALL sections */
+        .info-col{flex:1;min-width:0;max-width:520px;font-size:13px;padding-bottom:80px}
+        .product-name-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px}
+        .product-name{font-size:22px;font-weight:500;line-height:1.25;flex:1}
+        .action-bar{display:flex;gap:10px}
+        .action-btn{width:36px;height:36px;border-radius:50%;border:1px solid #eee;display:flex;align-items:center;justify-content:center;background:#fff}
+        .action-btn:hover{border-color:#D14A61;transform:translateY(-1px)}
+        .action-btn svg{width:15px;height:15px;stroke:#D14A61;fill:none;stroke-width:1.8}
+        /* Highlights with View Details inside */
+        .highlights-card{padding:16px;border-radius:14px;margin-bottom:14px;background:linear-gradient(135deg,#fdf2f4 0%,#f0e6ff 50%,#e8f4fd 100%);position:relative;overflow:hidden}
+        .highlights-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;position:relative;z-index:1}
+        .hl-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
+        .hl-item.diamond-item{background:linear-gradient(135deg,#e0f2fe,#bae6fd);position:relative;overflow:hidden}
+        .hl-item.diamond-item::after{content:'';position:absolute;top:-50%;left:-50%;width:50%;height:200%;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.5) 45%,rgba(255,255,255,0.8) 50%,rgba(255,255,255,0.5) 55%,transparent 60%);animation:diamondShine 4s ease-in-out infinite}
+        @keyframes diamondShine{0%{left:-50%}100%{left:150%}}
+        .hl-item.gold-item{background:linear-gradient(135deg,#fef9c3,#fde68a)}
+        .hl-item.pink-item{background:linear-gradient(135deg,#fdf2f4,#fecdd3)}
+        .hl-text .val{font-size:11px;font-weight:700;display:block}
+        .hl-text .val.diamond-text{color:#1e40af}
+        .hl-text .val.gold-text{color:#92400e}
+        .hl-text .val.pink-text{color:#be123c}
+        .hl-text .lab{font-size:9px;color:#777}
+        .view-details-btn{width:100%;padding:12px;border-radius:100px;background:rgba(255,255,255,0.8);border:1px solid rgba(209,74,97,0.2);display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-weight:600;font-size:12px;color:#D14A61;position:relative;z-index:1}
+        .view-details-btn svg{transition:transform 0.3s}
+        .view-details-btn.open svg{transform:rotate(45deg)}
+        .details-panel{max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1);position:relative;z-index:1}
+        .details-panel.open{max-height:1000px}
+        .details-table{width:100%;border-collapse:collapse;margin-top:12px;background:rgba(255,255,255,0.7);border-radius:10px;overflow:hidden}
+        .details-table td{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,0.04);font-size:12px}
+        .details-table td:first-child{color:#777;width:40%}
+        .details-table td:last-child{font-weight:600;text-align:right}
+        .details-table tr:last-child td{border-bottom:none}
+        .product-desc{margin-top:12px;padding:12px;background:rgba(255,255,255,0.7);border-radius:10px;font-size:12px;color:#555;line-height:1.6}
+        /* Trust */
+        .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+        .trust-card{background:#fff;padding:12px;border-radius:12px;text-align:center;border:1px solid #f0f0f0;box-shadow:0 1px 4px rgba(0,0,0,0.02),inset 0 -1px 2px rgba(0,0,0,0.02),inset 0 1px 2px rgba(255,255,255,0.8)}
+        .trust-card img{width:90px;height:40px;margin:0 auto;object-fit:contain}
+        /* Price */
+        .price-panel{padding:18px;border-radius:14px;background:linear-gradient(180deg,#FDF2F4,#fff);margin-bottom:14px}
+        .price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+        .price-cur{font-size:24px;font-weight:600;font-family:'Fraunces',serif}
+        .price-orig{font-size:13px;color:#999;text-decoration:line-through}
+        .price-disc{font-size:11px;color:#22C55E;background:rgba(34,197,94,0.1);padding:2px 8px;border-radius:100px;font-weight:700}
+        .breakup-trigger{width:100%;padding:12px 14px;border-radius:100px;background:#fff;border:1.5px dashed #D14A61;display:flex;justify-content:space-between;align-items:center;margin:14px 0;font-weight:700;font-size:12px;color:#D14A61}
+        .breakup-content{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+        .breakup-content.open{max-height:500px;padding-bottom:12px}
+        .breakup-row{display:flex;justify-content:space-between;padding:8px 10px;margin-bottom:4px;border-radius:8px;font-size:12px}
+        .select-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#777;margin-bottom:8px;display:block}
+        .pill-group{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+        .pill{padding:8px 14px;border-radius:100px;border:1.5px solid #eee;background:#fff;font-weight:600;font-size:12px}
+        .pill.active{border-color:#D14A61;background:#FDF2F4;color:#D14A61}
+        .pill:hover{border-color:#D14A61}
+        .gift-toggle-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;font-weight:600;font-size:12px}
+        .toggle-btn{width:50px;height:26px;border-radius:100px;background:#eee;position:relative;cursor:pointer}
+        .toggle-btn::after{content:'';width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;left:3px;top:3px;transition:transform 0.3s;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+        .toggle-btn.active{background:#D14A61}
+        .toggle-btn.active::after{transform:translateX(24px)}
+        .cta-row{display:flex;gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid #f0f0f0}
+        .btn-main{flex:1;padding:12px;border-radius:100px;font-size:13px;font-weight:700}
+        .btn-bag{background:linear-gradient(135deg,#E8668A,#D14A61,#B03A50);color:#fff;box-shadow:0 10px 25px rgba(209,74,97,0.3)}
+        .btn-bag:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(209,74,97,0.35)}
+        .btn-buy{border:2px solid #D14A61;color:#D14A61;background:#fff}
+        .btn-buy:hover{background:#FDF2F4}
+        /* Section dividers within right column */
+        .right-section{padding:20px 0;border-top:1px solid #f0f0f0;margin-top:6px}
+        .right-section-title{font-size:16px;font-weight:600;font-family:'Fraunces',serif;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        /* Exchange Gold */
+        .exchange-card{background:#fff;border-radius:14px;border:1px solid #f0f0f0;overflow:hidden}
+        .exchange-header{background:linear-gradient(135deg,#fffbeb,#fef3c7);padding:16px;display:flex;align-items:center;gap:12px}
+        .exchange-icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#fde68a,#f59e0b);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .exchange-body{padding:16px}
+        .karatage-tabs{display:flex;gap:6px;margin-bottom:14px}
+        .karatage-tab{flex:1;padding:8px;border-radius:100px;border:1.5px solid #eee;font-size:11px;font-weight:700;text-align:center;background:#fff}
+        .karatage-tab.active{border-color:#f59e0b;background:#fffbeb;color:#92400e}
+        .weight-input-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;background:#f9fafb;padding:10px;border-radius:10px}
+        .weight-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid #eee;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;color:#555;background:#fff}
+        .weight-btn:hover{border-color:#f59e0b;color:#f59e0b}
+        .weight-display{flex:1;text-align:center;font-size:18px;font-weight:700;font-family:'Fraunces',serif;color:#92400e}
+        .exchange-comparison{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;padding:14px;background:linear-gradient(135deg,#fffbeb,#fff);border-radius:10px;border:1px solid #fde68a}
+        .exchange-val{text-align:center}
+        .exchange-val .label{font-size:9px;color:#777;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px}
+        .exchange-val .amount{font-size:15px;font-weight:700;font-family:'Fraunces',serif}
+        .exchange-arrow{width:28px;height:28px;border-radius:50%;background:#f59e0b;display:flex;align-items:center;justify-content:center}
+        /* Coupons */
+        .coupons-col{display:flex;flex-direction:column;gap:12px}
+        .coupon-box{background:linear-gradient(145deg,#E8668A,#D14A61,#B03A50);padding:18px;border-radius:14px;color:#fff;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden}
+        .coupon-box::before{content:'';position:absolute;top:-20px;right:-20px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.08)}
+        .coupon-left{flex:1}
+        .coupon-tag{font-size:9px;font-weight:800;letter-spacing:0.8px;opacity:0.7;margin-bottom:2px}
+        .coupon-amount{font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:2px}
+        .coupon-desc{font-size:10px;opacity:0.8}
+        .coupon-code-pill{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:100px;background:#fff;color:#D14A61;font-size:10px;font-weight:800;flex-shrink:0}
+        /* Promotions */
+        .promo-stack{display:flex;flex-direction:column;gap:10px}
+        .promo-card{background:#fff;border-radius:12px;padding:14px;border:1px solid #f0f0f0;position:relative;overflow:hidden}
+        .promo-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px}
+        .promo-card:nth-child(1)::before{background:linear-gradient(180deg,#D14A61,#f472b6)}
+        .promo-card:nth-child(2)::before{background:linear-gradient(180deg,#8b5cf6,#a78bfa)}
+        .promo-card:nth-child(3)::before{background:linear-gradient(180deg,#f59e0b,#fbbf24)}
+        .promo-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:100px;font-size:9px;font-weight:800;letter-spacing:0.5px;margin-bottom:6px}
+        .promo-card:nth-child(1) .promo-badge{background:#FDF2F4;color:#D14A61}
+        .promo-card:nth-child(2) .promo-badge{background:#f5f3ff;color:#7c3aed}
+        .promo-card:nth-child(3) .promo-badge{background:#fffbeb;color:#d97706}
+        .promo-title{font-size:13px;font-weight:700;margin-bottom:2px}
+        .promo-desc{font-size:11px;color:#777;line-height:1.4}
+        /* Pre-book */
+        .prebook-card{padding:28px;border-radius:16px;background:linear-gradient(135deg,#B03A50 0%,#D14A61 25%,#f472b6 50%,#D14A61 75%,#B03A50 100%);background-size:300% 300%;animation:prebookSheen 6s ease infinite;text-align:center;color:#fff}
+        @keyframes prebookSheen{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+        /* Delivery */
+        .delivery-card{background:#fff;border-radius:14px;padding:16px;border:1px solid #f0f0f0}
+        .pincode-row{display:flex;gap:8px;margin-bottom:14px}
+        .pincode-input{flex:1;padding:9px 12px;border-radius:100px;border:1.5px solid #eee;font-size:12px;font-family:inherit;outline:none;transition:border-color 0.2s}
+        .pincode-input:focus{border-color:#D14A61}
+        .pincode-btn{padding:9px 16px;border-radius:100px;background:#D14A61;color:#fff;font-size:11px;font-weight:700;border:none}
+        .delivery-info{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+        .delivery-item{text-align:center;padding:12px 8px;border-radius:10px;background:#f9fafb;border:1px solid #f0f0f0}
+        .delivery-item svg{margin:0 auto 6px}
+        .delivery-item .di-label{font-size:10px;font-weight:600;display:block}
+        .delivery-item .di-sub{font-size:9px;color:#777;margin-top:2px}
+        .trust-ticker{overflow:hidden;margin-top:14px;position:relative}
+        .trust-ticker::before,.trust-ticker::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2}
+        .trust-ticker::before{left:0;background:linear-gradient(90deg,#fff,transparent)}
+        .trust-ticker::after{right:0;background:linear-gradient(-90deg,#fff,transparent)}
+        .ticker-track{display:flex;gap:12px;animation:tickerScroll 25s linear infinite;width:fit-content}
+        .ticker-badge{flex-shrink:0;display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:100px;background:#f9fafb;border:1px solid #f0f0f0;font-size:10px;font-weight:600;white-space:nowrap}
+        @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        /* Find in Store */
+        .store-card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid #f0f0f0}
+        .store-visual{background:linear-gradient(135deg,#FDF2F4,#f0e6ff);padding:24px;display:flex;align-items:center;gap:16px}
+        .store-icon-wrap{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#D14A61,#E8668A);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 16px rgba(209,74,97,0.25)}
+        .store-body{padding:16px}
+        .store-stat{display:flex;gap:20px;margin-top:14px}
+        .store-stat-item{text-align:center}
+        .store-stat-item .num{font-size:18px;font-weight:700;font-family:'Fraunces',serif;color:#D14A61}
+        .store-stat-item .lbl{font-size:9px;color:#777;margin-top:1px}
+        /* Recommendations */
+        .reco-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+        .reco-card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;transition:transform 0.3s,box-shadow 0.3s;position:relative}
+        .reco-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,0.06)}
+        .reco-img{aspect-ratio:1/1;overflow:hidden}
+        .reco-img img{width:100%;height:100%;object-fit:cover}
+        .reco-info{padding:10px 12px}
+        .reco-info p{font-size:11px;color:#555;margin-bottom:2px}
+        .reco-info b{font-size:12px}
+        .reco-wishlist{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;z-index:2}
+        .reco-card:hover .reco-wishlist{opacity:1}
+        .reco-section-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:100px;font-size:9px;font-weight:700;margin-left:auto}
+        /* FAQ */
+        .faq-item{border-bottom:1px solid #f0f0f0}
+        .faq-q{width:100%;padding:14px 0;text-align:left;font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:12px}
+        .faq-q svg{stroke:#D14A61;transition:transform 0.3s;flex-shrink:0}
+        .faq-q.open svg{transform:rotate(180deg)}
+        .faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+        .faq-a.open{max-height:200px}
+        .faq-a p{padding:0 0 14px;font-size:12px;color:#555;line-height:1.6}
+        /* Toast */
+        .toast-container{position:fixed;top:30px;right:30px;z-index:1000;display:flex;flex-direction:column;gap:12px}
+        .toast{padding:14px 22px;border-radius:12px;background:#fff;box-shadow:0 8px 30px rgba(0,0,0,0.12);display:flex;align-items:center;gap:10px;font-weight:600;font-size:13px;transform:translateX(120%);animation:toastIn 0.4s forwards}
+        .toast.success{border-left:4px solid #22C55E}
+        .toast.info{border-left:4px solid #3B82F6}
+        @keyframes toastIn{to{transform:translateX(0)}}
+    </style>
+</head>
+<body>
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- HEADER -->
+<header class="site-header"><span>Mia by Tanishq</span></header>
+
+<div class="container">
+    <nav style="font-size:12px;color:#888;margin-bottom:4px;padding-top:12px">Home <span style="color:#ccc">›</span> Rings <span style="color:#ccc">›</span> <span style="color:#1a1a1a;font-weight:600" id="breadName"></span></nav>
+    <div class="pdp-main-grid">
+        <!-- LEFT: Gallery (sticky) -->
+        <div class="gallery-col">
+            <div class="gallery-main" id="galleryMain">
+                <span class="product-tag">New Arrival</span>
+                <img src="" id="mainDisplayImg" alt="Product">
+                <div class="zoom-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                <button class="similar-float" onclick="event.stopPropagation();showToast('Finding similar products...','info')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Show Similar</button>
+            </div>
+            <div class="gallery-side">
+                <div class="gallery-side-scroll" id="sideScroll"></div>
+                <div class="scroll-indicator"><div class="scroll-track"><div class="scroll-thumb" id="scrollThumb"></div></div></div>
+            </div>
+        </div>
+
+        <!-- RIGHT: All content (scrolls) -->
+        <div class="info-col">
+            <!-- Product Name -->
+            <div class="product-name-row">
+                <h1 class="product-name font-display" id="dispName"></h1>
+                <div class="action-bar">
+                    <button class="action-btn" id="wishBtn"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                    <button class="action-btn" onclick="showToast('Link copied','success')"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+                </div>
+            </div>
+
+            <!-- Key Highlights + View Full Details (inside, like mweb) -->
+            <div class="highlights-card">
+                <div class="highlights-grid">
+                    <div class="hl-item diamond-item"><i data-lucide="gem" style="width:18px;height:18px;color:#2563eb"></i><div class="hl-text"><span class="val diamond-text">15 Diamonds</span><span class="lab">I2 &middot; 0.124 Ct</span></div></div>
+                    <div class="hl-item gold-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fde68a" stroke="#b8860b" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/></svg><div class="hl-text"><span class="val gold-text">14 KT Yellow Gold</span><span class="lab">1.950 g</span></div></div>
+                    <div class="hl-item pink-item"><i data-lucide="circle" style="width:18px;height:18px;color:#D14A61"></i><div class="hl-text"><span class="val pink-text">Finger Ring</span><span class="lab">Everyday & Workwear</span></div></div>
+                    <div class="hl-item pink-item"><i data-lucide="weight" style="width:18px;height:18px;color:#D14A61"></i><div class="hl-text"><span class="val pink-text">1.975 g</span><span class="lab">Gross Weight</span></div></div>
+                </div>
+                <button class="view-details-btn" id="viewDetailsBtn" onclick="toggleDetails()">
+                    <span>View Full Product Details</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2.5" stroke-linecap="round" id="detailsIcon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+                <div class="details-panel" id="detailsPanel">
+                    <table class="details-table" id="detailsTable"></table>
+                    <div class="product-desc" id="dispDesc"></div>
+                </div>
+            </div>
+
+            <!-- Trust Markers -->
+            <div class="trust-grid">
+                <div class="trust-card"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwf4347052/images/cart/certificate/bis.svg" alt="BIS"></div>
+                <div class="trust-card"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dw27b89fcd/images/cart/certificate/TATA.svg" alt="TATA"></div>
+                <div class="trust-card"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwbf1e1df1/images/cart/certificate/1%20YR.svg" alt="1YR"></div>
+            </div>
+
+            <!-- Price Panel -->
+            <div class="price-panel">
+                <div class="price-row"><span class="price-cur" id="dispPrice"></span><span class="price-orig" id="dispOrig"></span><span class="price-disc" id="dispDisc"></span></div>
+                <p style="font-size:12px;color:#777;margin-bottom:12px">Inclusive of all taxes</p>
+                <button class="breakup-trigger" onclick="toggleBreakup()"><span>Price Breakup</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2.5" stroke-linecap="round" id="breakupArrow" style="transition:transform 0.3s"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="breakup-content" id="breakupPanel">
+                    <div class="breakup-row" style="background:#f5f5f4;border-radius:8px;padding:10px;margin-bottom:4px"><span>Total Gold Value</span><b id="bkGold"></b></div>
+                    <div class="breakup-row" style="background:#eff6ff;border-radius:8px;padding:10px;margin-bottom:4px"><span>Stone Detail</span><b id="bkStone" style="color:#1e40af"></b></div>
+                    <div class="breakup-row" style="background:#faf5ff;border-radius:8px;padding:10px;margin-bottom:4px"><span>Making Charges</span><b id="bkMaking" style="color:#6d28d9"></b></div>
+                    <div class="breakup-row" style="background:#f0fdf4;border-radius:8px;padding:10px;margin-bottom:4px"><span>GST (3%)</span><b id="bkGST" style="color:#166534"></b></div>
+                    <div class="breakup-row" style="background:#FDF2F4;border-radius:8px;padding:10px;border-top:2px solid #D14A61"><span style="font-weight:800;color:#D14A61">Grand Total</span><b id="bkTotal" style="color:#D14A61;font-size:16px"></b></div>
+                </div>
+                <div style="margin-top:18px">
+                    <span class="select-label">Choose Weight</span>
+                    <div class="pill-group" id="weightPills"></div>
+                    <span class="select-label">Choose Size</span>
+                    <div class="pill-group" id="sizePills"></div>
+                </div>
+                <div class="gift-toggle-row"><i data-lucide="gift" style="width:16px;height:16px;color:#D14A61"></i><span>Make it a Gift</span><button class="toggle-btn" id="giftToggle" onclick="toggleGift()"></button></div>
+                <div class="cta-row"><button class="btn-main btn-buy" onclick="showToast('Proceeding to checkout','success')">Buy Now</button><button class="btn-main btn-bag" onclick="showToast('Added to Bag','success')">Add to Bag</button></div>
+                <div style="text-align:center;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px"><i data-lucide="leaf" style="width:13px;height:13px;color:#22C55E"></i><span style="font-size:10px;font-weight:600;color:#166534">100% Recycled Gold for a Greener World</span></div>
+            </div>
+
+            <!-- Exchange Gold -->
+            <div class="right-section">
+                <div class="right-section-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/></svg> Exchange Old Gold</div>
+                <div class="exchange-card">
+                    <div class="exchange-header">
+                        <div class="exchange-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#92400e" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/></svg></div>
+                        <div><div style="font-weight:700;font-size:12px">Gold Exchange Calculator</div><div style="font-size:10px;color:#777">Get up to 100% value on your old gold</div></div>
+                    </div>
+                    <div class="exchange-body">
+                        <span class="select-label">Select Karatage</span>
+                        <div class="karatage-tabs">
+                            <button class="karatage-tab" onclick="setKarat(this,22)">22 KT</button>
+                            <button class="karatage-tab active" onclick="setKarat(this,18)">18 KT</button>
+                            <button class="karatage-tab" onclick="setKarat(this,14)">14 KT</button>
+                        </div>
+                        <span class="select-label">Enter Gold Weight (grams)</span>
+                        <div class="weight-input-row">
+                            <button class="weight-btn" onclick="adjustWeight(-0.5)">−</button>
+                            <span class="weight-display" id="exchangeWeight">5.0 g</span>
+                            <button class="weight-btn" onclick="adjustWeight(0.5)">+</button>
+                        </div>
+                        <div class="exchange-comparison">
+                            <div class="exchange-val"><div class="label">Your Gold</div><div class="amount" style="color:#22C55E" id="exchangeValue">₹28,450</div></div>
+                            <div class="exchange-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                            <div class="exchange-val"><div class="label">Product</div><div class="amount" style="color:#D14A61" id="exchangeProduct">₹43,293</div></div>
+                        </div>
+                        <div style="text-align:center;margin-top:12px;padding:10px;border-radius:10px;background:#f0fdf4;border:1px solid #bbf7d0">
+                            <span style="font-size:11px;color:#166534;font-weight:600">You pay only <b id="exchangeDiff" style="font-size:14px;font-family:'Fraunces',serif">₹14,843</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coupons -->
+            <div class="right-section">
+                <div class="right-section-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> Available Coupons</div>
+                <div class="coupons-col" id="couponGrid"></div>
+            </div>
+
+            <!-- Promotions -->
+            <div class="right-section">
+                <div class="right-section-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg> Festive Offers</div>
+                <div class="promo-stack">
+                    <div class="promo-card">
+                        <div class="promo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/></svg> FLAT DISCOUNT</div>
+                        <div class="promo-title">Flat 10% Off</div>
+                        <div class="promo-desc">On diamond jewellery above ₹25,000. Stack with exchange.</div>
+                    </div>
+                    <div class="promo-card">
+                        <div class="promo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg> TIERED</div>
+                        <div class="promo-title">Buy 2 Get 15% Off</div>
+                        <div class="promo-desc">Purchase 2 pieces and unlock 15% off on the second item.</div>
+                    </div>
+                    <div class="promo-card">
+                        <div class="promo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> LIMITED</div>
+                        <div class="promo-title">Early Bird Special</div>
+                        <div class="promo-desc">Pre-book Dhanteras collection and save ₹3,000 on ₹40,000+.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pre-book -->
+            <div class="right-section">
+                <div class="prebook-card">
+                    <div style="font-size:18px;font-weight:600;font-family:'Fraunces',serif;margin-bottom:6px">Pre-Book for Festive Season</div>
+                    <p style="opacity:0.8;font-size:12px;margin-bottom:16px">Lock today's gold rate. Guaranteed delivery before Dhanteras.</p>
+                    <button style="padding:10px 28px;border-radius:100px;background:#fff;color:#D14A61;font-size:12px;font-weight:700;border:none;box-shadow:0 4px 12px rgba(0,0,0,0.1)" onclick="showToast('Pre-booking initiated','success')">Pre-Book Now</button>
+                </div>
+            </div>
+
+            <!-- Delivery -->
+            <div class="right-section">
+                <div class="right-section-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Delivery & Returns</div>
+                <div class="delivery-card">
+                    <div style="font-weight:600;font-size:12px;margin-bottom:10px">Check Delivery Availability</div>
+                    <div class="pincode-row">
+                        <input type="text" class="pincode-input" placeholder="Enter pincode" maxlength="6" id="pincodeInput">
+                        <button class="pincode-btn" onclick="checkPincode()">Check</button>
+                    </div>
+                    <div id="deliveryResult" style="display:none;padding:10px;border-radius:10px;background:#f0fdf4;border:1px solid #bbf7d0;margin-bottom:12px;font-size:11px;color:#166534;font-weight:600"></div>
+                    <div class="delivery-info">
+                        <div class="delivery-item">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="1.8"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                            <span class="di-label">Free Delivery</span>
+                            <span class="di-sub">4-6 business days</span>
+                        </div>
+                        <div class="delivery-item">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="1.8"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+                            <span class="di-label">30-Day Returns</span>
+                            <span class="di-sub">Hassle-free</span>
+                        </div>
+                        <div class="delivery-item">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <span class="di-label">Insured</span>
+                            <span class="di-sub">100% safe</span>
+                        </div>
+                    </div>
+                    <div class="trust-ticker">
+                        <div class="ticker-track" id="tickerTrack"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Find in Store -->
+            <div class="right-section">
+                <div class="right-section-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Find in Store</div>
+                <div class="store-card">
+                    <div class="store-visual">
+                        <div class="store-icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                        <div><div style="font-size:14px;font-weight:600;font-family:'Fraunces',serif">Try Before You Buy</div><p style="font-size:10px;color:#777;margin-top:2px">Visit a Mia store to see this piece in person</p></div>
+                    </div>
+                    <div class="store-body">
+                        <p style="font-size:11px;color:#777;line-height:1.5;margin-bottom:14px">Our stylists will help you try on the piece, check sizing, and suggest complementary items.</p>
+                        <button class="btn-main btn-buy" style="max-width:160px;padding:10px;font-size:12px" onclick="showToast('Finding nearby stores...','info')">Find Nearest Store</button>
+                        <div class="store-stat">
+                            <div class="store-stat-item"><div class="num">250+</div><div class="lbl">Stores</div></div>
+                            <div class="store-stat-item"><div class="num">50+</div><div class="lbl">Cities</div></div>
+                            <div class="store-stat-item"><div class="num">4.8★</div><div class="lbl">Rating</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendations: Complete the Set -->
+            <div class="right-section">
+                <div class="right-section-title">Complete the Set <span class="reco-section-badge" style="background:#f5f3ff;color:#7c3aed">Styled Together</span></div>
+                <div class="reco-grid" id="recoSetGrid"></div>
+            </div>
+
+            <!-- Recommendations: You May Also Like -->
+            <div class="right-section">
+                <div class="right-section-title">You May Also Like <span class="reco-section-badge" style="background:#dbeafe;color:#2563eb">Curated for You</span></div>
+                <div class="reco-grid" id="recoLikeGrid"></div>
+            </div>
+
+            <!-- Recommendations: Most Gifted -->
+            <div class="right-section">
+                <div class="right-section-title">Most Gifted <span class="reco-section-badge" style="background:#FDF2F4;color:#D14A61">Top Picks</span></div>
+                <div class="reco-grid" id="recoGiftGrid"></div>
+            </div>
+
+            <!-- FAQs -->
+            <div class="right-section">
+                <div class="right-section-title">Frequently Asked Questions</div>
+                <div id="faqContainer"></div>
+            </div>
+
+        </div><!-- /info-col -->
+    </div><!-- /pdp-main-grid -->
+</div><!-- /container -->
+
+<script>
+const product={name:"Gleam Play Diamond Ring",description:"A slim V-profile diamond ring that stacks easily and catches light from every angle. Crafted in 14 KT yellow gold with 15 natural diamonds, designed for daily wear with a comfort-fit band.",images:["https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_1.jpg","https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_2.jpg","https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_3.jpg","https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_4.jpg","https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-cutout.png","https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-top-cutout.png"],price:{current:43293,original:52990,discount:18},priceBreakup:{goldValue:28420,stoneDetail:10840,makingCharges:4033,gst:1302,grandTotal:43293},sizes:[{l:"14.00 MM",s:false},{l:"16.40 MM",s:true},{l:"17.00 MM",s:true},{l:"17.30 MM",s:true},{l:"18.10 MM",s:true},{l:"18.90 MM",s:false}],weights:["1.975 g","2.101 g"],details:[{l:"Design Code",v:"2812FPL"},{l:"Purity",v:"14 KT (585)"},{l:"Metal Colour",v:"Yellow Gold"},{l:"Diamond Count",v:"15"},{l:"Diamond Weight",v:"0.124 Ct"},{l:"Clarity",v:"I2"},{l:"Shape",v:"Round"},{l:"Setting",v:"Prong"},{l:"Gross Weight",v:"1.975 g"},{l:"Occasion",v:"Everyday & Workwear"}]};
+const recoProducts=[{name:"Sunburst Diamond Ring",price:38450,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-cutout.png"},{name:"V-stack Diamond Studs",price:18900,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/bundle-diamond-stud-earrings.jpg"},{name:"Petite Solitaire Band",price:31200,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-top-cutout.png"},{name:"Stackable Twin Band",price:27650,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_1.jpg"}];
+const recoSet=[{name:"Diamond Chain Necklace",price:32800,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_2.jpg"},{name:"Starlight Studs",price:14500,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/bundle-diamond-stud-earrings.jpg"},{name:"Classic Tennis Bracelet",price:45900,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_3.jpg"},{name:"Shimmer Pendant",price:19400,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_4.jpg"}];
+const recoGifts=[{name:"Heart Solitaire Ring",price:28750,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-cutout.png"},{name:"Dainty Pearl Studs",price:11200,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_1.jpg"},{name:"Infinity Band",price:22300,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-top-cutout.png"},{name:"Charm Bracelet Set",price:35100,img:"https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_4.jpg"}];
+let exchangeState={karat:18,weight:5.0};
+const goldRates={22:5690,18:4650,14:3620};
+let state={img:0,wish:false,size:"16.40 MM",weight:"1.975 g",gift:false};
+const fmt=n=>"\u20B9"+n.toLocaleString("en-IN");
+
+function showToast(m,t){const c=document.getElementById("toastContainer"),d=document.createElement("div");d.className="toast "+(t||"success");d.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+(t==="success"?"#22C55E":"#3B82F6")+'" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'+m;c.appendChild(d);setTimeout(()=>{d.style.opacity="0";setTimeout(()=>d.remove(),400)},3000)}
+function setImg(i){state.img=i;document.getElementById("mainDisplayImg").src=product.images[i];document.querySelectorAll(".gallery-side-img").forEach((t,idx)=>t.classList.toggle("active",idx===i))}
+function toggleBreakup(){const p=document.getElementById("breakupPanel"),a=document.getElementById("breakupArrow");p.classList.toggle("open");a.style.transform=p.classList.contains("open")?"rotate(180deg)":""}
+function toggleDetails(){const p=document.getElementById("detailsPanel"),b=document.getElementById("viewDetailsBtn"),i=document.getElementById("detailsIcon");p.classList.toggle("open");b.classList.toggle("open");i.style.transform=p.classList.contains("open")?"rotate(45deg)":""}
+function toggleGift(){state.gift=!state.gift;document.getElementById("giftToggle").classList.toggle("active",state.gift);if(state.gift)showToast("Gift wrap added","success")}
+function setKarat(el,k){exchangeState.karat=k;document.querySelectorAll(".karatage-tab").forEach(t=>t.classList.remove("active"));el.classList.add("active");updateExchange()}
+function adjustWeight(d){exchangeState.weight=Math.max(0.5,Math.min(50,exchangeState.weight+d));document.getElementById("exchangeWeight").textContent=exchangeState.weight.toFixed(1)+" g";updateExchange()}
+function updateExchange(){var val=Math.round(goldRates[exchangeState.karat]*exchangeState.weight);var diff=product.price.current-val;document.getElementById("exchangeValue").textContent=fmt(val);document.getElementById("exchangeProduct").textContent=fmt(product.price.current);document.getElementById("exchangeDiff").textContent=fmt(Math.max(0,diff))}
+function checkPincode(){var pin=document.getElementById("pincodeInput").value;if(pin.length!==6||isNaN(pin)){showToast("Enter a valid 6-digit pincode","info");return}var r=document.getElementById("deliveryResult");r.style.display="block";r.innerHTML='<div style="display:flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg> Delivery available to '+pin+' (4-6 days)</div>';showToast("Delivery available!","success")}
+function renderRecoGrid(grid,items){items.forEach(function(p){grid.innerHTML+='<div class="reco-card"><button class="reco-wishlist" onclick="event.stopPropagation();this.querySelector(\'svg\').style.fill=this.querySelector(\'svg\').style.fill===\'#D14A61\'?\'none\':\'#D14A61\';showToast(\'Wishlist updated\',\'success\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="reco-img"><img src="'+p.img+'"></div><div class="reco-info"><p>'+p.name+'</p><b>'+fmt(p.price)+'</b></div></div>'})}
+
+(function init(){
+    document.getElementById("dispName").textContent=product.name;
+    document.getElementById("breadName").textContent=product.name;
+    document.getElementById("dispDesc").textContent=product.description;
+    document.getElementById("dispPrice").textContent=fmt(product.price.current);
+    document.getElementById("dispOrig").textContent=fmt(product.price.original);
+    document.getElementById("dispDisc").textContent=product.price.discount+"% OFF";
+    document.getElementById("bkGold").textContent=fmt(product.priceBreakup.goldValue);
+    document.getElementById("bkStone").textContent=fmt(product.priceBreakup.stoneDetail);
+    document.getElementById("bkMaking").textContent=fmt(product.priceBreakup.makingCharges);
+    document.getElementById("bkGST").textContent=fmt(product.priceBreakup.gst);
+    document.getElementById("bkTotal").textContent=fmt(product.priceBreakup.grandTotal);
+    // Side gallery images
+    const ss=document.getElementById("sideScroll");
+    product.images.forEach((img,i)=>{if(i===0)return;const d=document.createElement("div");d.className="gallery-side-img"+(i===1?" active":"");d.innerHTML='<img src="'+img+'">';d.onclick=()=>setImg(i);ss.appendChild(d)});
+    setImg(0);
+    // Match side column height
+    function syncSideHeight(){const mainEl=document.querySelector(".gallery-main");const sideEl=document.querySelector(".gallery-side-scroll");if(mainEl&&sideEl){sideEl.style.height=mainEl.offsetHeight+"px"}}
+    syncSideHeight();window.addEventListener("resize",syncSideHeight);document.getElementById("mainDisplayImg").onload=syncSideHeight;
+    // Scroll indicator
+    ss.addEventListener("scroll",function(){const thumb=document.getElementById("scrollThumb");const maxScroll=ss.scrollHeight-ss.clientHeight;if(maxScroll>0){const pct=ss.scrollTop/maxScroll;thumb.style.top=(pct*40)+"px"}});
+    // Weight pills
+    const wp=document.getElementById("weightPills");
+    product.weights.forEach(w=>{const b=document.createElement("button");b.className="pill"+(state.weight===w?" active":"");b.textContent=w;b.onclick=()=>{state.weight=w;wp.querySelectorAll(".pill").forEach(p=>p.classList.remove("active"));b.classList.add("active")};wp.appendChild(b)});
+    // Size pills
+    const sp=document.getElementById("sizePills");
+    product.sizes.forEach(s=>{const b=document.createElement("button");b.className="pill"+(state.size===s.l?" active":"");b.textContent=s.l;if(!s.s){b.style.opacity="0.4";b.style.borderStyle="dashed"}b.onclick=()=>{if(!s.s){showToast("Size "+s.l+" is out of stock","info");return}state.size=s.l;sp.querySelectorAll(".pill").forEach(p=>p.classList.remove("active"));b.classList.add("active")};sp.appendChild(b)});
+    // Details table
+    document.getElementById("detailsTable").innerHTML=product.details.map(d=>"<tr><td>"+d.l+"</td><td>"+d.v+"</td></tr>").join("");
+    // Coupons
+    const cg=document.getElementById("couponGrid");
+    [{tag:"MIA 500",amt:"Flat \u20B9500 Off",desc:"First purchase",code:"MIA500"},{tag:"Birthday Special",amt:"Flat \u20B92000 Off",desc:"On your birthday month",code:"BIRTHDAY500"},{tag:"Anniversary",amt:"Flat \u20B92000 Off",desc:"On your anniversary month",code:"ANNIV500"}].forEach(c=>{cg.innerHTML+='<div class="coupon-box"><div class="coupon-left"><div class="coupon-tag">'+c.tag+'</div><div class="coupon-amount">'+c.amt+'</div><div class="coupon-desc">'+c.desc+'</div></div><span class="coupon-code-pill" onclick="showToast(\'Code '+c.code+' copied\',\'success\')">'+c.code+' <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></span></div>'});
+    // Recommendations
+    renderRecoGrid(document.getElementById("recoSetGrid"),recoSet);
+    renderRecoGrid(document.getElementById("recoLikeGrid"),recoProducts);
+    renderRecoGrid(document.getElementById("recoGiftGrid"),recoGifts);
+    // FAQ
+    const fc=document.getElementById("faqContainer");
+    [{q:"Is the gold BIS hallmarked?",a:"Yes. This ring is crafted in 14 KT (585) yellow gold and is BIS hallmarked, ensuring government-certified purity."},{q:"Are the diamonds natural and certified?",a:"Yes, all 15 diamonds are natural, brilliant-cut stones. Each stone is authenticated and comes with certification."},{q:"What is the return and exchange policy?",a:"We offer 30-day hassle-free returns and lifetime exchange on gold and diamond jewellery at any of our 250+ stores across India."},{q:"Is there a warranty?",a:"Yes, all Mia products come with a 1-year warranty covering manufacturing defects."},{q:"How do I find my ring size?",a:"Use our Size Guide. Wrap a thread around your finger, mark the overlap, measure in mm, and match with our chart."},{q:"Do you offer free shipping?",a:"Yes! All orders ship free across India with complimentary gift wrapping available at checkout."}].forEach(f=>{fc.innerHTML+='<div class="faq-item"><button class="faq-q" onclick="this.classList.toggle(\'open\');this.nextElementSibling.classList.toggle(\'open\')">'+f.q+'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a"><p>'+f.a+'</p></div></div>'});
+    // Wishlist
+    document.getElementById("wishBtn").onclick=function(){state.wish=!state.wish;this.querySelector("svg").style.fill=state.wish?"#D14A61":"none";showToast(state.wish?"Added to Wishlist":"Removed from Wishlist","success")};
+    // Ticker
+    var tickerBadges=["\uD83D\uDD12 Insured Shipping","\u2728 BIS Hallmarked","\uD83C\uDF81 Free Gift Wrap","\uD83D\uDD04 Lifetime Exchange","\uD83D\uDC8E Certified Diamonds","\uD83D\uDE9A Free Delivery","\uD83D\uDCE6 Premium Packaging","\uD83D\uDEE1\uFE0F 1 Year Warranty"];
+    var tt=document.getElementById("tickerTrack");
+    var badgeHTML=tickerBadges.map(function(b){return '<span class="ticker-badge">'+b+'</span>'}).join("");
+    tt.innerHTML=badgeHTML+badgeHTML;
+    // Exchange
+    updateExchange();
+    lucide.createIcons();
+
+    // Hover zoom (1s delay) + click lightbox
+    var galleryMain=document.getElementById("galleryMain");
+    var hoverTimer=null;
+    galleryMain.addEventListener("mouseenter",function(){hoverTimer=setTimeout(function(){galleryMain.classList.add("zoomed")},1000)});
+    galleryMain.addEventListener("mouseleave",function(){clearTimeout(hoverTimer);galleryMain.classList.remove("zoomed")});
+    galleryMain.addEventListener("mousemove",function(e){if(!galleryMain.classList.contains("zoomed"))return;var rect=galleryMain.getBoundingClientRect();var x=((e.clientX-rect.left)/rect.width)*100;var y=((e.clientY-rect.top)/rect.height)*100;galleryMain.style.setProperty("--zx",x+"%");galleryMain.style.setProperty("--zy",y+"%")});
+    galleryMain.addEventListener("click",function(e){if(e.target.closest(".similar-float")||e.target.closest(".product-tag"))return;if(galleryMain.classList.contains("zoomed")){galleryMain.classList.remove("zoomed");return}document.getElementById("dtLightboxImg").src=document.getElementById("mainDisplayImg").src;document.getElementById("dtLightbox").classList.add("open")});
+    document.getElementById("dtLightbox").addEventListener("click",function(e){if(e.target===this||e.target.closest(".dt-lightbox-close"))this.classList.remove("open")});
+})();
+</script>
+<!-- Lightbox -->
+<div class="dt-lightbox" id="dtLightbox">
+    <button class="dt-lightbox-close" onclick="document.getElementById('dtLightbox').classList.remove('open')"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <img id="dtLightboxImg" src="">
+</div>
+</body>
+</html>

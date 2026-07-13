@@ -494,12 +494,14 @@
         .pincode-check-btn:active { transform: scale(0.95); }
         .delivery-result { display: none; padding: 12px; border-radius: 12px; background: #f0fdf4; border: 1px solid rgba(34,197,94,0.15); }
         .delivery-result.show { display: flex; align-items: flex-start; gap: 8px; }
-        .delivery-result i { width: 16px; height: 16px; color: #22C55E; flex-shrink: 0; margin-top: 1px; }
+        .delivery-result.error { background: #fef2f2; border: 1px solid rgba(239,68,68,0.15); }
+        .delivery-result .result-icon { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
         .delivery-result p { font-size: 12px; color: #166534; line-height: 1.5; }
+        .delivery-result.error p { color: #991b1b; }
         .delivery-badges { overflow: hidden; margin-top: 12px; position: relative; }
         .delivery-ticker { display: flex; align-items: center; gap: 16px; width: max-content; animation: deliveryScroll 12s linear infinite; }
         .delivery-ticker:hover { animation-play-state: paused; }
-        .delivery-badge { display: flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 600; color: #D14A61; padding: 5px 10px; border-radius: 100px; background: #FDF2F4; white-space: nowrap; flex-shrink: 0; }
+        .delivery-badge { display: flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; color: #D14A61; padding: 6px 12px; border-radius: 100px; background: #FDF2F4; white-space: nowrap; flex-shrink: 0; }
         .delivery-badge i { width: 10px; height: 10px; color: #D14A61; }
         @keyframes deliveryScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
@@ -741,7 +743,7 @@ var product = {
         { label: "18.90 MM", circumference: "59.4 mm", inStock: false }
     ],
     weights: [ { label: "1.975 g", price: 43293, original: 52990 }, { label: "2.101 g", price: 46150, original: 56500 } ],
-    delivery: { estimate: "Get it by 12 Jul - 14 Jul", fast: "Express delivery available for select pincodes" },
+    delivery: { date: "14th July", city: "Mumbai", state: "Maharashtra" },
     goldRate: { rate22kt: 7420, rate24kt: 8095, rate18kt: 6073, rate14kt: 4731, rate9kt: 3039 },
     isSizeable: true, isPreBookEnabled: true,
     prebookDates: ["24 Oct 2026", "28 Oct 2026"]
@@ -1084,8 +1086,9 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
 // ===== DELIVERY CHECK =====
 (function() {
     var el = document.getElementById("deliverySection");
-    el.innerHTML = '<div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="color:#D14A61"></i></span>Delivery & Availability</div><div class="pincode-row"><input type="tel" maxlength="6" class="pincode-input" placeholder="Enter pincode" id="deliveryPincode"><button class="pincode-check-btn" id="deliveryCheckBtn">Check</button></div><div class="delivery-result" id="deliveryResult"><i data-lucide="check-circle"></i><p></p></div><div class="delivery-badges"><div class="delivery-ticker"><div class="delivery-badge"><i data-lucide="package" style="width:11px;height:11px;color:#D14A61"></i>Free Shipping</div><div class="delivery-badge"><i data-lucide="refresh-cw" style="width:11px;height:11px;color:#D14A61"></i>Lifetime Exchange at 250+ Stores</div><div class="delivery-badge"><i data-lucide="undo-2" style="width:11px;height:11px;color:#D14A61"></i>30-Day Returns</div><div class="delivery-badge"><i data-lucide="package" style="width:11px;height:11px;color:#D14A61"></i>Free Shipping</div><div class="delivery-badge"><i data-lucide="refresh-cw" style="width:11px;height:11px;color:#D14A61"></i>Lifetime Exchange at 250+ Stores</div><div class="delivery-badge"><i data-lucide="undo-2" style="width:11px;height:11px;color:#D14A61"></i>30-Day Returns</div></div></div>';
-    document.getElementById("deliveryCheckBtn").onclick = function() { var pin = document.getElementById("deliveryPincode").value; if (pin.length !== 6) { showToast("Please enter a valid 6-digit pincode", "error"); return; } var res = document.getElementById("deliveryResult"); res.classList.add("show"); res.querySelector("p").innerHTML = '<strong>Estimated Delivery:</strong> ' + product.delivery.estimate + '<br><span style="font-size:11px;color:#166534">' + product.delivery.fast + '</span>'; showToast("Delivery available to your pincode", "success"); };
+    el.innerHTML = '<div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="color:#D14A61"></i></span>Delivery & Availability</div><div class="pincode-row"><input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="pincode-input" placeholder="Enter pincode" id="deliveryPincode"><button class="pincode-check-btn" id="deliveryCheckBtn">Check</button></div><div class="delivery-result" id="deliveryResult"><svg class="result-icon" id="deliveryIcon" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><p></p></div><div class="delivery-badges"><div class="delivery-ticker"><div class="delivery-badge"><i data-lucide="package" style="width:12px;height:12px;color:#D14A61"></i>Free Shipping</div><div class="delivery-badge"><i data-lucide="refresh-cw" style="width:12px;height:12px;color:#D14A61"></i>Lifetime Exchange at 250+ Stores</div><div class="delivery-badge"><i data-lucide="undo-2" style="width:12px;height:12px;color:#D14A61"></i>30-Day Returns</div><div class="delivery-badge"><i data-lucide="package" style="width:12px;height:12px;color:#D14A61"></i>Free Shipping</div><div class="delivery-badge"><i data-lucide="refresh-cw" style="width:12px;height:12px;color:#D14A61"></i>Lifetime Exchange at 250+ Stores</div><div class="delivery-badge"><i data-lucide="undo-2" style="width:12px;height:12px;color:#D14A61"></i>30-Day Returns</div></div></div>';
+    document.getElementById("deliveryPincode").addEventListener("input", function(e) { this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6); });
+    document.getElementById("deliveryCheckBtn").onclick = function() { var pin = document.getElementById("deliveryPincode").value; if (pin.length !== 6) { showToast("Please enter a valid 6-digit pincode", "error"); return; } var res = document.getElementById("deliveryResult"); var icon = document.getElementById("deliveryIcon"); var unserviceable = ["110001","999999","000000"]; if (unserviceable.indexOf(pin) !== -1) { res.classList.add("show","error"); res.classList.remove("success"); icon.setAttribute("stroke","#991b1b"); icon.innerHTML='<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>'; res.querySelector("p").innerHTML='<strong>Oops! We can\'t deliver here yet 😔</strong><br><span style="font-size:11px;color:#991b1b">This pincode isn\'t serviceable right now. Try a nearby one or check back later!</span>'; showToast("Delivery not available", "error"); return; } res.classList.add("show"); res.classList.remove("error"); icon.setAttribute("stroke","#166534"); icon.innerHTML='<circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>'; res.querySelector("p").innerHTML='<span style="font-size:11px;color:#555">Delivering to <strong style="color:#1a1a1a">' + product.delivery.city + ', ' + product.delivery.state + '</strong></span><br><strong style="font-size:13px">Estimated Delivery: ' + product.delivery.date + '</strong>'; showToast("Delivery available to your pincode", "success"); };
 })();
 
 // ===== FIND IN STORE =====

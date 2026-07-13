@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mia PDP — Edge Cases & Use Cases</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Albert Sans',sans-serif;background:#f5f5f5;color:#1a1a1a;min-height:100vh}
+        .font-display{font-family:'Fraunces',serif}
+
+        /* Navigation */
+        .nav-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;gap:16px}
+        .nav-back{width:36px;height:36px;border-radius:50%;border:1px solid #eee;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff}
+        .nav-back:hover{border-color:#D14A61}
+        .nav-title{font-size:16px;font-weight:700}
+        .nav-subtitle{font-size:11px;color:#777;margin-top:2px}
+
+        /* Menu screen */
+        .menu-screen{max-width:420px;margin:0 auto;padding:24px 16px}
+        .menu-header{text-align:center;margin-bottom:32px}
+        .menu-header h1{font-size:24px;font-weight:600;font-family:'Fraunces',serif;color:#D14A61;margin-bottom:4px}
+        .menu-header p{font-size:13px;color:#777}
+        .menu-grid{display:flex;flex-direction:column;gap:12px}
+        .menu-item{background:#fff;border-radius:16px;padding:18px 20px;border:1px solid #f0f0f0;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.2s}
+        .menu-item:hover{border-color:#D14A61;transform:translateY(-2px);box-shadow:0 8px 24px rgba(209,74,97,0.08)}
+        .menu-item.active{border-color:#D14A61;background:#FDF2F4}
+        .menu-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .menu-text{flex:1}
+        .menu-text h3{font-size:14px;font-weight:700;margin-bottom:2px}
+        .menu-text p{font-size:11px;color:#777}
+        .menu-arrow{color:#ccc;font-size:18px}
+        .menu-item:hover .menu-arrow{color:#D14A61}
+        .menu-badge{font-size:9px;font-weight:800;padding:3px 8px;border-radius:100px;background:#D14A61;color:#fff;margin-left:auto}
+        .menu-item.disabled{opacity:0.5;pointer-events:none}
+        .menu-item.disabled .menu-badge{background:#ccc}
+
+        /* Case viewer */
+        .case-screen{display:none;max-width:420px;margin:0 auto;padding:24px 16px}
+        .case-screen.active{display:block}
+        .case-tabs{display:flex;gap:8px;margin-bottom:24px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch}
+        .case-tabs::-webkit-scrollbar{display:none}
+        .case-tab{padding:8px 16px;border-radius:100px;border:1.5px solid #eee;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;flex-shrink:0;background:#fff}
+        .case-tab.active{border-color:#D14A61;background:#FDF2F4;color:#D14A61}
+        .case-tab:hover{border-color:#D14A61}
+
+        /* Phone frame for previews */
+        .phone-frame{background:#fff;border-radius:24px;border:1px solid #e5e5e5;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,0.06);position:relative;overflow:hidden}
+        .phone-frame::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:100px;height:4px;background:#e5e5e5;border-radius:0 0 4px 4px}
+        .case-label{margin-top:16px;padding:12px 16px;border-radius:12px;background:#f9fafb;border:1px solid #f0f0f0}
+        .case-label h4{font-size:12px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+        .case-label p{font-size:11px;color:#777;line-height:1.5}
+        .case-label .tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:800;letter-spacing:0.5px}
+        .tag-success{background:#f0fdf4;color:#166534}
+        .tag-error{background:#fef2f2;color:#991b1b}
+        .tag-warning{background:#fffbeb;color:#92400e}
+        .tag-info{background:#eff6ff;color:#1e40af}
+
+        /* ====== DELIVERY SECTION STYLES (replicated from PDP) ====== */
+        .delivery-section{padding:16px;background:#fff;border-radius:16px;border:1px solid #f0f0f0}
+        .delivery-title{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+        .icon-pill{padding:5px 8px;border-radius:100px;background:#FDF2F4;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .pincode-row{display:flex;gap:8px;margin-bottom:12px}
+        .pincode-input{flex:1;padding:12px 14px;border-radius:100px;border:1.5px solid #D14A61;font-size:14px;font-weight:500;outline:none;font-family:inherit}
+        .pincode-input::placeholder{color:#bbb}
+        .pincode-check-btn{padding:12px 20px;border-radius:100px;font-size:12px;font-weight:700;background:#D14A61;color:#fff;white-space:nowrap;border:none;cursor:pointer}
+        .delivery-result{display:none;padding:12px;border-radius:12px;background:#f0fdf4;border:1px solid rgba(34,197,94,0.15)}
+        .delivery-result.show{display:flex;align-items:flex-start;gap:8px}
+        .delivery-result.error{background:#fef2f2;border:1px solid rgba(239,68,68,0.15)}
+        .delivery-result .result-icon{width:18px;height:18px;flex-shrink:0;margin-top:1px}
+        .delivery-result p{font-size:12px;color:#166534;line-height:1.5}
+        .delivery-result.error p{color:#991b1b}
+        .delivery-badges{overflow:hidden;margin-top:12px;position:relative}
+        .delivery-ticker{display:flex;align-items:center;gap:16px;width:max-content;animation:deliveryScroll 12s linear infinite}
+        .delivery-badge{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:#D14A61;padding:6px 12px;border-radius:100px;background:#FDF2F4;white-space:nowrap;flex-shrink:0}
+        @keyframes deliveryScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    </style>
+</head>
+<body>
+
+<!-- ===== MENU SCREEN ===== -->
+<div id="menuScreen">
+    <div class="menu-screen" style="display:block">
+        <div class="menu-header">
+            <h1>Mia PDP Edge Cases</h1>
+            <p>Section-wise use cases & edge case previews</p>
+        </div>
+        <div class="menu-grid">
+            <div class="menu-item active" onclick="showSection('delivery')">
+                <div class="menu-icon" style="background:linear-gradient(135deg,#FDF2F4,#fecdd3)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                </div>
+                <div class="menu-text">
+                    <h3>Delivery Section</h3>
+                    <p>Pincode check, delivery estimates, errors</p>
+                </div>
+                <span class="menu-badge">2</span>
+                <span class="menu-arrow">›</span>
+            </div>
+            <div class="menu-item disabled">
+                <div class="menu-icon" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                </div>
+                <div class="menu-text">
+                    <h3>Coupons Section</h3>
+                    <p>Applied, expired, invalid states</p>
+                </div>
+                <span class="menu-badge">Soon</span>
+                <span class="menu-arrow">›</span>
+            </div>
+            <div class="menu-item disabled">
+                <div class="menu-icon" style="background:linear-gradient(135deg,#fffbeb,#fde68a)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/></svg>
+                </div>
+                <div class="menu-text">
+                    <h3>Exchange Gold</h3>
+                    <p>Calculator edge cases, rate fluctuations</p>
+                </div>
+                <span class="menu-badge">Soon</span>
+                <span class="menu-arrow">›</span>
+            </div>
+            <div class="menu-item disabled">
+                <div class="menu-icon" style="background:linear-gradient(135deg,#f0fdf4,#bbf7d0)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="menu-text">
+                    <h3>Price Section</h3>
+                    <p>Out of stock, price changes, EMI</p>
+                </div>
+                <span class="menu-badge">Soon</span>
+                <span class="menu-arrow">›</span>
+            </div>
+            <div class="menu-item disabled">
+                <div class="menu-icon" style="background:linear-gradient(135deg,#f5f3ff,#ddd6fe)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                </div>
+                <div class="menu-text">
+                    <h3>Gallery Section</h3>
+                    <p>Broken images, video, 360°</p>
+                </div>
+                <span class="menu-badge">Soon</span>
+                <span class="menu-arrow">›</span>
+            </div>
+            <div class="menu-item disabled">
+                <div class="menu-icon" style="background:linear-gradient(135deg,#FDF2F4,#fecdd3)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
+                <div class="menu-text">
+                    <h3>Find in Store</h3>
+                    <p>No stores nearby, store hours</p>
+                </div>
+                <span class="menu-badge">Soon</span>
+                <span class="menu-arrow">›</span>
+            </div>
+            <div class="menu-item disabled">
+                <div class="menu-icon" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <div class="menu-text">
+                    <h3>FAQ Section</h3>
+                    <p>Long answers, search, empty states</p>
+                </div>
+                <span class="menu-badge">Soon</span>
+                <span class="menu-arrow">›</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== DELIVERY SECTION CASES ===== -->
+<div id="deliveryScreen" style="display:none">
+    <div class="nav-header">
+        <div class="nav-back" onclick="showMenu()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </div>
+        <div>
+            <div class="nav-title">Delivery Section</div>
+            <div class="nav-subtitle">Edge cases & use cases</div>
+        </div>
+    </div>
+    <div class="case-screen active">
+        <div class="case-tabs">
+            <div class="case-tab active" onclick="showCase('delivery','success')">✅ Successful</div>
+            <div class="case-tab" onclick="showCase('delivery','error')">❌ Not Serviceable</div>
+            <div class="case-tab" onclick="showCase('delivery','empty')">📝 Empty State</div>
+            <div class="case-tab" onclick="showCase('delivery','invalid')">⚠️ Invalid Input</div>
+        </div>
+
+        <!-- Case 1: Successful delivery -->
+        <div class="case-content" id="case-delivery-success">
+            <div class="phone-frame">
+                <div class="delivery-section">
+                    <div class="delivery-title">
+                        <span class="icon-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+                        Delivery & Availability
+                    </div>
+                    <div class="pincode-row">
+                        <input type="tel" class="pincode-input" value="400001" readonly>
+                        <button class="pincode-check-btn">Check</button>
+                    </div>
+                    <div class="delivery-result show">
+                        <svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+                        <p>
+                            <span style="font-size:11px;color:#555">Delivering to <strong style="color:#1a1a1a">Mumbai, Maharashtra</strong></span><br>
+                            <strong style="font-size:13px">Estimated Delivery: 14th July</strong>
+                        </p>
+                    </div>
+                    <div class="delivery-badges">
+                        <div class="delivery-ticker" style="animation:none">
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free Shipping</div>
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime Exchange</div>
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day Returns</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="case-label">
+                <h4><span class="tag tag-success">HAPPY PATH</span> Delivery Available</h4>
+                <p>User enters valid serviceable pincode (400001). Shows detected city/state, estimated delivery date in clean single-date format. Dark green check icon.</p>
+            </div>
+        </div>
+
+        <!-- Case 2: Not serviceable -->
+        <div class="case-content" id="case-delivery-error" style="display:none">
+            <div class="phone-frame">
+                <div class="delivery-section">
+                    <div class="delivery-title">
+                        <span class="icon-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+                        Delivery & Availability
+                    </div>
+                    <div class="pincode-row">
+                        <input type="tel" class="pincode-input" value="793108" readonly>
+                        <button class="pincode-check-btn">Check</button>
+                    </div>
+                    <div class="delivery-result show error">
+                        <svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="#991b1b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        <p>
+                            <strong>Oops! We can't deliver here yet 😔</strong><br>
+                            <span style="font-size:11px;color:#991b1b">This pincode isn't serviceable right now. Try a nearby one or check back later!</span>
+                        </p>
+                    </div>
+                    <div class="delivery-badges">
+                        <div class="delivery-ticker" style="animation:none">
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free Shipping</div>
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime Exchange</div>
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day Returns</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="case-label">
+                <h4><span class="tag tag-error">ERROR STATE</span> Not Serviceable</h4>
+                <p>User enters a pincode that isn't serviceable. Red background box with X icon. Friendly gen-z tone copy. Toast shows error.</p>
+            </div>
+        </div>
+
+        <!-- Case 3: Empty state -->
+        <div class="case-content" id="case-delivery-empty" style="display:none">
+            <div class="phone-frame">
+                <div class="delivery-section">
+                    <div class="delivery-title">
+                        <span class="icon-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+                        Delivery & Availability
+                    </div>
+                    <div class="pincode-row">
+                        <input type="tel" class="pincode-input" placeholder="Enter pincode" readonly>
+                        <button class="pincode-check-btn">Check</button>
+                    </div>
+                    <div class="delivery-badges">
+                        <div class="delivery-ticker" style="animation:none">
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free Shipping</div>
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime Exchange</div>
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day Returns</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="case-label">
+                <h4><span class="tag tag-info">DEFAULT</span> Empty / Initial State</h4>
+                <p>No pincode entered yet. Input is empty with placeholder. No delivery result shown. Only trust ticker badges visible below.</p>
+            </div>
+        </div>
+
+        <!-- Case 4: Invalid input -->
+        <div class="case-content" id="case-delivery-invalid" style="display:none">
+            <div class="phone-frame">
+                <div class="delivery-section">
+                    <div class="delivery-title">
+                        <span class="icon-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+                        Delivery & Availability
+                    </div>
+                    <div class="pincode-row">
+                        <input type="tel" class="pincode-input" value="400" readonly style="border-color:#EF4444">
+                        <button class="pincode-check-btn">Check</button>
+                    </div>
+                    <div style="padding:8px 12px;border-radius:8px;background:#fef2f2;margin-bottom:12px;display:flex;align-items:center;gap:6px">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <span style="font-size:11px;color:#991b1b;font-weight:600">Please enter a valid 6-digit pincode</span>
+                    </div>
+                    <div class="delivery-badges">
+                        <div class="delivery-ticker" style="animation:none">
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free Shipping</div>
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime Exchange</div>
+                            <div class="delivery-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day Returns</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="case-label">
+                <h4><span class="tag tag-warning">VALIDATION</span> Invalid Pincode</h4>
+                <p>User enters less than 6 digits or non-numeric characters. Input border turns red, inline error message shown. Input only accepts numbers (non-numeric chars stripped).</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showSection(section) {
+    document.getElementById('menuScreen').style.display = 'none';
+    document.getElementById(section + 'Screen').style.display = 'block';
+}
+function showMenu() {
+    document.querySelectorAll('[id$="Screen"]').forEach(function(el) { el.style.display = 'none'; });
+    document.getElementById('menuScreen').style.display = 'block';
+}
+function showCase(section, caseName) {
+    // Update tabs
+    var screen = document.getElementById(section + 'Screen');
+    screen.querySelectorAll('.case-tab').forEach(function(t) { t.classList.remove('active'); });
+    event.target.classList.add('active');
+    // Show case content
+    screen.querySelectorAll('.case-content').forEach(function(c) { c.style.display = 'none'; });
+    var target = document.getElementById('case-' + section + '-' + caseName);
+    if (target) target.style.display = 'block';
+}
+</script>
+</body>
+</html>
