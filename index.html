@@ -552,23 +552,27 @@
         .reco-scroll::-webkit-scrollbar { display: none; }
 
         /* ===== TESTIMONIALS ===== */
-        .testimonials-section { padding: 20px 0; margin: 8px 0; overflow: hidden; }
+        .testimonials-section { padding: 16px 0; margin: 8px 16px; overflow: hidden; background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; }
         .testimonials-heading { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; text-align: center; margin-bottom: 4px; padding: 0 16px; }
-        .testimonials-sub { font-size: 11px; color: #777; text-align: center; margin-bottom: 16px; padding: 0 16px; }
-        .testimonials-track { display: flex; gap: 14px; width: fit-content; animation: testimonialScroll 30s linear infinite; padding: 8px 0; }
+        .testimonials-sub { font-size: 11px; color: #777; text-align: center; margin-bottom: 12px; padding: 0 16px; }
+        .testimonials-track { display: flex; gap: 16px; width: fit-content; animation: testimonialScroll 35s linear infinite; padding: 4px 0 4px 16px; }
         .testimonials-track:hover, .testimonials-track:active { animation-play-state: paused; }
         @keyframes testimonialScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .testi-card { width: 260px; flex-shrink: 0; padding: 18px; border-radius: 18px; background: #fff; border: 1px solid #f0f0f0; position: relative; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-        .testi-card.expanded { width: 300px; box-shadow: 0 8px 30px rgba(209,74,97,0.12); border-color: #D14A61; z-index: 5; }
-        .testi-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .testi-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; }
-        .testi-name { font-size: 12px; font-weight: 700; color: #1a1a1a; }
-        .testi-tag { font-size: 9px; color: #777; margin-top: 1px; }
-        .testi-stars { display: flex; gap: 2px; margin-bottom: 8px; }
-        .testi-text { font-size: 12px; color: #555; line-height: 1.6; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; transition: all 0.3s; }
+        .testi-card { width: 240px; flex-shrink: 0; background: #fff; border-radius: 14px; border: 1px solid #f0f0f0; box-shadow: 0 2px 12px rgba(0,0,0,0.04); display: flex; flex-direction: column; overflow: hidden; cursor: pointer; transition: box-shadow 0.3s; }
+        .testi-card:hover { box-shadow: 0 6px 24px rgba(209,74,97,0.1); }
+        .testi-card.expanded { box-shadow: 0 8px 30px rgba(209,74,97,0.15); }
+        .testi-body { padding: 14px 16px 10px; flex: 1; }
+        .testi-quote { font-family: 'Fraunces', serif; font-size: 32px; line-height: 1; color: #D14A61; opacity: 0.3; margin-bottom: 2px; }
+        .testi-title { display: none; }
+        .testi-stars { display: none; }
+        .testi-text { font-size: 11px; color: #666; line-height: 1.5; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; transition: all 0.3s; }
         .testi-card.expanded .testi-text { -webkit-line-clamp: unset; display: block; }
-        .testi-readmore { font-size: 10px; font-weight: 700; color: #D14A61; margin-top: 6px; }
+        .testi-readmore { font-size: 9px; font-weight: 700; color: #D14A61; margin-top: 6px; }
         .testi-card.expanded .testi-readmore { display: none; }
+        .testi-footer { padding: 10px 16px; background: linear-gradient(135deg, #FDF2F4, #fce4ec, #fff); display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f0e0e3; }
+        .testi-name { font-size: 12px; font-weight: 700; color: #1a1a1a; }
+        .testi-role { font-size: 9px; color: #777; margin-top: 1px; }
+        .testi-verified { width: 24px; height: 24px; border-radius: 50%; background: #D14A61; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
         .reco-card { min-width: calc((100vw - 44px) / 2.3); max-width: 160px; scroll-snap-align: start; flex-shrink: 0; }
         .reco-card-img { position: relative; aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid #f0f0f0; margin-bottom: 8px; }
@@ -578,6 +582,20 @@
         .reco-card-wish.active svg { fill: #D14A61; }
         .reco-card-name { font-size: 11px; color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .reco-card-price { font-size: 12px; font-weight: 700; color: #1a1a1a; margin-top: 2px; }
+
+        /* ===== COMMUNITY SECTION ===== */
+        .community-section { padding: 16px; margin: 8px 16px; background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; }
+        .community-heading { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .community-sub { font-size: 11px; color: #777; margin-bottom: 16px; }
+        .ratings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+        .rating-item { padding: 12px; border-radius: 12px; background: #f9fafb; border: 1px solid #f0f0f0; }
+        .rating-label { font-size: 10px; font-weight: 600; color: #555; margin-bottom: 6px; }
+        .rating-bar { height: 6px; border-radius: 100px; background: #eee; overflow: hidden; margin-bottom: 4px; }
+        .rating-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #D14A61, #E8668A); transition: width 1s ease; }
+        .rating-pct { font-size: 11px; font-weight: 800; color: #D14A61; }
+        .community-cta { display: inline-block; font-size: 13px; font-weight: 700; color: #D14A61; text-decoration: underline; text-underline-offset: 3px; transition: all 0.2s; background: none; border: none; padding: 0; }
+        .community-cta:active { opacity: 0.7; }
+        .community-divider { height: 1px; background: #f0f0f0; margin: 16px 0; }
 
         /* ===== LIGHTBOX ===== */
         .lightbox { position: fixed; inset: 0; z-index: 300; background: #000; display: none; flex-direction: column; align-items: center; justify-content: center; }
@@ -712,6 +730,9 @@
 <section class="reco-section style-warm" id="recoSection1"></section>
 <section class="reco-section style-cool" id="recoSection2"></section>
 <section class="reco-section style-gold" id="recoSection3"></section>
+
+<!-- COMMUNITY RATINGS -->
+<section class="community-section section-gap" id="communitySection"></section>
 
 <!-- FAQs -->
 <section class="faq-section" id="faqSection"></section>
@@ -1148,12 +1169,6 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
     document.getElementById("findStoreCta").onclick = function() { openSheet("store"); renderStoreSheet(); };
 })();
 
-// ===== TESTIMONIALS (placeholder) =====
-(function() {
-    var el = document.getElementById("testimonialsSection");
-    el.innerHTML = '<div style="padding:32px 16px;text-align:center"><h2 class="font-display" style="font-size:18px;font-weight:600;margin-bottom:6px">Loved by Thousands</h2><p style="font-size:11px;color:#777;margin-bottom:16px">Real stories from real Mia lovers</p><div style="padding:24px;border-radius:16px;border:2px dashed #e0e0e0;color:#999;font-size:12px">Testimonials section — design TBD</div></div>';
-})();
-
 // ===== RECOMMENDATIONS =====
 function renderRecoSection(id, title, subtitle, products) {
     var el = document.getElementById(id);
@@ -1175,6 +1190,57 @@ function renderRecoSection(id, title, subtitle, products) {
 renderRecoSection("recoSection1", "Complete the Set", "Pieces that pair perfectly with your selection", recoProducts.slice(0, 4));
 renderRecoSection("recoSection2", "You May Also Like", "Handpicked based on what others loved", recoProducts.slice(2));
 renderRecoSection("recoSection3", "Most Gifted", "Top picks our customers love to gift", recoProducts.slice(0, 5));
+
+// ===== TESTIMONIALS =====
+(function() {
+    var el = document.getElementById("testimonialsSection");
+    var testimonials = [
+        { name: "Priya S.", role: "Verified Buyer", text: "I got the Gleam Play ring for my anniversary and I'm obsessed! The diamonds catch light beautifully and it's so comfortable for daily wear. My husband nailed it with this one. The packaging was gorgeous too." },
+        { name: "Ananya R.", role: "Repeat Customer", text: "Third purchase from Mia and they never disappoint. The quality is consistently amazing for the price point. This ring sits perfectly on my finger and I've gotten so many compliments at work." },
+        { name: "Meera K.", role: "Verified Buyer", text: "Was skeptical about buying jewellery online but Mia changed my mind completely. The ring looks exactly like the photos. Delivery was super fast and the 30-day return policy made me feel safe." },
+        { name: "Kavya D.", role: "Gift Recipient", text: "Received this as a birthday gift and it's the prettiest ring I own now. The 14KT gold has a beautiful warm tone and the diamonds are so sparkly in person. Mia has made me a loyal customer." },
+        { name: "Roshni M.", role: "Verified Buyer", text: "The exchange gold program is what sold me. Traded in my old gold jewellery and got this stunning piece at almost half the price. The whole process at the store was smooth and transparent." },
+        { name: "Sneha T.", role: "First Time Buyer", text: "I was looking for something minimal yet elegant for everyday wear and this ring is perfect. It's lightweight, doesn't snag on anything, and the diamond arrangement is so unique." }
+    ];
+    var h = '<div class="testimonials-heading font-display" style="font-size:15px;font-weight:600;margin-bottom:4px;padding:0 16px">Loved by Thousands</div>';
+    h += '<p class="testimonials-sub" style="margin-bottom:12px;padding:0 16px">Real stories from real Mia lovers</p>';
+    h += '<div style="overflow:hidden"><div class="testimonials-track" id="testiTrack">';
+    function buildCard(t, i) {
+        return '<div class="testi-card" data-testi="' + i + '"><div class="testi-body"><div class="testi-quote">\u201C\u201C</div><div class="testi-text">' + t.text + '</div><div class="testi-readmore">Read more</div></div><div class="testi-footer"><div class="testi-footer-info"><div class="testi-name">' + t.name + '</div><div class="testi-role">' + t.role + '</div></div><div class="testi-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></div></div></div>';
+    }
+    testimonials.forEach(function(t, i) { h += buildCard(t, i); });
+    testimonials.forEach(function(t, i) { h += buildCard(t, i + testimonials.length); });
+    h += '</div></div>';
+    el.innerHTML = h;
+    el.querySelectorAll('.testi-card').forEach(function(card) {
+        card.onclick = function() {
+            var wasExpanded = this.classList.contains('expanded');
+            el.querySelectorAll('.testi-card').forEach(function(c) { c.classList.remove('expanded'); });
+            if (!wasExpanded) this.classList.add('expanded');
+        };
+    });
+})();
+
+// ===== COMMUNITY RATINGS =====
+(function() {
+    var el = document.getElementById("communitySection");
+    var ratings = [
+        { label: "Design of Products", pct: 94, color: "#D14A61" },
+        { label: "Value for Money", pct: 88, color: "#8b5cf6" },
+        { label: "Unboxing Experience", pct: 91, color: "#2563eb" },
+        { label: "Product Variety", pct: 86, color: "#059669" }
+    ];
+    var h = '<div class="community-heading font-display">Why People Love Mia</div>';
+    h += '<p class="community-sub">Based on 10,000+ reviews from verified buyers</p>';
+    h += '<div class="ratings-grid">';
+    ratings.forEach(function(r) {
+        var lightBg = r.color === '#D14A61' ? '#FDF2F4' : r.color === '#8b5cf6' ? '#f5f3ff' : r.color === '#2563eb' ? '#eff6ff' : '#f0fdf4';
+        h += '<div class="rating-item" style="border-left:3px solid ' + r.color + ';background:' + lightBg + '"><div class="rating-label" style="color:' + r.color + '">' + r.label + '</div><div class="rating-bar"><div class="rating-fill" style="width:' + r.pct + '%;background:' + r.color + '"></div></div><div class="rating-pct" style="color:' + r.color + '">' + r.pct + '%</div></div>';
+    });
+    h += '</div>';
+    h += '<div style="text-align:center"><button class="community-cta" onclick="showToast(\'Opening Mia Stories...\',\'info\')">Explore Mia Stories</button></div>';
+    el.innerHTML = h;
+})();
 
 // ===== FAQs =====
 (function() {
