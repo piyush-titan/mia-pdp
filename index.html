@@ -452,14 +452,34 @@
         .btn-add-bag {
             padding: 12px 16px; border-radius: 100px; font-size: 12px; font-weight: 700;
             color: #fff; white-space: nowrap; flex-shrink: 0;
-            background: linear-gradient(135deg, #E8668A 0%, #D14A61 30%, #B03A50 60%, #C9506D 80%, #D8607E 100%);
-            background-size: 200% 200%; animation: metallicShift 4s ease infinite;
+            background: #D14A61;
             box-shadow: 0 4px 16px rgba(209,74,97,0.35);
             transition: transform 0.2s, box-shadow 0.2s;
             display: flex; align-items: center; gap: 5px;
         }
         .btn-add-bag:active { transform: scale(0.96); box-shadow: 0 2px 8px rgba(209,74,97,0.3); }
         .btn-add-bag i { width: 13px; height: 13px; color: #fff !important; }
+        .btn-add-bag svg, .btn-add-bag-main svg { animation: bagBounce 2s ease infinite; }
+        @keyframes bagBounce { 0%,70%{transform:translateY(0) scale(1)} 75%{transform:translateY(-3px) scale(1.15)} 80%{transform:translateY(0) scale(0.95)} 85%{transform:translateY(-2px) scale(1.1)} 90%{transform:translateY(0) scale(1)} }
+        /* Main page CTAs */
+        .btn-add-bag-main {
+            flex: 1; padding: 12px; border-radius: 100px; font-size: 13px; font-weight: 700;
+            color: #fff; text-align: center;
+            background: #D14A61;
+            box-shadow: 0 4px 16px rgba(209,74,97,0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        .btn-add-bag-main:active { transform: scale(0.96); }
+        .btn-prebook-main {
+            flex: 1; padding: 12px; border-radius: 100px; font-size: 13px; font-weight: 700;
+            color: #5c3d0a; text-align: center;
+            background: linear-gradient(135deg, #f5d77a 0%, #e8c252 25%, #f5d77a 50%, #d4a017 75%, #f5d77a 100%);
+            background-size: 300% 300%; animation: prebookSheen 6s ease infinite;
+            box-shadow: 0 4px 16px rgba(184,134,11,0.25);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-prebook-main:active { transform: scale(0.96); }
         @keyframes metallicShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -1019,10 +1039,10 @@ function renderPriceSection() {
             });
             h += '</div></div>';
         }
-        // Buy Now + Add to Bag CTAs
+        // Buy Now + Add to Bag + Pre-Book CTAs
         h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px solid #f0f0f0"><div style="display:flex;align-items:center;gap:8px"><i data-lucide="gift" style="width:16px;height:16px;color:#D14A61"></i><span style="font-size:13px;font-weight:600;color:#1a1a1a">Make it a Gift</span></div><div class="toggle-switch' + (state.giftEnabled ? ' active' : '') + '" id="giftToggle"></div></div>';
         h += '<div class="gift-selected-badge' + (state.giftEnabled ? ' show' : '') + '" id="giftBadge" style="margin-top:8px"><i data-lucide="check" style="width:12px;height:12px"></i>Gift wrap selected</div>';
-        h += '<div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0"><button class="btn-primary" id="priceBuyNow" style="flex:1;padding:10px">Buy Now</button><button style="flex:1;padding:10px;border-radius:100px;font-size:14px;font-weight:700;color:#D14A61;background:#FDF2F4;border:1.5px solid #D14A61;transition:all 0.2s" id="priceAddBag">Add to Bag</button></div>';
+        h += '<div style="margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0"><div style="display:flex;gap:10px;margin-bottom:10px"><button style="flex:1;padding:12px;border-radius:100px;font-size:14px;font-weight:700;color:#D14A61;background:#FDF2F4;border:1.5px solid #D14A61;transition:all 0.2s" id="priceBuyNow">Buy Now</button><button class="btn-add-bag-main" id="priceAddBag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button></div><button class="btn-prebook-main" style="width:100%" id="pricePrebook">Pre-Book Now</button></div>';
         h += '<div style="display:flex;align-items:center;justify-content:center;gap:5px;margin-top:12px"><i data-lucide="leaf" style="width:14px;height:14px;color:#22C55E"></i><span style="font-size:10px;font-weight:600;color:#166534">100% Recycled Gold for a Greener World</span></div>';
         el.innerHTML = h;
         lucide.createIcons({ nodes: [el] });
@@ -1032,6 +1052,7 @@ function renderPriceSection() {
         var sg = document.getElementById("sizeGuideOpen"); if (sg) sg.onclick = function() { openSheet("sizeGuide"); };
         document.getElementById("priceBuyNow").onclick = function() { showToast("Proceeding to checkout", "success"); };
         document.getElementById("priceAddBag").onclick = function() { showToast("Added to Bag: " + product.name, "success"); };
+        document.getElementById("pricePrebook").onclick = function() { openSheet("prebook"); renderPrebookSheet(); };
         document.getElementById("giftToggle").onclick = function() { state.giftEnabled = !state.giftEnabled; this.classList.toggle("active", state.giftEnabled); document.getElementById("giftBadge").classList.toggle("show", state.giftEnabled); if (state.giftEnabled) { openSheet("gift"); renderGiftSheet(); } };
     }
     renderPriceSection();
@@ -1115,10 +1136,8 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
 
 // ===== PRE-BOOK =====
 (function() {
-    if (!product.isPreBookEnabled) { document.getElementById("prebookSection").style.display = "none"; return; }
-    var el = document.getElementById("prebookSection");
-    el.innerHTML = '<div class="prebook-heading">Pre-Book for Festive Season</div><p class="prebook-desc">Lock today\'s gold rate and get guaranteed delivery before Dhanteras</p><button class="prebook-cta" id="prebookCta">Pre-Book Now</button>';
-    document.getElementById("prebookCta").onclick = function() { openSheet("prebook"); renderPrebookSheet(); };
+    if (!product.isPreBookEnabled) { return; }
+    document.getElementById("prebookSection").style.display = "none";
 })();
 
 // ===== DELIVERY CHECK =====
