@@ -1062,7 +1062,8 @@ document.getElementById("similarBtn").onclick = function() {
     if (product.gemstone) {
         var gemstoneSvg = '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 3 L18 3 L22 9 L12 21 L2 9 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></path><path d="M6 3 L12 9 M18 3 L12 9 M2 9 L22 9 M12 9 L12 21" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></path></svg>';
         var primaryGem = product.gemstone.name.split(',')[0].trim();
-        h += '<div class="highlight-item"><div class="highlight-icon gemstone-bg">' + gemstoneSvg + '</div><div class="highlight-text"><div class="hl-value">' + product.gemstone.count + ' ' + primaryGem + '</div><div class="hl-label">' + product.gemstone.colour + ' \u00b7 ' + product.gemstone.weight + '</div></div></div>';
+        var gemLabel = (product.gemstone.colour ? product.gemstone.colour + ' \u00b7 ' : '') + product.gemstone.weight;
+        h += '<div class="highlight-item"><div class="highlight-icon gemstone-bg">' + gemstoneSvg + '</div><div class="highlight-text"><div class="hl-value">' + product.gemstone.count + ' ' + primaryGem + '</div><div class="hl-label">' + gemLabel + '</div></div></div>';
     }
     
     // Gross Weight
