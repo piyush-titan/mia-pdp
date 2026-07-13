@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonial Card Options</title>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Albert Sans',sans-serif;background:#f5f5f5;padding:24px 0;color:#1a1a1a}
+        h1{font-family:'Fraunces',serif;font-size:20px;text-align:center;margin-bottom:4px;color:#D14A61}
+        .sub{text-align:center;font-size:11px;color:#777;margin-bottom:28px}
+        .label{font-size:13px;font-weight:800;margin:0 16px 12px;display:flex;align-items:center;gap:8px}
+        .label span{font-size:9px;font-weight:700;padding:3px 8px;border-radius:100px;background:#FDF2F4;color:#D14A61}
+        .desc{font-size:10px;color:#999;margin:0 16px 14px;line-height:1.5}
+        .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 16px 16px;scrollbar-width:none}
+        .scroll::-webkit-scrollbar{display:none}
+        .divider{height:1px;background:#e5e5e5;margin:24px 16px}
+        .star{width:11px;height:11px}
+        .stars{display:flex;gap:2px;margin-bottom:6px}
+
+        /* ===== E: Speech Bubble Overlap ===== */
+        .row-e{display:flex;padding-left:0}
+        .card-e{width:230px;flex-shrink:0;position:relative;margin-left:-20px}
+        .card-e:first-child{margin-left:0}
+        .card-e .bubble{padding:16px 18px 14px;background:#fff;border:1px solid #f0f0f0;border-radius:18px 18px 18px 6px;box-shadow:0 2px 10px rgba(0,0,0,0.05);position:relative}
+        .card-e .bubble::after{content:'';position:absolute;bottom:-8px;left:16px;width:16px;height:16px;background:#fff;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;transform:rotate(45deg);clip-path:polygon(0 0,100% 100%,0 100%)}
+        .card-e .name{font-size:11px;font-weight:700;margin-top:14px;padding-left:4px}
+        .card-e .text{font-size:11px;color:#555;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+        .card-e .more{font-size:9px;font-weight:700;color:#D14A61;margin-top:4px}
+
+        /* ===== F: Stacked Overlap with Color Edge ===== */
+        .row-f{display:flex;padding-left:0}
+        .card-f{width:220px;flex-shrink:0;margin-left:-16px;padding:16px 16px 14px;border-radius:14px;background:#fff;border:1px solid #f0f0f0;box-shadow:0 2px 10px rgba(0,0,0,0.05);position:relative;overflow:hidden}
+        .card-f:first-child{margin-left:0}
+        .card-f::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px}
+        .card-f:nth-child(1)::before{background:#D14A61}
+        .card-f:nth-child(2)::before{background:#8b5cf6}
+        .card-f:nth-child(3)::before{background:#2563eb}
+        .card-f:nth-child(4)::before{background:#059669}
+        .card-f:nth-child(5)::before{background:#d97706}
+        .card-f:nth-child(6)::before{background:#D14A61}
+        .card-f .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+        .card-f .avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+        .card-f .name{font-size:11px;font-weight:700}
+        .card-f .text{font-size:10px;color:#555;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+        .card-f .more{font-size:9px;font-weight:700;color:#D14A61;margin-top:4px}
+
+        /* ===== G: Rounded Tag / Pill Cards ===== */
+        .row-g{display:flex;gap:10px}
+        .card-g{width:240px;flex-shrink:0;padding:16px 18px;border-radius:24px;background:#fff;border:1px solid #f0f0f0;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+        .card-g .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+        .card-g .avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+        .card-g .right{flex:1}
+        .card-g .name{font-size:11px;font-weight:700}
+        .card-g .text{font-size:10px;color:#555;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+        .card-g .more{font-size:9px;font-weight:700;color:#D14A61;margin-top:4px}
+
+        /* ===== H: Notch / Ticket Style ===== */
+        .row-h{display:flex;gap:12px}
+        .card-h{width:230px;flex-shrink:0;position:relative;background:#fff;border:1px solid #f0f0f0;border-radius:14px;padding:16px 16px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+        .card-h::before,.card-h::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#f5f5f5;border:1px solid #f0f0f0}
+        .card-h::before{left:-9px;top:50%;transform:translateY(-50%)}
+        .card-h::after{right:-9px;top:50%;transform:translateY(-50%)}
+        .card-h .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+        .card-h .avatar{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+        .card-h .name{font-size:11px;font-weight:700}
+        .card-h .text{font-size:10px;color:#555;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+        .card-h .more{font-size:9px;font-weight:700;color:#D14A61;margin-top:4px}
+
+        /* ===== I: Gradient Glass Morph ===== */
+        .row-i{display:flex;gap:12px}
+        .card-i{width:230px;flex-shrink:0;padding:18px;border-radius:16px;background:linear-gradient(145deg,rgba(253,242,244,0.8),rgba(240,230,255,0.5),rgba(232,244,253,0.5));border:1px solid rgba(255,255,255,0.6);backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(209,74,97,0.06)}
+        .card-i .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+        .card-i .avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+        .card-i .name{font-size:11px;font-weight:700}
+        .card-i .text{font-size:10px;color:#555;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+        .card-i .more{font-size:9px;font-weight:700;color:#D14A61;margin-top:4px}
+
+        /* ===== J: Overlap Fan with Shadow Depth ===== */
+        .row-j{display:flex;padding-left:0}
+        .card-j{width:210px;flex-shrink:0;margin-left:-24px;padding:16px;border-radius:16px;background:#fff;border:1px solid #f0f0f0;position:relative;transition:transform 0.2s,box-shadow 0.2s}
+        .card-j:first-child{margin-left:0}
+        .card-j:nth-child(1){z-index:6;box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+        .card-j:nth-child(2){z-index:5;box-shadow:0 4px 16px rgba(0,0,0,0.06)}
+        .card-j:nth-child(3){z-index:4;box-shadow:0 3px 12px rgba(0,0,0,0.05)}
+        .card-j:nth-child(4){z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+        .card-j:nth-child(5){z-index:2;box-shadow:0 2px 6px rgba(0,0,0,0.03)}
+        .card-j:nth-child(6){z-index:1;box-shadow:0 1px 4px rgba(0,0,0,0.02)}
+        .card-j .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+        .card-j .avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+        .card-j .name{font-size:11px;font-weight:700}
+        .card-j .text{font-size:10px;color:#555;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+        .card-j .more{font-size:9px;font-weight:700;color:#D14A61;margin-top:4px}
+    </style>
+</head>
+<body>
+<h1>Testimonial Card Options</h1>
+<p class="sub">Scroll each row. Pick your favourite!</p>
+
+<!-- E: Speech Bubble Overlap -->
+<div class="label"><span>E</span> Speech Bubble + Overlap</div>
+<div class="desc">Chat-style bubbles with a tail pointer. Cards overlap slightly left to create depth. Name sits below the bubble.</div>
+<div class="scroll"><div class="row-e">
+    <div class="card-e"><div class="bubble"><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">I got the Gleam Play ring for my anniversary and I'm obsessed! The diamonds catch light beautifully.</div><div class="more">Read more</div></div><div class="name">Priya S.</div></div>
+    <div class="card-e"><div class="bubble"><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">Third purchase from Mia and they never disappoint. The quality is consistently amazing for the price.</div><div class="more">Read more</div></div><div class="name">Ananya R.</div></div>
+    <div class="card-e"><div class="bubble"><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">Was skeptical about buying jewellery online but Mia changed my mind. The ring looks exactly like photos.</div><div class="more">Read more</div></div><div class="name">Meera K.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<!-- F: Color Edge Overlap -->
+<div class="label"><span>F</span> Color Edge + Overlap</div>
+<div class="desc">Each card has a unique left color bar. Cards stack with slight overlap creating a layered deck feel.</div>
+<div class="scroll"><div class="row-f">
+    <div class="card-f"><div class="top"><div class="avatar" style="background:#D14A61">P</div><div class="name">Priya S.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">I got the Gleam Play ring for my anniversary and I'm obsessed! The diamonds catch light beautifully.</div><div class="more">Read more</div></div>
+    <div class="card-f"><div class="top"><div class="avatar" style="background:#8b5cf6">A</div><div class="name">Ananya R.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">Third purchase from Mia and they never disappoint. Quality is consistently amazing for the price point.</div><div class="more">Read more</div></div>
+    <div class="card-f"><div class="top"><div class="avatar" style="background:#2563eb">M</div><div class="name">Meera K.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">Was skeptical about buying jewellery online but Mia changed my mind completely. Ring looks exactly like photos.</div><div class="more">Read more</div></div>
+    <div class="card-f"><div class="top"><div class="avatar" style="background:#059669">K</div><div class="name">Kavya D.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">Received this as a birthday gift and it's the prettiest ring I own now. The 14KT gold has a beautiful warm tone.</div><div class="more">Read more</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<!-- G: Super Round Pill -->
+<div class="label"><span>G</span> Pill / Super Rounded</div>
+<div class="desc">Extra rounded corners (24px radius) give a soft pill shape. Clean and friendly.</div>
+<div class="scroll"><div class="row-g">
+    <div class="card-g"><div class="top"><div class="avatar" style="background:#D14A61">P</div><div class="right"><div class="name">Priya S.</div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div></div></div><div class="text">I got the Gleam Play ring for my anniversary and I'm obsessed! The diamonds catch light beautifully and it's comfortable.</div><div class="more">Read more</div></div>
+    <div class="card-g"><div class="top"><div class="avatar" style="background:#8b5cf6">A</div><div class="right"><div class="name">Ananya R.</div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div></div></div><div class="text">Third purchase from Mia. Quality is consistently amazing for the price point. Ring sits perfectly on my finger.</div><div class="more">Read more</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<!-- H: Ticket / Notch -->
+<div class="label"><span>H</span> Ticket Notch</div>
+<div class="desc">Circular cutouts on left and right edges create a coupon/ticket feel. Squared avatar for variety.</div>
+<div class="scroll"><div class="row-h">
+    <div class="card-h"><div class="top"><div class="avatar" style="background:#D14A61">P</div><div class="name">Priya S.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">I got the Gleam Play ring for my anniversary and I'm obsessed! The diamonds catch light beautifully.</div><div class="more">Read more</div></div>
+    <div class="card-h"><div class="top"><div class="avatar" style="background:#2563eb">M</div><div class="name">Meera K.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">Was skeptical about buying jewellery online but Mia changed my mind completely. Delivery was super fast.</div><div class="more">Read more</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<!-- I: Gradient Glass -->
+<div class="label"><span>I</span> Gradient Glassmorphism</div>
+<div class="desc">Pastel gradient background (pink → purple → blue) with frosted glass effect. Premium and dreamy.</div>
+<div class="scroll"><div class="row-i">
+    <div class="card-i"><div class="top"><div class="avatar" style="background:#D14A61">P</div><div class="name">Priya S.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">I got the Gleam Play ring for my anniversary and I'm obsessed! The diamonds catch light beautifully.</div><div class="more">Read more</div></div>
+    <div class="card-i"><div class="top"><div class="avatar" style="background:#8b5cf6">A</div><div class="name">Ananya R.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">Third purchase from Mia and they never disappoint. Quality is consistently amazing for the price.</div><div class="more">Read more</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<!-- J: Deep Overlap Fan -->
+<div class="label"><span>J</span> Deep Overlap Fan</div>
+<div class="desc">Cards overlap more aggressively with decreasing shadow depth, creating a fanned deck effect. First card is most prominent.</div>
+<div class="scroll"><div class="row-j">
+    <div class="card-j"><div class="top"><div class="avatar" style="background:#D14A61">P</div><div class="name">Priya S.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">I got the Gleam Play ring for my anniversary and I'm obsessed! The diamonds catch light beautifully.</div><div class="more">Read more</div></div>
+    <div class="card-j"><div class="top"><div class="avatar" style="background:#8b5cf6">A</div><div class="name">Ananya R.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">Third purchase from Mia and they never disappoint. Quality is consistently amazing for the price.</div><div class="more">Read more</div></div>
+    <div class="card-j"><div class="top"><div class="avatar" style="background:#2563eb">M</div><div class="name">Meera K.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">Was skeptical about buying jewellery online but Mia changed my mind completely. Ring looks exactly like photos.</div><div class="more">Read more</div></div>
+    <div class="card-j"><div class="top"><div class="avatar" style="background:#059669">K</div><div class="name">Kavya D.</div></div><div class="stars"><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24" fill="#fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text">Received this as a birthday gift and it's the prettiest ring I own now. The 14KT gold has a warm tone.</div><div class="more">Read more</div></div>
+</div></div>
+
+</body>
+</html>

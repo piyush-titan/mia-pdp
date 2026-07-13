@@ -422,7 +422,7 @@
         .sticky-size-trigger {
             display: flex; align-items: center; gap: 3px;
             padding: 5px 8px 5px 10px; border-radius: 100px;
-            border: 1px solid #e0e0e0; font-size: 10px; font-weight: 600;
+            border: 1px solid #e0e0e0; font-size: 9px; font-weight: 600;
             color: #555; background: #FAFAFA; white-space: nowrap;
             position: relative; cursor: pointer; transition: all 0.2s;
             min-width: 0; overflow: hidden;
@@ -450,7 +450,7 @@
         .size-dropdown-item.oos { color: #bbb; font-style: italic; }
         .sticky-spacer { flex: 1; }
         .btn-add-bag {
-            padding: 12px 16px; border-radius: 100px; font-size: 12px; font-weight: 700;
+            padding: 12px 20px; border-radius: 100px; font-size: 12px; font-weight: 700;
             color: #fff; white-space: nowrap; flex-shrink: 0;
             background: #D14A61;
             box-shadow: 0 4px 16px rgba(209,74,97,0.35);
@@ -459,7 +459,7 @@
         }
         .btn-add-bag:active { transform: scale(0.96); box-shadow: 0 2px 8px rgba(209,74,97,0.3); }
         .btn-add-bag i { width: 13px; height: 13px; color: #fff !important; }
-        .btn-add-bag svg, .btn-add-bag-main svg { animation: bagBounce 2s ease infinite; }
+        .btn-add-bag svg, .btn-add-bag-main svg { animation: bagBounce 2s ease infinite; width: 16px; height: 16px; }
         @keyframes bagBounce { 0%,70%{transform:translateY(0) scale(1)} 75%{transform:translateY(-3px) scale(1.15)} 80%{transform:translateY(0) scale(0.95)} 85%{transform:translateY(-2px) scale(1.1)} 90%{transform:translateY(0) scale(1)} }
         /* Main page CTAs */
         .btn-add-bag-main {
@@ -550,6 +550,26 @@
             scroll-snap-type: x mandatory; scroll-padding-left: 16px;
         }
         .reco-scroll::-webkit-scrollbar { display: none; }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials-section { padding: 20px 0; margin: 8px 0; overflow: hidden; }
+        .testimonials-heading { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; text-align: center; margin-bottom: 4px; padding: 0 16px; }
+        .testimonials-sub { font-size: 11px; color: #777; text-align: center; margin-bottom: 16px; padding: 0 16px; }
+        .testimonials-track { display: flex; gap: 14px; width: fit-content; animation: testimonialScroll 30s linear infinite; padding: 8px 0; }
+        .testimonials-track:hover, .testimonials-track:active { animation-play-state: paused; }
+        @keyframes testimonialScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .testi-card { width: 260px; flex-shrink: 0; padding: 18px; border-radius: 18px; background: #fff; border: 1px solid #f0f0f0; position: relative; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .testi-card.expanded { width: 300px; box-shadow: 0 8px 30px rgba(209,74,97,0.12); border-color: #D14A61; z-index: 5; }
+        .testi-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .testi-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; }
+        .testi-name { font-size: 12px; font-weight: 700; color: #1a1a1a; }
+        .testi-tag { font-size: 9px; color: #777; margin-top: 1px; }
+        .testi-stars { display: flex; gap: 2px; margin-bottom: 8px; }
+        .testi-text { font-size: 12px; color: #555; line-height: 1.6; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; transition: all 0.3s; }
+        .testi-card.expanded .testi-text { -webkit-line-clamp: unset; display: block; }
+        .testi-readmore { font-size: 10px; font-weight: 700; color: #D14A61; margin-top: 6px; }
+        .testi-card.expanded .testi-readmore { display: none; }
+
         .reco-card { min-width: calc((100vw - 44px) / 2.3); max-width: 160px; scroll-snap-align: start; flex-shrink: 0; }
         .reco-card-img { position: relative; aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid #f0f0f0; margin-bottom: 8px; }
         .reco-card-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -673,23 +693,20 @@
 <!-- PRICE SECTION -->
 <section class="price-section section-gap" id="priceSection"></section>
 
-<!-- EXCHANGE GOLD -->
-<section class="exchange-section section-gap" id="exchangeSection"></section>
-
 <!-- COUPONS -->
 <section class="coupons-section section-gap" id="couponsSection"></section>
-
-<!-- PROMOTIONS -->
-<section class="promos-section section-gap" id="promosSection"></section>
-
-<!-- PRE-BOOK -->
-<section class="prebook-section section-gap" id="prebookSection"></section>
 
 <!-- DELIVERY CHECK -->
 <section class="delivery-section section-gap" id="deliverySection"></section>
 
 <!-- FIND IN STORE -->
 <section class="find-store-section section-gap" id="findStoreSection"></section>
+
+<!-- EXCHANGE GOLD -->
+<section class="exchange-section section-gap" id="exchangeSection"></section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section section-gap" id="testimonialsSection"></section>
 
 <!-- RECOMMENDATIONS -->
 <section class="reco-section style-warm" id="recoSection1"></section>
@@ -1119,26 +1136,9 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
     });
 })();
 
-// ===== PROMOTIONS =====
-(function() {
-    var el = document.getElementById("promosSection");
-    var price = product.price.current;
-    var activeTier = price >= 300000 ? "D" : price >= 150000 ? "C" : price >= 50000 ? "B" : price >= 10000 ? "A" : null;
-    var h = '<div class="promos-header"><span class="promos-badge">FESTIVE OFFER</span><span class="promos-title">Save More, Sparkle More</span></div>';
-    h += '<p class="promos-subtitle">Up to 101% off on Making Charges* . Buy more, save more</p><div class="promo-tiers">';
-    [{ band:"A",range:"\u20B910K \u2013 \u20B949.99K",qty1:"21%",qty2:"31%",qty3:"51%"},{ band:"B",range:"\u20B950K \u2013 \u20B91.49L",qty1:"31%",qty2:"41%",qty3:"61%"},{ band:"C",range:"\u20B91.50L \u2013 \u20B92.99L",qty1:"41%",qty2:"51%",qty3:"71%"},{ band:"D",range:"\u20B93L & Above",qty1:"71%",qty2:"81%",qty3:"101%"}].forEach(function(t) {
-        var isA = t.band === activeTier;
-        h += '<div class="promo-tier' + (isA ? ' active-tier' : '') + '"><div class="promo-tier-badge">' + t.qty1 + '</div><div class="promo-tier-info"><div class="promo-tier-label">' + t.range + (isA ? ' <span style="font-size:9px;background:#D14A61;color:#fff;padding:1px 6px;border-radius:100px;margin-left:4px">YOUR TIER</span>' : '') + '</div><div class="promo-tier-desc">Qty 2: ' + t.qty2 + ' off | Qty 3+: ' + t.qty3 + ' off on Making Charges</div></div></div>';
-    });
-    h += '</div><div class="promo-qty-bonus"><p><i data-lucide="gift" style="width:14px;height:14px;color:#166534"></i> Buy 2 items: Extra 10% off | Buy 3+: Extra 30% off</p><span>Discount applied automatically in cart on Making Charges</span></div>';
-    el.innerHTML = h;
-})();
+// ===== PROMOTIONS (removed) =====
 
-// ===== PRE-BOOK =====
-(function() {
-    if (!product.isPreBookEnabled) { return; }
-    document.getElementById("prebookSection").style.display = "none";
-})();
+// ===== PRE-BOOK (section removed, handled via price CTAs) =====
 
 // ===== DELIVERY CHECK =====
 (function() {
@@ -1153,6 +1153,12 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
     var el = document.getElementById("findStoreSection");
     el.innerHTML = '<svg class="find-store-bg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l2-4h16l2 4"/><path d="M2 7h20"/><rect x="2" y="7" width="4" height="4" rx="1"/><rect x="6" y="7" width="4" height="4" rx="1"/><rect x="10" y="7" width="4" height="4" rx="1"/><rect x="14" y="7" width="4" height="4" rx="1"/><rect x="18" y="7" width="4" height="4" rx="1"/><path d="M2 11v10h20V11"/><path d="M9 21v-7h6v7"/></svg><div class="find-store-title"><span class="icon-pill"><i data-lucide="map-pin" style="color:#D14A61"></i></span>Find In Store</div><p class="find-store-subtitle">Locate this product at a Mia store near you</p><button class="find-store-cta" id="findStoreCta"><i data-lucide="search" style="color:#fff;width:14px;height:14px"></i>Check Store Availability</button>';
     document.getElementById("findStoreCta").onclick = function() { openSheet("store"); renderStoreSheet(); };
+})();
+
+// ===== TESTIMONIALS (placeholder) =====
+(function() {
+    var el = document.getElementById("testimonialsSection");
+    el.innerHTML = '<div style="padding:32px 16px;text-align:center"><h2 class="font-display" style="font-size:18px;font-weight:600;margin-bottom:6px">Loved by Thousands</h2><p style="font-size:11px;color:#777;margin-bottom:16px">Real stories from real Mia lovers</p><div style="padding:24px;border-radius:16px;border:2px dashed #e0e0e0;color:#999;font-size:12px">Testimonials section — design TBD</div></div>';
 })();
 
 // ===== RECOMMENDATIONS =====
