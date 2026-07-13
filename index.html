@@ -853,44 +853,37 @@ document.getElementById("appNudgeClose").onclick = function() { document.getElem
         }
         currentX = 0; startX = 0; render();
     });
-    // Long press to zoom on gallery
-    var longPressTimer = null, isZoomed = false;
+    // Double tap to zoom on gallery
+    var lastTapTime = 0, isZoomed = false;
     var zoomNudge = document.createElement('div');
     zoomNudge.style.cssText = 'position:absolute;bottom:16px;left:50%;transform:translateX(-50%);padding:8px 16px;border-radius:100px;background:rgba(0,0,0,0.7);color:#fff;font-size:11px;font-weight:600;z-index:10;pointer-events:none;opacity:1;transition:opacity 0.5s';
-    zoomNudge.textContent = 'Long press to zoom';
+    zoomNudge.textContent = 'Double tap to zoom';
     main.appendChild(zoomNudge);
     setTimeout(function() { zoomNudge.style.opacity = '0'; setTimeout(function() { zoomNudge.remove(); }, 500); }, 2000);
-    main.addEventListener('touchstart', function(e) {
-        if (e.touches.length !== 1) return;
-        var touch = e.touches[0];
-        var rect = main.getBoundingClientRect();
-        var x = ((touch.clientX - rect.left) / rect.width) * 100;
-        var y = ((touch.clientY - rect.top) / rect.height) * 100;
-        longPressTimer = setTimeout(function() {
-            isZoomed = true;
-            var currentImg = track.querySelector('img:nth-child(' + (state.currentSlide + 1) + ')');
-            if (currentImg) {
+    main.addEventListener('touchend', function(e) {
+        if (hasMoved) return;
+        var now = Date.now();
+        if (now - lastTapTime < 300) {
+            e.preventDefault();
+            var currentImg = track.querySelector('.gallery-slide:nth-child(' + (state.currentSlide + 1) + ') img');
+            if (!currentImg) return;
+            if (isZoomed) {
+                isZoomed = false;
+                currentImg.style.transform = '';
+                currentImg.style.transition = 'transform 0.2s ease';
+            } else {
+                isZoomed = true;
+                var touch = e.changedTouches[0];
+                var rect = main.getBoundingClientRect();
+                var x = ((touch.clientX - rect.left) / rect.width) * 100;
+                var y = ((touch.clientY - rect.top) / rect.height) * 100;
                 currentImg.style.transformOrigin = x + '% ' + y + '%';
                 currentImg.style.transform = 'scale(2.5)';
                 currentImg.style.transition = 'transform 0.2s ease';
             }
-        }, 500);
-    }, { passive: true });
-    main.addEventListener('touchmove', function(e) {
-        if (isZoomed && e.touches.length === 1) {
-            var touch = e.touches[0];
-            var rect = main.getBoundingClientRect();
-            var x = ((touch.clientX - rect.left) / rect.width) * 100;
-            var y = ((touch.clientY - rect.top) / rect.height) * 100;
-            var currentImg = track.querySelector('img:nth-child(' + (state.currentSlide + 1) + ')');
-            if (currentImg) { currentImg.style.transformOrigin = x + '% ' + y + '%'; }
-        } else { clearTimeout(longPressTimer); }
-    }, { passive: true });
-    main.addEventListener('touchend', function() {
-        clearTimeout(longPressTimer);
-        if (isZoomed) {
-            isZoomed = false;
-            track.querySelectorAll('img').forEach(function(img) { img.style.transform = ''; img.style.transition = 'transform 0.2s ease'; });
+            lastTapTime = 0;
+        } else {
+            lastTapTime = now;
         }
     });
 })();
