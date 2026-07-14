@@ -267,6 +267,11 @@
         .detail-row:last-child { border-bottom: none; }
         .detail-row .dl { font-size: 12px; color: #777; flex-shrink: 0; }
         .detail-row .dv { font-size: 12px; font-weight: 600; color: #1a1a1a; text-align: right; word-break: break-word; }
+        /* 2-column grid for dense detail sections */
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+        .detail-grid-cell { padding: 8px 4px 8px 0; }
+        .detail-grid-cell .dc-label { font-size: 10px; color: #999; margin-bottom: 2px; }
+        .detail-grid-cell .dc-value { font-size: 12px; font-weight: 600; color: #1a1a1a; }
         .product-description { margin-top: 16px; padding-top: 12px; border-top: 1px solid #f0f0f0; font-size: 13px; line-height: 1.7; color: #555; }
 
         /* ===== TRUST ELEMENTS ===== */
@@ -798,6 +803,10 @@ var product = {
     ],
     gold: { purity: "14 KT", weight: "1.950 g", colour: "Yellow" },
     diamond: { type: "Natural", count: 15, weight: "0.124 Ct", clarity: "I2", colour: "GH", shape: "Round", setting: "Prong" },
+    gemstones: [
+        { name: "Light Yellow Sapphire", count: 53, shape: "Round", colour: "Light Yellow", weight: "1.250 Ct" },
+        { name: "Dark Yellow Sapphire", count: 33, shape: "Round", colour: "Dark Yellow", weight: "0.820 Ct" }
+    ],
     price: { current: 43293, original: 52990, discount: 18 },
     priceBreakup: { goldValue: { amount: 28420, weight: "1.950 g", rate: "\u20B914,574/g" }, stoneDetail: { amount: 10840, count: 15, diamondWeight: "0.124 Ct" }, makingCharges: 4033, gst: 1302, grandTotal: 43293 },
     sizes: [
@@ -1082,8 +1091,20 @@ document.getElementById("similarBtn").onclick = function() {
 
     var di = document.getElementById("fullDetailsInner");
     var dh = '<div class="detail-category"><div class="detail-cat-title general-title">General</div><div class="detail-rows"><div class="detail-row"><span class="dl">Design Code</span><span class="dv">' + product.designCode + '</span></div><div class="detail-row"><span class="dl">Gross Weight</span><span class="dv">' + product.grossWeight + '</span></div><div class="detail-row"><span class="dl">Jewellery Type</span><span class="dv">' + product.jewelleryType + '</span></div><div class="detail-row"><span class="dl">Occasion</span><span class="dv">' + product.occasion + '</span></div><div class="detail-row"><span class="dl">Gender</span><span class="dv">' + product.gender + '</span></div><div class="detail-row"><span class="dl">Brand</span><span class="dv">' + product.brand + '</span></div></div></div>';
-    dh += '<div class="detail-category"><div class="detail-cat-title gold-title">Gold Details</div><div class="detail-rows"><div class="detail-row"><span class="dl">Purity</span><span class="dv" style="color:#92400e">' + product.gold.purity + '</span></div><div class="detail-row"><span class="dl">Weight</span><span class="dv">' + product.gold.weight + '</span></div><div class="detail-row"><span class="dl">Colour</span><span class="dv" style="color:#92400e">' + product.gold.colour + '</span></div></div></div>';
-    if (product.diamond) dh += '<div class="detail-category"><div class="detail-cat-title diamond-title">Diamond Details</div><div class="detail-rows"><div class="detail-row"><span class="dl">Type</span><span class="dv">' + product.diamond.type + '</span></div><div class="detail-row"><span class="dl">Count</span><span class="dv" style="color:#1e40af">' + product.diamond.count + '</span></div><div class="detail-row"><span class="dl">Weight</span><span class="dv">' + product.diamond.weight + '</span></div><div class="detail-row"><span class="dl">Clarity</span><span class="dv">' + product.diamond.clarity + '</span></div><div class="detail-row"><span class="dl">Colour</span><span class="dv">' + product.diamond.colour + '</span></div><div class="detail-row"><span class="dl">Shape</span><span class="dv">' + product.diamond.shape + '</span></div><div class="detail-row"><span class="dl">Setting</span><span class="dv">' + product.diamond.setting + '</span></div></div></div>';
+    dh += '<div class="detail-category"><div class="detail-cat-title gold-title">Gold Details</div><div class="detail-grid"><div class="detail-grid-cell"><div class="dc-label">Purity</div><div class="dc-value" style="color:#92400e">' + product.gold.purity + '</div></div><div class="detail-grid-cell"><div class="dc-label">Colour</div><div class="dc-value" style="color:#92400e">' + product.gold.colour + '</div></div><div class="detail-grid-cell"><div class="dc-label">Weight</div><div class="dc-value">' + product.gold.weight + '</div></div></div></div>';
+    if (product.diamond) dh += '<div class="detail-category"><div class="detail-cat-title diamond-title">Diamond Details</div><div class="detail-grid"><div class="detail-grid-cell"><div class="dc-label">Count</div><div class="dc-value" style="color:#1e3a5f">' + product.diamond.count + '</div></div><div class="detail-grid-cell"><div class="dc-label">Weight</div><div class="dc-value">' + product.diamond.weight + '</div></div><div class="detail-grid-cell"><div class="dc-label">Type</div><div class="dc-value">' + product.diamond.type + '</div></div><div class="detail-grid-cell"><div class="dc-label">Clarity</div><div class="dc-value">' + product.diamond.clarity + '</div></div><div class="detail-grid-cell"><div class="dc-label">Colour</div><div class="dc-value">' + product.diamond.colour + '</div></div><div class="detail-grid-cell"><div class="dc-label">Shape</div><div class="dc-value">' + product.diamond.shape + '</div></div><div class="detail-grid-cell"><div class="dc-label">Setting</div><div class="dc-value">' + product.diamond.setting + '</div></div></div></div>';
+    if (product.gemstones && product.gemstones.length) {
+        product.gemstones.forEach(function(gem) {
+            dh += '<div class="detail-category"><div class="detail-cat-title" style="color:#4c1d95">Gemstone ' + gem.name + '</div><div class="detail-grid">';
+            if (gem.count) dh += '<div class="detail-grid-cell"><div class="dc-label">Count</div><div class="dc-value">' + gem.count + '</div></div>';
+            if (gem.shape) dh += '<div class="detail-grid-cell"><div class="dc-label">Shape</div><div class="dc-value">' + gem.shape + '</div></div>';
+            if (gem.colour) dh += '<div class="detail-grid-cell"><div class="dc-label">Colour</div><div class="dc-value">' + gem.colour + '</div></div>';
+            if (gem.weight) dh += '<div class="detail-grid-cell"><div class="dc-label">Weight</div><div class="dc-value">' + gem.weight + '</div></div>';
+            if (gem.clarity) dh += '<div class="detail-grid-cell"><div class="dc-label">Clarity</div><div class="dc-value">' + gem.clarity + '</div></div>';
+            if (gem.treatment) dh += '<div class="detail-grid-cell"><div class="dc-label">Treatment</div><div class="dc-value">' + gem.treatment + '</div></div>';
+            dh += '</div></div>';
+        });
+    }
     dh += '<div class="product-description"><strong style="font-size:11px;letter-spacing:0.5px;text-transform:uppercase;color:#555;display:block;margin-bottom:6px">Description</strong>' + product.description + '</div>';
     di.innerHTML = dh;
 
