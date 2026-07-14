@@ -556,8 +556,8 @@
         .reco-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 16px 4px; }
         .reco-grid-2col .reco-card { min-width: 0; max-width: none; }
         .reco-grid .reco-card { min-width: 0; max-width: none; }
-        .reco-view-more { display: flex; align-items: center; justify-content: center; gap: 6px; width: calc(100% - 32px); margin: 12px 16px 0; padding: 10px; font-size: 12px; font-weight: 700; color: #555; background: #fff; border: 1px solid #e5e5e5; border-radius: 100px; cursor: pointer; transition: all 0.2s; }
-        .reco-view-more:active { background: #f9f9f9; }
+        .reco-view-more { display: inline-flex; align-items: center; gap: 4px; margin: 12px auto 0; padding: 0; font-size: 12px; font-weight: 700; color: #555; background: none; border: none; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; transition: all 0.2s; }
+        .reco-view-more:active { opacity: 0.6; }
         .reco-view-more svg { width: 12px; height: 12px; stroke: #555; transition: transform 0.3s; }
         .reco-view-more.open svg { transform: rotate(180deg); }
         .reco-expanded { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -1262,7 +1262,7 @@ function bindWishlist(el) {
 (function() {
     var el = document.getElementById("recoSection2");
     var items = recoProducts.slice(0, 5);
-    var h = '<div class="reco-header"><h2 class="reco-title font-display">Most Gifted</h2><p class="reco-subtitle">Top picks our customers love to gift</p></div><div class="reco-scroll">';
+    var h = '<div class="reco-header"><h2 class="reco-title font-display"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:4px"><path d="M20 12v10H4V12"/><rect x="2" y="7" width="20" height="5" rx="1"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>Most Gifted</h2><p class="reco-subtitle">Top picks our customers love to gift</p></div><div class="reco-scroll">';
     items.forEach(function(p) { h += buildCard(p); });
     h += '</div>'; el.innerHTML = h; bindWishlist(el);
 })();
@@ -1279,7 +1279,7 @@ function bindWishlist(el) {
     h += '<div class="reco-expanded" id="recoExpanded"><div class="reco-grid-2col" style="padding-top:0">';
     extra.forEach(function(p) { h += buildCard(p); });
     h += '</div></div>';
-    h += '<button class="reco-view-more" id="recoViewMore"><span>View More</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>';
+    h += '<div style="text-align:center"><button class="reco-view-more" id="recoViewMore"><span>View More</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button></div>';
     el.innerHTML = h; bindWishlist(el);
     document.getElementById("recoViewMore").addEventListener("click", function() {
         var panel = document.getElementById("recoExpanded");
