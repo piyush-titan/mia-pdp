@@ -1045,9 +1045,9 @@ document.getElementById("similarBtn").onclick = function() {
 
     // Count items to determine layout
     var itemCount = 1 + (product.diamond ? 1 : 0) + (product.gemstone ? 1 : 0) + 1; // metal + diamond? + gemstone? + weight
-    // 2 items: side by side. 3 items: metal+stone row 1, weight full below. 4 items: 2x2.
+    // 2 items: side by side. 3 items: normal grid. 4 items: 2x2.
     var metalSpan = '';
-    var weightSpan = (itemCount === 3) ? ' span-full' : '';
+    var weightSpan = '';
 
     var h = '<div class="highlights-grid">';
     
