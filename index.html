@@ -722,12 +722,6 @@
 <!-- PRICE SECTION -->
 <section class="price-section section-gap" id="priceSection"></section>
 
-<!-- COUPONS -->
-<section class="coupons-section section-gap" id="couponsSection"></section>
-
-<!-- DELIVERY CHECK -->
-<section class="delivery-section section-gap" id="deliverySection"></section>
-
 <!-- FIND IN STORE -->
 <section class="find-store-section section-gap" id="findStoreSection"></section>
 
@@ -1140,11 +1134,15 @@ function renderPriceSection() {
             });
             h += '</div></div>';
         }
+        // Coupons slot (rendered by coupon IIFE below)
+        h += '<div id="priceCouponsSlot" style="margin-top:14px;padding-top:14px;border-top:1px solid #f0f0f0"></div>';
         // Buy Now + Add to Bag + Pre-Book CTAs
         h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px solid #f0f0f0"><div style="display:flex;align-items:center;gap:8px"><i data-lucide="gift" style="width:16px;height:16px;color:#D14A61"></i><span style="font-size:13px;font-weight:600;color:#1a1a1a">Make it a Gift</span></div><div class="toggle-switch' + (state.giftEnabled ? ' active' : '') + '" id="giftToggle"></div></div>';
         h += '<div class="gift-selected-badge' + (state.giftEnabled ? ' show' : '') + '" id="giftBadge" style="margin-top:8px"><i data-lucide="check" style="width:12px;height:12px"></i>Gift wrap selected</div>';
         h += '<div style="margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0"><button style="width:100%;padding:12px;border-radius:100px;font-size:14px;font-weight:700;color:#D14A61;background:#fce4ec;border:none;transition:all 0.2s;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px" id="priceBuyNow"><b>Buy Now</b><span style="display:inline-flex;align-items:center;gap:4px"><span style="font-size:11px;font-weight:800;color:#5f259f;background:#f3e8ff;padding:2px 5px;border-radius:4px;line-height:1">पे</span><svg viewBox="0 0 48 48" width="17" height="17"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg><svg viewBox="0 0 32 20" width="19" height="13"><circle cx="12.5" cy="10" r="8" fill="#EB001B"/><circle cx="19.5" cy="10" r="8" fill="#F79E1B"/><path d="M16 4.2a8 8 0 0 0 0 11.6 8 8 0 0 0 0-11.6z" fill="#FF5F00"/></svg></span></button><div style="display:flex;gap:10px"><button class="btn-prebook-main" style="flex:1;padding:12px" id="pricePrebook">Pre-Book Now</button><button class="btn-add-bag-main" style="flex:1;padding:12px" id="priceAddBag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button></div></div>';
         h += '<div style="display:flex;align-items:center;justify-content:center;gap:5px;margin-top:12px"><i data-lucide="leaf" style="width:14px;height:14px;color:#22C55E"></i><span style="font-size:10px;font-weight:600;color:#166534">100% Recycled Gold for a Greener World</span></div>';
+        // Delivery slot (rendered by delivery IIFE below)
+        h += '<div id="priceDeliverySlot" style="margin-top:14px;padding-top:14px;border-top:1px solid #f0f0f0"></div>';
         el.innerHTML = h;
         lucide.createIcons({ nodes: [el] });
         document.getElementById("priceBreakupToggle").onclick = function() { state.priceBreakupOpen = !state.priceBreakupOpen; this.classList.toggle("open"); document.getElementById("priceBreakupPanel").classList.toggle("open"); };
@@ -1171,7 +1169,7 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
 
 // ===== COUPONS (stacked carousel) =====
 (function() {
-    var el = document.getElementById("couponsSection");
+    var el = document.getElementById("priceCouponsSlot");
     var coupons = [
         { tag: "MIA 500", amount: "Flat \u20B9500 Off", desc: "Applicable for your first purchase", code: "MIA500", view: false },
         { tag: "Birthday Special", amount: "Flat \u20B92000 Off", desc: "Applicable on your birthday month", code: "BIRTHDAY500", view: true },
@@ -1226,7 +1224,7 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
 
 // ===== DELIVERY CHECK =====
 (function() {
-    var el = document.getElementById("deliverySection");
+    var el = document.getElementById("priceDeliverySlot");
     el.innerHTML = '<div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="color:#D14A61"></i></span>Delivery & Availability</div><div class="pincode-row"><input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="pincode-input" placeholder="Enter pincode" id="deliveryPincode"><button class="pincode-check-btn" id="deliveryCheckBtn">Check</button></div><div class="delivery-result" id="deliveryResult"><svg class="result-icon" id="deliveryIcon" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><p></p></div><div class="delivery-badges"><div class="delivery-badges-grid"><div class="delivery-badge"><i data-lucide="package"></i>Free Shipping</div><div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime Exchange</div><div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day Returns</div></div></div>';
     document.getElementById("deliveryPincode").addEventListener("input", function(e) { this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6); });
     document.getElementById("deliveryCheckBtn").onclick = function() { var pin = document.getElementById("deliveryPincode").value; if (pin.length !== 6) { showToast("Please enter a valid 6-digit pincode", "error"); return; } var res = document.getElementById("deliveryResult"); var icon = document.getElementById("deliveryIcon"); var unserviceable = ["110001","999999","000000"]; if (unserviceable.indexOf(pin) !== -1) { res.classList.add("show","error"); res.classList.remove("success"); icon.setAttribute("stroke","#991b1b"); icon.innerHTML='<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>'; res.querySelector("p").innerHTML='<strong>Oops! We can\'t deliver here yet 😔</strong><br><span style="font-size:11px;color:#991b1b">This pincode isn\'t serviceable right now. Try a nearby one or check back later!</span>'; showToast("Delivery not available", "error"); return; } res.classList.add("show"); res.classList.remove("error"); icon.setAttribute("stroke","#166534"); icon.innerHTML='<circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>'; res.querySelector("p").innerHTML='<span style="font-size:11px;color:#555">Delivering to <strong style="color:#1a1a1a">' + product.delivery.city + ', ' + product.delivery.state + '</strong></span><br><strong style="font-size:13px">Estimated Delivery: ' + product.delivery.date + '</strong>'; showToast("Delivery available to your pincode", "success"); };
