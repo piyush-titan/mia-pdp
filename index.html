@@ -1143,7 +1143,7 @@ function renderPriceSection() {
         // Buy Now + Add to Bag + Pre-Book CTAs
         h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px solid #f0f0f0"><div style="display:flex;align-items:center;gap:8px"><i data-lucide="gift" style="width:16px;height:16px;color:#D14A61"></i><span style="font-size:13px;font-weight:600;color:#1a1a1a">Make it a Gift</span></div><div class="toggle-switch' + (state.giftEnabled ? ' active' : '') + '" id="giftToggle"></div></div>';
         h += '<div class="gift-selected-badge' + (state.giftEnabled ? ' show' : '') + '" id="giftBadge" style="margin-top:8px"><i data-lucide="check" style="width:12px;height:12px"></i>Gift wrap selected</div>';
-        h += '<div style="margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0"><button style="width:100%;padding:14px;border-radius:100px;font-size:15px;font-weight:700;color:#D14A61;background:#fce4ec;border:none;transition:all 0.2s;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px" id="priceBuyNow"><b>Buy Now</b><span style="display:inline-flex;align-items:center;gap:4px"><span style="font-size:11px;font-weight:800;color:#5f259f;background:#f3e8ff;padding:2px 5px;border-radius:4px;line-height:1">पे</span><svg viewBox="0 0 48 48" width="17" height="17"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg><svg viewBox="0 0 32 20" width="19" height="13"><circle cx="12.5" cy="10" r="8" fill="#EB001B"/><circle cx="19.5" cy="10" r="8" fill="#F79E1B"/><path d="M16 4.2a8 8 0 0 0 0 11.6 8 8 0 0 0 0-11.6z" fill="#FF5F00"/></svg></span></button><div style="display:flex;gap:10px"><button class="btn-prebook-main" style="flex:1" id="pricePrebook">Pre-Book Now</button><button class="btn-add-bag-main" style="flex:1" id="priceAddBag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button></div></div>';
+        h += '<div style="margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0"><button style="width:100%;padding:12px;border-radius:100px;font-size:14px;font-weight:700;color:#D14A61;background:#fce4ec;border:none;transition:all 0.2s;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px" id="priceBuyNow"><b>Buy Now</b><span style="display:inline-flex;align-items:center;gap:4px"><span style="font-size:11px;font-weight:800;color:#5f259f;background:#f3e8ff;padding:2px 5px;border-radius:4px;line-height:1">पे</span><svg viewBox="0 0 48 48" width="17" height="17"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg><svg viewBox="0 0 32 20" width="19" height="13"><circle cx="12.5" cy="10" r="8" fill="#EB001B"/><circle cx="19.5" cy="10" r="8" fill="#F79E1B"/><path d="M16 4.2a8 8 0 0 0 0 11.6 8 8 0 0 0 0-11.6z" fill="#FF5F00"/></svg></span></button><div style="display:flex;gap:10px"><button class="btn-prebook-main" style="flex:1;padding:12px" id="pricePrebook">Pre-Book Now</button><button class="btn-add-bag-main" style="flex:1;padding:12px" id="priceAddBag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button></div></div>';
         h += '<div style="display:flex;align-items:center;justify-content:center;gap:5px;margin-top:12px"><i data-lucide="leaf" style="width:14px;height:14px;color:#22C55E"></i><span style="font-size:10px;font-weight:600;color:#166534">100% Recycled Gold for a Greener World</span></div>';
         el.innerHTML = h;
         lucide.createIcons({ nodes: [el] });
@@ -1254,28 +1254,32 @@ function bindWishlist(el) {
     });
 }
 
-// 1. Complete the Set — 3 products, 3-col grid, no scroll, Buy All CTA
+// 1. Complete the Set — primary product + 2 reco, Buy All CTA
 (function() {
     var el = document.getElementById("recoSection1");
-    var items = recoProducts.slice(1, 4);
+    var recoItems = recoProducts.slice(1, 3);
+    var allItems = [{ name: product.name, price: product.price.current, originalPrice: product.price.original, image: product.images[0], isPrimary: true }].concat(recoItems.map(function(p) { return { name: p.name, price: p.price, originalPrice: p.originalPrice, image: p.image, isPrimary: false }; }));
     var h = '<div class="reco-header"><h2 class="reco-title font-display">Complete the Set</h2><p class="reco-subtitle">Pieces that pair perfectly with your selection</p></div><div class="reco-grid">';
-    items.forEach(function(p) { h += buildCard(p); });
+    allItems.forEach(function(p) {
+        var border = p.isPrimary ? 'border:2px solid #D14A61' : 'border:1px solid #f0f0f0';
+        h += '<div class="reco-card"><div class="reco-card-img" style="' + border + '">' + (p.isPrimary ? '<span style="position:absolute;top:6px;left:6px;font-size:8px;font-weight:700;color:#fff;background:#D14A61;padding:2px 6px;border-radius:100px;z-index:1">Your Pick</span>' : '') + '<img src="' + p.image + '" alt="' + p.name + '" loading="lazy"></div><p class="reco-card-name">' + p.name + '</p><p class="reco-card-price">' + fmt(p.price) + (p.originalPrice ? ' <span class="old">' + fmt(p.originalPrice) + '</span>' : '') + '</p></div>';
+    });
     h += '</div>';
-    var totalPrice = items.reduce(function(s, p) { return s + p.price; }, 0);
-    h += '<div style="text-align:center;margin-top:12px;padding:0 16px"><button style="width:100%;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#D14A61;background:#fce4ec;border:none;cursor:pointer" id="buyAllBtn"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Buy All ' + fmt(totalPrice) + '</button></div>';
+    var totalPrice = allItems.reduce(function(s, p) { return s + p.price; }, 0);
+    h += '<div style="text-align:center;margin-top:12px;padding:0 16px"><button style="width:100%;padding:10px;border-radius:100px;font-size:12px;font-weight:700;color:#D14A61;background:transparent;border:1.5px solid #D14A61;cursor:pointer" id="buyAllBtn">Buy All ' + fmt(totalPrice) + '</button></div>';
     el.innerHTML = h; bindWishlist(el);
-    // Buy All — open size chooser sheet
-    var setItems = items;
+    // Buy All — open size chooser sheet with checkboxes
+    var setItems = allItems;
     document.getElementById("buyAllBtn").onclick = function() {
         var body = document.getElementById("buyAllBody");
         var bh = '<div style="padding:0 4px">';
         setItems.forEach(function(p, i) {
             var isSizeable = (p.name.indexOf("Ring") !== -1 || p.name.indexOf("Band") !== -1);
-            bh += '<div style="display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #f5f5f5"><img src="' + p.image + '" style="width:48px;height:48px;border-radius:10px;object-fit:cover;border:1px solid #f0f0f0"><div style="flex:1;min-width:0"><p style="font-size:12px;font-weight:600;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + p.name + '</p><p style="font-size:11px;font-weight:700;margin-top:2px">' + fmt(p.price) + '</p>';
+            bh += '<div style="display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #f5f5f5"><input type="checkbox" checked style="width:18px;height:18px;accent-color:#D14A61;margin-top:4px;flex-shrink:0" id="buyAllCheck' + i + '"><img src="' + p.image + '" style="width:48px;height:48px;border-radius:10px;object-fit:cover;border:1px solid #f0f0f0;flex-shrink:0"><div style="flex:1;min-width:0"><p style="font-size:12px;font-weight:600;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + p.name + (p.isPrimary ? ' <span style="font-size:9px;color:#D14A61;font-weight:700">(Your Pick)</span>' : '') + '</p><p style="font-size:11px;font-weight:700;margin-top:2px">' + fmt(p.price) + '</p>';
             if (isSizeable) {
-                bh += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px" id="buyAllSize' + i + '">';
+                bh += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">';
                 product.sizes.forEach(function(s) {
-                    if (s.inStock) bh += '<button class="pill" style="padding:5px 12px;font-size:9px" data-sz="' + s.label + '" onclick="this.parentElement.querySelectorAll(\'.pill\').forEach(function(p){p.classList.remove(\'active\')});this.classList.add(\'active\')">' + s.label + '</button>';
+                    if (s.inStock) bh += '<button class="pill" style="padding:5px 12px;font-size:9px" onclick="this.parentElement.querySelectorAll(\'.pill\').forEach(function(p){p.classList.remove(\'active\')});this.classList.add(\'active\')">' + s.label + '</button>';
                 });
                 bh += '</div>';
             } else {
@@ -1283,7 +1287,7 @@ function bindWishlist(el) {
             }
             bh += '</div></div>';
         });
-        bh += '</div><button class="btn-primary" style="width:100%;margin-top:16px;padding:14px;font-size:14px" onclick="closeSheet(\'buyAll\');showToast(\'Added all items to bag\',\'success\')">Add All to Bag</button>';
+        bh += '</div><button class="btn-primary" style="width:100%;margin-top:16px;padding:12px;font-size:14px" onclick="closeSheet(\'buyAll\');showToast(\'Added selected items to bag\',\'success\')">Add Selected to Bag</button>';
         body.innerHTML = bh;
         openSheet("buyAll");
     };
