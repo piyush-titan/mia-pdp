@@ -573,27 +573,26 @@ function renderHighlightsCase(productConfig) {
 <style>
 .ribbon-demo{position:relative;background:#f5f5f5;border-radius:16px;aspect-ratio:3/4;overflow:hidden;max-width:200px;margin:0 auto}
 .ribbon-demo img{width:100%;height:100%;object-fit:cover}
-.ribbon-tag{position:absolute;top:12px;left:-2px;display:flex;align-items:center;gap:0;z-index:2}
-.ribbon-tag-body{padding:4px 10px 4px 12px;font-size:11px;font-weight:700;color:#fff;line-height:1.2;position:relative;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,0 100%)}
-.ribbon-tag-tail{width:6px;height:100%;position:absolute;left:0;top:0;background:rgba(0,0,0,0.25);clip-path:polygon(0 50%,100% 0,100% 100%)}
-.tag-gold .ribbon-tag-body{background:linear-gradient(135deg,#d4a017,#b8860b)}
-.tag-pink .ribbon-tag-body{background:linear-gradient(135deg,#E8668A,#D14A61)}
-.tag-purple .ribbon-tag-body{background:linear-gradient(135deg,#a855f7,#7e22ce)}
+.product-tag{position:absolute;top:12px;left:12px;z-index:2;padding:7px 12px;font-size:8px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;-webkit-clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));white-space:nowrap}
+.product-tag.tag-gold{background:linear-gradient(135deg,#b8860b,#f5d77a);color:#5c3d0a}
+.product-tag.tag-pink{background:linear-gradient(135deg,#D14A61,#f9a8b8);color:#fff}
+.product-tag.tag-purple{background:linear-gradient(135deg,#7c3aed,#c4b5fd);color:#fff}
+.product-tag.tag-long{white-space:normal;max-width:140px;line-height:1.4}
 </style>
 <div class="case-content" id="case-ribbon-gold">
-<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo tag-gold"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_1.jpg" alt=""><div class="ribbon-tag"><div class="ribbon-tag-body">New Arrival</div></div></div></div>
+<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_1.jpg" alt=""><span class="product-tag tag-gold">New Arrival</span></div></div>
 <div class="case-label"><h4><span class="tag tag-warning">GOLD</span> Gold Gradient Tag</h4><p>Used for premium / price-led offers like gold value discounts. Warm, luxe feel.</p></div>
 </div>
 <div class="case-content" id="case-ribbon-pink" style="display:none">
-<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo tag-pink"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_2.jpg" alt=""><div class="ribbon-tag"><div class="ribbon-tag-body">Bestseller</div></div></div></div>
+<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_2.jpg" alt=""><span class="product-tag tag-pink">Bestseller</span></div></div>
 <div class="case-label"><h4><span class="tag tag-error">PINK</span> Pink Gradient Tag</h4><p>Used for editorial / trending tags like Bestseller, Fan Favourite, Most Loved.</p></div>
 </div>
 <div class="case-content" id="case-ribbon-purple" style="display:none">
-<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo tag-purple"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_3.jpg" alt=""><div class="ribbon-tag"><div class="ribbon-tag-body">Limited Edition</div></div></div></div>
+<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_3.jpg" alt=""><span class="product-tag tag-purple">Limited Edition</span></div></div>
 <div class="case-label"><h4><span class="tag tag-info">PURPLE</span> Purple Gradient Tag</h4><p>Used for special / exclusive tags like Limited Edition, New Design, Just Dropped.</p></div>
 </div>
 <div class="case-content" id="case-ribbon-long" style="display:none">
-<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo tag-gold"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_4.jpg" alt=""><div class="ribbon-tag"><div class="ribbon-tag-body" style="max-width:160px;white-space:normal">40% off on Making Charges</div></div></div></div>
+<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_4.jpg" alt=""><span class="product-tag tag-gold tag-long">40% off on Making Charges</span></div></div>
 <div class="case-label"><h4><span class="tag tag-warning">EDGE CASE</span> Long Tag Text</h4><p>"40% off on Making Charges" — text wraps to 2 lines. Clip-path maintains arrow shape. Max-width prevents overflow out of the card frame.</p></div>
 </div>
 </div>
