@@ -543,9 +543,6 @@
             content: ''; position: absolute; top: 0; left: 16px; right: 16px; height: 1px;
             background: #f0f0f0;
         }
-        .reco-section.style-warm { background: #FAFAFA; }
-        .reco-section.style-cool { background: #FAFAFA; }
-        .reco-section.style-gold { background: #FAFAFA; }
         .reco-header { padding: 0 16px; margin-bottom: 6px; text-align: center; }
         .reco-title { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 500; color: #1a1a1a; }
         .reco-subtitle { font-size: 11px; color: #999; margin-top: 2px; line-height: 1.4; }
@@ -555,6 +552,16 @@
             scroll-snap-type: x mandatory; scroll-padding-left: 16px;
         }
         .reco-scroll::-webkit-scrollbar { display: none; }
+        .reco-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 12px 16px 4px; }
+        .reco-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 16px 4px; }
+        .reco-grid-2col .reco-card { min-width: 0; max-width: none; }
+        .reco-grid .reco-card { min-width: 0; max-width: none; }
+        .reco-view-more { display: flex; align-items: center; justify-content: center; gap: 6px; width: calc(100% - 32px); margin: 12px 16px 0; padding: 10px; font-size: 12px; font-weight: 700; color: #555; background: #fff; border: 1px solid #e5e5e5; border-radius: 100px; cursor: pointer; transition: all 0.2s; }
+        .reco-view-more:active { background: #f9f9f9; }
+        .reco-view-more svg { width: 12px; height: 12px; stroke: #555; transition: transform 0.3s; }
+        .reco-view-more.open svg { transform: rotate(180deg); }
+        .reco-expanded { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reco-expanded.open { max-height: 2000px; }
 
         /* ===== TESTIMONIALS ===== */
         .testimonials-section { padding: 16px 0; margin: 8px 16px; overflow: hidden; background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; }
@@ -580,13 +587,14 @@
         .testi-verified { width: 24px; height: 24px; border-radius: 50%; background: #D14A61; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
         .reco-card { min-width: calc((100vw - 44px) / 2.3); max-width: 160px; scroll-snap-align: start; flex-shrink: 0; }
-        .reco-card-img { position: relative; aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid #f0f0f0; margin-bottom: 8px; }
+        .reco-card-img { position: relative; aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid #f0f0f0; margin-bottom: 6px; }
         .reco-card-img img { width: 100%; height: 100%; object-fit: cover; }
         .reco-card-wish { position: absolute; top: 6px; right: 6px; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; border: none; transition: all 0.2s; }
         .reco-card-wish svg { width: 12px; height: 12px; stroke: #D14A61; fill: transparent; stroke-width: 1.8; transition: fill 0.2s; }
         .reco-card-wish.active svg { fill: #D14A61; }
         .reco-card-name { font-size: 11px; color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .reco-card-price { font-size: 12px; font-weight: 700; color: #1a1a1a; margin-top: 2px; }
+        .reco-card-price .old { font-size: 10px; color: #999; text-decoration: line-through; font-weight: 400; }
 
         /* ===== COMMUNITY SECTION ===== */
         .community-section { padding: 16px; margin: 8px 16px; background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; }
@@ -732,9 +740,9 @@
 <section class="testimonials-section section-gap" id="testimonialsSection"></section>
 
 <!-- RECOMMENDATIONS -->
-<section class="reco-section style-warm" id="recoSection1"></section>
-<section class="reco-section style-cool" id="recoSection2"></section>
-<section class="reco-section style-gold" id="recoSection3"></section>
+<section class="reco-section" id="recoSection1"></section>
+<section class="reco-section" id="recoSection2"></section>
+<section class="reco-section" id="recoSection3"></section>
 
 <!-- COMMUNITY RATINGS -->
 <section class="community-section section-gap" id="communitySection"></section>
@@ -818,7 +826,15 @@ var recoProducts = [
     { name: "Petite Solitaire Band", price: 31200, originalPrice: 36800, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-top-cutout.png" },
     { name: "Stackable Twin Band", price: 27650, originalPrice: 32900, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_1.jpg" },
     { name: "Twisted Gold Ring", price: 22400, originalPrice: null, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_3.jpg" },
-    { name: "Classic Diamond Band", price: 35600, originalPrice: 42000, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_4.jpg" }
+    { name: "Classic Diamond Band", price: 35600, originalPrice: 42000, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_4.jpg" },
+    { name: "Delicate Chain Bracelet", price: 14200, originalPrice: 17500, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-cutout.png" },
+    { name: "Minimalist Ear Cuff", price: 9800, originalPrice: null, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/bundle-diamond-stud-earrings.jpg" },
+    { name: "Layered Gold Necklace", price: 42500, originalPrice: 49900, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-top-cutout.png" },
+    { name: "Halo Diamond Pendant", price: 28900, originalPrice: 34500, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_1.jpg" },
+    { name: "Eternity Band Ring", price: 52300, originalPrice: 61000, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_3.jpg" },
+    { name: "Cluster Stud Earrings", price: 16400, originalPrice: 19800, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_4.jpg" },
+    { name: "Dainty Charm Anklet", price: 11500, originalPrice: null, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-cutout.png" },
+    { name: "Marquise Drop Earrings", price: 33700, originalPrice: 39900, image: "https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/bundle-diamond-stud-earrings.jpg" }
 ];
 
 // ===== STATE =====
@@ -1219,14 +1235,10 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
 })();
 
 // ===== RECOMMENDATIONS =====
-function renderRecoSection(id, title, subtitle, products) {
-    var el = document.getElementById(id);
-    var h = '<div class="reco-header"><h2 class="reco-title font-display">' + title + '</h2><p class="reco-subtitle">' + subtitle + '</p></div><div class="reco-scroll">';
-    products.forEach(function(p) {
-        h += '<div class="reco-card"><div class="reco-card-img"><img src="' + p.image + '" alt="' + p.name + '" loading="lazy"><button class="reco-card-wish" aria-label="Wishlist"><svg viewBox="0 0 24 24" fill="transparent" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></div><p class="reco-card-name">' + p.name + '</p><p class="reco-card-price">' + fmt(p.price) + (p.originalPrice ? ' <span style="font-size:10px;color:#999;text-decoration:line-through">' + fmt(p.originalPrice) + '</span>' : '') + '</p></div>';
-    });
-    h += '</div>'; el.innerHTML = h;
-    // Reco wishlist click handlers
+function buildCard(p) {
+    return '<div class="reco-card"><div class="reco-card-img"><img src="' + p.image + '" alt="' + p.name + '" loading="lazy"><button class="reco-card-wish" aria-label="Wishlist"><svg viewBox="0 0 24 24" fill="transparent" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></div><p class="reco-card-name">' + p.name + '</p><p class="reco-card-price">' + fmt(p.price) + (p.originalPrice ? ' <span class="old">' + fmt(p.originalPrice) + '</span>' : '') + '</p></div>';
+}
+function bindWishlist(el) {
     el.querySelectorAll(".reco-card-wish").forEach(function(btn) {
         btn.addEventListener("click", function(e) {
             e.stopPropagation();
@@ -1236,9 +1248,46 @@ function renderRecoSection(id, title, subtitle, products) {
         });
     });
 }
-renderRecoSection("recoSection1", "Complete the Set", "Pieces that pair perfectly with your selection", recoProducts.slice(0, 4));
-renderRecoSection("recoSection2", "You May Also Like", "Handpicked based on what others loved", recoProducts.slice(2));
-renderRecoSection("recoSection3", "Most Gifted", "Top picks our customers love to gift", recoProducts.slice(0, 5));
+
+// 1. Complete the Set — 3 products, 3-col grid, no scroll
+(function() {
+    var el = document.getElementById("recoSection1");
+    var items = recoProducts.slice(1, 4);
+    var h = '<div class="reco-header"><h2 class="reco-title font-display">Complete the Set</h2><p class="reco-subtitle">Pieces that pair perfectly with your selection</p></div><div class="reco-grid">';
+    items.forEach(function(p) { h += buildCard(p); });
+    h += '</div>'; el.innerHTML = h; bindWishlist(el);
+})();
+
+// 2. Most Gifted — scrollable (existing layout)
+(function() {
+    var el = document.getElementById("recoSection2");
+    var items = recoProducts.slice(0, 5);
+    var h = '<div class="reco-header"><h2 class="reco-title font-display">Most Gifted</h2><p class="reco-subtitle">Top picks our customers love to gift</p></div><div class="reco-scroll">';
+    items.forEach(function(p) { h += buildCard(p); });
+    h += '</div>'; el.innerHTML = h; bindWishlist(el);
+})();
+
+// 3. You May Also Like — 2-col grid, 4 shown, View More expands 10 more
+(function() {
+    var el = document.getElementById("recoSection3");
+    var initial = recoProducts.slice(0, 4);
+    var extra = recoProducts.slice(4, 14);
+    var h = '<div class="reco-header"><h2 class="reco-title font-display">You May Also Like</h2><p class="reco-subtitle">Handpicked based on what others loved</p></div>';
+    h += '<div class="reco-grid-2col">';
+    initial.forEach(function(p) { h += buildCard(p); });
+    h += '</div>';
+    h += '<div class="reco-expanded" id="recoExpanded"><div class="reco-grid-2col" style="padding-top:0">';
+    extra.forEach(function(p) { h += buildCard(p); });
+    h += '</div></div>';
+    h += '<button class="reco-view-more" id="recoViewMore"><span>View More</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>';
+    el.innerHTML = h; bindWishlist(el);
+    document.getElementById("recoViewMore").addEventListener("click", function() {
+        var panel = document.getElementById("recoExpanded");
+        this.classList.toggle("open");
+        panel.classList.toggle("open");
+        this.querySelector("span").textContent = panel.classList.contains("open") ? "Show Less" : "View More";
+    });
+})();
 
 // ===== TESTIMONIALS =====
 (function() {
