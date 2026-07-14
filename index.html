@@ -324,7 +324,7 @@
         .selection-label i { width: 7px; height: 7px; }
         .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
         .pill {
-            padding: 8px 16px; border-radius: 100px; font-size: 12px; font-weight: 600;
+            padding: 8px 16px; border-radius: 100px; font-size: 10px; font-weight: 600;
             border: 1.5px solid #e0e0e0; background: #fff; color: #555;
             transition: all 0.2s;
         }
@@ -1453,6 +1453,7 @@ document.addEventListener("click", function() { if (state.sizeDropdownOpen) { st
 (function() {
     var body = document.getElementById("sizeGuideBody");
     var h = '<div style="text-align:center;margin-bottom:20px"><p style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:4px">Thread Ring Sizer</p><p style="font-size:11px;color:#777">Wrap. Mark. Measure.</p></div>';
+    h += '<div style="margin-bottom:20px;border-radius:14px;overflow:hidden;border:1px solid #f0f0f0;background:#fafafa"><img src="" alt="Size guide instruction" id="sizeGuideImage" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#f0f0f0" onerror="this.style.display=\'none\'"><div style="padding:12px;text-align:center;font-size:10px;color:#999">Place your sizing instruction image here</div></div>';
     h += '<div style="padding:16px;border-radius:14px;background:#FAFAFA;margin-bottom:20px"><p style="font-size:12px;color:#555;line-height:1.7;margin-bottom:12px">Wrap a thread or paper strip around the base of your finger, mark where it overlaps, then measure that length in mm.</p>';
     h += '<div style="display:flex;flex-direction:column;gap:10px">';
     ["Wrap thread/paper at the finger base.", "Mark where the ends overlap.", "Lay it flat on a ruler, read the mm."].forEach(function(s, i) {
