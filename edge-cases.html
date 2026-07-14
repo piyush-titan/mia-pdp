@@ -153,7 +153,7 @@
                     <h3>Price Section</h3>
                     <p>Discount types, no prebook layout</p>
                 </div>
-                <span class="menu-badge">3</span>
+                <span class="menu-badge">2</span>
                 <span class="menu-arrow">›</span>
             </div>
             <div class="menu-item active" onclick="showSection('sizeguide')">
@@ -661,51 +661,106 @@ function renderHighlightsCase(productConfig) {
 
 <!-- ===== PRICE SECTION CASES ===== -->
 <div id="priceScreen" style="display:none">
-<div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Price Section</div><div class="nav-subtitle">Discount types & CTA layout</div></div></div>
+<div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Price Section</div><div class="nav-subtitle">With Pre-Book vs Without</div></div></div>
 <div class="case-screen active">
 <div class="case-tabs">
-<div class="case-tab active" onclick="showCase('price','nodiscount',this)">No Discount</div>
-<div class="case-tab" onclick="showCase('price','discount',this)">Making Charges Discount</div>
+<div class="case-tab active" onclick="showCase('price','withprebook',this)">With Pre-Book</div>
 <div class="case-tab" onclick="showCase('price','noprebook',this)">No Pre-Book</div>
 </div>
 <style>
-.price-demo{background:linear-gradient(180deg,#FDF2F4,#fff);border-radius:16px;padding:16px}
-.price-demo .pd-main{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
-.price-demo .pd-current{font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:#1a1a1a}
-.price-demo .pd-original{font-size:14px;color:#aaa;text-decoration:line-through}
-.price-demo .pd-badge{font-size:11px;font-weight:700;color:#22C55E;background:rgba(34,197,94,0.08);padding:2px 8px;border-radius:100px}
-.price-demo .pd-sub{font-size:10px;color:#777;margin-bottom:14px}
-.pd-cta-row{display:flex;gap:10px;margin-top:12px}
-.pd-btn-buy{flex:3;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#D14A61;background:#fce4ec;border:none}
-.pd-btn-bag{flex:2;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#fff;background:#D14A61;border:none;display:flex;align-items:center;justify-content:center;gap:5px}
-.pd-btn-bag svg{width:13px;height:13px;stroke:#fff}
-.pd-btn-prebook{width:100%;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#5c3d0a;background:linear-gradient(135deg,#f5d77a,#e8c252,#f5d77a,#d4a017,#f5d77a);background-size:300% 300%;margin-top:8px;border:none}
+/* Shared price section styles matching PDP */
+.ec-price{background:linear-gradient(180deg,#FDF2F4,#fff);border-radius:16px;padding:16px;font-family:'Albert Sans',sans-serif}
+.ec-price-main{display:flex;align-items:baseline;gap:8px;margin-bottom:2px}
+.ec-price-current{font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:#1a1a1a}
+.ec-price-original{font-size:14px;color:#aaa;text-decoration:line-through}
+.ec-price-badge{font-size:11px;font-weight:700;color:#22C55E;background:rgba(34,197,94,0.08);padding:2px 8px;border-radius:100px}
+.ec-price-tax{font-size:10px;color:#777;margin-bottom:12px}
+.ec-breakup-btn{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#f9fafb;border-radius:10px;border:1px solid #f0f0f0;font-size:12px;font-weight:700;color:#D14A61;margin-bottom:12px}
+.ec-pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.ec-pill{padding:7px 14px;border-radius:100px;font-size:10px;font-weight:600;border:1.5px solid #e0e0e0;background:#fff;color:#555}
+.ec-pill.active{border-color:#D14A61;background:#FDF2F4;color:#D14A61}
+.ec-section-label{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;margin-bottom:8px}
+.ec-divider{height:1px;background:#f0f0f0;margin:12px 0}
+.ec-coupon-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+.ec-gift-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-top:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0}
+.ec-toggle{width:40px;height:22px;border-radius:100px;background:#e5e5e5;position:relative;flex-shrink:0}
+.ec-toggle::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:2px;left:2px;box-shadow:0 1px 4px rgba(0,0,0,0.15)}
+.ec-btn-buy{width:100%;padding:12px;border-radius:100px;font-size:14px;font-weight:700;color:#D14A61;background:#fce4ec;border:none;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px}
+.ec-btn-buy b{font-weight:700}
+.ec-cta-row{display:flex;gap:10px}
+.ec-btn-prebook{flex:1;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#5c3d0a;background:linear-gradient(135deg,#f5d77a,#e8c252,#f5d77a);border:none}
+.ec-btn-bag{flex:1;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#fff;background:#D14A61;border:none;display:flex;align-items:center;justify-content:center;gap:5px}
+.ec-btn-bag svg{width:13px;height:13px;stroke:#fff}
+.ec-btn-buy-60{flex:3;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#D14A61;background:#fce4ec;border:none;display:flex;align-items:center;justify-content:center;gap:6px}
+.ec-btn-bag-40{flex:2;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#fff;background:#D14A61;border:none;display:flex;align-items:center;justify-content:center;gap:5px}
+.ec-leaf{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:12px;font-size:10px;font-weight:600;color:#166534}
+.ec-delivery{margin-top:14px;padding-top:14px;border-top:1px solid #f0f0f0}
+.ec-delivery-title{font-size:13px;font-weight:700;color:#1a1a1a;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ec-pincode-row{display:flex;gap:8px;margin-bottom:10px}
+.ec-pincode-input{flex:1;padding:10px 14px;border-radius:100px;border:1.5px solid #D14A61;font-size:13px;font-weight:500;outline:none}
+.ec-pincode-btn{padding:10px 18px;border-radius:100px;font-size:12px;font-weight:700;background:#D14A61;color:#fff;border:none}
+.ec-trust-grid{display:flex;justify-content:space-between;gap:8px}
+.ec-trust-badge{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:600;color:#9f1239;padding:10px 4px;border-radius:12px;background:#fff5f7;flex:1;text-align:center;line-height:1.3}
+.ec-trust-badge svg{width:16px;height:16px;flex-shrink:0}
 </style>
-<div class="case-content" id="case-price-nodiscount">
-<div class="phone-frame"><div class="price-demo">
-<div class="pd-main"><span class="pd-current">₹43,293</span></div>
-<div class="pd-sub">Includes all taxes &amp; making charges</div>
-<div class="pd-cta-row"><button class="pd-btn-buy">Buy Now</button><button class="pd-btn-bag"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button></div>
-<button class="pd-btn-prebook">Pre-Book Now</button>
-</div></div>
-<div class="case-label"><h4><span class="tag tag-info">NO DISCOUNT</span> Full Price</h4><p>No discount applied. Single price shown. No strikethrough or percentage badge visible.</p></div>
+
+<!-- Case 1: Full pricing section WITH Pre-Book -->
+<div class="case-content" id="case-price-withprebook">
+<div class="phone-frame"><div class="ec-price">
+<div class="ec-price-main"><span class="ec-price-current">₹43,293</span><span class="ec-price-original">₹52,990</span><span class="ec-price-badge">18% off</span></div>
+<div class="ec-price-tax">Inclusive of all taxes</div>
+<div class="ec-breakup-btn"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="10" y1="9" x2="10" y2="21"/></svg>Price Breakup</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+<div class="ec-section-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Choose Weight</div>
+<div class="ec-pill-row"><span class="ec-pill active">1.975 g</span><span class="ec-pill">2.101 g</span></div>
+<div class="ec-section-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"><line x1="2" y1="12" x2="22" y2="12"/><path d="M6 8v8M10 10v4M14 10v4M18 8v8"/></svg>Choose Size</div>
+<div class="ec-pill-row"><span class="ec-pill">14.00 MM</span><span class="ec-pill active">16.40 MM</span><span class="ec-pill">17.00 MM</span><span class="ec-pill">17.30 MM</span><span class="ec-pill">18.10 MM</span><span class="ec-pill">18.90 MM</span></div>
+<div class="ec-divider"></div>
+<!-- Coupons mini -->
+<div class="ec-coupon-row"><span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>Available Coupons</span><span style="font-size:10px;font-weight:700;color:#D14A61;background:#FDF2F4;padding:3px 10px;border-radius:100px">MIA500</span></div>
+<!-- Make it a Gift -->
+<div class="ec-gift-row"><span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M20 12v10H4V12"/><rect x="2" y="7" width="20" height="5" rx="1"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>Make it a Gift</span><div class="ec-toggle"></div></div>
+<!-- CTAs - WITH Pre-Book -->
+<div style="margin-top:14px">
+<button class="ec-btn-buy"><b>Buy Now</b><span style="display:inline-flex;align-items:center;gap:3px"><span style="font-size:10px;font-weight:800;color:#5f259f;background:#f3e8ff;padding:2px 5px;border-radius:4px">पे</span><svg viewBox="0 0 48 48" width="16" height="16"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg><svg viewBox="0 0 32 20" width="18" height="12"><circle cx="12.5" cy="10" r="8" fill="#EB001B"/><circle cx="19.5" cy="10" r="8" fill="#F79E1B"/><path d="M16 4.2a8 8 0 000 11.6 8 8 0 000-11.6z" fill="#FF5F00"/></svg></span></button>
+<div class="ec-cta-row"><button class="ec-btn-prebook">Pre-Book Now</button><button class="ec-btn-bag"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button></div>
 </div>
-<div class="case-content" id="case-price-discount" style="display:none">
-<div class="phone-frame"><div class="price-demo">
-<div class="pd-main"><span class="pd-current">₹43,293</span><span class="pd-original">₹52,990</span><span class="pd-badge">18% off on Making Charges</span></div>
-<div class="pd-sub">Includes all taxes &amp; making charges</div>
-<div class="pd-cta-row"><button class="pd-btn-buy">Buy Now</button><button class="pd-btn-bag"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button></div>
-<button class="pd-btn-prebook">Pre-Book Now</button>
-</div></div>
-<div class="case-label"><h4><span class="tag tag-success">DISCOUNT</span> 18% off on Making Charges</h4><p>Discount badge reads "18% off on Making Charges" instead of generic percentage. Strikethrough MRP shown. Badge is green pill.</p></div>
+<div class="ec-leaf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><path d="M17 8C8 10 5.9 16.17 3.82 19.97M9.5 4.5C9.5 4.5 10.5 6 10.5 9.5C10.5 10.5 9.5 12.5 7.5 14"/></svg>100% Recycled Gold for a Greener World</div>
+<!-- Delivery -->
+<div class="ec-delivery">
+<div class="ec-delivery-title"><span style="padding:5px 8px;border-radius:100px;background:#FDF2F4;display:flex;align-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>Delivery &amp; Availability</div>
+<div class="ec-pincode-row"><input class="ec-pincode-input" placeholder="Enter pincode" type="tel"><button class="ec-pincode-btn">Check</button></div>
+<div class="ec-trust-grid"><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div></div>
 </div>
+</div></div>
+<div class="case-label"><h4><span class="tag tag-success">WITH PRE-BOOK</span> Full Pricing Section</h4><p>Complete pricing section: price + breakup, weight/size selectors, coupon, gift toggle, Buy Now (full-width) + Pre-Book + Add to Bag row, eco text, delivery checker with trust badges.</p></div>
+</div>
+
+<!-- Case 2: Full pricing section WITHOUT Pre-Book (60-40 split) -->
 <div class="case-content" id="case-price-noprebook" style="display:none">
-<div class="phone-frame"><div class="price-demo">
-<div class="pd-main"><span class="pd-current">₹43,293</span><span class="pd-original">₹52,990</span><span class="pd-badge">18% off</span></div>
-<div class="pd-sub">Includes all taxes &amp; making charges</div>
-<div class="pd-cta-row" style="margin-top:12px"><button class="pd-btn-buy" style="flex:3">Buy Now</button><button class="pd-btn-bag" style="flex:2"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button></div>
+<div class="phone-frame"><div class="ec-price">
+<div class="ec-price-main"><span class="ec-price-current">₹43,293</span><span class="ec-price-original">₹52,990</span><span class="ec-price-badge">18% off</span></div>
+<div class="ec-price-tax">Inclusive of all taxes</div>
+<div class="ec-breakup-btn"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="10" y1="9" x2="10" y2="21"/></svg>Price Breakup</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+<div class="ec-section-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Choose Weight</div>
+<div class="ec-pill-row"><span class="ec-pill active">1.975 g</span><span class="ec-pill">2.101 g</span></div>
+<div class="ec-section-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"><line x1="2" y1="12" x2="22" y2="12"/><path d="M6 8v8M10 10v4M14 10v4M18 8v8"/></svg>Choose Size</div>
+<div class="ec-pill-row"><span class="ec-pill">14.00 MM</span><span class="ec-pill active">16.40 MM</span><span class="ec-pill">17.00 MM</span><span class="ec-pill">17.30 MM</span><span class="ec-pill">18.10 MM</span><span class="ec-pill">18.90 MM</span></div>
+<div class="ec-divider"></div>
+<div class="ec-coupon-row"><span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>Available Coupons</span><span style="font-size:10px;font-weight:700;color:#D14A61;background:#FDF2F4;padding:3px 10px;border-radius:100px">MIA500</span></div>
+<div class="ec-gift-row"><span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M20 12v10H4V12"/><rect x="2" y="7" width="20" height="5" rx="1"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>Make it a Gift</span><div class="ec-toggle"></div></div>
+<!-- CTAs - WITHOUT Pre-Book: 60-40 split -->
+<div style="margin-top:14px;display:flex;gap:10px">
+<button class="ec-btn-buy-60"><b>Buy Now</b><span style="display:inline-flex;align-items:center;gap:3px"><span style="font-size:10px;font-weight:800;color:#5f259f;background:#f3e8ff;padding:2px 5px;border-radius:4px">पे</span><svg viewBox="0 0 48 48" width="16" height="16"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg><svg viewBox="0 0 32 20" width="18" height="12"><circle cx="12.5" cy="10" r="8" fill="#EB001B"/><circle cx="19.5" cy="10" r="8" fill="#F79E1B"/><path d="M16 4.2a8 8 0 000 11.6 8 8 0 000-11.6z" fill="#FF5F00"/></svg></span></button>
+<button class="ec-btn-bag-40"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>
+</div>
+<div class="ec-leaf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><path d="M17 8C8 10 5.9 16.17 3.82 19.97M9.5 4.5C9.5 4.5 10.5 6 10.5 9.5C10.5 10.5 9.5 12.5 7.5 14"/></svg>100% Recycled Gold for a Greener World</div>
+<div class="ec-delivery">
+<div class="ec-delivery-title"><span style="padding:5px 8px;border-radius:100px;background:#FDF2F4;display:flex;align-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>Delivery &amp; Availability</div>
+<div class="ec-pincode-row"><input class="ec-pincode-input" placeholder="Enter pincode" type="tel"><button class="ec-pincode-btn">Check</button></div>
+<div class="ec-trust-grid"><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div></div>
+</div>
 </div></div>
-<div class="case-label"><h4><span class="tag tag-info">NO PRE-BOOK</span> Buy Now 60% · Add to Bag 40%</h4><p>When pre-booking is disabled, Buy Now and Add to Bag share the full row. Buy Now gets ~60% width (flex:3), Add to Bag gets ~40% (flex:2). No second row needed.</p></div>
+<div class="case-label"><h4><span class="tag tag-info">NO PRE-BOOK</span> Buy Now 60% · Add to Bag 40%</h4><p>Pre-booking is disabled. Buy Now (flex:3, ~60%) and Add to Bag (flex:2, ~40%) share a single row with payment badges on Buy Now. No second CTA row needed.</p></div>
 </div>
 </div>
 </div>
