@@ -371,53 +371,41 @@ function showCase(section, caseName, clickedTab) {
     </div>
     <div class="case-screen active" style="background:#fff;">
         <div class="case-tabs">
-            <div class="case-tab active" onclick="showCase('highlights','2-items',this)">2 Items</div>
-            <div class="case-tab" onclick="showCase('highlights','3-diamond',this)">3 Items (Diamond)</div>
-            <div class="case-tab" onclick="showCase('highlights','3-gem',this)">3 Items (Gem)</div>
-            <div class="case-tab" onclick="showCase('highlights','4-items',this)">4 Items (Full)</div>
+            <div class="case-tab active" onclick="showCase('highlights','3-tabs',this)">3 Tabs</div>
+            <div class="case-tab" onclick="showCase('highlights','4-tabs',this)">4 Tabs</div>
+            <div class="case-tab" onclick="showCase('highlights','5-tabs',this)">5 Tabs</div>
         </div>
 
-        <!-- Case 1: 2 items — Metal + Weight -->
-        <div class="case-content" id="case-highlights-2-items">
+        <!-- Case 1: 3 tabs — Metal + Weight + Occasion (metal full-width top) -->
+        <div class="case-content" id="case-highlights-3-tabs">
             <div class="phone-frame" style="background:#f5f5f5;">
                 <div id="hl-case-1"></div>
             </div>
             <div class="case-label">
-                <h4><span class="tag tag-info">2 Items</span> Metal + Weight Only</h4>
-                <p>Simplest case — no diamonds or gemstones. Metal and weight side by side in one row.</p>
+                <h4><span class="tag tag-info">3 Tabs</span> Metal + Weight + Occasion</h4>
+                <p>No diamonds or gemstones. Metal spans full-width on top. Weight and Occasion side by side below.</p>
             </div>
         </div>
 
-        <!-- Case 2: 3 items — Metal + Diamond + Weight -->
-        <div class="case-content" id="case-highlights-3-diamond" style="display:none">
+        <!-- Case 2: 4 tabs — Metal + Diamond + Weight + Occasion (2x2) -->
+        <div class="case-content" id="case-highlights-4-tabs" style="display:none">
             <div class="phone-frame" style="background:#f5f5f5;">
                 <div id="hl-case-2"></div>
             </div>
             <div class="case-label">
-                <h4><span class="tag tag-success">3 Items</span> Metal + Diamond + Weight</h4>
-                <p>Metal and diamond side by side. Weight spans full width below for clean balance.</p>
+                <h4><span class="tag tag-success">4 Tabs</span> Metal + Diamond + Weight + Occasion</h4>
+                <p>Gold with diamonds. Clean 2×2 grid — metal, diamond, weight, occasion each get their own cell.</p>
             </div>
         </div>
 
-        <!-- Case 3: 3 items — Metal + Gemstone + Weight -->
-        <div class="case-content" id="case-highlights-3-gem" style="display:none">
+        <!-- Case 3: 5 tabs — Metal + Diamond + Gemstone + Weight + Occasion (metal full-width + 2x2) -->
+        <div class="case-content" id="case-highlights-5-tabs" style="display:none">
             <div class="phone-frame" style="background:#f5f5f5;">
                 <div id="hl-case-3"></div>
             </div>
             <div class="case-label">
-                <h4><span class="tag tag-warning">3 Items</span> Metal + Gemstone + Weight</h4>
-                <p>Metal and primary gem side by side. Weight spans full width below. Only first gem shown.</p>
-            </div>
-        </div>
-        
-        <!-- Case 4: 4 items — Metal + Diamond + Gemstone + Weight -->
-        <div class="case-content" id="case-highlights-4-items" style="display:none">
-            <div class="phone-frame" style="background:#f5f5f5;">
-                <div id="hl-case-4"></div>
-            </div>
-            <div class="case-label">
-                <h4><span class="tag tag-success">4 Items</span> Full Spec (Max)</h4>
-                <p>All fields present — metal, diamonds, primary gemstone, and weight in a clean 2×2 grid.</p>
+                <h4><span class="tag tag-warning">5 Tabs</span> Metal + Diamond + Gemstone + Weight + Occasion</h4>
+                <p>Full spec. Metal spans full-width top row. Diamond, Gemstone, Weight, Occasion fill 2×2 grid below.</p>
             </div>
         </div>
 
@@ -493,10 +481,10 @@ function showCase(section, caseName, clickedTab) {
 <script>
 function renderHighlightsCase(productConfig) {
     // Count items to determine layout
-    var itemCount = 1 + (productConfig.diamond ? 1 : 0) + (productConfig.gemstone ? 1 : 0) + 1;
-    // 2 items: side by side. 3 items: metal full-width top, 2 below. 4 items: 2x2.
-    var metalSpan = (itemCount === 3) ? ' span-full' : '';
-    var weightSpan = '';
+    // Count: metal + diamond? + gemstone? + weight + occasion = min 3, max 5
+    var itemCount = 1 + (productConfig.diamond ? 1 : 0) + (productConfig.gemstone ? 1 : 0) + 1 + 1;
+    // 3 tabs: metal full-width top. 4 tabs: 2x2. 5 tabs: metal full-width top + 2x2 below.
+    var metalSpan = (itemCount === 3 || itemCount === 5) ? ' span-full' : '';
 
     var h = '<div class="key-highlights"><div class="key-highlights-bg"></div><div class="highlights-grid">';
     
@@ -523,8 +511,11 @@ function renderHighlightsCase(productConfig) {
         h += '<div class="highlight-item"><div class="highlight-icon gemstone-bg">' + gemstoneSvg + '</div><div class="highlight-text"><div class="hl-value">' + productConfig.gemstone.count + ' ' + primaryGem + '</div><div class="hl-label">' + gemLabel + '</div></div></div>';
     }
     
+    // Occasion / USP
+    h += '<div class="highlight-item pink-item"><div class="highlight-icon pink-bg"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="highlight-text"><div class="hl-value">' + productConfig.occasion + '</div><div class="hl-label">Occasion</div></div></div>';
+
     // Gross Weight
-    h += '<div class="highlight-item pink-item' + weightSpan + '"><div class="highlight-icon pink-bg"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><div class="highlight-text"><div class="hl-value">' + productConfig.grossWeight + '</div><div class="hl-label">Gross Weight</div></div></div>';
+    h += '<div class="highlight-item pink-item"><div class="highlight-icon pink-bg"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><div class="highlight-text"><div class="hl-value">' + productConfig.grossWeight + '</div><div class="hl-label">Gross Weight</div></div></div>';
     
     h += '</div>';
     h += '<button class="view-full-details-btn"><span>View Full Product Details</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>';
@@ -534,28 +525,24 @@ function renderHighlightsCase(productConfig) {
 }
 </script>
 <script>document.addEventListener("DOMContentLoaded", function() {
-    // Case 1: 2 items — Silver + Weight (both full-width rows)
+    // Case 1: 3 tabs — Gold + Weight + Occasion (metal full-width top)
     document.getElementById("hl-case-1").innerHTML = renderHighlightsCase({
-        grossWeight: "5.500 g",
-        silver: { purity: "925", weight: "5.500 g" }
+        occasion: "Daily Wear",
+        grossWeight: "5.200 g",
+        gold: { purity: "14 KT", colour: "White", weight: "5.200 g" }
     });
     
-    // Case 2: 3 items — Gold + Diamond + Weight (metal full-width, diamond+weight side by side)
+    // Case 2: 4 tabs — Gold + Diamond + Weight + Occasion (2x2 grid)
     document.getElementById("hl-case-2").innerHTML = renderHighlightsCase({
+        occasion: "Everyday & Workwear",
         grossWeight: "2.980 g",
         gold: { purity: "14 KT", colour: "White", weight: "2.500 g" },
         diamond: { count: "15", clarity: "I2", weight: "0.124 Ct" }
     });
     
-    // Case 3: 3 items — Gold + Gemstone + Weight (metal full-width, gem+weight side by side)
+    // Case 3: 5 tabs — Gold + Diamond + Gemstone + Weight + Occasion (metal full-width + 2x2)
     document.getElementById("hl-case-3").innerHTML = renderHighlightsCase({
-        grossWeight: "8.200 g",
-        gold: { purity: "22 KT", colour: "Yellow", weight: "7.000 g" },
-        gemstone: { count: "4", name: "Ruby, Emerald, Sapphire", colour: "Red", weight: "1.80 Ct" }
-    });
-    
-    // Case 4: 4 items — Gold + Diamond + Gemstone + Weight (2x2 grid)
-    document.getElementById("hl-case-4").innerHTML = renderHighlightsCase({
+        occasion: "Wedding",
         grossWeight: "14.500 g",
         gold: { purity: "22 KT", colour: "Yellow", weight: "12.000 g" },
         diamond: { count: "25", clarity: "VVS", weight: "1.250 Ct" },
