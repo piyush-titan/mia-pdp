@@ -429,6 +429,14 @@ function showCase(section, caseName, clickedTab) {
         .key-highlights-bg::after { display: none; }
         .highlights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; position: relative; z-index: 1; padding: 16px; }
         .highlight-item.span-full { grid-column: 1 / -1; }
+        /* Compact mode: 5 items fit same height as 4 items by reducing proportionally */
+        .highlights-grid.compact { gap: 5px; padding: 11px; }
+        .highlights-grid.compact .highlight-item { padding: 5px 9px; gap: 6px; }
+        .highlights-grid.compact .highlight-icon { width: 22px; height: 22px; min-width: 22px; border-radius: 8px; }
+        .highlights-grid.compact .highlight-icon svg { width: 12px !important; height: 12px !important; }
+        .highlights-grid.compact .hl-value { font-size: 10px; }
+        .highlights-grid.compact .hl-label { font-size: 8px; }
+        .highlights-grid.compact ~ .view-full-details-btn { margin: 6px 11px 11px; padding: 8px 12px; font-size: 11px; }
         .highlight-item {
             display: flex; align-items: center; gap: 8px;
             padding: 10px 12px; border-radius: 14px; min-width: 0;
@@ -486,7 +494,8 @@ function renderHighlightsCase(productConfig) {
     // 3 tabs: metal full-width top. 4 tabs: 2x2. 5 tabs: metal full-width top + 2x2 below.
     var metalSpan = (itemCount === 3 || itemCount === 5) ? ' span-full' : '';
 
-    var h = '<div class="key-highlights"><div class="key-highlights-bg"></div><div class="highlights-grid">';
+    var isCompact = (itemCount === 5);
+    var h = '<div class="key-highlights"><div class="key-highlights-bg"></div><div class="highlights-grid' + (isCompact ? ' compact' : '') + '">';
     
     // Metal Details
     var goldIconSvg = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="2"/><path d="M7 8 V16 M17 8 V16"/></svg>';
