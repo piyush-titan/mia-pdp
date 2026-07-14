@@ -483,8 +483,8 @@ function showCase(section, caseName, clickedTab) {
 function renderHighlightsCase(productConfig) {
     // Count items to determine layout
     var itemCount = 1 + (productConfig.diamond ? 1 : 0) + (productConfig.gemstone ? 1 : 0) + 1;
-    // All items flow naturally in 2-col grid, no spanning
-    var metalSpan = '';
+    // 2 items: side by side. 3 items: metal full-width top, 2 below. 4 items: 2x2.
+    var metalSpan = (itemCount === 3) ? ' span-full' : '';
     var weightSpan = '';
 
     var h = '<div class="key-highlights"><div class="key-highlights-bg"></div><div class="highlights-grid">';
