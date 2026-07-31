@@ -243,18 +243,18 @@
         /* ===== FULL PRODUCT DETAILS ===== */
         .full-details-panel {
             display: grid; grid-template-rows: 0fr;
-            background: #faf4f5;
+            background: #fff;
             transition: grid-template-rows 0.35s ease-in-out;
         }
-        .full-details-panel.open { grid-template-rows: 1fr; border-top: 1px solid #fae6e9; }
+        .full-details-panel.open { grid-template-rows: 1fr; border-top: 1px solid #f0e8ea; }
         .full-details-inner { overflow: hidden; padding: 0 10px; }
         .full-details-panel.open .full-details-inner { padding: 10px; display: flex; flex-direction: column; gap: 12px; }
-        .acc-group-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #b83e53; margin-bottom: 6px; }
+        .acc-group-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px; }
         .acc-rows { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; row-gap: 4px; }
-        .acc-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; border-bottom: 1px solid rgba(244,206,213,0.7); padding-bottom: 4px; }
+        .acc-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; border-bottom: 1px solid #f5f0f1; padding-bottom: 4px; }
         .acc-row-label { font-size: 11px; color: #a08c92; white-space: nowrap; }
         .acc-row-value { font-size: 12px; font-weight: 600; color: #43323a; text-align: right; }
-        .acc-description { font-size: 12px; line-height: 1.7; color: #6d565e; padding-top: 4px; border-top: 1px solid #fae6e9; }
+        .acc-description { font-size: 12px; line-height: 1.7; color: #6d565e; padding-top: 4px; border-top: 1px solid #f0e8ea; }
 
         /* ===== TRUST ELEMENTS ===== */
         .trust-elements {
@@ -1051,8 +1051,8 @@ document.getElementById("similarBtn").onclick = function() {
         '<div class="cta-wrap"><button class="view-full-details-btn" id="viewDetailsBtn"><span>View Full Product Details</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>';
     el.innerHTML = h;
 
-    function accGroup(title, rows) {
-        return '<div><div class="acc-group-title">' + title + '</div><div class="acc-rows">' +
+    function accGroup(title, rows, titleColor) {
+        return '<div><div class="acc-group-title" style="color:' + (titleColor || '#6d565e') + '">' + title + '</div><div class="acc-rows">' +
             rows.filter(Boolean).map(function(r) {
                 return '<div class="acc-row"><span class="acc-row-label">' + r[0] + '</span><span class="acc-row-value">' + r[1] + '</span></div>';
             }).join('') +
@@ -1067,7 +1067,7 @@ document.getElementById("similarBtn").onclick = function() {
         ['Occasion', product.occasion],
         ['Gender', product.gender],
         ['Brand', product.brand]
-    ]);
+    ], '#6b7280');
     dh += accGroup((product.gold ? 'Gold' : 'Silver') + ' Details', product.gold ? [
         ['Purity', product.gold.purity],
         ['Colour', product.gold.colour],
@@ -1075,7 +1075,7 @@ document.getElementById("similarBtn").onclick = function() {
     ] : [
         ['Purity', product.silver.purity],
         ['Weight', product.silver.weight]
-    ]);
+    ], '#92400e');
     if (product.diamond) dh += accGroup('Diamond Details', [
         ['Count', product.diamond.count],
         ['Weight', product.diamond.weight],
@@ -1084,7 +1084,7 @@ document.getElementById("similarBtn").onclick = function() {
         ['Colour', product.diamond.colour],
         ['Shape', product.diamond.shape],
         ['Setting', product.diamond.setting]
-    ]);
+    ], '#1e3a5f');
     if (product.gemstones && product.gemstones.length) {
         product.gemstones.forEach(function(gem) {
             dh += accGroup('Gemstone — ' + gem.name, [
@@ -1094,10 +1094,10 @@ document.getElementById("similarBtn").onclick = function() {
                 gem.weight   && ['Weight',    gem.weight],
                 gem.clarity  && ['Clarity',   gem.clarity],
                 gem.treatment && ['Treatment', gem.treatment]
-            ]);
+            ], '#4c1d95');
         });
     }
-    dh += '<div class="acc-description"><div class="acc-group-title" style="margin-bottom:4px">Description</div>' + product.description + '</div>';
+    dh += '<div class="acc-description"><div class="acc-group-title" style="color:#6b7280;margin-bottom:4px">Description</div>' + product.description + '</div>';
     di.innerHTML = dh;
 
     document.getElementById("viewDetailsBtn").onclick = function() {
