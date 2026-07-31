@@ -286,24 +286,28 @@
         .price-breakup-toggle span { font-size: 12px; font-weight: 700; color: #D14A61; display: flex; align-items: center; gap: 6px; }
         .price-breakup-toggle .toggle-arrow { transition: transform 0.3s; }
         .price-breakup-toggle.open .toggle-arrow { transform: rotate(180deg); }
-        .price-breakup-panel { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .price-breakup-panel.open { max-height: 600px; }
-        .breakup-content { padding: 12px 0 0; }
-        .breakup-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 12px; margin-bottom: 0; border-radius: 0; border-bottom: 1px solid #f5f5f5; }
-        .breakup-label { font-size: 12px; color: #1a1a1a; font-weight: 600; }
-        .breakup-sub { font-size: 10px; color: #666; margin-top: 2px; }
-        .breakup-value { font-size: 12px; font-weight: 700; color: #1a1a1a; text-align: right; flex-shrink: 0; }
-        .breakup-row.row-gold { background: transparent; }
-        .breakup-row.row-gold .breakup-value { color: #1a1a1a; }
-        .breakup-row.row-stone { background: transparent; }
-        .breakup-row.row-stone .breakup-value { color: #1a1a1a; }
-        .breakup-row.row-making { background: transparent; }
-        .breakup-row.row-making .breakup-value { color: #1a1a1a; }
-        .breakup-row.row-gst { background: transparent; }
-        .breakup-row.row-gst .breakup-value { color: #1a1a1a; }
-        .breakup-total { margin-top: 4px; padding: 12px; border-radius: 0; background: transparent; border-top: 1px solid #e5e5e5; border-bottom: none; }
-        .breakup-total .breakup-label { font-weight: 700; color: #1a1a1a; font-size: 13px; }
-        .breakup-total .breakup-value { font-size: 15px; color: #1a1a1a; font-weight: 800; }
+        .price-breakup-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease-in-out; }
+        .price-breakup-panel.open { grid-template-rows: 1fr; }
+        .breakup-content { overflow: hidden; }
+        .price-breakup-panel.open .breakup-content { padding: 14px 0 0; }
+        /* value sections: gold / diamond / gemstone */
+        .bp-section { margin-bottom: 10px; }
+        .bp-section-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 5px; border-bottom: 1px solid #f0e8ea; margin-bottom: 4px; }
+        .bp-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+        .bp-section-amount { font-size: 13px; font-weight: 700; color: #43323a; font-family: 'Fraunces', serif; }
+        .bp-specs { display: flex; gap: 16px; padding: 2px 0 4px; }
+        .bp-spec { font-size: 11px; color: #a08c92; }
+        .bp-spec strong { font-weight: 600; color: #6d565e; }
+        /* summary rows */
+        .bp-divider { border: none; border-top: 1px solid #f0e8ea; margin: 4px 0 8px; }
+        .bp-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8f4f5; }
+        .bp-row-label { font-size: 12px; color: #6d565e; }
+        .bp-row-value { font-size: 12px; font-weight: 600; color: #43323a; }
+        .bp-row.bp-subtotal .bp-row-label { font-weight: 700; color: #43323a; }
+        .bp-row.bp-discount .bp-row-value { color: #16a34a; }
+        .bp-grand { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding: 11px 14px; background: #fdf2f4; border-radius: 10px; }
+        .bp-grand-label { font-size: 13px; font-weight: 700; color: #43323a; }
+        .bp-grand-value { font-size: 16px; font-weight: 700; color: #D14A61; font-family: 'Fraunces', serif; }
 
         /* Weight & Size Selection */
         .selection-section { margin-top: 16px; padding-top: 16px; border-top: 1px solid #f0f0f0; }
@@ -790,7 +794,17 @@ var product = {
         { name: "Dark Yellow Sapphire", count: 33, shape: "Round", colour: "Dark Yellow", weight: "0.820 Ct" }
     ],
     price: { current: 43293, original: 52990, discount: 18 },
-    priceBreakup: { goldValue: { amount: 28420, weight: "1.950 g", rate: "\u20B914,574/g" }, stoneDetail: { amount: 10840, count: 15, diamondWeight: "0.124 Ct" }, makingCharges: 4033, gst: 1302, grandTotal: 43293 },
+    priceBreakup: {
+        gold:             { weight: "1.950 g", rate: "\u20B914,574/g", amount: 28420 },
+        diamond:          { weightG: "0.025 g", weightCt: "0.124 Ct", amount: 8640 },
+        gemstone:         { weightG: "0.164 g", weightCt: "0.820 Ct", amount: 2240 },
+        making:           4732,
+        subTotal:         44032,
+        discount:         { amount: 2000 },
+        subAfterDiscount: 42032,
+        gst:              { pct: 3, amount: 1261 },
+        grandTotal:       43293
+    },
     sizes: [
         { label: "14.00 MM", circumference: "44.0 mm", inStock: false },
         { label: "16.40 MM", circumference: "51.5 mm", inStock: true },
@@ -1125,11 +1139,32 @@ function renderPriceSection() {
         h += '<button class="price-breakup-toggle' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupToggle"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="10" y1="9" x2="10" y2="21"/></svg>Price Breakup</span><svg class="toggle-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>';
         h += '<div class="price-breakup-panel' + (state.priceBreakupOpen ? ' open' : '') + '" id="priceBreakupPanel"><div class="breakup-content">';
         var b = product.priceBreakup;
-        h += '<div class="breakup-row row-gold"><div><div class="breakup-label">Total Gold Value</div><div class="breakup-sub">Weight: ' + b.goldValue.weight + ' &middot; Rate: ' + b.goldValue.rate + '</div></div><div class="breakup-value">' + fmt(b.goldValue.amount) + '</div></div>';
-        h += '<div class="breakup-row row-stone"><div><div class="breakup-label">Stone Detail</div><div class="breakup-sub">Count: ' + b.stoneDetail.count + ' &middot; Diamond: ' + b.stoneDetail.diamondWeight + '</div></div><div class="breakup-value">' + fmt(b.stoneDetail.amount) + '</div></div>';
-        h += '<div class="breakup-row row-making"><div><div class="breakup-label">Making Charges</div></div><div class="breakup-value">' + fmt(b.makingCharges) + '</div></div>';
-        h += '<div class="breakup-row row-gst"><div><div class="breakup-label">GST (3%)</div></div><div class="breakup-value">' + fmt(b.gst) + '</div></div>';
-        h += '<div class="breakup-row breakup-total"><div><div class="breakup-label">Grand Total</div></div><div class="breakup-value">' + fmt(b.grandTotal) + '</div></div>';
+        // Gold section
+        h += '<div class="bp-section">';
+        h += '<div class="bp-section-head"><span class="bp-section-title" style="color:#92400e">Gold Value</span><span class="bp-section-amount">' + fmt(b.gold.amount) + '</span></div>';
+        h += '<div class="bp-specs"><span class="bp-spec">Weight <strong>' + b.gold.weight + '</strong></span><span class="bp-spec">Rate <strong>' + b.gold.rate + '</strong></span></div>';
+        h += '</div>';
+        // Diamond section
+        if (product.diamond) {
+            h += '<div class="bp-section">';
+            h += '<div class="bp-section-head"><span class="bp-section-title" style="color:#1e3a5f">Diamond Value</span><span class="bp-section-amount">' + fmt(b.diamond.amount) + '</span></div>';
+            h += '<div class="bp-specs"><span class="bp-spec">Weight <strong>' + b.diamond.weightG + ' &middot; ' + b.diamond.weightCt + '</strong></span></div>';
+            h += '</div>';
+        }
+        // Gemstone section
+        if (product.gemstone || (product.gemstones && product.gemstones.length)) {
+            h += '<div class="bp-section">';
+            h += '<div class="bp-section-head"><span class="bp-section-title" style="color:#4c1d95">Gemstone Value</span><span class="bp-section-amount">' + fmt(b.gemstone.amount) + '</span></div>';
+            h += '<div class="bp-specs"><span class="bp-spec">Weight <strong>' + b.gemstone.weightG + ' &middot; ' + b.gemstone.weightCt + '</strong></span></div>';
+            h += '</div>';
+        }
+        h += '<hr class="bp-divider">';
+        h += '<div class="bp-row"><span class="bp-row-label">Making Charges</span><span class="bp-row-value">' + fmt(b.making) + '</span></div>';
+        h += '<div class="bp-row bp-subtotal"><span class="bp-row-label">Sub Total</span><span class="bp-row-value">' + fmt(b.subTotal) + '</span></div>';
+        h += '<div class="bp-row bp-discount"><span class="bp-row-label">Discount</span><span class="bp-row-value">&minus;' + fmt(b.discount.amount) + '</span></div>';
+        h += '<div class="bp-row bp-subtotal"><span class="bp-row-label">Sub Total After Discount</span><span class="bp-row-value">' + fmt(b.subAfterDiscount) + '</span></div>';
+        h += '<div class="bp-row"><span class="bp-row-label">GST (' + b.gst.pct + '%)</span><span class="bp-row-value">' + fmt(b.gst.amount) + '</span></div>';
+        h += '<div class="bp-grand"><span class="bp-grand-label">Grand Total</span><span class="bp-grand-value">' + fmt(b.grandTotal) + '</span></div>';
         h += '</div></div>';
         h += '<div class="selection-section"><div class="selection-label"><i data-lucide="weight" style="width:18px;height:18px;color:#555"></i>Choose Weight</div><div class="pill-row">';
         product.weights.forEach(function(w) { h += '<button class="pill' + (state.selectedWeight === w.label ? ' active' : '') + '" data-weight="' + w.label + '">' + w.label + '</button>'; });
