@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sticky CTA — Background Colour Variants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Fraunces:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Albert Sans', sans-serif;
+  background: #f5eef0;
+  min-height: 100vh;
+  padding: 40px 16px 60px;
+  display: flex; flex-direction: column; align-items: center; gap: 32px;
+}
+
+.row { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 8px; }
+.lbl { display: flex; justify-content: space-between; align-items: baseline; padding: 0 2px; }
+.lbl-name { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #7c5c64; }
+.lbl-hex  { font-size: 10px; color: #a08c92; font-family: monospace; }
+
+/* ── shared bar ── */
+.bar {
+  padding: 10px 10px 10px 14px;
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.s-price {
+  font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+  white-space: nowrap; flex-shrink: 0; line-height: 1;
+  background: linear-gradient(90deg,#1a1a1a 0%,#1a1a1a 28%,#555 40%,#999 50%,#555 60%,#1a1a1a 72%,#1a1a1a 100%);
+  background-size: 300% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  animation: sh 4s linear infinite;
+}
+@keyframes sh { 0%{background-position:200% center} 100%{background-position:-200% center} }
+
+.s-size {
+  display: flex; align-items: center; gap: 3px;
+  padding: 5px 8px 5px 10px; border-radius: 100px;
+  border: 1px solid rgba(0,0,0,0.10); font-size: 9px; font-weight: 600;
+  color: #555; background: rgba(255,255,255,0.7); white-space: nowrap;
+}
+.s-size svg { width: 10px; height: 10px; stroke: #999; stroke-width: 2.5; flex-shrink: 0; }
+.spacer { flex: 1; }
+.s-btn {
+  padding: 12px 20px; border-radius: 100px; font-size: 12px; font-weight: 700;
+  color: #fff; white-space: nowrap; flex-shrink: 0; background: #D14A61;
+  box-shadow: 0 4px 14px rgba(209,74,97,0.38);
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Albert Sans', sans-serif;
+}
+.s-btn svg { width: 13px; height: 13px; }
+</style>
+</head>
+<body>
+
+<!-- V1: Mia Rose — the brand's primary pink, full opacity, punchy -->
+<div class="row">
+  <div class="lbl"><span class="lbl-name">V1 — Mia Rose (brand primary)</span><span class="lbl-hex">#D14A61</span></div>
+  <div class="bar" style="background:#D14A61">
+    <span class="s-price" style="background:linear-gradient(90deg,#fff 0%,#fff 30%,#ffd6de 50%,#fff 70%,#fff 100%);background-size:300% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:sh 4s linear infinite">₹43,293</span>
+    <button class="s-size" style="background:rgba(255,255,255,0.25);border-color:rgba(255,255,255,0.4);color:#fff">16.40MM · 1.975g
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke:#fff"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+    <span class="spacer"></span>
+    <button class="s-btn" style="background:#fff;color:#D14A61;box-shadow:0 4px 14px rgba(0,0,0,0.12)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Add to Bag
+    </button>
+  </div>
+</div>
+
+<!-- V2: Champagne — warm gold-ivory, rich contrast against white page -->
+<div class="row">
+  <div class="lbl"><span class="lbl-name">V2 — Champagne gold</span><span class="lbl-hex">#FAE8C8</span></div>
+  <div class="bar" style="background:#FAE8C8;border:1px solid rgba(184,134,11,0.2)">
+    <span class="s-price">₹43,293</span>
+    <button class="s-size">16.40MM · 1.975g
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+    <span class="spacer"></span>
+    <button class="s-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Add to Bag
+    </button>
+  </div>
+</div>
+
+<!-- V3: Lilac mist — soft lavender, feminine complement to pink -->
+<div class="row">
+  <div class="lbl"><span class="lbl-name">V3 — Lilac mist</span><span class="lbl-hex">#EDE0F5</span></div>
+  <div class="bar" style="background:#EDE0F5;border:1px solid rgba(124,58,237,0.12)">
+    <span class="s-price">₹43,293</span>
+    <button class="s-size">16.40MM · 1.975g
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+    <span class="spacer"></span>
+    <button class="s-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Add to Bag
+    </button>
+  </div>
+</div>
+
+<!-- V4: Warm peach — soft coral, warm and distinct without being loud -->
+<div class="row">
+  <div class="lbl"><span class="lbl-name">V4 — Warm peach</span><span class="lbl-hex">#FFE5D6</span></div>
+  <div class="bar" style="background:#FFE5D6;border:1px solid rgba(209,100,74,0.15)">
+    <span class="s-price">₹43,293</span>
+    <button class="s-size">16.40MM · 1.975g
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+    <span class="spacer"></span>
+    <button class="s-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Add to Bag
+    </button>
+  </div>
+</div>
+
+<!-- V5: Deep mauve — richer, moody rose. Closest to Mia's premium jewellery feel -->
+<div class="row">
+  <div class="lbl"><span class="lbl-name">V5 — Deep mauve</span><span class="lbl-hex">#8B3A52</span></div>
+  <div class="bar" style="background:#8B3A52">
+    <span class="s-price" style="background:linear-gradient(90deg,#fff 0%,#fff 28%,#ffd6de 45%,#fff 55%,#fff 72%,#fff 100%);background-size:300% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:sh 4s linear infinite">₹43,293</span>
+    <button class="s-size" style="background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.9)">16.40MM · 1.975g
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke:rgba(255,255,255,0.7)"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+    <span class="spacer"></span>
+    <button class="s-btn" style="background:#fff;color:#8B3A52;box-shadow:0 4px 14px rgba(0,0,0,0.15)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#8B3A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Add to Bag
+    </button>
+  </div>
+</div>
+
+</body>
+</html>
