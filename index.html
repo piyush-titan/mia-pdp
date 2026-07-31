@@ -248,28 +248,13 @@
         }
         .full-details-panel.open { grid-template-rows: 1fr; border-top: 1px solid #fae6e9; }
         .full-details-inner { overflow: hidden; padding: 0 10px; }
-        .full-details-panel.open .full-details-inner { padding: 10px; }
-        .detail-category { margin-bottom: 16px; }
-        .detail-category:last-child { margin-bottom: 0; }
-        .detail-cat-title {
-            font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-            text-transform: uppercase; margin-bottom: 8px; padding-bottom: 6px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .detail-cat-title.gold-title { color: #b8860b; }
-        .detail-cat-title.diamond-title { color: #D14A61; }
-        .detail-cat-title.general-title { color: #555; }
-        .detail-rows { display: flex; flex-direction: column; }
-        .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f5f5f5; gap: 12px; }
-        .detail-row:last-child { border-bottom: none; }
-        .detail-row .dl { font-size: 12px; color: #777; flex-shrink: 0; }
-        .detail-row .dv { font-size: 12px; font-weight: 600; color: #1a1a1a; text-align: right; word-break: break-word; }
-        /* 2-column grid for dense detail sections */
-        .detail-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
-        .detail-grid-cell { padding: 8px 4px 8px 0; }
-        .detail-grid-cell .dc-label { font-size: 10px; color: #999; margin-bottom: 2px; }
-        .detail-grid-cell .dc-value { font-size: 12px; font-weight: 600; color: #1a1a1a; }
-        .product-description { margin-top: 16px; padding-top: 12px; border-top: 1px solid #f0f0f0; font-size: 13px; line-height: 1.7; color: #555; }
+        .full-details-panel.open .full-details-inner { padding: 10px; display: flex; flex-direction: column; gap: 12px; }
+        .acc-group-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #b83e53; margin-bottom: 6px; }
+        .acc-rows { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; row-gap: 4px; }
+        .acc-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; border-bottom: 1px solid rgba(244,206,213,0.7); padding-bottom: 4px; }
+        .acc-row-label { font-size: 11px; color: #a08c92; white-space: nowrap; }
+        .acc-row-value { font-size: 12px; font-weight: 600; color: #43323a; text-align: right; }
+        .acc-description { font-size: 12px; line-height: 1.7; color: #6d565e; padding-top: 4px; border-top: 1px solid #fae6e9; }
 
         /* ===== TRUST ELEMENTS ===== */
         .trust-elements {
@@ -1066,23 +1051,53 @@ document.getElementById("similarBtn").onclick = function() {
         '<div class="cta-wrap"><button class="view-full-details-btn" id="viewDetailsBtn"><span>View Full Product Details</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>';
     el.innerHTML = h;
 
+    function accGroup(title, rows) {
+        return '<div><div class="acc-group-title">' + title + '</div><div class="acc-rows">' +
+            rows.filter(Boolean).map(function(r) {
+                return '<div class="acc-row"><span class="acc-row-label">' + r[0] + '</span><span class="acc-row-value">' + r[1] + '</span></div>';
+            }).join('') +
+            '</div></div>';
+    }
+
     var di = document.getElementById("fullDetailsInner");
-    var dh = '<div class="detail-category"><div class="detail-cat-title general-title">General</div><div class="detail-rows"><div class="detail-row"><span class="dl">Design Code</span><span class="dv">' + product.designCode + '</span></div><div class="detail-row"><span class="dl">Gross Weight</span><span class="dv">' + product.grossWeight + '</span></div><div class="detail-row"><span class="dl">Jewellery Type</span><span class="dv">' + product.jewelleryType + '</span></div><div class="detail-row"><span class="dl">Occasion</span><span class="dv">' + product.occasion + '</span></div><div class="detail-row"><span class="dl">Gender</span><span class="dv">' + product.gender + '</span></div><div class="detail-row"><span class="dl">Brand</span><span class="dv">' + product.brand + '</span></div></div></div>';
-    dh += '<div class="detail-category"><div class="detail-cat-title gold-title">Gold Details</div><div class="detail-grid"><div class="detail-grid-cell"><div class="dc-label">Purity</div><div class="dc-value" style="color:#92400e">' + product.gold.purity + '</div></div><div class="detail-grid-cell"><div class="dc-label">Colour</div><div class="dc-value" style="color:#92400e">' + product.gold.colour + '</div></div><div class="detail-grid-cell"><div class="dc-label">Weight</div><div class="dc-value">' + product.gold.weight + '</div></div></div></div>';
-    if (product.diamond) dh += '<div class="detail-category"><div class="detail-cat-title diamond-title">Diamond Details</div><div class="detail-grid"><div class="detail-grid-cell"><div class="dc-label">Count</div><div class="dc-value" style="color:#1e3a5f">' + product.diamond.count + '</div></div><div class="detail-grid-cell"><div class="dc-label">Weight</div><div class="dc-value">' + product.diamond.weight + '</div></div><div class="detail-grid-cell"><div class="dc-label">Type</div><div class="dc-value">' + product.diamond.type + '</div></div><div class="detail-grid-cell"><div class="dc-label">Clarity</div><div class="dc-value">' + product.diamond.clarity + '</div></div><div class="detail-grid-cell"><div class="dc-label">Colour</div><div class="dc-value">' + product.diamond.colour + '</div></div><div class="detail-grid-cell"><div class="dc-label">Shape</div><div class="dc-value">' + product.diamond.shape + '</div></div><div class="detail-grid-cell"><div class="dc-label">Setting</div><div class="dc-value">' + product.diamond.setting + '</div></div></div></div>';
+    var dh = accGroup('General Details', [
+        ['Design Code', product.designCode],
+        ['Gross Weight', product.grossWeight],
+        ['Jewellery Type', product.jewelleryType],
+        ['Occasion', product.occasion],
+        ['Gender', product.gender],
+        ['Brand', product.brand]
+    ]);
+    dh += accGroup((product.gold ? 'Gold' : 'Silver') + ' Details', product.gold ? [
+        ['Purity', product.gold.purity],
+        ['Colour', product.gold.colour],
+        ['Weight', product.gold.weight]
+    ] : [
+        ['Purity', product.silver.purity],
+        ['Weight', product.silver.weight]
+    ]);
+    if (product.diamond) dh += accGroup('Diamond Details', [
+        ['Count', product.diamond.count],
+        ['Weight', product.diamond.weight],
+        ['Type', product.diamond.type],
+        ['Clarity', product.diamond.clarity],
+        ['Colour', product.diamond.colour],
+        ['Shape', product.diamond.shape],
+        ['Setting', product.diamond.setting]
+    ]);
     if (product.gemstones && product.gemstones.length) {
         product.gemstones.forEach(function(gem) {
-            dh += '<div class="detail-category"><div class="detail-cat-title" style="color:#4c1d95">Gemstone ' + gem.name + '</div><div class="detail-grid">';
-            if (gem.count) dh += '<div class="detail-grid-cell"><div class="dc-label">Count</div><div class="dc-value">' + gem.count + '</div></div>';
-            if (gem.shape) dh += '<div class="detail-grid-cell"><div class="dc-label">Shape</div><div class="dc-value">' + gem.shape + '</div></div>';
-            if (gem.colour) dh += '<div class="detail-grid-cell"><div class="dc-label">Colour</div><div class="dc-value">' + gem.colour + '</div></div>';
-            if (gem.weight) dh += '<div class="detail-grid-cell"><div class="dc-label">Weight</div><div class="dc-value">' + gem.weight + '</div></div>';
-            if (gem.clarity) dh += '<div class="detail-grid-cell"><div class="dc-label">Clarity</div><div class="dc-value">' + gem.clarity + '</div></div>';
-            if (gem.treatment) dh += '<div class="detail-grid-cell"><div class="dc-label">Treatment</div><div class="dc-value">' + gem.treatment + '</div></div>';
-            dh += '</div></div>';
+            dh += accGroup('Gemstone — ' + gem.name, [
+                gem.count    && ['Count',     gem.count],
+                gem.shape    && ['Shape',     gem.shape],
+                gem.colour   && ['Colour',    gem.colour],
+                gem.weight   && ['Weight',    gem.weight],
+                gem.clarity  && ['Clarity',   gem.clarity],
+                gem.treatment && ['Treatment', gem.treatment]
+            ]);
         });
     }
-    dh += '<div class="product-description"><strong style="font-size:11px;letter-spacing:0.5px;text-transform:uppercase;color:#555;display:block;margin-bottom:6px">Description</strong>' + product.description + '</div>';
+    dh += '<div class="acc-description"><div class="acc-group-title" style="margin-bottom:4px">Description</div>' + product.description + '</div>';
     di.innerHTML = dh;
 
     document.getElementById("viewDetailsBtn").onclick = function() {
