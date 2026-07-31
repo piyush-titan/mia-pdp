@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sticky CTA — Background Variants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Fraunces:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Albert Sans', sans-serif;
+  background: #f0eaec;
+  min-height: 100vh;
+  padding: 40px 16px 60px;
+  display: flex; flex-direction: column; align-items: center; gap: 56px;
+}
+
+/* ── shared label ── */
+.variant-wrap { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 10px; }
+.variant-label { display: flex; justify-content: space-between; align-items: baseline; padding: 0 4px; }
+.variant-label .v-name  { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #7c5c64; }
+.variant-label .v-desc  { font-size: 10px; color: #a08c92; }
+
+/* ── shared bar shell ── */
+.bar {
+  position: relative;
+  padding: 10px 10px 10px 14px;
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+
+/* ── price ── */
+.s-price {
+  font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+  white-space: nowrap; flex-shrink: 0; line-height: 1;
+  background: linear-gradient(90deg,#1a1a1a 0%,#1a1a1a 28%,#555 40%,#999 50%,#555 60%,#1a1a1a 72%,#1a1a1a 100%);
+  background-size: 300% auto;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+
+/* ── size pill ── */
+.s-size {
+  display: flex; align-items: center; gap: 3px;
+  padding: 5px 8px 5px 10px; border-radius: 100px;
+  border: 1px solid #e0e0e0; font-size: 9px; font-weight: 600;
+  color: #555; background: #fafafa; white-space: nowrap; cursor: pointer;
+}
+.s-size svg { width: 10px; height: 10px; stroke: #999; stroke-width: 2.5; flex-shrink: 0; }
+
+/* ── add to bag button ── */
+.s-btn {
+  padding: 12px 20px; border-radius: 100px; font-size: 12px; font-weight: 700;
+  color: #fff; white-space: nowrap; flex-shrink: 0;
+  background: #D14A61;
+  box-shadow: 0 4px 16px rgba(209,74,97,0.35);
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Albert Sans', sans-serif;
+}
+.s-btn svg { width: 13px; height: 13px; }
+
+.spacer { flex: 1; }
+
+
+/* ════════════════════════════════════════════
+   V1 — White + revolving pink border shimmer
+   ════════════════════════════════════════════ */
+.v1 {
+  background: #fff;
+  border: none;
+}
+/* pseudo-element carries a conic-gradient that rotates */
+.v1::before {
+  content: '';
+  position: absolute; inset: -3px;
+  border-radius: 21px;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    transparent 0deg,
+    transparent 60deg,
+    rgba(209,74,97,0.0)  65deg,
+    rgba(209,74,97,0.55) 90deg,
+    rgba(255,180,196,0.8) 100deg,
+    rgba(209,74,97,0.55) 110deg,
+    rgba(209,74,97,0.0)  135deg,
+    transparent 140deg,
+    transparent 360deg
+  );
+  z-index: 0;
+  animation: spin-border 2.8s linear infinite;
+}
+/* clip the glow so only the ring shows, not the interior */
+.v1::after {
+  content: '';
+  position: absolute; inset: 2px;
+  background: #fff;
+  border-radius: 16px;
+  z-index: 1;
+}
+.v1 > * { position: relative; z-index: 2; }
+@property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes spin-border { to { --angle: 360deg; } }
+
+
+/* ════════════════════════
+   V2 — Soft blush gradient
+   ════════════════════════ */
+.v2 {
+  background: linear-gradient(115deg, #fff0f3 0%, #fdf2f4 45%, #fff5eb 100%);
+  border: 1px solid rgba(209,74,97,0.12);
+}
+
+
+/* ════════════════════════════════
+   V3 — Frosted glass (translucent)
+   ════════════════════════════════ */
+.v3-wrap {
+  /* contextual background so frosted effect is visible */
+  background: linear-gradient(135deg, #f7c8d2 0%, #c9a8e0 100%);
+  border-radius: 22px;
+  padding: 20px 0;
+}
+.v3 {
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.7);
+  box-shadow: 0 8px 32px rgba(180,60,100,0.14), 0 2px 8px rgba(0,0,0,0.04);
+}
+/* frosted variant: price text needs to be readable on any bg */
+.v3 .s-price {
+  background: linear-gradient(90deg,#3a1a22 0%,#3a1a22 25%,#7a3040 40%,#b05060 50%,#7a3040 60%,#3a1a22 75%,#3a1a22 100%);
+  background-size: 300% auto;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+.v3 .s-size { background: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.9); }
+
+
+/* ══════════════════════════════════
+   V4 — Deep charcoal ink
+   ══════════════════════════════════ */
+.v4 {
+  background: #1e1218;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3);
+}
+.v4 .s-price {
+  background: linear-gradient(90deg,#e8d0d5 0%,#e8d0d5 25%,#fff 45%,#f9c0cc 50%,#fff 55%,#e8d0d5 75%,#e8d0d5 100%);
+  background-size: 300% auto;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+.v4 .s-size { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); color: #ccc; }
+.v4 .s-size svg { stroke: #888; }
+.v4 .s-btn { box-shadow: 0 4px 20px rgba(209,74,97,0.5); }
+
+
+/* ════════════════════════════════════
+   V5 — Warm parchment with gold tones
+   ════════════════════════════════════ */
+.v5 {
+  background: linear-gradient(120deg, #fdf6ee 0%, #fef3e8 60%, #fdf0f3 100%);
+  border: 1px solid rgba(184,134,11,0.18);
+  box-shadow: 0 8px 32px rgba(184,134,11,0.10), 0 2px 8px rgba(0,0,0,0.05);
+}
+.v5 .s-price {
+  background: linear-gradient(90deg, #6b4c10 0%, #b8860b 20%, #d4a843 35%, #f5e07a 50%, #d4a843 65%, #b8860b 80%, #6b4c10 100%);
+  background-size: 300% auto;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  animation: shimmer-gold 4s linear infinite;
+}
+@keyframes shimmer-gold { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+.v5 .s-size { background: rgba(255,255,255,0.85); border-color: rgba(184,134,11,0.25); }
+.v5 .s-btn {
+  background: linear-gradient(135deg, #D14A61 0%, #b8395c 100%);
+  box-shadow: 0 4px 16px rgba(209,74,97,0.30);
+}
+</style>
+</head>
+<body>
+
+<!-- ── VARIANT 1 ── White + revolving pink border shimmer -->
+<div class="variant-wrap">
+  <div class="variant-label">
+    <span class="v-name">V1 — White + revolving border</span>
+    <span class="v-desc">Conic-gradient spin</span>
+  </div>
+  <div class="bar v1">
+    <span class="s-price">₹43,293</span>
+    <button class="s-size">16.40MM · 1.975g
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+    <span class="spacer"></span>
+    <button class="s-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Add to Bag
+    </button>
+  </div>
+</div>
+
+<!-- ── VARIANT 2 ── Soft blush gradient -->
+<div class="variant-wrap">
+  <div class="variant-label">
+    <span class="v-name">V2 — Soft blush gradient</span>
+    <span class="v-desc">Pink → white → warm</span>
+  </div>
+  <div class="bar v2">
+    <span class="s-price">₹43,293</span>
+    <button class="s-size">16.40MM · 1.975g
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+    <span class="spacer"></span>
+    <button class="s-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Add to Bag
+    </button>
+  </div>
+</div>
+
+<!-- ── VARIANT 3 ── Frosted glass -->
+<div class="variant-wrap">
+  <div class="variant-label">
+    <span class="v-name">V3 — Frosted glass</span>
+    <span class="v-desc">Translucent + backdrop-blur</span>
+  </div>
+  <div class="v3-wrap">
+    <div class="bar v3" style="margin: 0 12px">
+      <span class="s-price">₹43,293</span>
+      <button class="s-size">16.40MM · 1.975g
+        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+      </button>
+      <span class="spacer"></span>
+      <button class="s-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Add to Bag
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── VARIANT 4 ── Deep charcoal ink -->
+<div class="variant-wrap">
+  <div class="variant-label">
+    <span class="v-name">V4 — Deep charcoal</span>
+    <span class="v-desc">Dark ink · light price</span>
+  </div>
+  <div class="bar v4">
+    <span class="s-price">₹43,293</span>
+    <button class="s-size">16.40MM · 1.975g
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+    <span class="spacer"></span>
+    <button class="s-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Add to Bag
+    </button>
+  </div>
+</div>
+
+<!-- ── VARIANT 5 ── Warm parchment / gold -->
+<div class="variant-wrap">
+  <div class="variant-label">
+    <span class="v-name">V5 — Warm parchment</span>
+    <span class="v-desc">Ivory · gold shimmer price</span>
+  </div>
+  <div class="bar v5">
+    <span class="s-price">₹43,293</span>
+    <button class="s-size">16.40MM · 1.975g
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+    <span class="spacer"></span>
+    <button class="s-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Add to Bag
+    </button>
+  </div>
+</div>
+
+</body>
+</html>
