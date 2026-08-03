@@ -183,10 +183,11 @@
         }
         .hl-area { padding: 10px; display: flex; flex-direction: column; gap: 10px; }
         .metal-box {
-            background: #fdf2f4;
-            border: 1px solid #fae6e9;
-            border-radius: 12px;
-            padding: 8px 14px;
+            background: #fff;
+            border: none;
+            border-bottom: 1px solid #f0e8ea;
+            border-radius: 0;
+            padding: 8px 14px 12px;
             text-align: center;
             line-height: 1.25;
         }
@@ -1039,7 +1040,7 @@ document.getElementById("similarBtn").onclick = function() {
     var metalWeight = isGold ? product.gold.weight : (product.silver ? product.silver.weight : '');
 
     var attrs = [];
-    if (product.diamond)  attrs.push(['Diamonds',  product.diamond.count + ' \u00b7 ' + product.diamond.clarity]);
+    if (product.diamond)  attrs.push(['Diamonds',  product.diamond.shape + ' · ' + product.diamond.weight]);
     if (product.gemstone) attrs.push(['Gemstone',  product.gemstone.count + ' \u00b7 ' + product.gemstone.name.split(',')[0].trim()]);
     if (product.occasion) attrs.push(['Occasion',  product.occasion]);
     attrs.push(['Gross Wt.', product.grossWeight]);
