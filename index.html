@@ -506,6 +506,20 @@
         .pincode-input::placeholder { color: #bbb; }
         .pincode-check-btn { padding: 12px 20px; border-radius: 100px; font-size: 12px; font-weight: 700; background: #D14A61; color: #fff; white-space: nowrap; transition: all 0.2s; }
         .pincode-check-btn:active { transform: scale(0.95); }
+        /* country selector */
+        .country-selector-wrap { position: relative; flex-shrink: 0; }
+        .country-selector-btn { display: flex; align-items: center; gap: 4px; padding: 11px 10px; border-radius: 100px; border: 1.5px solid #D14A61; background: #fff; cursor: pointer; white-space: nowrap; }
+        .country-flag-el { font-size: 16px; line-height: 1; }
+        .country-code-el { font-size: 11px; font-weight: 700; color: #1a1a1a; }
+        .country-selector-btn svg { width: 9px; height: 9px; stroke: #aaa; stroke-width: 2.5; }
+        .country-dropdown { display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 300; background: #fff; border-radius: 14px; border: 1px solid #f0e8ea; box-shadow: 0 8px 24px rgba(0,0,0,0.14); max-height: 260px; overflow-y: auto; min-width: 220px; scrollbar-width: none; }
+        .country-dropdown::-webkit-scrollbar { display: none; }
+        .country-dropdown.open { display: block; }
+        .country-option { display: flex; align-items: center; gap: 10px; padding: 11px 14px; font-size: 12px; cursor: pointer; border-bottom: 1px solid #faf4f5; transition: background 0.12s; }
+        .country-option:last-child { border-bottom: none; }
+        .country-option:hover { background: #fdf2f4; }
+        .country-option.selected { background: #fdf2f4; color: #D14A61; font-weight: 700; }
+        .co-flag { font-size: 18px; line-height: 1; flex-shrink: 0; }
         .delivery-result { display: none; padding: 12px; border-radius: 12px; background: #f0fdf4; border: 1px solid rgba(34,197,94,0.15); }
         .delivery-result.show { display: flex; align-items: flex-start; gap: 8px; }
         .delivery-result.error { background: #fef2f2; border: 1px solid rgba(239,68,68,0.15); }
@@ -1271,10 +1285,140 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
 
 // ===== DELIVERY CHECK =====
 (function() {
+    var countries = [
+        { code:'IN',  flag:'\uD83C\uDDEE\uD83C\uDDF3', name:'India',        postal:6,  numeric:true  },
+        { code:'UAE', flag:'\uD83C\uDDE6\uD83C\uDDEA', name:'UAE',           postal:0,  numeric:false },
+        { code:'DE',  flag:'\uD83C\uDDE9\uD83C\uDDEA', name:'Germany',       postal:5,  numeric:true  },
+        { code:'KSA', flag:'\uD83C\uDDF8\uD83C\uDDE6', name:'Saudi Arabia',  postal:5,  numeric:true  },
+        { code:'NL',  flag:'\uD83C\uDDF3\uD83C\uDDF1', name:'Netherlands',   postal:4,  numeric:false },
+        { code:'MY',  flag:'\uD83C\uDDF2\uD83C\uDDFE', name:'Malaysia',      postal:5,  numeric:true  },
+        { code:'KE',  flag:'\uD83C\uDDF0\uD83C\uDDEA', name:'Kenya',         postal:5,  numeric:true  },
+        { code:'RO',  flag:'\uD83C\uDDF7\uD83C\uDDF4', name:'Romania',       postal:6,  numeric:true  },
+        { code:'ES',  flag:'\uD83C\uDDEA\uD83C\uDDF8', name:'Spain',         postal:5,  numeric:true  },
+        { code:'PT',  flag:'\uD83C\uDDF5\uD83C\uDDF9', name:'Portugal',      postal:4,  numeric:true  },
+        { code:'QA',  flag:'\uD83C\uDDF6\uD83C\uDDE6', name:'Qatar',         postal:0,  numeric:false },
+        { code:'IT',  flag:'\uD83C\uDDEE\uD83C\uDDF9', name:'Italy',         postal:5,  numeric:true  },
+        { code:'OM',  flag:'\uD83C\uDDF4\uD83C\uDDF2', name:'Oman',          postal:3,  numeric:true  },
+        { code:'KW',  flag:'\uD83C\uDDF0\uD83C\uDDFC', name:'Kuwait',        postal:0,  numeric:false },
+        { code:'BH',  flag:'\uD83C\uDDE7\uD83C\uDDED', name:'Bahrain',       postal:0,  numeric:false },
+        { code:'ZA',  flag:'\uD83C\uDDFF\uD83C\uDDE6', name:'South Africa',  postal:4,  numeric:true  },
+        { code:'CA',  flag:'\uD83C\uDDE8\uD83C\uDDE6', name:'Canada',        postal:6,  numeric:false },
+        { code:'NZ',  flag:'\uD83C\uDDF3\uD83C\uDDFF', name:'New Zealand',   postal:4,  numeric:true  },
+        { code:'AU',  flag:'\uD83C\uDDE6\uD83C\uDDFA', name:'Australia',     postal:4,  numeric:true  },
+        { code:'SG',  flag:'\uD83C\uDDF8\uD83C\uDDEC', name:'Singapore',     postal:6,  numeric:true  },
+        { code:'US',  flag:'\uD83C\uDDFA\uD83C\uDDF8', name:'USA',           postal:5,  numeric:true  },
+        { code:'UK',  flag:'\uD83C\uDDEC\uD83C\uDDE7', name:'United Kingdom',postal:7,  numeric:false }
+    ];
+
+    var selectedIdx = 0; /* India default */
+
+    function currentCountry() { return countries[selectedIdx]; }
+
+    function optionsHTML() {
+        return countries.map(function(c, i) {
+            return '<div class="country-option' + (i === selectedIdx ? ' selected' : '') + '" data-idx="' + i + '">' +
+                '<span class="co-flag">' + c.flag + '</span>' +
+                '<span>' + c.name + ' (' + c.code + ')</span>' +
+            '</div>';
+        }).join('');
+    }
+
+    function refreshSelectorBtn() {
+        var c = currentCountry();
+        document.getElementById('countryFlagEl').textContent = c.flag;
+        document.getElementById('countryCodeEl').textContent = c.code;
+        var input = document.getElementById('deliveryPincode');
+        var isIndia = c.code === 'IN';
+        input.placeholder = c.postal ? (isIndia ? 'Enter pincode' : 'Enter postal code') : 'Enter city / area';
+        if (c.numeric) {
+            input.setAttribute('inputmode', 'numeric');
+            input.setAttribute('pattern', '[0-9]*');
+        } else {
+            input.removeAttribute('inputmode');
+            input.removeAttribute('pattern');
+        }
+        input.maxLength = c.postal || 32;
+        input.value = '';
+        /* reset result */
+        var res = document.getElementById('deliveryResult');
+        if (res) res.classList.remove('show', 'error');
+    }
+
     var el = document.getElementById("priceDeliverySlot");
-    el.innerHTML = '<div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="color:#D14A61"></i></span>Delivery & Availability</div><div class="pincode-row"><input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="pincode-input" placeholder="Enter pincode" id="deliveryPincode"><button class="pincode-check-btn" id="deliveryCheckBtn">Check</button></div><div class="delivery-result" id="deliveryResult"><svg class="result-icon" id="deliveryIcon" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><p></p></div><div class="delivery-badges"><div class="delivery-badges-grid"><div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div><div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div><div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div></div></div>';
-    document.getElementById("deliveryPincode").addEventListener("input", function(e) { this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6); });
-    document.getElementById("deliveryCheckBtn").onclick = function() { var pin = document.getElementById("deliveryPincode").value; if (pin.length !== 6) { showToast("Please enter a valid 6-digit pincode", "error"); return; } var res = document.getElementById("deliveryResult"); var icon = document.getElementById("deliveryIcon"); var unserviceable = ["110001","999999","000000"]; if (unserviceable.indexOf(pin) !== -1) { res.classList.add("show","error"); res.classList.remove("success"); icon.setAttribute("stroke","#991b1b"); icon.innerHTML='<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>'; res.querySelector("p").innerHTML='<strong>Oops! We can\'t deliver here yet 😔</strong><br><span style="font-size:11px;color:#991b1b">This pincode isn\'t serviceable right now. Try a nearby one or check back later!</span>'; showToast("Delivery not available", "error"); return; } res.classList.add("show"); res.classList.remove("error"); icon.setAttribute("stroke","#166534"); icon.innerHTML='<circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>'; res.querySelector("p").innerHTML='<span style="font-size:11px;color:#555">Delivering to <strong style="color:#1a1a1a">' + product.delivery.city + ', ' + product.delivery.state + '</strong></span><br><strong style="font-size:13px">Estimated Delivery: ' + product.delivery.date + '</strong>'; showToast("Delivery available to your pincode", "success"); };
+    el.innerHTML =
+        '<div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="color:#D14A61"></i></span>Delivery &amp; Availability</div>' +
+        '<div class="pincode-row">' +
+            '<div class="country-selector-wrap">' +
+                '<button class="country-selector-btn" id="countryBtn" type="button">' +
+                    '<span class="country-flag-el" id="countryFlagEl">' + countries[0].flag + '</span>' +
+                    '<span class="country-code-el" id="countryCodeEl">' + countries[0].code + '</span>' +
+                    '<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+                '</button>' +
+                '<div class="country-dropdown" id="countryDropdown">' + optionsHTML() + '</div>' +
+            '</div>' +
+            '<input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="pincode-input" placeholder="Enter pincode" id="deliveryPincode">' +
+            '<button class="pincode-check-btn" id="deliveryCheckBtn">Check</button>' +
+        '</div>' +
+        '<div class="delivery-result" id="deliveryResult"><svg class="result-icon" id="deliveryIcon" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><p></p></div>' +
+        '<div class="delivery-badges"><div class="delivery-badges-grid"><div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div><div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div><div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div></div></div>';
+
+    /* country dropdown toggle */
+    document.getElementById('countryBtn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        document.getElementById('countryDropdown').classList.toggle('open');
+    });
+
+    /* country option selection */
+    document.getElementById('countryDropdown').addEventListener('click', function(e) {
+        var opt = e.target.closest('.country-option');
+        if (!opt) return;
+        selectedIdx = parseInt(opt.dataset.idx, 10);
+        this.innerHTML = optionsHTML();
+        this.classList.remove('open');
+        refreshSelectorBtn();
+    });
+
+    /* close dropdown on outside click */
+    document.addEventListener('click', function() {
+        var dd = document.getElementById('countryDropdown');
+        if (dd) dd.classList.remove('open');
+    });
+
+    if (currentCountry().numeric) {
+        document.getElementById("deliveryPincode").addEventListener("input", function() {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, currentCountry().postal || 10);
+        });
+    }
+
+    document.getElementById("deliveryCheckBtn").onclick = function() {
+        var c   = currentCountry();
+        var pin = document.getElementById("deliveryPincode").value.trim();
+        var res = document.getElementById("deliveryResult");
+        var icon = document.getElementById("deliveryIcon");
+
+        if (!pin) { showToast("Please enter a " + (c.postal ? 'postal code' : 'city or area'), "error"); return; }
+        if (c.code === 'IN' && pin.length !== 6) { showToast("Please enter a valid 6-digit pincode", "error"); return; }
+
+        var unserviceable = ["110001","999999","000000"];
+        if (c.code === 'IN' && unserviceable.indexOf(pin) !== -1) {
+            res.classList.add("show","error"); res.classList.remove("success");
+            icon.setAttribute("stroke","#991b1b");
+            icon.innerHTML='<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>';
+            res.querySelector("p").innerHTML='<strong>Oops! We can\'t deliver here yet \uD83D\uDE14</strong><br><span style="font-size:11px;color:#991b1b">This pincode isn\'t serviceable right now.</span>';
+            showToast("Delivery not available", "error"); return;
+        }
+
+        res.classList.add("show"); res.classList.remove("error");
+        icon.setAttribute("stroke","#166534");
+        icon.innerHTML='<circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>';
+        var dest = c.code === 'IN'
+            ? product.delivery.city + ', ' + product.delivery.state
+            : c.name;
+        res.querySelector("p").innerHTML =
+            '<span style="font-size:11px;color:#555">Delivering to <strong style="color:#1a1a1a">' + dest + '</strong></span><br>' +
+            '<strong style="font-size:13px">Estimated Delivery: ' + product.delivery.date + '</strong>';
+        showToast("Delivery available \u2013 " + dest, "success");
+    };
 })();
 
 // ===== FIND IN STORE =====
