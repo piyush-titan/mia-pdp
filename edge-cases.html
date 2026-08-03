@@ -382,8 +382,8 @@ function showCase(section, caseName, clickedTab) {
                 <div id="hl-case-1"></div>
             </div>
             <div class="case-label">
-                <h4><span class="tag tag-info">3 Tabs</span> Metal + Weight + Occasion</h4>
-                <p>No diamonds or gemstones. Metal spans full-width on top. Weight and Occasion side by side below.</p>
+                <h4><span class="tag tag-info">3 Attrs</span> Metal + Occasion + Gross Wt.</h4>
+                <p>No diamonds or gemstones. Metal box on top, 2 attrs in sec-grid below.</p>
             </div>
         </div>
 
@@ -393,8 +393,8 @@ function showCase(section, caseName, clickedTab) {
                 <div id="hl-case-2"></div>
             </div>
             <div class="case-label">
-                <h4><span class="tag tag-success">4 Tabs</span> Metal + Diamond + Weight + Occasion</h4>
-                <p>Gold with diamonds. Clean 2×2 grid — metal, diamond, weight, occasion each get their own cell.</p>
+                <h4><span class="tag tag-success">4 Attrs</span> Metal + Diamond + Occasion + Gross Wt.</h4>
+                <p>Diamond shown as shape &middot; ct weight. Clean 2&times;2 sec-grid.</p>
             </div>
         </div>
 
@@ -404,157 +404,127 @@ function showCase(section, caseName, clickedTab) {
                 <div id="hl-case-3"></div>
             </div>
             <div class="case-label">
-                <h4><span class="tag tag-warning">5 Tabs</span> Metal + Diamond + Gemstone + Weight + Occasion</h4>
-                <p>Full spec. Metal spans full-width top row. Diamond, Gemstone, Weight, Occasion fill 2×2 grid below.</p>
+                <h4><span class="tag tag-warning">5 Attrs</span> Metal + Diamond + Gemstone + Occasion + Gross Wt.</h4>
+                <p>Full spec. Metal box on top, all 4 attrs fill 2&times;2 sec-grid below.</p>
             </div>
         </div>
 
     </div>
 </div>
 <style>
-/* CSS copied to embed */
+        /* ===== KEY HIGHLIGHTS V9 ===== */
         .key-highlights {
-            padding: 0; margin: 0; border-radius: 20px;
-            position: relative;
+            margin: 0; border-radius: 20px;
+            background: #fffdfd;
+            box-shadow: 0 6px 20px -10px rgba(67,50,58,0.3);
+            border: 1px solid #fae6e9;
+            overflow: hidden;
+        }
+        .hl-area { padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+        .metal-box {
             background: #fff;
-            border: 1px solid #f0e8e5;
+            border: none;
+            border-bottom: 1px solid #f0e8ea;
+            border-radius: 0;
+            padding: 8px 14px 12px;
+            text-align: center; line-height: 1.25;
         }
-        .key-highlights-bg {
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            overflow: hidden; border-radius: 20px; z-index: 0;
-            pointer-events: none;
-            background: linear-gradient(145deg, #fef6f0 0%, #fff5f7 50%, #f5f0ff 100%);
+        .metal-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: #b83e53; }
+        .metal-row { display: flex; align-items: baseline; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+        .metal-karat { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+        .metal-desc  { font-size: 15px; font-weight: 600; color: #43323a; }
+        .metal-net   { font-size: 11px; color: #a08c92; }
+        .metal-net strong { font-weight: 600; color: #43323a; }
+        .sec-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; row-gap: 8px; }
+        .sec-grid.cols-1 { grid-template-columns: 1fr; }
+        .sec-cell { border-left: 2px solid #f4ced5; padding-left: 10px; line-height: 1.25; }
+        .sec-lbl  { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: #a08c92; }
+        .sec-val  { font-size: 13px; font-weight: 600; color: #43323a; }
+        .shimmer-gold {
+            background: linear-gradient(90deg, #6b4c10 0%, #b8860b 20%, #d4a843 35%, #f5e07a 50%, #d4a843 65%, #b8860b 80%, #6b4c10 100%);
+            background-size: 300% auto;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer-gold 4s linear infinite;
         }
-        .key-highlights-bg::before { display: none; }
-        .key-highlights-bg::after { display: none; }
-        .highlights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; position: relative; z-index: 1; padding: 16px; }
-        .highlight-item.span-full { grid-column: 1 / -1; }
-        /* Compact mode: 5 items fit same height as 4 items by reducing proportionally */
-        .highlights-grid.compact { gap: 5px; padding: 11px; }
-        .highlights-grid.compact .highlight-item { padding: 5px 9px; gap: 6px; }
-        .highlights-grid.compact .highlight-icon { width: 22px; height: 22px; min-width: 22px; border-radius: 8px; }
-        .highlights-grid.compact .highlight-icon svg { width: 12px !important; height: 12px !important; }
-        .highlights-grid.compact .hl-value { font-size: 10px; }
-        .highlights-grid.compact .hl-label { font-size: 8px; }
-        .highlights-grid.compact ~ .view-full-details-btn { margin: 6px 11px 11px; padding: 8px 12px; font-size: 11px; }
-        .highlight-item {
-            display: flex; align-items: center; gap: 8px;
-            padding: 10px 12px; border-radius: 14px; min-width: 0;
-            border: 1px solid #ffffff;
-            background: #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.02);
-            position: relative; overflow: hidden;
-            transform: translateZ(0);
+        .shimmer-silver {
+            background: linear-gradient(90deg, #3a3a3a 0%, #7a7a7a 20%, #b0b0b0 35%, #e8e8e8 50%, #b0b0b0 65%, #7a7a7a 80%, #3a3a3a 100%);
+            background-size: 300% auto;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer-silver 4s linear infinite;
         }
-        .highlight-item.diamond-item::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-            animation: glassShine 4s ease-in-out infinite;
-        }
-        @keyframes glassShine { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
-        
-        .highlight-icon {
-            width: 28px; height: 28px; min-width: 28px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-            background: #fff;
-            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
-        }
-        .highlight-icon.gold-bg { background: #fde68a; color: #92400e; }
-        .highlight-icon.diamond-bg { background: #bae6fd; color: #1e3a5f; }
-        .highlight-icon.silver-bg { background: #cbd5e1; color: #1e293b; }
-        .highlight-icon.pink-bg { background: #fecdd3; color: #9f1239; }
-        .highlight-icon.gemstone-bg { background: #d8b4fe; color: #4c1d95; }
-        
-        .highlight-text { min-width: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
-        .highlight-text .hl-value { font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #1a1a1a; }
-        .highlight-text .hl-label { font-size: 10px; color: #777; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
+        @keyframes shimmer-gold   { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+        @keyframes shimmer-silver { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+        .cta-wrap { padding: 0 10px 10px; }
         .view-full-details-btn {
             display: flex; align-items: center; justify-content: space-between; gap: 6px;
-            width: calc(100% - 32px); margin: 10px 16px 16px; padding: 10px 14px;
+            width: 100%; padding: 10px 14px;
             font-size: 12px; font-weight: 700; color: #D14A61;
-            border: none; border-radius: 100px;
+            border: 1px solid #f4ced5; border-radius: 100px;
             background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             box-shadow: 0 2px 8px rgba(209,74,97,0.08);
-            transition: all 0.2s;
-            position: relative; z-index: 1;
         }
-        .view-full-details-btn:active { transform: scale(0.98); background: rgba(253,242,244,0.9); }
-        .view-full-details-btn svg { width: 13px; height: 13px; stroke: #D14A61; flex-shrink: 0; transition: transform 0.3s; }
-        
-        /* Edge case viewer specific */
+        .view-full-details-btn svg { width: 13px; height: 13px; stroke: #D14A61; flex-shrink: 0; }
         .case-screen-wrap { margin-top: 24px; }
 </style>
 <script>
-function renderHighlightsCase(productConfig) {
-    // Count items to determine layout
-    // Count: metal + diamond? + gemstone? + weight + occasion = min 3, max 5
-    var itemCount = 1 + (productConfig.diamond ? 1 : 0) + (productConfig.gemstone ? 1 : 0) + 1 + 1;
-    // 3 tabs: metal full-width top. 4 tabs: 2x2. 5 tabs: metal full-width top + 2x2 below.
-    var metalSpan = (itemCount === 3 || itemCount === 5) ? ' span-full' : '';
+function renderHighlightsCase(cfg) {
+    var isGold     = !!cfg.gold;
+    var shimmer    = isGold ? 'shimmer-gold' : 'shimmer-silver';
+    var karatage   = isGold ? cfg.gold.purity : (cfg.silver ? cfg.silver.purity : '');
+    var metalColour = isGold ? cfg.gold.colour + ' Gold' : 'Silver';
+    var metalWeight = isGold ? cfg.gold.weight : (cfg.silver ? cfg.silver.weight : '');
 
-    var isCompact = (itemCount === 5);
-    var h = '<div class="key-highlights"><div class="key-highlights-bg"></div><div class="highlights-grid' + (isCompact ? ' compact' : '') + '">';
-    
-    // Metal Details
-    var goldIconSvg = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="2"/><path d="M7 8 V16 M17 8 V16"/></svg>';
-    if (productConfig.gold) {
-        h += '<div class="highlight-item gold-item' + metalSpan + '"><div class="highlight-icon gold-bg">' + goldIconSvg + '</div><div class="highlight-text"><div class="hl-value">' + productConfig.gold.purity + ' ' + productConfig.gold.colour + ' Gold</div><div class="hl-label">' + productConfig.gold.weight + '</div></div></div>';
-    } else if (productConfig.silver) {
-        var silverIconSvg = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="2"/><path d="M7 8 V16 M17 8 V16"/></svg>';
-        h += '<div class="highlight-item' + metalSpan + '"><div class="highlight-icon silver-bg">' + silverIconSvg + '</div><div class="highlight-text"><div class="hl-value">' + productConfig.silver.purity + ' Silver</div><div class="hl-label">' + productConfig.silver.weight + '</div></div></div>';
-    }
-    
-    // Diamond (if present)
-    var diamondIconSvg = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 8 L18 8 L12 20 Z"/><path d="M6 8 L12 2 L18 8"/></svg>';
-    if (productConfig.diamond) {
-        h += '<div class="highlight-item diamond-item"><div class="highlight-icon diamond-bg">' + diamondIconSvg + '</div><div class="highlight-text"><div class="hl-value">' + productConfig.diamond.count + ' Diamonds</div><div class="hl-label">' + productConfig.diamond.clarity + ' \u00b7 ' + productConfig.diamond.weight + '</div></div></div>';
-    }
-    
-    // Primary Gemstone (if present)
-    if (productConfig.gemstone) {
-        var gemstoneSvg = '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 3 L18 3 L22 9 L12 21 L2 9 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></path><path d="M6 3 L12 9 M18 3 L12 9 M2 9 L22 9 M12 9 L12 21" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></path></svg>';
-        var primaryGem = productConfig.gemstone.name.split(',')[0].trim();
-        var gemLabel = (productConfig.gemstone.colour ? productConfig.gemstone.colour + ' \u00b7 ' : '') + productConfig.gemstone.weight;
-        h += '<div class="highlight-item"><div class="highlight-icon gemstone-bg">' + gemstoneSvg + '</div><div class="highlight-text"><div class="hl-value">' + productConfig.gemstone.count + ' ' + primaryGem + '</div><div class="hl-label">' + gemLabel + '</div></div></div>';
-    }
-    
-    // Occasion / USP
-    h += '<div class="highlight-item pink-item"><div class="highlight-icon pink-bg"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="highlight-text"><div class="hl-value">' + productConfig.occasion + '</div><div class="hl-label">Occasion</div></div></div>';
+    var attrs = [];
+    if (cfg.diamond)  attrs.push(['Diamonds', cfg.diamond.shape + ' \u00b7 ' + cfg.diamond.weight]);
+    if (cfg.gemstone) attrs.push(['Gemstone', cfg.gemstone.count + ' \u00b7 ' + cfg.gemstone.name.split(',')[0].trim()]);
+    if (cfg.occasion) attrs.push(['Occasion', cfg.occasion]);
+    attrs.push(['Gross Wt.', cfg.grossWeight]);
 
-    // Gross Weight
-    h += '<div class="highlight-item pink-item"><div class="highlight-icon pink-bg"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><div class="highlight-text"><div class="hl-value">' + productConfig.grossWeight + '</div><div class="hl-label">Gross Weight</div></div></div>';
-    
-    h += '</div>';
-    h += '<button class="view-full-details-btn"><span>View Full Product Details</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>';
-    h += '</div>';
-    
-    return h;
+    var secGrid = '<div class="sec-grid' + (attrs.length === 1 ? ' cols-1' : '') + '">' +
+        attrs.map(function(a) {
+            return '<div class="sec-cell"><div class="sec-lbl">' + a[0] + '</div><div class="sec-val">' + a[1] + '</div></div>';
+        }).join('') + '</div>';
+
+    return '<div class="key-highlights">' +
+        '<div class="hl-area">' +
+            '<div class="metal-box">' +
+                '<div class="metal-lbl">Metal</div>' +
+                '<div class="metal-row">' +
+                    '<span class="metal-karat ' + shimmer + '">' + karatage + '</span>' +
+                    '<span class="metal-desc">' + metalColour + '</span>' +
+                    '<span class="metal-net">\u00b7 Net <strong>' + metalWeight + '</strong></span>' +
+                '</div>' +
+            '</div>' +
+            secGrid +
+        '</div>' +
+        '<div class="cta-wrap"><button class="view-full-details-btn"><span>View Full Product Details</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>' +
+    '</div>';
 }
 </script>
 <script>document.addEventListener("DOMContentLoaded", function() {
-    // Case 1: 3 tabs — Gold + Weight + Occasion (metal full-width top)
+    // Case 1: 3 attrs — Gold + Occasion + Gross Wt.
     document.getElementById("hl-case-1").innerHTML = renderHighlightsCase({
         occasion: "Daily Wear",
         grossWeight: "5.200 g",
         gold: { purity: "14 KT", colour: "White", weight: "5.200 g" }
     });
-    
-    // Case 2: 4 tabs — Gold + Diamond + Weight + Occasion (2x2 grid)
+
+    // Case 2: 4 attrs — Gold + Diamond + Occasion + Gross Wt.
     document.getElementById("hl-case-2").innerHTML = renderHighlightsCase({
         occasion: "Everyday & Workwear",
         grossWeight: "2.980 g",
-        gold: { purity: "14 KT", colour: "White", weight: "2.500 g" },
-        diamond: { count: "15", clarity: "I2", weight: "0.124 Ct" }
+        gold: { purity: "14 KT", colour: "Yellow", weight: "2.500 g" },
+        diamond: { shape: "Round", weight: "0.124 Ct" }
     });
-    
-    // Case 3: 5 tabs — Gold + Diamond + Gemstone + Weight + Occasion (metal full-width + 2x2)
+
+    // Case 3: 5 attrs — Gold + Diamond + Gemstone + Occasion + Gross Wt.
     document.getElementById("hl-case-3").innerHTML = renderHighlightsCase({
         occasion: "Wedding",
         grossWeight: "14.500 g",
         gold: { purity: "22 KT", colour: "Yellow", weight: "12.000 g" },
-        diamond: { count: "25", clarity: "VVS", weight: "1.250 Ct" },
+        diamond: { shape: "Round", weight: "1.250 Ct" },
         gemstone: { count: "3", name: "Ruby, Emerald", colour: "Red", weight: "2.10 Ct" }
     });
 });
