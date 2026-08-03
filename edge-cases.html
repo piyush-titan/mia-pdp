@@ -77,6 +77,22 @@
         .delivery-badges-grid{display:flex;justify-content:space-between;gap:8px}
         .delivery-badge{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:600;color:#9f1239;padding:10px 4px;border-radius:12px;background:#fff5f7;flex:1;text-align:center;line-height:1.3}
         .delivery-badge svg{width:16px;height:16px;flex-shrink:0}
+        /* spacing between stacked cases */
+        .case-content{margin-bottom:32px}
+        .case-content:last-child{margin-bottom:0}
+        /* country selector (delivery edge case) */
+        .ec-country-wrap{position:relative;flex-shrink:0}
+        .ec-country-btn{display:flex;align-items:center;gap:4px;padding:11px 10px;border-radius:100px;border:1.5px solid #D14A61;background:#fff;cursor:pointer;white-space:nowrap}
+        .ec-cflag{font-size:16px;line-height:1}
+        .ec-ccode{font-size:11px;font-weight:700;color:#1a1a1a}
+        .ec-country-btn svg{width:9px;height:9px;stroke:#aaa;stroke-width:2.5;fill:none}
+        .ec-country-dropdown{position:absolute;top:calc(100% + 6px);left:0;z-index:10;background:#fff;border-radius:14px;border:1px solid #f0e8ea;box-shadow:0 8px 24px rgba(0,0,0,0.14);max-height:220px;overflow-y:auto;min-width:210px;scrollbar-width:none}
+        .ec-country-dropdown::-webkit-scrollbar{display:none}
+        .ec-coption{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:12px;border-bottom:1px solid #faf4f5}
+        .ec-coption:last-child{border-bottom:none}
+        .ec-coption.ec-selected{background:#fdf2f4;color:#D14A61;font-weight:700}
+        .ec-coption.ec-hover{background:#fdf2f4}
+        .ec-coflag{font-size:17px;line-height:1;flex-shrink:0}
     </style>
 </head>
 <body>
@@ -205,12 +221,6 @@
         </div>
     </div>
     <div class="case-screen active">
-        <div class="case-tabs">
-            <div class="case-tab active" onclick="showCase('delivery','success',this)">✅ Successful</div>
-            <div class="case-tab" onclick="showCase('delivery','error',this)">❌ Not Serviceable</div>
-            <div class="case-tab" onclick="showCase('delivery','empty',this)">📝 Empty State</div>
-            <div class="case-tab" onclick="showCase('delivery','invalid',this)">⚠️ Invalid Input</div>
-        </div>
 
         <!-- Case 1: Successful delivery -->
         <div class="case-content" id="case-delivery-success">
@@ -247,7 +257,7 @@
         </div>
 
         <!-- Case 2: Not serviceable -->
-        <div class="case-content" id="case-delivery-error" style="display:none">
+        <div class="case-content" id="case-delivery-error">
             <div class="phone-frame">
                 <div class="delivery-section">
                     <div class="delivery-title">
@@ -281,7 +291,7 @@
         </div>
 
         <!-- Case 3: Empty state -->
-        <div class="case-content" id="case-delivery-empty" style="display:none">
+        <div class="case-content" id="case-delivery-empty">
             <div class="phone-frame">
                 <div class="delivery-section">
                     <div class="delivery-title">
@@ -308,7 +318,7 @@
         </div>
 
         <!-- Case 4: Invalid input -->
-        <div class="case-content" id="case-delivery-invalid" style="display:none">
+        <div class="case-content" id="case-delivery-invalid">
             <div class="phone-frame">
                 <div class="delivery-section">
                     <div class="delivery-title">
@@ -335,6 +345,64 @@
             <div class="case-label">
                 <h4><span class="tag tag-warning">VALIDATION</span> Invalid Pincode</h4>
                 <p>User enters less than 6 digits or non-numeric characters. Input border turns red, inline error message shown. Input only accepts numbers (non-numeric chars stripped).</p>
+            </div>
+        </div>
+
+        <!-- Case 5: Country dropdown open -->
+        <div class="case-content" id="case-delivery-country-dropdown">
+            <div class="phone-frame">
+                <div class="delivery-section" style="overflow:visible">
+                    <div class="delivery-title">
+                        <span class="icon-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+                        Delivery &amp; Availability
+                    </div>
+                    <div class="pincode-row" style="position:relative">
+                        <div class="ec-country-wrap">
+                            <button class="ec-country-btn">
+                                <span class="ec-cflag">🇮🇳</span>
+                                <span class="ec-ccode">IN</span>
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div class="ec-country-dropdown">
+                                <div class="ec-coption ec-selected"><span class="ec-coflag">🇮🇳</span><span>India (IN)</span></div>
+                                <div class="ec-coption ec-hover"><span class="ec-coflag">🇦🇪</span><span>UAE (UAE)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇩🇪</span><span>Germany (DE)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇸🇦</span><span>Saudi Arabia (KSA)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇳🇱</span><span>Netherlands (NL)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇲🇾</span><span>Malaysia (MY)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇰🇪</span><span>Kenya (KE)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇷🇴</span><span>Romania (RO)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇪🇸</span><span>Spain (ES)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇵🇹</span><span>Portugal (PT)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇶🇦</span><span>Qatar (QA)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇮🇹</span><span>Italy (IT)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇴🇲</span><span>Oman (OM)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇰🇼</span><span>Kuwait (KW)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇧🇭</span><span>Bahrain (BH)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇿🇦</span><span>South Africa (ZA)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇨🇦</span><span>Canada (CA)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇳🇿</span><span>New Zealand (NZ)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇦🇺</span><span>Australia (AU)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇸🇬</span><span>Singapore (SG)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇺🇸</span><span>USA (US)</span></div>
+                                <div class="ec-coption"><span class="ec-coflag">🇬🇧</span><span>United Kingdom (UK)</span></div>
+                            </div>
+                        </div>
+                        <input type="tel" class="pincode-input" placeholder="Enter pincode" readonly>
+                        <button class="pincode-check-btn">Check</button>
+                    </div>
+                    <div class="delivery-badges">
+                        <div class="delivery-badges-grid">
+                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div>
+                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div>
+                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="case-label">
+                <h4><span class="tag tag-info">INTERACTION</span> Country Dropdown Open</h4>
+                <p>User taps the country selector pill (🇮🇳 IN ▾). Dropdown opens below showing all 22 countries — flag emoji + full name + code. India is selected (pink highlight). UAE row shows hover state. Dropdown scrolls if list exceeds max-height.</p>
             </div>
         </div>
     </div>
@@ -370,43 +438,37 @@ function showCase(section, caseName, clickedTab) {
         </div>
     </div>
     <div class="case-screen active" style="background:#fff;">
-        <div class="case-tabs">
-            <div class="case-tab active" onclick="showCase('highlights','3-tabs',this)">3 Tabs</div>
-            <div class="case-tab" onclick="showCase('highlights','4-tabs',this)">4 Tabs</div>
-            <div class="case-tab" onclick="showCase('highlights','5-tabs',this)">5 Tabs</div>
+        <div class="case-content" id="case-highlights-c1">
+            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-1"></div></div>
+            <div class="case-label"><h4><span class="tag tag-warning">5 Attrs</span> 18K Rose Gold — Full</h4><p>Diamonds + Gemstone + Occasion + Gross Wt. All 4 attrs in 2×2 sec-grid.</p></div>
         </div>
-
-        <!-- Case 1: 3 tabs — Metal + Weight + Occasion (metal full-width top) -->
-        <div class="case-content" id="case-highlights-3-tabs">
-            <div class="phone-frame" style="background:#f5f5f5;">
-                <div id="hl-case-1"></div>
-            </div>
-            <div class="case-label">
-                <h4><span class="tag tag-info">3 Attrs</span> Metal + Occasion + Gross Wt.</h4>
-                <p>No diamonds or gemstones. Metal box on top, 2 attrs in sec-grid below.</p>
-            </div>
+        <div class="case-content" id="case-highlights-c2">
+            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-2"></div></div>
+            <div class="case-label"><h4><span class="tag tag-success">4 Attrs</span> 925 Silver — Silver shimmer</h4><p>Silver karat shimmer. Diamonds + Occasion + Gross Wt.</p></div>
         </div>
-
-        <!-- Case 2: 4 tabs — Metal + Diamond + Weight + Occasion (2x2) -->
-        <div class="case-content" id="case-highlights-4-tabs" style="display:none">
-            <div class="phone-frame" style="background:#f5f5f5;">
-                <div id="hl-case-2"></div>
-            </div>
-            <div class="case-label">
-                <h4><span class="tag tag-success">4 Attrs</span> Metal + Diamond + Occasion + Gross Wt.</h4>
-                <p>Diamond shown as shape &middot; ct weight. Clean 2&times;2 sec-grid.</p>
-            </div>
+        <div class="case-content" id="case-highlights-c3">
+            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-3"></div></div>
+            <div class="case-label"><h4><span class="tag tag-info">3 Attrs</span> 14KT White Gold — Diamond only</h4><p>No occasion, no gemstone. Diamond + Gross Wt. side by side.</p></div>
         </div>
-
-        <!-- Case 3: 5 tabs — Metal + Diamond + Gemstone + Weight + Occasion (metal full-width + 2x2) -->
-        <div class="case-content" id="case-highlights-5-tabs" style="display:none">
-            <div class="phone-frame" style="background:#f5f5f5;">
-                <div id="hl-case-3"></div>
-            </div>
-            <div class="case-label">
-                <h4><span class="tag tag-warning">5 Attrs</span> Metal + Diamond + Gemstone + Occasion + Gross Wt.</h4>
-                <p>Full spec. Metal box on top, all 4 attrs fill 2&times;2 sec-grid below.</p>
-            </div>
+        <div class="case-content" id="case-highlights-c4">
+            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-4"></div></div>
+            <div class="case-label"><h4><span class="tag tag-info">3 Attrs</span> 18KT Rose &amp; White — Gemstone only</h4><p>No diamonds, no occasion. Gemstone + Gross Wt.</p></div>
+        </div>
+        <div class="case-content" id="case-highlights-c5">
+            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-5"></div></div>
+            <div class="case-label"><h4><span class="tag tag-error">2 Attrs</span> 22KT Yellow Gold — Minimal</h4><p>No stones, no occasion. Only Gross Wt. below metal — single col.</p></div>
+        </div>
+        <div class="case-content" id="case-highlights-c6">
+            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-6"></div></div>
+            <div class="case-label"><h4><span class="tag tag-info">3 Attrs</span> 9KT Yellow Gold — Multi-gemstone</h4><p>3 gemstones, no diamonds, no occasion.</p></div>
+        </div>
+        <div class="case-content" id="case-highlights-c7">
+            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-7"></div></div>
+            <div class="case-label"><h4><span class="tag tag-success">4 Attrs</span> 22KT Yellow &amp; White — Dual tone</h4><p>Two-tone metal colour. Diamond + Occasion + Gross Wt.</p></div>
+        </div>
+        <div class="case-content" id="case-highlights-c8">
+            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-8"></div></div>
+            <div class="case-label"><h4><span class="tag tag-warning">5 Attrs</span> 18K Rose Gold — Alt full</h4><p>Same 5-attr layout, different product. No breathing animation.</p></div>
         </div>
 
     </div>
@@ -504,28 +566,43 @@ function renderHighlightsCase(cfg) {
 }
 </script>
 <script>document.addEventListener("DOMContentLoaded", function() {
-    // Case 1: 3 attrs — Gold + Occasion + Gross Wt.
-    document.getElementById("hl-case-1").innerHTML = renderHighlightsCase({
-        occasion: "Daily Wear",
-        grossWeight: "5.200 g",
-        gold: { purity: "14 KT", colour: "White", weight: "5.200 g" }
-    });
-
-    // Case 2: 4 attrs — Gold + Diamond + Occasion + Gross Wt.
-    document.getElementById("hl-case-2").innerHTML = renderHighlightsCase({
-        occasion: "Everyday & Workwear",
-        grossWeight: "2.980 g",
-        gold: { purity: "14 KT", colour: "Yellow", weight: "2.500 g" },
-        diamond: { shape: "Round", weight: "0.124 Ct" }
-    });
-
-    // Case 3: 5 attrs — Gold + Diamond + Gemstone + Occasion + Gross Wt.
-    document.getElementById("hl-case-3").innerHTML = renderHighlightsCase({
-        occasion: "Wedding",
-        grossWeight: "14.500 g",
-        gold: { purity: "22 KT", colour: "Yellow", weight: "12.000 g" },
-        diamond: { shape: "Round", weight: "1.250 Ct" },
-        gemstone: { count: "3", name: "Ruby, Emerald", colour: "Red", weight: "2.10 Ct" }
+    var cases = [
+        // 1: 18K Rose Gold — Full (5 attrs)
+        { gold: { purity: "18K", colour: "Rose", weight: "4.50 g" },
+          diamond: { shape: "Round", weight: "0.50 ct" },
+          gemstone: { count: "1", name: "Ruby", weight: "0.60 g" },
+          occasion: "Engagement", grossWeight: "5.20 g" },
+        // 2: 925 Silver — 4 attrs
+        { silver: { purity: "925", weight: "6.10 g" },
+          diamond: { shape: "Round", weight: "0.25 ct" },
+          occasion: "Anniversary", grossWeight: "7.00 g" },
+        // 3: 14KT White Gold — Diamond only, no occasion
+        { gold: { purity: "14KT", colour: "White", weight: "3.20 g" },
+          diamond: { shape: "Round", weight: "0.75 ct" },
+          grossWeight: "3.85 g" },
+        // 4: 18KT Rose & White — Gemstone only, no diamond, no occasion
+        { gold: { purity: "18KT", colour: "Rose & White", weight: "5.80 g" },
+          gemstone: { count: "1", name: "Ruby", weight: "1.20 g" },
+          grossWeight: "6.50 g" },
+        // 5: 22KT Yellow Gold — Minimal, no stones, no occasion
+        { gold: { purity: "22KT", colour: "Yellow", weight: "8.20 g" },
+          grossWeight: "8.20 g" },
+        // 6: 9KT Yellow Gold — Multi-gemstone, no diamond, no occasion
+        { gold: { purity: "9KT", colour: "Yellow", weight: "2.10 g" },
+          gemstone: { count: "3", name: "Ruby", weight: "0.90 g" },
+          grossWeight: "2.80 g" },
+        // 7: 22KT Yellow & White — Dual tone, diamond + occasion
+        { gold: { purity: "22KT", colour: "Yellow & White", weight: "6.40 g" },
+          diamond: { shape: "Round", weight: "0.30 ct" },
+          occasion: "Wedding", grossWeight: "7.10 g" },
+        // 8: 18K Rose Gold — Alt full (5 attrs, no animation)
+        { gold: { purity: "18K", colour: "Rose", weight: "4.80 g" },
+          diamond: { shape: "Round", weight: "0.60 ct" },
+          gemstone: { count: "1", name: "Ruby", weight: "0.75 g" },
+          occasion: "Engagement", grossWeight: "5.60 g" }
+    ];
+    cases.forEach(function(cfg, i) {
+        document.getElementById("hl-case-" + (i + 1)).innerHTML = renderHighlightsCase(cfg);
     });
 });
 </script>
@@ -534,12 +611,7 @@ function renderHighlightsCase(cfg) {
 <div id="ribbonScreen" style="display:none">
 <div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Ribbon Tag</div><div class="nav-subtitle">Colour variants & edge cases</div></div></div>
 <div class="case-screen active">
-<div class="case-tabs">
-<div class="case-tab active" onclick="showCase('ribbon','gold',this)">Gold</div>
-<div class="case-tab" onclick="showCase('ribbon','pink',this)">Pink</div>
-<div class="case-tab" onclick="showCase('ribbon','purple',this)">Purple</div>
-<div class="case-tab" onclick="showCase('ribbon','long',this)">Long Text</div>
-</div>
+
 <style>
 .ribbon-demo{position:relative;background:#f5f5f5;border-radius:16px;aspect-ratio:3/4;overflow:hidden;max-width:200px;margin:0 auto}
 .ribbon-demo img{width:100%;height:100%;object-fit:cover}
@@ -553,15 +625,15 @@ function renderHighlightsCase(cfg) {
 <div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_1.jpg" alt=""><span class="product-tag tag-gold">New Arrival</span></div></div>
 <div class="case-label"><h4><span class="tag tag-warning">GOLD</span> Gold Gradient Tag</h4><p>Used for premium / price-led offers like gold value discounts. Warm, luxe feel.</p></div>
 </div>
-<div class="case-content" id="case-ribbon-pink" style="display:none">
+<div class="case-content" id="case-ribbon-pink">
 <div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_2.jpg" alt=""><span class="product-tag tag-pink">Bestseller</span></div></div>
 <div class="case-label"><h4><span class="tag tag-error">PINK</span> Pink Gradient Tag</h4><p>Used for editorial / trending tags like Bestseller, Fan Favourite, Most Loved.</p></div>
 </div>
-<div class="case-content" id="case-ribbon-purple" style="display:none">
+<div class="case-content" id="case-ribbon-purple">
 <div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_3.jpg" alt=""><span class="product-tag tag-purple">Limited Edition</span></div></div>
 <div class="case-label"><h4><span class="tag tag-info">PURPLE</span> Purple Gradient Tag</h4><p>Used for special / exclusive tags like Limited Edition, New Design, Just Dropped.</p></div>
 </div>
-<div class="case-content" id="case-ribbon-long" style="display:none">
+<div class="case-content" id="case-ribbon-long">
 <div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_4.jpg" alt=""><span class="product-tag tag-gold tag-long">40% off on Making Charges</span></div></div>
 <div class="case-label"><h4><span class="tag tag-warning">EDGE CASE</span> Long Tag Text</h4><p>"40% off on Making Charges" — text wraps to 2 lines. Clip-path maintains arrow shape. Max-width prevents overflow out of the card frame.</p></div>
 </div>
@@ -572,7 +644,7 @@ function renderHighlightsCase(cfg) {
 <div id="similarScreen" style="display:none">
 <div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Show Similar</div><div class="nav-subtitle">API failure empty state</div></div></div>
 <div class="case-screen active">
-<div class="case-tabs"><div class="case-tab active" onclick="showCase('similar','error',this)">API Error</div></div>
+
 <div class="case-content" id="case-similar-error">
 <div class="phone-frame">
 <div style="padding:24px;text-align:center">
@@ -593,10 +665,7 @@ function renderHighlightsCase(cfg) {
 <div id="headerScreen" style="display:none">
 <div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Product Header</div><div class="nav-subtitle">Long name & spacing edge cases</div></div></div>
 <div class="case-screen active">
-<div class="case-tabs">
-<div class="case-tab active" onclick="showCase('header','normal',this)">Normal Name</div>
-<div class="case-tab" onclick="showCase('header','long',this)">Long Name</div>
-</div>
+
 <style>
 .hdr-demo{background:#fff;border-radius:16px;border:1px solid #f0f0f0;overflow:hidden}
 .hdr-name-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:12px 16px 6px}
@@ -617,7 +686,7 @@ function renderHighlightsCase(cfg) {
 </div></div>
 <div class="case-label"><h4><span class="tag tag-success">NORMAL</span> Short Product Name</h4><p>3–4 word name. Name and action icons comfortably fit in one line. Spacing below name to Key Highlights is 12px gap + section divider.</p></div>
 </div>
-<div class="case-content" id="case-header-long" style="display:none">
+<div class="case-content" id="case-header-long">
 <div class="phone-frame"><div class="hdr-demo">
 <div class="hdr-name-row"><span class="hdr-name">Ornate Kundan Polki Diamond & Emerald Studded 22 KT Gold Mangalsutra Necklace</span><div class="hdr-actions"><button class="hdr-action-btn"><svg viewBox="0 0 24 24" fill="transparent" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button><button class="hdr-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button></div></div>
 <div class="hdr-sku">Design Code: 2812FPL</div>
@@ -633,10 +702,7 @@ function renderHighlightsCase(cfg) {
 <div id="priceScreen" style="display:none">
 <div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Price Section</div><div class="nav-subtitle">With Pre-Book vs Without</div></div></div>
 <div class="case-screen active">
-<div class="case-tabs">
-<div class="case-tab active" onclick="showCase('price','withprebook',this)">With Pre-Book</div>
-<div class="case-tab" onclick="showCase('price','noprebook',this)">No Pre-Book</div>
-</div>
+
 <style>
 /* Shared price section styles matching PDP */
 .ec-price{background:linear-gradient(180deg,#FDF2F4,#fff);border-radius:16px;padding:16px;font-family:'Albert Sans',sans-serif}
@@ -706,7 +772,7 @@ function renderHighlightsCase(cfg) {
 </div>
 
 <!-- Case 2: Full pricing section WITHOUT Pre-Book (60-40 split) -->
-<div class="case-content" id="case-price-noprebook" style="display:none">
+<div class="case-content" id="case-price-noprebook">
 <div class="phone-frame"><div class="ec-price">
 <div class="ec-price-main"><span class="ec-price-current">₹43,293</span><span class="ec-price-original">₹52,990</span><span class="ec-price-badge">18% off</span></div>
 <div class="ec-price-tax">Inclusive of all taxes</div>
@@ -739,14 +805,7 @@ function renderHighlightsCase(cfg) {
 <div id="sizeguideScreen" style="display:none">
 <div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Size Guides</div><div class="nav-subtitle">Per jewellery category</div></div></div>
 <div class="case-screen active">
-<div class="case-tabs" style="flex-wrap:wrap;height:auto;padding-bottom:0">
-<div class="case-tab active" onclick="showCase('sizeguide','ring',this)">Finger Ring</div>
-<div class="case-tab" onclick="showCase('sizeguide','bangle',this)">Bangle</div>
-<div class="case-tab" onclick="showCase('sizeguide','bracelet',this)">Bracelet</div>
-<div class="case-tab" onclick="showCase('sizeguide','anklet',this)">Anklet</div>
-<div class="case-tab" onclick="showCase('sizeguide','necklace',this)">Necklace</div>
-<div class="case-tab" onclick="showCase('sizeguide','chain',this)">Chain / Mangalsutra</div>
-</div>
+
 <style>
 .sg-table{width:100%;border-collapse:collapse;font-size:12px}
 .sg-table th{text-align:left;padding:8px 6px;font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid #f0f0f0}
@@ -787,7 +846,7 @@ function renderHighlightsCase(cfg) {
 </div>
 <div class="case-label"><h4><span class="tag tag-info">FINGER RING</span> Size Code + Inner Dia + Circumference</h4><p>Source: Titan JD IMS/IPD/QAL/QP/026 Rev.16</p></div>
 </div>
-<div class="case-content" id="case-sizeguide-bangle" style="display:none">
+<div class="case-content" id="case-sizeguide-bangle">
 <div class="phone-frame">
 <p style="font-size:11px;color:#555;margin-bottom:12px">Measure the widest part of your hand (knuckles) in mm when fingers are together. Choose the closest size.</p>
 <table class="sg-table">
@@ -814,7 +873,7 @@ function renderHighlightsCase(cfg) {
 </div>
 <div class="case-label"><h4><span class="tag tag-info">BANGLE</span> Round / Square / Oval Diameter</h4><p>Source: Titan JD IMS/IPD/QAL/QP/026 Rev.16</p></div>
 </div>
-<div class="case-content" id="case-sizeguide-bracelet" style="display:none">
+<div class="case-content" id="case-sizeguide-bracelet">
 <div class="phone-frame">
 <p style="font-size:11px;color:#555;margin-bottom:12px">Measure the circumference of your wrist just below the wrist bone. Length is end-to-end in cm.</p>
 <table class="sg-table">
@@ -835,7 +894,7 @@ function renderHighlightsCase(cfg) {
 </div>
 <div class="case-label"><h4><span class="tag tag-info">BRACELET</span> Length in CM</h4><p>Source: Titan JD IMS/IPD/QAL/QP/026 Rev.16</p></div>
 </div>
-<div class="case-content" id="case-sizeguide-anklet" style="display:none">
+<div class="case-content" id="case-sizeguide-anklet">
 <div class="phone-frame">
 <p style="font-size:11px;color:#555;margin-bottom:12px">Measure circumference around the ankle bone. Length is end-to-end in cm.</p>
 <table class="sg-table">
@@ -856,7 +915,7 @@ function renderHighlightsCase(cfg) {
 </div>
 <div class="case-label"><h4><span class="tag tag-info">ANKLET</span> Length in CM</h4><p>Source: Titan JD IMS/IPD/QAL/QP/026 Rev.16</p></div>
 </div>
-<div class="case-content" id="case-sizeguide-necklace" style="display:none">
+<div class="case-content" id="case-sizeguide-necklace">
 <div class="phone-frame">
 <p style="font-size:11px;color:#555;margin-bottom:12px">Length is measured end-to-end for gold jewellery, or 1st O-ring to lock for studded jewellery.</p>
 <table class="sg-table">
@@ -875,7 +934,7 @@ function renderHighlightsCase(cfg) {
 </div>
 <div class="case-label"><h4><span class="tag tag-info">NECKLACE</span> Length in Inches with Type Name</h4><p>Source: Titan JD IMS/IPD/QAL/QP/026 Rev.16</p></div>
 </div>
-<div class="case-content" id="case-sizeguide-chain" style="display:none">
+<div class="case-content" id="case-sizeguide-chain">
 <div class="phone-frame">
 <p style="font-size:11px;color:#555;margin-bottom:12px">Chain and Mangalsutra length is measured end-to-end in cm.</p>
 <table class="sg-table">
@@ -905,11 +964,7 @@ function renderHighlightsCase(cfg) {
 <div id="exchangeScreen" style="display:none">
 <div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Exchange Gold</div><div class="nav-subtitle">Validation & final screens</div></div></div>
 <div class="case-screen active">
-<div class="case-tabs">
-<div class="case-tab active" onclick="showCase('exchange','validation',this)">Inline Validation</div>
-<div class="case-tab" onclick="showCase('exchange','lesser',this)">Exchange &lt; Price</div>
-<div class="case-tab" onclick="showCase('exchange','greater',this)">Exchange &gt; Price</div>
-</div>
+
 <style>
 .exch-demo{background:#fff;border-radius:16px;border:1px solid #f0f0f0;padding:16px}
 .exch-field{margin-bottom:14px}
@@ -947,7 +1002,7 @@ function renderHighlightsCase(cfg) {
 </div></div>
 <div class="case-label"><h4><span class="tag tag-error">VALIDATION</span> Inline Field Errors</h4><p>Errors appear directly below each field as small red text — no toast/nudge on top of screen. Input border turns red. Each field validates independently.</p></div>
 </div>
-<div class="case-content" id="case-exchange-lesser" style="display:none">
+<div class="case-content" id="case-exchange-lesser">
 <div class="phone-frame"><div class="exch-demo">
 <div class="exch-result-box" style="background:#fffbeb"><p style="font-size:10px;color:#92400e;margin-bottom:4px">Your Gold Exchange Value (22 KT · 2.5g)</p><div class="exch-result-val" style="color:#b8860b">₹18,550</div></div>
 <div class="exch-breakdown">
@@ -960,7 +1015,7 @@ function renderHighlightsCase(cfg) {
 </div></div>
 <div class="case-label"><h4><span class="tag tag-warning">EXCHANGE &lt; PRICE</span> Pay Remaining Amount</h4><p>Exchange value (₹18,550) is less than product price (₹43,293). "You Pay" shows the difference. User needs to pay additional at store.</p></div>
 </div>
-<div class="case-content" id="case-exchange-greater" style="display:none">
+<div class="case-content" id="case-exchange-greater">
 <div class="phone-frame"><div class="exch-demo">
 <div class="exch-result-box" style="background:#fffbeb"><p style="font-size:10px;color:#92400e;margin-bottom:4px">Your Gold Exchange Value (22 KT · 8g)</p><div class="exch-result-val" style="color:#b8860b">₹59,360</div></div>
 <div class="exch-breakdown">
