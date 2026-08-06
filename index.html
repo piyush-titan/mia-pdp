@@ -618,6 +618,7 @@
 
         /* ===== COMMUNITY SECTION ===== */
         .community-section { padding: 16px; margin: 16px 16px; background: #fff; border-radius: 16px; border: 1px solid #f0e8e5; background: linear-gradient(145deg, #fef6f0 0%, #fff5f7 50%, #f5f0ff 100%); }
+        #communityInInfoCol { display: none; }
         .community-heading { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
         .community-sub { font-size: 11px; color: #777; margin-bottom: 16px; }
         .ratings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
@@ -798,7 +799,8 @@
             .below-fold .testimonials-section { margin: 0; border-radius: 0; padding: 48px 0; background: transparent; border: none; border-top: 1px solid #f0e8ea; }
             .below-fold .reco-section { margin: 0; padding: 48px 0; background: transparent; border: none; border-top: 1px solid #f0e8ea; }
             .below-fold .reco-section::before { display: none; }
-            .below-fold .community-section { margin: 0; border-radius: 0; padding: 48px 0; background: transparent; border: none; border-top: 1px solid #f0e8ea; }
+            .below-fold .community-section { display: none; }
+            #communityInInfoCol { display: block; padding: 20px; background: linear-gradient(145deg, #fef6f0 0%, #fff5f7 50%, #f5f0ff 100%); border-radius: 16px; border: 1px solid #f0e8e5; margin: 0 0 20px; }
             .below-fold .faq-section { margin: 0; border-radius: 0; padding: 48px 0 80px; background: transparent; border: none; border-top: 1px solid #f0e8ea; }
             .below-fold .stores-section { margin: 0; padding: 48px 0; background: transparent; border-top: 1px solid #f0e8ea; }
             .below-fold .stores-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
@@ -929,6 +931,8 @@
 
 <!-- EXCHANGE GOLD -->
 <section class="exchange-section section-gap" id="exchangeSection"></section>
+<!-- desktop-only community slot -->
+<div id="communityInInfoCol"></div>
 
 </div><!-- /.pdp-info-col -->
 </div><!-- /.pdp-layout -->
@@ -1762,9 +1766,9 @@ function bindWishlist(el) {
     h += '</div>';
     h += '<div style="text-align:center"><button class="community-cta" onclick="showToast(\'Opening Mia Stories...\',\'info\')">Explore Mia Stories</button></div>';
     el.innerHTML = h;
+    var desktopSlot = document.getElementById("communityInInfoCol");
+    if (desktopSlot) desktopSlot.innerHTML = h;
 })();
-
-// ===== STORES =====
 var storesData = [
     { name: "Mia by Tanishq — Connaught Place", address: "Shop 14, Outer Circle, Connaught Place, New Delhi 110001", phone: "+91 11 4356 7890", timings: "Open · Closes 9 PM", lat: 28.6315, lng: 77.2167 },
     { name: "Mia by Tanishq — Khan Market", address: "15A Khan Market, Rabindra Nagar, New Delhi 110003", phone: "+91 11 2461 3322", timings: "Open · Closes 8:30 PM", lat: 28.6003, lng: 77.2273 },
