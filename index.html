@@ -442,7 +442,8 @@
         .sticky-size-trigger:active { background: rgba(255,255,255,0.28); }
         /* Size dropdown - positioned above sticky bar */
         .size-dropdown {
-            position: fixed; bottom: 70px; left: 12px; right: 12px;
+            position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%);
+            width: min(340px, calc(100vw - 24px));
             background: #fff; border-radius: 16px; border: 1px solid #f0f0f0;
             box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
             overflow: hidden; z-index: 150;
@@ -572,7 +573,7 @@
             scroll-snap-type: x mandatory; scroll-padding-left: 16px;
         }
         .reco-scroll::-webkit-scrollbar { display: none; }
-        .reco-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 12px 16px 4px; }
+        .reco-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 12px 16px 4px; justify-items: center; }
         .reco-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 16px 4px; }
         .reco-grid-2col .reco-card { min-width: 0; max-width: none; }
         .reco-grid .reco-card { min-width: 0; max-width: none; }
@@ -638,6 +639,28 @@
         .lightbox-img-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; touch-action: manipulation; }
         .lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.25s ease; transform-origin: center center; }
         .lightbox-counter { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.7); font-size: 12px; font-weight: 600; letter-spacing: 1px; }
+
+        /* ===== STORES SECTION ===== */
+        .stores-section { padding: 24px 16px; margin: 0 0 0; }
+        .stores-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; text-align: center; margin-bottom: 4px; }
+        .stores-sub { font-size: 11px; color: #777; text-align: center; margin-bottom: 20px; }
+        .stores-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .store-tile {
+            background: #fff; border-radius: 16px; padding: 16px;
+            border: 1px solid #f0e8ea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .store-name { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+        .store-meta { font-size: 11px; color: #6d565e; line-height: 1.5; }
+        .store-meta span { display: block; }
+        .store-timings { font-size: 10px; font-weight: 600; color: #22C55E; background: rgba(34,197,94,0.08); padding: 3px 8px; border-radius: 100px; display: inline-block; }
+        .store-tile-ctас { display: flex; gap: 8px; margin-top: 4px; }
+        .store-btn { flex: 1; padding: 8px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.2s; border: none; }
+        .store-btn-primary { background: #D14A61; color: #fff; }
+        .store-btn-primary:active { background: #b03a50; }
+        .store-btn-secondary { background: #fff; color: #D14A61; border: 1.5px solid #D14A61; }
+        .store-btn-secondary:active { background: #fdf2f4; }
 
         /* ===== FAQs ===== */
         .faq-section { padding: 20px 16px; margin: 16px 16px 100px; background: #fff; border-radius: 0; border: none; }
@@ -774,6 +797,9 @@
             .below-fold .reco-section::before { display: none; }
             .below-fold .community-section { margin: 0; border-radius: 0; padding: 48px 0; background: transparent; border: none; border-top: 1px solid #f0e8ea; }
             .below-fold .faq-section { margin: 0; border-radius: 0; padding: 48px 0 80px; background: transparent; border: none; border-top: 1px solid #f0e8ea; }
+            .below-fold .stores-section { margin: 0; padding: 48px 0; background: transparent; border-top: 1px solid #f0e8ea; }
+            .below-fold .stores-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+            .below-fold #recoSection3 .reco-grid-2col { grid-template-columns: repeat(5, 1fr); gap: 16px; }
 
             /* Reco cards: grid on desktop */
             .below-fold .reco-card { min-width: 0 !important; max-width: none; }
@@ -911,6 +937,7 @@
 <section class="reco-section" id="recoSection2"></section>
 <section class="reco-section" id="recoSection3"></section>
 <section class="community-section section-gap" id="communitySection"></section>
+<section class="stores-section" id="storesSection"></section>
 <section class="faq-section" id="faqSection"></section>
 </div><!-- /.below-fold -->
 
@@ -1650,13 +1677,13 @@ function bindWishlist(el) {
     h += '</div>'; el.innerHTML = h; bindWishlist(el);
 })();
 
-// 3. You May Also Like — 2-col grid, 4 shown, View More expands 10 more
+// 3. You May Also Like — 5-col grid initial on desktop, 2-col on mobile
 (function() {
     var el = document.getElementById("recoSection3");
-    var initial = recoProducts.slice(0, 4);
-    var extra = recoProducts.slice(4, 14);
+    var initial = recoProducts.slice(0, 5);
+    var extra = recoProducts.slice(5, 15);
     var h = '<div class="reco-header"><h2 class="reco-title font-display">You May Also Like</h2><p class="reco-subtitle">Handpicked based on what others loved</p></div>';
-    h += '<div class="reco-grid-2col">';
+    h += '<div class="reco-grid-2col" id="recoInitialGrid">';
     initial.forEach(function(p) { h += buildCard(p); });
     h += '</div>';
     h += '<div class="reco-expanded" id="recoExpanded"><div class="reco-grid-2col" style="padding-top:0">';
@@ -1718,6 +1745,34 @@ function bindWishlist(el) {
     ratingsHtml += '</div>';
     var textHtml = '<div class="community-text-col"><div class="community-heading font-display">Why People Love Mia</div><p class="community-sub">Based on 10,000+ reviews from verified buyers</p><button class="community-cta" onclick="showToast(\'Opening Mia Stories...\',\'info\')">Explore Mia Stories →</button></div>';
     el.innerHTML = '<div class="community-inner">' + ratingsHtml + textHtml + '</div>';
+})();
+
+})();
+
+// ===== STORES =====
+(function() {
+    var el = document.getElementById("storesSection");
+    var stores = [
+        { name: "Mia by Tanishq — Connaught Place", address: "Shop 14, Outer Circle, Connaught Place, New Delhi 110001", phone: "+91 11 4356 7890", timings: "Open · Closes 9 PM", lat: 28.6315, lng: 77.2167 },
+        { name: "Mia by Tanishq — Khan Market", address: "15A Khan Market, Rabindra Nagar, New Delhi 110003", phone: "+91 11 2461 3322", timings: "Open · Closes 8:30 PM", lat: 28.6003, lng: 77.2273 },
+        { name: "Mia by Tanishq — Select CityWalk", address: "Level 1, Select CityWalk Mall, Saket, New Delhi 110017", phone: "+91 11 4050 1234", timings: "Open · Closes 10 PM", lat: 28.5274, lng: 77.2192 },
+        { name: "Mia by Tanishq — DLF Promenade", address: "Ground Floor, DLF Promenade, Vasant Kunj, New Delhi 110070", phone: "+91 11 4607 8800", timings: "Open · Closes 10 PM", lat: 28.5215, lng: 77.1580 }
+    ];
+    var h = '<h2 class="stores-title font-display">Find In Store</h2>';
+    h += '<p class="stores-sub">Visit a Mia store near you to experience this piece</p>';
+    h += '<div class="stores-grid">';
+    stores.forEach(function(s, i) {
+        h += '<div class="store-tile">';
+        h += '<div class="store-name">' + s.name + '</div>';
+        h += '<div class="store-meta"><span>' + s.address + '</span><span style="margin-top:4px">' + s.phone + '</span></div>';
+        h += '<span class="store-timings">' + s.timings + '</span>';
+        h += '<div class="store-tile-ctас">';
+        h += '<button class="store-btn store-btn-primary" onclick="showToast(\'Appointment request sent!\',\'success\')">Book Appointment</button>';
+        h += '<button class="store-btn store-btn-secondary" onclick="window.open(\'https://maps.google.com/?q=' + s.lat + ',' + s.lng + '\',\'_blank\')">Get Directions</button>';
+        h += '</div></div>';
+    });
+    h += '</div>';
+    el.innerHTML = h;
 })();
 
 // ===== FAQs =====
