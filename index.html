@@ -762,15 +762,14 @@
             .pdp-gallery-col .gallery-thumbnails::-webkit-scrollbar { display: none; }
             .pdp-gallery-col .gallery-thumb { width: 64px; height: 64px; flex-shrink: 0; }
 
-            /* ── Gallery find-in-store banner (desktop only) ── */
-            .gallery-find-store {
-                display: block; flex-shrink: 0;
-                padding: 14px 20px;
+            /* ── Gallery trust markers below image (desktop only) ── */
+            .gallery-trust-desktop {
+                display: flex; align-items: center; justify-content: center; gap: 16px;
+                flex-shrink: 0; padding: 14px 20px;
                 background: linear-gradient(100deg, #F4C2CC 0%, #fdf2f4 60%, #fff 100%);
-                border-radius: 16px;
-                border: 1px solid rgba(209,74,97,0.12);
-                position: relative; overflow: hidden;
+                border-radius: 16px; border: 1px solid rgba(209,74,97,0.12);
             }
+            .gallery-trust-desktop .trust-item { border: none; background: none; padding: 0; }
 
             /* ── Collection name above product title ── */
             .collection-name {
@@ -782,7 +781,8 @@
 
             /* ── Info column ── */
             .pdp-info-col { display: block; padding: 4px 0 80px; overflow: visible; }
-            .pdp-info-col .find-store-section { display: none; }
+            .pdp-info-col .find-store-section { display: block; }
+            .trust-elements { display: none; }
             .product-header { padding: 0 0 16px; }
             .product-name { font-size: 26px; }
             .key-highlights { margin: 0 0 20px; }
@@ -813,11 +813,15 @@
             .below-fold .reco-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 12px 0 4px; }
             .below-fold .reco-grid-2col { grid-template-columns: repeat(5, 1fr); gap: 16px; padding: 12px 0 4px; }
             .below-fold .reco-header { padding: 0; text-align: center; }
-            .below-fold .reco-title { font-size: 22px; }
-            .below-fold .reco-subtitle { font-size: 13px; }
-            .below-fold .testimonials-heading { font-size: 24px; text-align: center; }
-            .below-fold .testimonials-sub { text-align: center; }
-            .below-fold .faq-title { font-size: 24px; text-align: center; }
+            .below-fold .reco-title { font-size: 22px; color: #9f1239; }
+            .below-fold .reco-subtitle { font-size: 13px; color: #9f1239; }
+            .below-fold .testimonials-heading { font-size: 22px; text-align: center; color: #9f1239; }
+            .below-fold .testimonials-sub { text-align: center; font-size: 13px; color: #9f1239; }
+            .below-fold .stores-title { font-size: 22px; color: #9f1239; }
+            .below-fold .stores-sub { font-size: 13px; color: #9f1239; }
+            .below-fold .community-heading { font-size: 22px; color: #9f1239; }
+            .below-fold .community-sub { font-size: 13px; color: #9f1239; }
+            .below-fold .faq-title { font-size: 22px; text-align: center; color: #9f1239; }
 
             /* Exchange stays in info-col on desktop; community section stays in below-fold */
             .below-fold-exchange { display: none; }
@@ -897,7 +901,11 @@
     </div>
     <div class="gallery-thumbnails" id="galleryThumbs"></div>
 </section>
-<div class="gallery-find-store" id="galleryFindStoreDesktop"></div>
+<div class="gallery-trust-desktop" id="galleryFindStoreDesktop">
+  <div class="trust-item"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwf4347052/images/cart/certificate/bis.svg" alt="BIS Hallmarked" loading="lazy"></div>
+  <div class="trust-item"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dw27b89fcd/images/cart/certificate/TATA.svg" alt="A TATA Product" loading="lazy"></div>
+  <div class="trust-item"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwbf1e1df1/images/cart/certificate/1%20YR.svg" alt="1 Year Warranty" loading="lazy"></div>
+</div>
 </div>
 <div class="pdp-info-col">
 
@@ -1615,11 +1623,6 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
     }
     document.getElementById("findStoreSection").innerHTML = getFindStoreHTML("findStoreCta");
     document.getElementById("findStoreCta").onclick = function() { openSheet("store"); renderStoreSheet(); };
-    var galleryEl = document.getElementById("galleryFindStoreDesktop");
-    if (galleryEl) {
-        galleryEl.innerHTML = getFindStoreHTML("galleryFindStoreCta");
-        document.getElementById("galleryFindStoreCta").onclick = function() { openSheet("store"); renderStoreSheet(); };
-    }
 })();
 
 // ===== RECOMMENDATIONS =====
