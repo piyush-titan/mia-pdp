@@ -678,45 +678,89 @@
         @media (min-width: 1024px) {
             .app-nudge { display: none; }
 
-            /* 2-column PDP layout */
-            .pdp-layout { display: flex; align-items: flex-start; }
-            .pdp-gallery-col { display: block; position: sticky; top: 0; width: 50%; flex-shrink: 0; height: 100vh; overflow: hidden; }
-            .pdp-gallery-col .gallery-section { height: 100%; display: flex; flex-direction: column; justify-content: center; }
-            .pdp-gallery-col .gallery-main { aspect-ratio: 1/1; width: 100%; max-height: calc(100vh - 80px); }
-            .pdp-gallery-col .gallery-thumbnails { padding: 10px 16px; flex-shrink: 0; }
-            .pdp-info-col { display: block; flex: 1; min-width: 0; padding: 0 24px 80px; overflow: hidden; }
+            /* ── Container ── */
+            .breadcrumb { max-width: 1320px; margin: 0 auto; padding: 16px 40px 8px; }
+            .pdp-layout {
+                max-width: 1320px; margin: 0 auto;
+                display: grid !important;
+                grid-template-columns: 1fr 480px;
+                gap: 48px;
+                padding: 24px 40px 56px;
+                align-items: start;
+            }
+            .below-fold { max-width: 1320px; margin: 0 auto; padding: 0 40px; }
 
-            /* breadcrumb */
-            .breadcrumb { padding: 12px 24px; }
+            /* ── Gallery column ── */
+            .pdp-gallery-col {
+                display: block;
+                position: sticky; top: 80px;
+                align-self: start;
+            }
+            .pdp-gallery-col .gallery-section {
+                display: grid;
+                grid-template-columns: 72px 1fr;
+                gap: 12px;
+                background: #fff;
+                border-radius: 20px;
+                overflow: hidden;
+            }
+            .pdp-gallery-col .gallery-main {
+                grid-column: 2; grid-row: 1;
+                aspect-ratio: 1/1;
+                border-radius: 16px;
+                overflow: hidden;
+                position: relative;
+            }
+            .pdp-gallery-col .gallery-thumbnails {
+                grid-column: 1; grid-row: 1;
+                flex-direction: column;
+                overflow-x: hidden;
+                overflow-y: auto;
+                padding: 4px 0;
+                gap: 8px;
+                justify-content: flex-start;
+                width: 72px;
+            }
+            .pdp-gallery-col .gallery-thumbnails::-webkit-scrollbar { display: none; }
+            .pdp-gallery-col .gallery-thumb { width: 64px; height: 64px; flex-shrink: 0; }
 
-            /* product header */
-            .product-header { padding: 20px 0 12px; }
+            /* ── Info column ── */
+            .pdp-info-col { display: block; padding: 4px 0 80px; overflow: visible; }
+            .product-header { padding: 0 0 16px; }
+            .product-name { font-size: 26px; }
+            .key-highlights { margin: 0 0 20px; }
+            .trust-elements { margin: 0 0 20px; padding: 0; }
+            .price-section { margin: 0 0 20px; }
+            .coupons-section { margin: 0 0 20px; }
+            .promos-section { margin: 0 0 20px; }
+            .gift-section { margin: 0 0 20px; }
+            .delivery-section { margin: 0 0 20px; }
+            .find-store-section { margin: 0 0 20px; }
+            .exchange-section { margin: 0 0 20px; }
+            .prebook-section { margin: 0 0 20px; }
 
-            /* key highlights */
-            .key-highlights { margin: 0 0 16px; }
+            /* ── Below fold ── */
+            .below-fold .testimonials-section { margin: 0; border-radius: 0; padding: 48px 0; border-top: 1px solid #f0e8ea; }
+            .below-fold .reco-section { margin: 0; padding: 48px 0; border-top: 1px solid #f0e8ea; background: #fff; }
+            .below-fold .reco-section::before { display: none; }
+            .below-fold .community-section { margin: 0; border-radius: 0; padding: 48px 0; border-top: 1px solid #f0e8ea; }
+            .below-fold .faq-section { margin: 0; border-radius: 0; padding: 48px 0 80px; border-top: 1px solid #f0e8ea; background: #fff; }
 
-            /* trust elements */
-            .trust-elements { margin: 0 0 16px; padding: 0; }
+            /* Reco cards: grid on desktop */
+            .below-fold .reco-card { min-width: 0 !important; max-width: none; }
+            .below-fold .reco-scroll { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; overflow: visible; padding: 12px 0 4px; flex-wrap: unset; }
+            .below-fold .reco-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 12px 0 4px; }
+            .below-fold .reco-grid-2col { grid-template-columns: repeat(5, 1fr); gap: 16px; padding: 12px 0 4px; }
+            .below-fold .reco-header { padding: 0; text-align: left; }
+            .below-fold .reco-title { font-size: 22px; }
+            .below-fold .testimonials-heading { font-size: 24px; text-align: left; }
+            .below-fold .community-heading { font-size: 22px; }
+            .below-fold .faq-title { font-size: 24px; text-align: left; }
 
-            /* sections — remove side margins, stack vertically */
-            .price-section { margin: 0 0 16px; }
-            .find-store-section { margin: 0 0 16px; }
-            .exchange-section { margin: 0 0 16px; }
-            /* below-fold sections: full-width, centered */
-            .below-fold { width: 100%; }
-            .below-fold .testimonials-section { margin: 0 0 0; border-radius: 0; }
-            .below-fold .reco-section { margin: 0; }
-            .below-fold .community-section { margin: 0 0 0; border-radius: 0; }
-            .below-fold .faq-section { margin: 0; border-radius: 0; padding: 32px calc(50% - 520px); }
+            /* ── Sticky bar ── */
+            .sticky-bar { left: 50%; right: auto; transform: translateX(-50%); width: 640px; max-width: none; justify-content: flex-start; gap: 12px; padding: 10px 16px; }
 
-            /* reco cards: override vw-based min-width for desktop */
-            .reco-card { min-width: 0; }
-            .reco-scroll { flex-wrap: wrap; overflow-x: visible; }
-
-            /* sticky bar: centered, full layout */
-            .sticky-bar { left: 50%; right: auto; transform: translateX(-50%); width: 640px; max-width: none; justify-content: center; gap: 12px; padding: 10px 16px; }
-
-            /* bottom sheets → side panel from right */
+            /* ── Bottom sheets → side panels ── */
             .bottom-sheet {
                 top: 0; bottom: 0; left: auto; right: 0;
                 width: 440px; max-height: 100vh;
@@ -729,10 +773,8 @@
         }
 
         @media (min-width: 1440px) {
-            .pdp-gallery-col { width: 55%; }
-            .pdp-info-col { padding: 0 32px 80px; }
+            .pdp-layout { grid-template-columns: 1fr 520px; gap: 56px; }
             .sticky-bar { width: 720px; }
-            .below-fold .faq-section { padding: 32px calc(50% - 580px); }
             .bottom-sheet { width: 480px; }
         }
     </style>
@@ -763,9 +805,9 @@
 <div class="pdp-layout">
 <div class="pdp-gallery-col">
 <section class="gallery-section">
-    <span class="product-tag new-arrival" id="productTag">New Arrival</span>
-    <button class="similar-float" id="similarBtn" aria-label="Similar Products"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#D14A61" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Show Similar</span></button>
     <div class="gallery-main" id="galleryMain">
+        <span class="product-tag new-arrival" id="productTag">New Arrival</span>
+        <button class="similar-float" id="similarBtn" aria-label="Similar Products"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#D14A61" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Show Similar</span></button>
         <div class="gallery-track" id="galleryTrack"></div>
     </div>
     <div class="gallery-thumbnails" id="galleryThumbs"></div>
