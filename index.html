@@ -368,9 +368,9 @@
         .stack-card.active { z-index: 3; transform: translateX(0) scale(1); opacity: 1; }
         .stack-card.prev { z-index: 2; transform: translateX(-22%) scale(0.88); opacity: 0.55; filter: brightness(0.85); }
         .stack-card.next { z-index: 2; transform: translateX(22%) scale(0.88); opacity: 0.55; filter: brightness(0.85); }
-        .stack-card.s0 { background: linear-gradient(145deg, #E8668A, #D14A61, #B03A50); }
-        .stack-card.s1 { background: linear-gradient(145deg, #E8668A, #D14A61, #B03A50); }
-        .stack-card.s2 { background: linear-gradient(145deg, #E8668A, #D14A61, #B03A50); }
+        .stack-card.s0 { background: linear-gradient(145deg, #2d2d2d, #1a1a1a, #111); }
+        .stack-card.s1 { background: linear-gradient(145deg, #3a3040, #2a2035, #1a1225); }
+        .stack-card.s2 { background: linear-gradient(145deg, #1a2a3a, #122030, #0c1820); }
         .stack-card::before { content: ''; position: absolute; top: -25px; right: -25px; width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.08); }
         .stack-card::after { content: ''; position: absolute; bottom: -15px; left: -15px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.05); }
         .stack-tag { font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 2px; }
@@ -379,7 +379,7 @@
         .stack-bottom { display: flex; align-items: center; justify-content: space-between; }
         .stack-code-row { display: flex; align-items: center; gap: 5px; }
         .stack-code-label { font-size: 10px; color: rgba(255,255,255,0.75); font-weight: 600; }
-        .stack-code { font-size: 12px; font-weight: 800; color: #D14A61; letter-spacing: 0.8px; padding: 4px 12px; border-radius: 100px; background: #fff; }
+        .stack-code { font-size: 12px; font-weight: 800; color: #1a1a1a; letter-spacing: 0.8px; padding: 4px 12px; border-radius: 100px; background: #fff; }
         .stack-view { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.8); text-decoration: underline; text-underline-offset: 2px; }
         .stack-nav { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
         .stack-arrow { width: 24px; height: 24px; border-radius: 50%; background: rgba(209,74,97,0.18); display: flex; align-items: center; justify-content: center; transition: all 0.2s; border: none; cursor: pointer; flex-shrink: 0; }
@@ -422,19 +422,19 @@
 
         /* ===== FLOATING STICKY BAR ===== */
         .sticky-bar {
-            position: fixed; bottom: 12px; left: 10px; right: 10px; z-index: 100;
-            padding: 10px 10px 10px 14px;
+            position: fixed; bottom: 14px; left: 10px; right: 10px; z-index: 100;
+            padding: 13px 12px 13px 18px;
             background: linear-gradient(105deg, #c93d56 0%, #D14A61 40%, #e0607a 100%);
-            border-radius: 18px; border: none;
+            border-radius: 20px; border: none;
             box-shadow: 0 8px 32px rgba(209,74,97,0.35), 0 2px 8px rgba(0,0,0,0.08);
-            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+            display: flex; align-items: center; justify-content: space-between; gap: 10px;
         }
-        .sticky-price { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: #1a1a1a; white-space: nowrap; flex-shrink: 0; line-height: 1; }
+        .sticky-price { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: #fff; white-space: nowrap; flex-shrink: 0; line-height: 1; text-shadow: 0 1px 6px rgba(0,0,0,0.15); }
         .sticky-size-trigger {
-            display: flex; align-items: center; gap: 3px;
-            padding: 5px 8px 5px 10px; border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.35); font-size: 9px; font-weight: 600;
-            color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.18); white-space: nowrap;
+            display: flex; align-items: center; gap: 4px;
+            padding: 7px 10px 7px 12px; border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.4); font-size: 10px; font-weight: 600;
+            color: rgba(255,255,255,0.95); background: rgba(255,255,255,0.2); white-space: nowrap;
             position: relative; cursor: pointer; transition: all 0.2s;
             min-width: 0; overflow: hidden;
         }
@@ -461,12 +461,12 @@
         .size-dropdown-item.oos { color: #bbb; font-style: italic; }
         .sticky-spacer { flex: 1; }
         .btn-add-bag {
-            padding: 12px 20px; border-radius: 100px; font-size: 12px; font-weight: 700;
+            padding: 13px 24px; border-radius: 100px; font-size: 13px; font-weight: 700;
             color: #D14A61; white-space: nowrap; flex-shrink: 0;
             background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
             transition: transform 0.2s, box-shadow 0.2s;
-            display: flex; align-items: center; gap: 5px;
+            display: flex; align-items: center; gap: 6px;
         }
         .btn-add-bag:active { transform: scale(0.96); }
         .btn-add-bag i { width: 13px; height: 13px; color: #D14A61 !important; }
@@ -790,7 +790,7 @@
             .community-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
 
             /* ── Sticky bar ── */
-            .sticky-bar { left: 50%; right: auto; transform: translateX(-50%); width: 640px; max-width: none; justify-content: flex-start; gap: 12px; padding: 10px 16px; }
+            .sticky-bar { left: 50%; right: auto; transform: translateX(-50%); width: 720px; max-width: none; justify-content: flex-start; gap: 16px; padding: 14px 20px; }
 
             /* ── Bottom sheets → centered modals ── */
             .bottom-sheet {
@@ -816,7 +816,7 @@
 
         @media (min-width: 1440px) {
             .pdp-layout { grid-template-columns: 1fr 480px; gap: 56px; }
-            .sticky-bar { width: 720px; }
+            .sticky-bar { width: 820px; }
         }
     </style>
 </head>
