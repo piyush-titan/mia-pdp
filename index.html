@@ -573,7 +573,7 @@
             scroll-snap-type: x mandatory; scroll-padding-left: 16px;
         }
         .reco-scroll::-webkit-scrollbar { display: none; }
-        .reco-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 12px 16px 4px; justify-items: center; }
+        .reco-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 12px 16px 4px; justify-items: center; justify-content: center; }
         .reco-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 16px 4px; }
         .reco-grid-2col .reco-card { min-width: 0; max-width: none; }
         .reco-grid .reco-card { min-width: 0; max-width: none; }
@@ -816,20 +816,9 @@
             .below-fold .community-heading { font-size: 24px; }
             .below-fold .faq-title { font-size: 24px; text-align: center; }
 
-            /* Exchange + community 2-col on desktop */
-            .below-fold .exchange-community-pair {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 56px;
-                padding: 48px 0;
-                border-top: 1px solid #f0e8ea;
-                align-items: center;
-            }
-            .below-fold .exchange-community-pair .community-section { margin: 0; border-radius: 0; padding: 0; border: none; background: transparent; }
-            .below-fold-exchange { display: block; }
-            .below-fold-exchange .exchange-section { margin: 0; background: linear-gradient(180deg,#fffbeb,#fff); border-radius: 20px; }
-            /* hide exchange from info-col on desktop — shown in below-fold pair */
-            .pdp-info-col .exchange-section { display: none; }
+            /* Exchange stays in info-col on desktop; community section stays in below-fold */
+            .below-fold-exchange { display: none; }
+            .below-fold .exchange-community-pair { display: block; }
             /* ── Sticky bar: centered via margin auto ── */
             .sticky-bar { left: 0; right: 0; margin: 0 auto; transform: none; width: 760px; max-width: calc(100vw - 80px); justify-content: center; gap: 10px; padding: 12px 20px; bottom: 18px; }
             .btn-sticky-buy-now {
@@ -1784,7 +1773,7 @@ function bindWishlist(el) {
     stores.forEach(function(s, i) {
         h += '<div class="store-tile">';
         h += '<div class="store-name">' + s.name + '</div>';
-        h += '<div class="store-meta"><span>' + s.address + '</span><span style="margin-top:4px">' + s.phone + '</span></div>';
+        h += '<div class="store-meta"><span>' + s.address + '</span><a href="tel:' + s.phone.replace(/\s/g,'') + '" style="margin-top:4px;color:#D14A61;font-weight:700;text-decoration:underline;display:block">' + s.phone + '</a></div>';
         h += '<span class="store-timings">' + s.timings + '</span>';
         h += '<div class="store-tile-ctas">';
         h += '<button class="store-btn store-btn-primary" onclick="showToast(\'Appointment request sent!\',\'success\')">Book Appointment</button>';
