@@ -429,7 +429,7 @@
             display: flex; align-items: center; justify-content: space-between; gap: 10px;
         }
         .sticky-price { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: #fff; white-space: nowrap; flex-shrink: 0; line-height: 1; text-shadow: 0 1px 6px rgba(0,0,0,0.15); }
-        .sticky-product-name { display: none; font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
+        .sticky-product-name { display: none; font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.72); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; letter-spacing: 0.01em; }
         .sticky-size-trigger {
             display: flex; align-items: center; gap: 4px;
             padding: 7px 10px 7px 12px; border-radius: 100px;
@@ -765,11 +765,11 @@
 
             /* ── Gallery trust markers below image (desktop only) ── */
             .gallery-trust-desktop {
-                display: flex; align-items: stretch; gap: 12px;
+                display: flex; align-items: center; justify-content: space-between; gap: 10px;
                 flex-shrink: 0; padding: 0; background: none; border: none; border-radius: 0;
             }
-            .gallery-trust-desktop .trust-item { flex: 1; padding: 24px 8px; }
-            .gallery-trust-desktop .trust-item img { height: 54px; width: 120px; }
+            .gallery-trust-desktop .trust-item { flex: 1; padding: 20px 8px; align-items: center; justify-content: center; }
+            .gallery-trust-desktop .trust-item img { height: 50px; width: 100%; max-width: 110px; object-fit: contain; }
 
             /* ── Collection name above product title ── */
             .collection-name {
@@ -1858,7 +1858,7 @@ document.getElementById("allStoresOverlay").onclick = function() {
 function renderStickyBar() {
     var el = document.getElementById("stickyBar");
     var p = getCurrentPrice();
-    var h = '<div style="display:flex;flex-direction:column;gap:1px;flex-shrink:0;line-height:1">'
+    var h = '<div style="display:flex;flex-direction:column;flex-shrink:0;line-height:1;gap:3px">'
         + '<span class="sticky-product-name">' + product.name + '</span>'
         + '<span style="font-family:Fraunces,serif;font-size:20px;font-weight:700;white-space:nowrap;line-height:1;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,0.15)">' + fmt(p.current) + '</span>'
         + '</div>';
