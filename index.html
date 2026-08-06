@@ -430,6 +430,7 @@
         }
         .sticky-price { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: #fff; white-space: nowrap; flex-shrink: 0; line-height: 1; text-shadow: 0 1px 6px rgba(0,0,0,0.15); }
         .sticky-product-name { display: none; font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.72); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; letter-spacing: 0.01em; }
+        .sticky-blur-scrim { display: none; }
         .sticky-size-trigger {
             display: flex; align-items: center; gap: 4px;
             padding: 7px 10px 7px 12px; border-radius: 100px;
@@ -829,6 +830,18 @@
             /* ── Sticky bar: centered via margin auto ── */
             .sticky-bar { left: 0; right: 0; margin: 0 auto; transform: none; width: 760px; max-width: calc(100vw - 80px); justify-content: center; gap: 10px; padding: 12px 20px; bottom: 18px; box-shadow: 0 8px 32px rgba(209,74,97,0.35), 0 2px 8px rgba(0,0,0,0.08), 0 0 0 8px rgba(255,255,255,0.18); backdrop-filter: blur(16px) brightness(0.85); -webkit-backdrop-filter: blur(16px) brightness(0.85); }
             .sticky-product-name { display: block; }
+            /* full-width frosted scrim behind sticky CTA */
+            .sticky-blur-scrim {
+                display: block;
+                position: fixed; bottom: 0; left: 0; right: 0;
+                height: 110px;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 45%);
+                mask-image: linear-gradient(to bottom, transparent 0%, black 45%);
+                z-index: 99;
+                pointer-events: none;
+            }
             .btn-sticky-buy-now {
                 display: flex; align-items: center; gap: 8px;
                 padding: 12px 20px; border-radius: 100px; font-size: 13px; font-weight: 700;
@@ -968,6 +981,7 @@
 </div>
 
 <!-- FLOATING STICKY BAR -->
+<div class="sticky-blur-scrim" id="stickyBlurScrim"></div>
 <div class="sticky-bar" id="stickyBar"></div>
 
 <!-- BOTTOM SHEETS -->
