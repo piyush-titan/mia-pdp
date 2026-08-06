@@ -148,7 +148,6 @@
         /* ===== PRODUCT HEADER ===== */
         .collection-name { display: none; }
         .gallery-find-store { display: none; }
-        .community-inner { display: block; }
         .product-header { padding: 16px 16px 12px; }
         .product-name-row { display: flex; align-items: center; gap: 10px; }
         .product-name {
@@ -816,7 +815,6 @@
             .below-fold .reco-subtitle { font-size: 13px; }
             .below-fold .testimonials-heading { font-size: 24px; text-align: center; }
             .below-fold .testimonials-sub { text-align: center; }
-            .below-fold .community-heading { font-size: 24px; }
             .below-fold .faq-title { font-size: 24px; text-align: center; }
 
             /* Exchange stays in info-col on desktop; community section stays in below-fold */
@@ -1755,13 +1753,15 @@ function bindWishlist(el) {
         { label: "Unboxing", pct: 91, color: "#2563eb" },
         { label: "Variety", pct: 86, color: "#059669" }
     ];
-    var ratingsHtml = '<div class="community-ratings-col">';
+    var h = '<div class="community-heading font-display" style="text-align:center">Why People Love Mia</div>';
+    h += '<p class="community-sub" style="text-align:center">Based on 10,000+ reviews from verified buyers</p>';
+    h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">';
     ratings.forEach(function(r) {
-        ratingsHtml += '<div style="padding:10px 0;display:flex;align-items:center;gap:14px;border-bottom:1px solid #f0e8ea"><div style="font-size:22px;font-weight:800;color:#1a1a1a;font-family:Fraunces,serif;min-width:52px;letter-spacing:-0.5px">' + r.pct + '%</div><div style="flex:1"><div style="font-size:12px;font-weight:600;color:#555;margin-bottom:6px">' + r.label + '</div><div style="height:5px;border-radius:100px;background:#f0e8ea;overflow:hidden"><div style="height:100%;width:' + r.pct + '%;background:' + r.color + ';border-radius:100px"></div></div></div></div>';
+        h += '<div style="text-align:center;padding:14px 8px;border-radius:12px;background:#fff;border:1px solid #f0f0f0"><div style="font-size:20px;font-weight:800;color:#1a1a1a;font-family:Fraunces,serif">' + r.pct + '%</div><div style="margin:8px auto 6px;width:80%;height:5px;border-radius:100px;background:#f0f0f0;overflow:hidden"><div style="height:100%;width:' + r.pct + '%;background:' + r.color + ';border-radius:100px"></div></div><div style="font-size:12px;font-weight:600;color:#555">' + r.label + '</div></div>';
     });
-    ratingsHtml += '</div>';
-    var textHtml = '<div class="community-text-col"><div class="community-heading font-display">Why People Love Mia</div><p class="community-sub">Based on 10,000+ reviews from verified buyers</p><button class="community-cta" onclick="showToast(\'Opening Mia Stories...\',\'info\')">Explore Mia Stories →</button></div>';
-    el.innerHTML = '<div class="community-inner">' + ratingsHtml + textHtml + '</div>';
+    h += '</div>';
+    h += '<div style="text-align:center"><button class="community-cta" onclick="showToast(\'Opening Mia Stories...\',\'info\')">Explore Mia Stories</button></div>';
+    el.innerHTML = h;
 })();
 
 // ===== STORES =====
