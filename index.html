@@ -460,10 +460,12 @@
         .size-dropdown-item.active { color: #D14A61; font-weight: 700; background: #FDF2F4; }
         .size-dropdown-item.oos { color: #bbb; font-style: italic; }
         .btn-sticky-buy-now { display: none; }
+        .sticky-pay-icons { display: none; }
+        .pay-badge { font-size: 7px; font-weight: 800; color: #fff; padding: 2px 5px; border-radius: 3px; letter-spacing: 0.2px; }
         .btn-add-bag {
             padding: 13px 24px; border-radius: 100px; font-size: 13px; font-weight: 700;
             color: #D14A61; white-space: nowrap; flex-shrink: 0;
-            background: #fdf0f2;
+            background: #fff;
             box-shadow: 0 2px 12px rgba(0,0,0,0.15);
             transition: transform 0.2s, box-shadow 0.2s;
             display: flex; align-items: center; gap: 6px;
@@ -789,19 +791,24 @@
             /* Community 2-col: ratings left, heading right */
             .community-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
 
-            /* ── Sticky bar ── */
-            .sticky-bar { left: 50%; right: auto; transform: translateX(-50%); width: 740px; max-width: none; justify-content: center; gap: 12px; padding: 12px 20px; }
+            /* ── Sticky bar: centered via margin auto ── */
+            .sticky-bar { left: 0; right: 0; margin: 0 auto; transform: none; width: 760px; max-width: calc(100vw - 80px); justify-content: center; gap: 10px; padding: 12px 20px; bottom: 18px; }
             .btn-sticky-buy-now {
-                display: flex; align-items: center; gap: 6px;
-                padding: 12px 28px; border-radius: 100px; font-size: 13px; font-weight: 800;
-                color: #B03A50; white-space: nowrap; flex-shrink: 0;
-                background: #fff;
+                display: flex; align-items: center; gap: 7px;
+                padding: 12px 22px; border-radius: 100px; font-size: 13px; font-weight: 800;
+                color: #fff; white-space: nowrap; flex-shrink: 0;
+                background: #43323a;
                 border: none;
-                box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+                box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 3px 12px rgba(0,0,0,0.25);
                 letter-spacing: 0.2px;
-                transition: transform 0.15s, box-shadow 0.15s;
+                transition: background 0.18s;
             }
-            .btn-sticky-buy-now:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(0,0,0,0.22); }
+            .btn-sticky-buy-now:hover { background: #2e2028; }
+            .sticky-pay-icons {
+                display: flex; align-items: center; gap: 5px; flex-shrink: 0;
+                padding: 0 4px;
+                border-left: 1px solid rgba(255,255,255,0.25);
+            }
 
             /* ── Bottom sheets → centered modals ── */
             .bottom-sheet {
@@ -827,7 +834,7 @@
 
         @media (min-width: 1440px) {
             .pdp-layout { grid-template-columns: 1fr 480px; gap: 56px; }
-            .sticky-bar { width: 820px; }
+            .sticky-bar { width: 880px; }
         }
     </style>
 </head>
@@ -1757,7 +1764,12 @@ function renderStickyBar() {
     h += '<span style="flex:1"></span>';
     h += '<button class="sticky-size-trigger" id="stickySize"><span>' + state.selectedSize.replace(' ', '') + ' &middot; ' + state.selectedWeight.replace(' ', '') + '</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>';
     h += '<button class="btn-add-bag" id="addBagBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>';
-    h += '<button class="btn-sticky-buy-now" id="buyNowBtn">Buy Now</button>';
+    h += '<button class="btn-sticky-buy-now" id="buyNowBtn">⚡ Buy Now</button>';
+    h += '<div class="sticky-pay-icons">';
+    h += '<span class="pay-badge" style="background:#4285F4">G Pay</span>';
+    h += '<span class="pay-badge" style="background:#5f259f">PhonePe</span>';
+    h += '<svg width="26" height="16" viewBox="0 0 26 16" style="flex-shrink:0" aria-label="Mastercard"><circle cx="9" cy="8" r="8" fill="#EB001B"/><circle cx="17" cy="8" r="8" fill="#F79E1B"/></svg>';
+    h += '</div>';
     el.innerHTML = h;
     // Render dropdown outside sticky bar
     var existingDD = document.getElementById("sizeDropdown");
