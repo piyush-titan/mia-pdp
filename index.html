@@ -655,14 +655,16 @@
         .store-meta { font-size: 11px; color: #6d565e; line-height: 1.5; }
         .store-meta span { display: block; }
         .store-timings { font-size: 10px; font-weight: 600; color: #22C55E; background: rgba(34,197,94,0.08); padding: 3px 8px; border-radius: 100px; display: inline-block; }
-        .store-tile-ctас { display: flex; gap: 8px; margin-top: 4px; }
+        .store-tile-ctas { display: flex; gap: 8px; margin-top: 4px; }
         .store-btn { flex: 1; padding: 8px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.2s; border: none; }
         .store-btn-primary { background: #D14A61; color: #fff; }
         .store-btn-primary:active { background: #b03a50; }
         .store-btn-secondary { background: #fff; color: #D14A61; border: 1.5px solid #D14A61; }
         .store-btn-secondary:active { background: #fdf2f4; }
 
-        /* ===== FAQs ===== */
+        /* Exchange + community pair */
+        .exchange-community-pair { display: flex; flex-direction: column; gap: 0; }
+        .below-fold-exchange { display: none; }
         .faq-section { padding: 20px 16px; margin: 16px 16px 100px; background: #fff; border-radius: 0; border: none; }
         .faq-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; text-align: center; margin-bottom: 24px; }
         .faq-category { margin-bottom: 28px; }
@@ -814,9 +816,20 @@
             .below-fold .community-heading { font-size: 24px; }
             .below-fold .faq-title { font-size: 24px; text-align: center; }
 
-            /* Community 2-col: ratings left, heading right */
-            .community-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-
+            /* Exchange + community 2-col on desktop */
+            .below-fold .exchange-community-pair {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 56px;
+                padding: 48px 0;
+                border-top: 1px solid #f0e8ea;
+                align-items: center;
+            }
+            .below-fold .exchange-community-pair .community-section { margin: 0; border-radius: 0; padding: 0; border: none; background: transparent; }
+            .below-fold-exchange { display: block; }
+            .below-fold-exchange .exchange-section { margin: 0; background: linear-gradient(180deg,#fffbeb,#fff); border-radius: 20px; }
+            /* hide exchange from info-col on desktop — shown in below-fold pair */
+            .pdp-info-col .exchange-section { display: none; }
             /* ── Sticky bar: centered via margin auto ── */
             .sticky-bar { left: 0; right: 0; margin: 0 auto; transform: none; width: 760px; max-width: calc(100vw - 80px); justify-content: center; gap: 10px; padding: 12px 20px; bottom: 18px; }
             .btn-sticky-buy-now {
@@ -934,10 +947,13 @@
 <div class="below-fold">
 <section class="testimonials-section section-gap" id="testimonialsSection"></section>
 <section class="reco-section" id="recoSection1"></section>
+<section class="stores-section" id="storesSection"></section>
 <section class="reco-section" id="recoSection2"></section>
 <section class="reco-section" id="recoSection3"></section>
-<section class="community-section section-gap" id="communitySection"></section>
-<section class="stores-section" id="storesSection"></section>
+<div class="exchange-community-pair">
+  <div class="below-fold-exchange"><section class="exchange-section" id="belowExchangeSection"></section></div>
+  <section class="community-section section-gap" id="communitySection"></section>
+</div>
 <section class="faq-section" id="faqSection"></section>
 </div><!-- /.below-fold -->
 
@@ -1390,6 +1406,12 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
     var el = document.getElementById("exchangeSection");
     el.innerHTML = '<div class="exchange-header"><div class="exchange-icon"><i data-lucide="repeat" style="color:#b8860b"></i></div><div><div class="exchange-title">Exchange Old Gold</div><div class="exchange-subtitle">Get up to 100% value on your old gold jewellery</div></div></div><div class="exchange-rate"><i data-lucide="trending-up" style="width:14px;height:14px;color:#F59E0B;flex-shrink:0"></i><span>Today\'s gold rate: <strong>\u20B9' + product.goldRate.rate22kt.toLocaleString("en-IN") + '/gm (22Kt)</strong></span></div><button class="exchange-cta" id="exchangeCta">Check Exchange Value</button>';
     document.getElementById("exchangeCta").onclick = function() { openSheet("exchange"); renderExchangeSheet(); };
+    var belowEl = document.getElementById("belowExchangeSection");
+    if (belowEl) {
+        belowEl.innerHTML = el.innerHTML.replace('id="exchangeCta"', 'id="exchangeCta2"');
+        document.getElementById("exchangeCta2").onclick = function() { openSheet("exchange"); renderExchangeSheet(); };
+        lucide.createIcons({ nodes: [belowEl] });
+    }
 })();
 
 // ===== COUPONS (stacked carousel) =====
@@ -1766,7 +1788,7 @@ function bindWishlist(el) {
         h += '<div class="store-name">' + s.name + '</div>';
         h += '<div class="store-meta"><span>' + s.address + '</span><span style="margin-top:4px">' + s.phone + '</span></div>';
         h += '<span class="store-timings">' + s.timings + '</span>';
-        h += '<div class="store-tile-ctас">';
+        h += '<div class="store-tile-ctas">';
         h += '<button class="store-btn store-btn-primary" onclick="showToast(\'Appointment request sent!\',\'success\')">Book Appointment</button>';
         h += '<button class="store-btn store-btn-secondary" onclick="window.open(\'https://maps.google.com/?q=' + s.lat + ',' + s.lng + '\',\'_blank\')">Get Directions</button>';
         h += '</div></div>';
