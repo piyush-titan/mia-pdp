@@ -764,12 +764,11 @@
 
             /* ── Gallery trust markers below image (desktop only) ── */
             .gallery-trust-desktop {
-                display: flex; align-items: center; justify-content: center; gap: 24px;
-                flex-shrink: 0; padding: 22px 20px;
-                background: #fff; border-radius: 16px; border: 1px solid #f0ece8;
+                display: flex; align-items: stretch; gap: 12px;
+                flex-shrink: 0; padding: 0; background: none; border: none; border-radius: 0;
             }
-            .gallery-trust-desktop .trust-item { border: none; background: none; padding: 0; }
-            .gallery-trust-desktop .trust-item img { height: 48px; width: 110px; }
+            .gallery-trust-desktop .trust-item { flex: 1; padding: 24px 8px; }
+            .gallery-trust-desktop .trust-item img { height: 54px; width: 120px; }
 
             /* ── Collection name above product title ── */
             .collection-name {
