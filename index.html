@@ -368,19 +368,19 @@
         .stack-card.active { z-index: 3; transform: translateX(0) scale(1); opacity: 1; }
         .stack-card.prev { z-index: 2; transform: translateX(-22%) scale(0.88); opacity: 0.55; filter: brightness(0.85); }
         .stack-card.next { z-index: 2; transform: translateX(22%) scale(0.88); opacity: 0.55; filter: brightness(0.85); }
-        .stack-card.s0 { background: linear-gradient(145deg, #2d2d2d, #1a1a1a, #111); }
-        .stack-card.s1 { background: linear-gradient(145deg, #3a3040, #2a2035, #1a1225); }
-        .stack-card.s2 { background: linear-gradient(145deg, #1a2a3a, #122030, #0c1820); }
-        .stack-card::before { content: ''; position: absolute; top: -25px; right: -25px; width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.08); }
-        .stack-card::after { content: ''; position: absolute; bottom: -15px; left: -15px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.05); }
-        .stack-tag { font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 2px; }
-        .stack-amount { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: #fff; line-height: 1.2; margin-bottom: 2px; }
-        .stack-desc { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.4; }
+        .stack-card.s0 { background: linear-gradient(145deg, #f9d0da, #f5b8c6, #efaabb); }
+        .stack-card.s1 { background: linear-gradient(145deg, #fce4ec, #f8c8d8, #f4b0c8); }
+        .stack-card.s2 { background: linear-gradient(145deg, #fdeef3, #f9d5e4, #f5c0d5); }
+        .stack-card::before { content: ''; position: absolute; top: -25px; right: -25px; width: 80px; height: 80px; border-radius: 50%; background: rgba(209,74,97,0.08); }
+        .stack-card::after { content: ''; position: absolute; bottom: -15px; left: -15px; width: 50px; height: 50px; border-radius: 50%; background: rgba(209,74,97,0.05); }
+        .stack-tag { font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(176,58,80,0.75); margin-bottom: 2px; }
+        .stack-amount { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: #B03A50; line-height: 1.2; margin-bottom: 2px; }
+        .stack-desc { font-size: 10px; color: rgba(176,58,80,0.8); line-height: 1.4; }
         .stack-bottom { display: flex; align-items: center; justify-content: space-between; }
         .stack-code-row { display: flex; align-items: center; gap: 5px; }
-        .stack-code-label { font-size: 10px; color: rgba(255,255,255,0.75); font-weight: 600; }
-        .stack-code { font-size: 12px; font-weight: 800; color: #1a1a1a; letter-spacing: 0.8px; padding: 4px 12px; border-radius: 100px; background: #fff; }
-        .stack-view { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.8); text-decoration: underline; text-underline-offset: 2px; }
+        .stack-code-label { font-size: 10px; color: rgba(176,58,80,0.7); font-weight: 600; }
+        .stack-code { font-size: 12px; font-weight: 800; color: #fff; letter-spacing: 0.8px; padding: 4px 12px; border-radius: 100px; background: #D14A61; }
+        .stack-view { font-size: 10px; font-weight: 600; color: rgba(176,58,80,0.8); text-decoration: underline; text-underline-offset: 2px; }
         .stack-nav { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
         .stack-arrow { width: 24px; height: 24px; border-radius: 50%; background: rgba(209,74,97,0.18); display: flex; align-items: center; justify-content: center; transition: all 0.2s; border: none; cursor: pointer; flex-shrink: 0; }
         .stack-arrow:active { transform: scale(0.9); background: rgba(209,74,97,0.3); }
@@ -459,7 +459,7 @@
         .size-dropdown-item:last-child { border-bottom: none; }
         .size-dropdown-item.active { color: #D14A61; font-weight: 700; background: #FDF2F4; }
         .size-dropdown-item.oos { color: #bbb; font-style: italic; }
-        .sticky-spacer { flex: 1; }
+        .btn-sticky-buy-now { display: none; }
         .btn-add-bag {
             padding: 13px 24px; border-radius: 100px; font-size: 13px; font-weight: 700;
             color: #D14A61; white-space: nowrap; flex-shrink: 0;
@@ -790,7 +790,16 @@
             .community-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
 
             /* ── Sticky bar ── */
-            .sticky-bar { left: 50%; right: auto; transform: translateX(-50%); width: 720px; max-width: none; justify-content: flex-start; gap: 16px; padding: 14px 20px; }
+            .sticky-bar { left: 50%; right: auto; transform: translateX(-50%); width: 720px; max-width: none; justify-content: center; gap: 16px; padding: 14px 20px; }
+            .btn-sticky-buy-now {
+                display: flex; align-items: center; gap: 6px;
+                padding: 13px 28px; border-radius: 100px; font-size: 13px; font-weight: 700;
+                color: #fff; white-space: nowrap; flex-shrink: 0;
+                background: rgba(255,255,255,0.22);
+                border: 1.5px solid rgba(255,255,255,0.55);
+                transition: background 0.2s;
+            }
+            .btn-sticky-buy-now:hover { background: rgba(255,255,255,0.32); }
 
             /* ── Bottom sheets → centered modals ── */
             .bottom-sheet {
@@ -1746,6 +1755,7 @@ function renderStickyBar() {
     h += '<span style="flex:1"></span>';
     h += '<button class="sticky-size-trigger" id="stickySize"><span>' + state.selectedSize.replace(' ', '') + ' &middot; ' + state.selectedWeight.replace(' ', '') + '</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>';
     h += '<button class="btn-add-bag" id="addBagBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>';
+    h += '<button class="btn-sticky-buy-now" id="buyNowBtn">Buy Now</button>';
     el.innerHTML = h;
     // Render dropdown outside sticky bar
     var existingDD = document.getElementById("sizeDropdown");
@@ -1794,6 +1804,8 @@ function renderStickyBar() {
         document.getElementById("sizeDropdown").classList.toggle("open", state.sizeDropdownOpen);
     });
     document.getElementById("addBagBtn").addEventListener("click", function() { showToast("Added to Bag: " + product.name, "success"); });
+    var buyNow = document.getElementById("buyNowBtn");
+    if (buyNow) buyNow.addEventListener("click", function() { showToast("Proceeding to checkout…", "success"); });
 }
 renderStickyBar();
 
