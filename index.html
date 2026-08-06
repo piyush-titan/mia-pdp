@@ -681,8 +681,8 @@
             /* 2-column PDP layout */
             .pdp-layout { display: flex; align-items: flex-start; }
             .pdp-gallery-col { display: block; position: sticky; top: 0; width: 50%; flex-shrink: 0; height: 100vh; overflow: hidden; }
-            .pdp-gallery-col .gallery-section { height: 100%; display: flex; flex-direction: column; }
-            .pdp-gallery-col .gallery-main { flex: 1; aspect-ratio: auto; }
+            .pdp-gallery-col .gallery-section { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+            .pdp-gallery-col .gallery-main { aspect-ratio: 1/1; width: 100%; max-height: calc(100vh - 80px); }
             .pdp-gallery-col .gallery-thumbnails { padding: 10px 16px; flex-shrink: 0; }
             .pdp-info-col { display: block; flex: 1; min-width: 0; padding: 0 24px 80px; overflow: hidden; }
 
@@ -702,17 +702,19 @@
             .price-section { margin: 0 0 16px; }
             .find-store-section { margin: 0 0 16px; }
             .exchange-section { margin: 0 0 16px; }
-            .testimonials-section { margin: 0 0 16px; }
-            .community-section { margin: 0 0 16px; }
-            .faq-section { margin: 0 0 16px; }
-            .reco-section { margin: 0; padding: 24px 0; }
+            /* below-fold sections: full-width, centered */
+            .below-fold { width: 100%; }
+            .below-fold .testimonials-section { margin: 0 0 0; border-radius: 0; }
+            .below-fold .reco-section { margin: 0; }
+            .below-fold .community-section { margin: 0 0 0; border-radius: 0; }
+            .below-fold .faq-section { margin: 0; border-radius: 0; padding: 32px calc(50% - 520px); }
 
             /* reco cards: override vw-based min-width for desktop */
             .reco-card { min-width: 0; }
             .reco-scroll { flex-wrap: wrap; overflow-x: visible; }
 
-            /* sticky bar: spans info column only */
-            .sticky-bar { left: 50%; right: 24px; max-width: none; transform: none; }
+            /* sticky bar: centered, full layout */
+            .sticky-bar { left: 50%; right: auto; transform: translateX(-50%); width: 640px; max-width: none; justify-content: center; gap: 12px; padding: 10px 16px; }
 
             /* bottom sheets → side panel from right */
             .bottom-sheet {
@@ -729,7 +731,8 @@
         @media (min-width: 1440px) {
             .pdp-gallery-col { width: 55%; }
             .pdp-info-col { padding: 0 32px 80px; }
-            .sticky-bar { left: 55%; right: 32px; }
+            .sticky-bar { width: 720px; }
+            .below-fold .faq-section { padding: 32px calc(50% - 580px); }
             .bottom-sheet { width: 480px; }
         }
     </style>
@@ -800,22 +803,18 @@
 <!-- EXCHANGE GOLD -->
 <section class="exchange-section section-gap" id="exchangeSection"></section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials-section section-gap" id="testimonialsSection"></section>
+</div><!-- /.pdp-info-col -->
+</div><!-- /.pdp-layout -->
 
-<!-- RECOMMENDATIONS -->
+<!-- BELOW FOLD: full-width sections -->
+<div class="below-fold">
+<section class="testimonials-section section-gap" id="testimonialsSection"></section>
 <section class="reco-section" id="recoSection1"></section>
 <section class="reco-section" id="recoSection2"></section>
 <section class="reco-section" id="recoSection3"></section>
-
-<!-- COMMUNITY RATINGS -->
 <section class="community-section section-gap" id="communitySection"></section>
-
-<!-- FAQs -->
 <section class="faq-section" id="faqSection"></section>
-
-</div><!-- /.pdp-info-col -->
-</div><!-- /.pdp-layout -->
+</div><!-- /.below-fold -->
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
@@ -1653,6 +1652,7 @@ function renderStickyBar() {
     var el = document.getElementById("stickyBar");
     var p = getCurrentPrice();
     var h = '<span style="font-family:Fraunces,serif;font-size:20px;font-weight:700;white-space:nowrap;flex-shrink:0;line-height:1;display:inline-block;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,0.15)">' + fmt(p.current) + '</span>';
+    h += '<span style="flex:1"></span>';
     h += '<button class="sticky-size-trigger" id="stickySize"><span>' + state.selectedSize.replace(' ', '') + ' &middot; ' + state.selectedWeight.replace(' ', '') + '</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>';
     h += '<button class="btn-add-bag" id="addBagBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>';
     el.innerHTML = h;
