@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product Highlight Card — Variant 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary:       #D14A61;
+  --primary-50:    #fdf2f4;
+  --primary-100:   #fae6e9;
+  --primary-200:   #f4ced5;
+  --primary-600:   #b83e53;
+  --ink:           #43323a;
+  --ink-soft:      #6d565e;
+  --ink-faint:     #a08c92;
+  --surface:       #fffdfd;
+  --surface-alt:   #faf4f5;
+  font-family: 'Albert Sans', sans-serif;
+  color: var(--ink);
+}
+
+body { min-height: 100vh; padding: 40px 16px; background: #f6eef0; display: flex; flex-direction: column; align-items: center; gap: 48px; }
+
+/* Card shell */
+.card-wrap { display: flex; flex-direction: column; gap: 8px; }
+.card-meta { display: flex; justify-content: space-between; align-items: baseline; padding: 0 4px; }
+.card-meta .title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); }
+.card-meta .effect { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: color-mix(in srgb, var(--primary) 70%, transparent); }
+
+.card {
+  width: 356px;
+  background: var(--surface);
+  border-radius: 20px;
+  box-shadow: 0 6px 20px -10px rgba(67,50,58,0.35);
+  border: 1px solid var(--primary-100);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+
+.hl-area { padding: 10px; display: flex; flex-direction: column; }
+
+/* CTA pill */
+.cta-wrap { padding: 0 10px 10px; flex-shrink: 0; }
+.cta-btn {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 10px 14px; border-radius: 100px;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 2px 8px 0 rgba(209,74,97,0.08);
+  border: 1px solid var(--primary-200); cursor: pointer;
+  font-family: 'Albert Sans', sans-serif;
+  transition: background 0.2s;
+}
+.cta-btn:hover { background: #fff; }
+.cta-label { font-size: 12px; font-weight: 700; color: var(--primary); flex: 1; text-align: center; }
+.cta-icon { flex-shrink: 0; display: flex; align-items: center; transition: transform 0.3s; }
+.cta-icon.rotated { transform: rotate(45deg); }
+
+/* Accordion */
+.accordion {
+  display: grid; grid-template-rows: 0fr;
+  background: var(--surface-alt);
+  transition: grid-template-rows 0.35s ease-in-out;
+}
+.accordion > .accordion-inner { overflow: hidden; }
+.card.expanded .accordion { grid-template-rows: 1fr; border-top: 1px solid var(--primary-100); }
+.accordion-inner { padding: 0 10px; display: flex; flex-direction: column; gap: 12px; }
+.card.expanded .accordion-inner { padding: 10px; }
+.acc-group-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--primary-600); margin-bottom: 6px; }
+.acc-rows { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; row-gap: 4px; }
+.acc-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; border-bottom: 1px solid color-mix(in srgb, var(--primary-100) 70%, transparent); padding-bottom: 4px; }
+.acc-row-label { font-size: 11px; color: var(--ink-faint); white-space: nowrap; }
+.acc-row-value { font-size: 12px; font-weight: 600; color: var(--ink); text-align: right; }
+
+/* Variant 9 layout */
+.v9-layout { display: flex; flex-direction: column; gap: 10px; }
+
+.metal-box {
+  background: var(--primary-50);
+  border: 1px solid var(--primary-100);
+  border-radius: 12px;
+  padding: 8px 14px;
+  text-align: center;
+  line-height: 1.25;
+}
+.metal-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: var(--primary-600); }
+.metal-row { display: flex; align-items: baseline; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.metal-karat { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+.metal-desc  { font-size: 15px; font-weight: 600; color: var(--ink); }
+.metal-net   { font-size: 11px; color: var(--ink-faint); }
+.metal-net strong { font-weight: 600; color: var(--ink); }
+
+.sec-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; row-gap: 8px; }
+.sec-grid.cols-1 { grid-template-columns: 1fr; }
+.sec-cell { border-left: 2px solid var(--primary-200); padding-left: 10px; line-height: 1.25; }
+.sec-lbl  { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: var(--ink-faint); }
+.sec-val  { font-size: 13px; font-weight: 600; color: var(--ink); }
+
+/* Karat shimmer */
+@keyframes shimmer-gold   { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+@keyframes shimmer-silver { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+
+.shimmer-gold {
+  background: linear-gradient(90deg,
+    #6b4c10 0%, #b8860b 20%, #d4a843 35%,
+    #f5e07a 50%,
+    #d4a843 65%, #b8860b 80%, #6b4c10 100%);
+  background-size: 300% auto;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: shimmer-gold 4s linear infinite;
+}
+.shimmer-silver {
+  background: linear-gradient(90deg,
+    #3a3a3a 0%, #7a7a7a 20%, #b0b0b0 35%,
+    #e8e8e8 50%,
+    #b0b0b0 65%, #7a7a7a 80%, #3a3a3a 100%);
+  background-size: 300% auto;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: shimmer-silver 4s linear infinite;
+}
+
+/* Breathing */
+@keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+.fx-breathe { animation: breathe 3.6s ease-in-out infinite; transform-origin: center; }
+</style>
+</head>
+<body>
+
+<div id="cards-container"></div>
+
+<script>
+// variants[0] is the primary design; all others are edge cases for different metal/stone combinations
+const variants = [
+  {
+    title: "18K Rose Gold — Full",
+    effect: "5 attrs · Breathing scale",
+    animated: true,
+    product: {
+      designCode:  "JWL-8472-RG",
+      karatage:    "18K",   metal: "Gold",   metalColour: "Rose",
+      metalWeight: "4.50 g", grossWeight: "5.20 g",
+      occasion: "Engagement", style: "Vintage Halo",
+      diamonds:  { clarity:"VS-SI", weight:"0.10 g", count:24, shape:"Round", colour:"G-H", carat:"0.50 ct" },
+      gemstones: { count:1, shape:"Oval", weight:"0.60 g" },
+    }
+  },
+  {
+    title: "925 Silver — 4 attrs",
+    effect: "Diamonds · Occasion · No gemstone",
+    product: {
+      designCode:  "JWL-2231-SL",
+      karatage:    "925",   metal: "Silver", metalColour: "Rhodium Plated",
+      metalWeight: "6.10 g", grossWeight: "7.00 g",
+      occasion: "Anniversary", style: "Classic Solitaire",
+      diamonds:  { clarity:"SI", weight:"0.08 g", count:12, shape:"Round", colour:"H-I", carat:"0.25 ct" },
+      gemstones: null,
+    }
+  },
+  {
+    title: "14KT White Gold — 3 attrs",
+    effect: "Diamonds only · No occasion · No gemstone",
+    product: {
+      designCode:  "JWL-5519-WG",
+      karatage:    "14KT",  metal: "Gold",   metalColour: "White",
+      metalWeight: "3.20 g", grossWeight: "3.85 g",
+      occasion: null, style: "Eternity Band",
+      diamonds:  { clarity:"VVS", weight:"0.15 g", count:36, shape:"Round", colour:"F-G", carat:"0.75 ct" },
+      gemstones: null,
+    }
+  },
+  {
+    title: "18KT Rose & White Gold — 3 attrs",
+    effect: "Gemstone only · No diamonds · No occasion",
+    product: {
+      designCode:  "JWL-7734-DT",
+      karatage:    "18KT",  metal: "Gold",   metalColour: "Rose & White",
+      metalWeight: "5.80 g", grossWeight: "6.50 g",
+      occasion: null, style: "Two-Tone Contemporary",
+      diamonds:  null,
+      gemstones: { count:1, shape:"Pear", weight:"1.20 g" },
+    }
+  },
+  {
+    title: "22KT Yellow Gold — 2 attrs",
+    effect: "Minimal · No stones · No occasion",
+    product: {
+      designCode:  "JWL-1102-YG",
+      karatage:    "22KT",  metal: "Gold",   metalColour: "Yellow",
+      metalWeight: "8.20 g", grossWeight: "8.20 g",
+      occasion: null, style: "Plain Band",
+      diamonds:  null,
+      gemstones: null,
+    }
+  },
+  {
+    title: "9KT Yellow Gold — 3 attrs",
+    effect: "Gemstones · No diamonds · No occasion",
+    product: {
+      designCode:  "JWL-0983-YG",
+      karatage:    "9KT",   metal: "Gold",   metalColour: "Yellow",
+      metalWeight: "2.10 g", grossWeight: "2.80 g",
+      occasion: null, style: "Cluster Ring",
+      diamonds:  null,
+      gemstones: { count:3, shape:"Round", weight:"0.90 g" },
+    }
+  },
+  {
+    title: "22KT Yellow & White Gold — 4 attrs",
+    effect: "Diamonds · Occasion · Dual tone",
+    product: {
+      designCode:  "JWL-3356-YW",
+      karatage:    "22KT",  metal: "Gold",   metalColour: "Yellow & White",
+      metalWeight: "6.40 g", grossWeight: "7.10 g",
+      occasion: "Wedding", style: "Dual Tone Bangle",
+      diamonds:  { clarity:"SI", weight:"0.06 g", count:18, shape:"Round", colour:"G-H", carat:"0.30 ct" },
+      gemstones: null,
+    }
+  },
+  {
+    title: "18K Rose Gold — All details",
+    effect: "5 attrs · No animation",
+    product: {
+      designCode:  "JWL-9001-RG",
+      karatage:    "18K",   metal: "Gold",   metalColour: "Rose",
+      metalWeight: "4.80 g", grossWeight: "5.60 g",
+      occasion: "Engagement", style: "Floral Halo",
+      diamonds:  { clarity:"VVS-VS", weight:"0.12 g", count:30, shape:"Round", colour:"F-G", carat:"0.60 ct" },
+      gemstones: { count:1, shape:"Cushion", weight:"0.75 g" },
+    }
+  },
+];
+
+function buildHighlights(el, product) {
+  const isGold      = product.metal.toLowerCase() === "gold";
+  const shimmerClass = isGold ? "shimmer-gold" : "shimmer-silver";
+
+  const attrs = [];
+  if (product.diamonds)  attrs.push(["Diamonds",  `${product.diamonds.count} \u00b7 ${product.diamonds.carat}`]);
+  if (product.gemstones) attrs.push(["Gemstone",  `${product.gemstones.count} \u00b7 ${product.gemstones.shape}`]);
+  if (product.occasion)  attrs.push(["Occasion",  product.occasion]);
+  attrs.push(["Gross Wt.", product.grossWeight]);
+
+  el.innerHTML = `
+    <div class="metal-box">
+      <div class="metal-lbl">Metal</div>
+      <div class="metal-row">
+        <span class="metal-karat ${shimmerClass}">${product.karatage}</span>
+        <span class="metal-desc">${product.metalColour} ${product.metal}</span>
+        <span class="metal-net">\u00b7 Net <strong>${product.metalWeight}</strong></span>
+      </div>
+    </div>
+    <div class="sec-grid${attrs.length === 1 ? " cols-1" : ""}">
+      ${attrs.map(([l,v]) => `
+        <div class="sec-cell">
+          <div class="sec-lbl">${l}</div>
+          <div class="sec-val">${v}</div>
+        </div>`).join("")}
+    </div>`;
+}
+
+function buildAccordion(el, product) {
+  const groups = [
+    {
+      title: "General Details",
+      rows: [
+        product.designCode && ["Design Code", product.designCode],
+        ["Gross Weight",   product.grossWeight],
+        product.occasion   && ["Occasion",    product.occasion],
+        product.style      && ["Style",        product.style],
+      ].filter(Boolean)
+    },
+    {
+      title: `${product.metal} Details`,
+      rows: [
+        ["Purity",  product.karatage],
+        ["Weight",  product.metalWeight],
+        ["Colour",  product.metalColour],
+      ]
+    },
+    product.diamonds && {
+      title: "Diamond Details",
+      rows: [
+        ["Clarity",  product.diamonds.clarity],
+        ["Weight",   product.diamonds.weight],
+        ["Count",    String(product.diamonds.count)],
+        ["Shape",    product.diamonds.shape],
+        ["Colour",   product.diamonds.colour],
+      ]
+    },
+    product.gemstones && {
+      title: "Gemstone Details",
+      rows: [
+        ["Count",   String(product.gemstones.count)],
+        ["Shape",   product.gemstones.shape],
+        ["Weight",  product.gemstones.weight],
+      ]
+    },
+  ].filter(Boolean);
+
+  el.innerHTML = `<div class="accordion-inner">
+    ${groups.map(g => `
+      <div>
+        <div class="acc-group-title">${g.title}</div>
+        <div class="acc-rows">
+          ${g.rows.map(([l,v]) => `
+            <div class="acc-row">
+              <span class="acc-row-label">${l}</span>
+              <span class="acc-row-value">${v}</span>
+            </div>`).join("")}
+        </div>
+      </div>`).join("")}
+  </div>`;
+}
+
+const container = document.getElementById("cards-container");
+
+variants.forEach((variant, i) => {
+  const id   = `card-${i}`;
+  const wrap = document.createElement("div");
+  wrap.className = "card-wrap";
+  wrap.innerHTML = `
+    <div class="card-meta">
+      <span class="title">${variant.title}</span>
+      <span class="effect">${variant.effect}</span>
+    </div>
+    <div class="card${variant.animated ? " fx-breathe" : ""}" id="${id}">
+      <div class="hl-area">
+        <div class="v9-layout" id="hl-${id}"></div>
+      </div>
+      <div class="accordion" id="acc-${id}"></div>
+      <div class="cta-wrap">
+        <button class="cta-btn" type="button">
+          <span class="cta-label">View Full Product Details</span>
+          <span class="cta-icon">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <path d="M6.5 2.70833V10.2917" stroke="#D14A61" stroke-width="1.35417" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2.70833 6.5H10.2917" stroke="#D14A61" stroke-width="1.35417" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>`;
+  container.appendChild(wrap);
+  buildHighlights(document.getElementById(`hl-${id}`), variant.product);
+  buildAccordion(document.getElementById(`acc-${id}`), variant.product);
+});
+
+document.querySelectorAll(".cta-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const card     = btn.closest(".card");
+    const icon     = btn.querySelector(".cta-icon");
+    const label    = btn.querySelector(".cta-label");
+    const expanded = card.classList.toggle("expanded");
+    icon.classList.toggle("rotated", expanded);
+    label.textContent = expanded ? "Hide Product Details" : "View Full Product Details";
+  });
+});
+</script>
+</body>
+</html>

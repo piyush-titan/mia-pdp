@@ -86,7 +86,7 @@
         .ec-cflag{font-size:16px;line-height:1}
         .ec-ccode{font-size:11px;font-weight:700;color:#1a1a1a}
         .ec-country-btn svg{width:9px;height:9px;stroke:#aaa;stroke-width:2.5;fill:none}
-        .ec-country-dropdown{position:absolute;top:calc(100% + 6px);left:0;z-index:10;background:#fff;border-radius:14px;border:1px solid #f0e8ea;box-shadow:0 8px 24px rgba(0,0,0,0.14);max-height:220px;overflow-y:auto;min-width:210px;scrollbar-width:none}
+        .ec-country-dropdown{background:#fff;border-radius:14px;border:1px solid #f0e8ea;box-shadow:0 8px 24px rgba(0,0,0,0.14);max-height:260px;overflow-y:auto;width:220px;scrollbar-width:none}
         .ec-country-dropdown::-webkit-scrollbar{display:none}
         .ec-coption{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:12px;border-bottom:1px solid #faf4f5}
         .ec-coption:last-child{border-bottom:none}
@@ -231,6 +231,7 @@
                         Delivery & Availability
                     </div>
                     <div class="pincode-row">
+                        <div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div>
                         <input type="tel" class="pincode-input" value="400001" readonly>
                         <button class="pincode-check-btn">Check</button>
                     </div>
@@ -265,6 +266,7 @@
                         Delivery & Availability
                     </div>
                     <div class="pincode-row">
+                        <div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div>
                         <input type="tel" class="pincode-input" value="793108" readonly>
                         <button class="pincode-check-btn">Check</button>
                     </div>
@@ -299,6 +301,7 @@
                         Delivery & Availability
                     </div>
                     <div class="pincode-row">
+                        <div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div>
                         <input type="tel" class="pincode-input" placeholder="Enter pincode" readonly>
                         <button class="pincode-check-btn">Check</button>
                     </div>
@@ -326,6 +329,7 @@
                         Delivery & Availability
                     </div>
                     <div class="pincode-row">
+                        <div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div>
                         <input type="tel" class="pincode-input" value="400" readonly style="border-color:#EF4444">
                         <button class="pincode-check-btn">Check</button>
                     </div>
@@ -350,54 +354,30 @@
 
         <!-- Case 5: Country dropdown open -->
         <div class="case-content" id="case-delivery-country-dropdown">
-            <div class="phone-frame">
-                <div class="delivery-section" style="overflow:visible">
-                    <div class="delivery-title">
-                        <span class="icon-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
-                        Delivery &amp; Availability
-                    </div>
-                    <div class="pincode-row" style="position:relative">
-                        <div class="ec-country-wrap">
-                            <button class="ec-country-btn">
-                                <span class="ec-cflag">🇮🇳</span>
-                                <span class="ec-ccode">IN</span>
-                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                            </button>
-                            <div class="ec-country-dropdown">
-                                <div class="ec-coption ec-selected"><span class="ec-coflag">🇮🇳</span><span>India (IN)</span></div>
-                                <div class="ec-coption ec-hover"><span class="ec-coflag">🇦🇪</span><span>UAE (UAE)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇩🇪</span><span>Germany (DE)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇸🇦</span><span>Saudi Arabia (KSA)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇳🇱</span><span>Netherlands (NL)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇲🇾</span><span>Malaysia (MY)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇰🇪</span><span>Kenya (KE)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇷🇴</span><span>Romania (RO)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇪🇸</span><span>Spain (ES)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇵🇹</span><span>Portugal (PT)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇶🇦</span><span>Qatar (QA)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇮🇹</span><span>Italy (IT)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇴🇲</span><span>Oman (OM)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇰🇼</span><span>Kuwait (KW)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇧🇭</span><span>Bahrain (BH)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇿🇦</span><span>South Africa (ZA)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇨🇦</span><span>Canada (CA)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇳🇿</span><span>New Zealand (NZ)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇦🇺</span><span>Australia (AU)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇸🇬</span><span>Singapore (SG)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇺🇸</span><span>USA (US)</span></div>
-                                <div class="ec-coption"><span class="ec-coflag">🇬🇧</span><span>United Kingdom (UK)</span></div>
-                            </div>
-                        </div>
-                        <input type="tel" class="pincode-input" placeholder="Enter pincode" readonly>
-                        <button class="pincode-check-btn">Check</button>
-                    </div>
-                    <div class="delivery-badges">
-                        <div class="delivery-badges-grid">
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div>
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div>
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div>
-                        </div>
-                    </div>
+            <div class="phone-frame" style="display:flex;justify-content:center;padding:20px 16px">
+                <div class="ec-country-dropdown">
+                    <div class="ec-coption ec-selected"><span class="ec-coflag">🇮🇳</span><span>India (IN)</span></div>
+                    <div class="ec-coption ec-hover"><span class="ec-coflag">🇦🇪</span><span>UAE (UAE)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇩🇪</span><span>Germany (DE)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇸🇦</span><span>Saudi Arabia (KSA)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇳🇱</span><span>Netherlands (NL)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇲🇾</span><span>Malaysia (MY)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇰🇪</span><span>Kenya (KE)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇷🇴</span><span>Romania (RO)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇪🇸</span><span>Spain (ES)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇵🇹</span><span>Portugal (PT)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇶🇦</span><span>Qatar (QA)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇮🇹</span><span>Italy (IT)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇴🇲</span><span>Oman (OM)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇰🇼</span><span>Kuwait (KW)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇧🇭</span><span>Bahrain (BH)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇿🇦</span><span>South Africa (ZA)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇨🇦</span><span>Canada (CA)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇳🇿</span><span>New Zealand (NZ)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇦🇺</span><span>Australia (AU)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇸🇬</span><span>Singapore (SG)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇺🇸</span><span>USA (US)</span></div>
+                    <div class="ec-coption"><span class="ec-coflag">🇬🇧</span><span>United Kingdom (UK)</span></div>
                 </div>
             </div>
             <div class="case-label">
@@ -671,15 +651,15 @@ function renderHighlightsCase(cfg) {
 .hdr-name-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:12px 16px 6px}
 .hdr-name{font-family:'Fraunces',serif;font-size:20px;font-weight:500;color:#1a1a1a;line-height:1.3;flex:1}
 .hdr-actions{display:flex;gap:8px;flex-shrink:0;padding-top:2px}
-.hdr-action-btn{width:32px;height:32px;border-radius:50%;border:1px solid #e5e5e5;background:#fff;display:flex;align-items:center;justify-content:center}
-.hdr-action-btn svg{width:14px;height:14px;stroke:#1a1a1a}
+.hdr-action-btn{width:38px;height:38px;border-radius:50%;border:1px solid #f0f0f0;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 6px rgba(0,0,0,0.08),0 2px 12px rgba(0,0,0,0.04)}
+.hdr-action-btn svg{width:17px;height:17px;stroke:#D14A61;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .hdr-sku{font-size:10px;color:#999;padding:0 16px 8px}
 .hdr-highlights-gap{height:12px;background:#f9f9f9;border-top:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;margin:8px 0}
 .hdr-highlights-placeholder{padding:12px 16px;font-size:11px;color:#aaa;text-align:center;border:1px dashed #e5e5e5;margin:0 16px;border-radius:12px}
 </style>
 <div class="case-content" id="case-header-normal">
 <div class="phone-frame"><div class="hdr-demo">
-<div class="hdr-name-row"><span class="hdr-name">Gleam Play Diamond Ring</span><div class="hdr-actions"><button class="hdr-action-btn"><svg viewBox="0 0 24 24" fill="transparent" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button><button class="hdr-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button></div></div>
+<div class="hdr-name-row"><span class="hdr-name">Gleam Play Diamond Ring</span><div class="hdr-actions"><button class="hdr-action-btn"><svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 1.5C10.5 3.5 9.26 3 7.5 3a5.5 5.5 0 0 0-5.5 5.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button><button class="hdr-action-btn"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button></div></div>
 <div class="hdr-sku">Design Code: 2812FPL</div>
 <div class="hdr-highlights-gap"></div>
 <div class="hdr-highlights-placeholder">↑ Key Highlights Section ↑</div>
@@ -688,7 +668,7 @@ function renderHighlightsCase(cfg) {
 </div>
 <div class="case-content" id="case-header-long">
 <div class="phone-frame"><div class="hdr-demo">
-<div class="hdr-name-row"><span class="hdr-name">Ornate Kundan Polki Diamond & Emerald Studded 22 KT Gold Mangalsutra Necklace</span><div class="hdr-actions"><button class="hdr-action-btn"><svg viewBox="0 0 24 24" fill="transparent" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button><button class="hdr-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button></div></div>
+<div class="hdr-name-row"><span class="hdr-name">Ornate Kundan Polki Diamond & Emerald Studded 22 KT Gold Mangalsutra Necklace</span><div class="hdr-actions"><button class="hdr-action-btn"><svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 1.5C10.5 3.5 9.26 3 7.5 3a5.5 5.5 0 0 0-5.5 5.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button><button class="hdr-action-btn"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button></div></div>
 <div class="hdr-sku">Design Code: 2812FPL</div>
 <div class="hdr-highlights-gap"></div>
 <div class="hdr-highlights-placeholder">↑ Key Highlights Section ↑</div>
@@ -764,7 +744,7 @@ function renderHighlightsCase(cfg) {
 <!-- Delivery -->
 <div class="ec-delivery">
 <div class="ec-delivery-title"><span style="padding:5px 8px;border-radius:100px;background:#FDF2F4;display:flex;align-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>Delivery &amp; Availability</div>
-<div class="ec-pincode-row"><input class="ec-pincode-input" placeholder="Enter pincode" type="tel"><button class="ec-pincode-btn">Check</button></div>
+<div class="ec-pincode-row"><div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div><input class="ec-pincode-input" placeholder="Enter pincode" type="tel"><button class="ec-pincode-btn">Check</button></div>
 <div class="ec-trust-grid"><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div></div>
 </div>
 </div></div>
@@ -792,7 +772,7 @@ function renderHighlightsCase(cfg) {
 <div class="ec-leaf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><path d="M17 8C8 10 5.9 16.17 3.82 19.97M9.5 4.5C9.5 4.5 10.5 6 10.5 9.5C10.5 10.5 9.5 12.5 7.5 14"/></svg>100% Recycled Gold for a Greener World</div>
 <div class="ec-delivery">
 <div class="ec-delivery-title"><span style="padding:5px 8px;border-radius:100px;background:#FDF2F4;display:flex;align-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>Delivery &amp; Availability</div>
-<div class="ec-pincode-row"><input class="ec-pincode-input" placeholder="Enter pincode" type="tel"><button class="ec-pincode-btn">Check</button></div>
+<div class="ec-pincode-row"><div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div><input class="ec-pincode-input" placeholder="Enter pincode" type="tel"><button class="ec-pincode-btn">Check</button></div>
 <div class="ec-trust-grid"><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div></div>
 </div>
 </div></div>

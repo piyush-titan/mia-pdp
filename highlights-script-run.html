@@ -1,0 +1,37 @@
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. All (Gold, silver logic check, diamond, gemstone, weight, cat)
+    document.getElementById("hl-case-1").innerHTML = renderHighlightsCase({
+        jewelleryType: "Mangalsutra", occasion: "Wedding", grossWeight: "14.500 g",
+        gold: { purity: "22 KT", colour: "Yellow", weight: "12.000 g" },
+        diamond: { count: "25", clarity: "VVS", weight: "1.250 Ct" },
+        gemstone: { count: "3", name: "Ruby, Emerald" }
+    });
+    
+    // 2. Metal, weight, cat
+    document.getElementById("hl-case-2").innerHTML = renderHighlightsCase({
+        jewelleryType: "Chain", occasion: "Daily Wear", grossWeight: "5.500 g",
+        silver: { purity: "925", weight: "5.500 g" }
+    });
+    
+    // 3. Gold diamond, multiple gemstones, weight, cat
+    document.getElementById("hl-case-3").innerHTML = renderHighlightsCase({
+        jewelleryType: "Necklace", occasion: "Party Wear", grossWeight: "22.500 g",
+        gold: { purity: "18 KT", colour: "Rose", weight: "18.000 g" },
+        diamond: { count: "40", clarity: "VS", weight: "2.100 Ct" },
+        gemstone: { count: "12", name: "Sapphire, Turquoise, Topaz" }
+    });
+    
+    // 4. Gold, diamond, weight, cat
+    document.getElementById("hl-case-4").innerHTML = renderHighlightsCase({
+        jewelleryType: "Finger Ring", occasion: "Workwear", grossWeight: "2.980 g",
+        gold: { purity: "14 KT", colour: "White", weight: "2.500 g" },
+        diamond: { count: "5", clarity: "SI1", weight: "0.200 Ct" }
+    });
+    
+    // 5. Gold, gemstone, weight, cat
+    document.getElementById("hl-case-5").innerHTML = renderHighlightsCase({
+        jewelleryType: "Earring", occasion: "Festive", grossWeight: "8.200 g",
+        gold: { purity: "22 KT", colour: "Yellow", weight: "7.000 g" },
+        gemstone: { count: "2", name: "Amethyst" }
+    });
+});

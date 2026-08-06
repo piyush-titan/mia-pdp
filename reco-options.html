@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Most Gifted — Layout Options</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Albert Sans',sans-serif;background:#f5f5f5;color:#1a1a1a;min-height:100vh;padding-bottom:60px}
+        .font-display{font-family:'Fraunces',serif}
+        .page-header{text-align:center;padding:32px 16px 24px}
+        .page-header h1{font-family:'Fraunces',serif;font-size:22px;color:#D14A61;margin-bottom:4px}
+        .page-header p{font-size:12px;color:#777}
+        .option-block{max-width:420px;margin:0 auto 32px;background:#fff;border-radius:20px;border:1px solid #f0f0f0;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.04)}
+        .option-label{padding:16px 20px;background:#fafafa;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:10px}
+        .option-label .badge{width:28px;height:28px;border-radius:8px;background:#D14A61;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+        .option-label h2{font-size:14px;font-weight:700}
+        .option-label p{font-size:10px;color:#777;margin-top:1px}
+        .option-content{padding:20px 16px}
+
+        /* Shared */
+        .section-title{font-family:'Fraunces',serif;font-size:16px;font-weight:500;text-align:center;margin-bottom:2px}
+        .section-sub{font-size:10px;color:#999;text-align:center;margin-bottom:14px}
+        .product-img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;background:#f9f9f9;border:1px solid #f0f0f0}
+        .product-name{font-size:11px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:6px}
+        .product-price{font-size:12px;font-weight:700;color:#1a1a1a;margin-top:2px}
+        .product-price .old{font-size:10px;color:#999;text-decoration:line-through;font-weight:400;margin-left:4px}
+
+        /* Option A: Stacked Horizontal Cards */
+        .opt-a-list{display:flex;flex-direction:column;gap:10px}
+        .opt-a-card{display:flex;gap:12px;padding:12px;border-radius:14px;border:1px solid #f0f0f0;align-items:center}
+        .opt-a-card img{width:64px;height:64px;border-radius:10px;object-fit:cover;flex-shrink:0;border:1px solid #f0f0f0}
+        .opt-a-info{flex:1;min-width:0}
+        .opt-a-info .name{font-size:12px;font-weight:600;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .opt-a-info .price{font-size:12px;font-weight:700;margin-top:3px}
+        .opt-a-info .tag{font-size:9px;color:#D14A61;font-weight:700;margin-top:3px}
+
+        /* Option B: Hero + Grid */
+        .opt-b-hero{margin-bottom:12px}
+        .opt-b-hero img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:1px solid #f0f0f0}
+        .opt-b-hero .info{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px}
+        .opt-b-hero .name{font-size:13px;font-weight:600}
+        .opt-b-hero .price{font-size:14px;font-weight:800}
+        .opt-b-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .opt-b-grid img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;border:1px solid #f0f0f0}
+
+        /* Option C: Numbered Ranking */
+        .opt-c-list{display:flex;flex-direction:column;gap:0}
+        .opt-c-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #f5f5f5;align-items:center}
+        .opt-c-item:last-child{border-bottom:none}
+        .opt-c-rank{font-family:'Fraunces',serif;font-size:28px;font-weight:300;color:#e0e0e0;width:28px;text-align:center;flex-shrink:0}
+        .opt-c-item:first-child .opt-c-rank{color:#D14A61}
+        .opt-c-img{width:56px;height:56px;border-radius:10px;object-fit:cover;flex-shrink:0;border:1px solid #f0f0f0}
+        .opt-c-info{flex:1;min-width:0}
+        .opt-c-info .name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .opt-c-info .price{font-size:12px;font-weight:700;margin-top:2px}
+        .opt-c-info .meta{font-size:9px;color:#999;margin-top:2px}
+
+        /* Option D: Large Cards with Badges */
+        .opt-d-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .opt-d-card{position:relative}
+        .opt-d-card img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;border:1px solid #f0f0f0}
+        .opt-d-badge{position:absolute;top:8px;left:8px;font-size:8px;font-weight:800;color:#fff;background:#D14A61;padding:3px 8px;border-radius:100px;letter-spacing:0.3px}
+        .opt-d-card .name{font-size:11px;color:#555;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .opt-d-card .price{font-size:12px;font-weight:700;margin-top:2px}
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>Most Gifted — Layout Options</h1>
+        <p>Pick the layout that feels right for quiet luxury</p>
+    </div>
+
+    <!-- OPTION A -->
+    <div class="option-block">
+        <div class="option-label">
+            <div class="badge">A</div>
+            <div><h2>Stacked Horizontal Cards</h2><p>Editorial top-picks list. Clean & scannable.</p></div>
+        </div>
+        <div class="option-content">
+            <div class="section-title font-display">Most Gifted</div>
+            <div class="section-sub">Top picks our customers love to gift</div>
+            <div class="opt-a-list">
+                <div class="opt-a-card">
+                    <img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-cutout.png" alt="">
+                    <div class="opt-a-info">
+                        <div class="name">Sunburst Diamond Ring</div>
+                        <div class="price">₹38,450 <span class="old">₹45,900</span></div>
+                        <div class="tag">🎁 Gifted 240+ times</div>
+                    </div>
+                </div>
+                <div class="opt-a-card">
+                    <img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/bundle-diamond-stud-earrings.jpg" alt="">
+                    <div class="opt-a-info">
+                        <div class="name">V-stack Diamond Studs</div>
+                        <div class="price">₹18,900 <span class="old">₹24,500</span></div>
+                        <div class="tag">🎁 Gifted 180+ times</div>
+                    </div>
+                </div>
+                <div class="opt-a-card">
+                    <img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-top-cutout.png" alt="">
+                    <div class="opt-a-info">
+                        <div class="name">Petite Solitaire Band</div>
+                        <div class="price">₹31,200 <span class="old">₹36,800</span></div>
+                        <div class="tag">🎁 Gifted 120+ times</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTION B -->
+    <div class="option-block">
+        <div class="option-label">
+            <div class="badge">B</div>
+            <div><h2>Hero + Grid</h2><p>Large featured product with 2 smaller below. Visual hierarchy.</p></div>
+        </div>
+        <div class="option-content">
+            <div class="section-title font-display">Most Gifted</div>
+            <div class="section-sub">Top picks our customers love to gift</div>
+            <div class="opt-b-hero">
+                <img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-cutout.png" alt="">
+                <div class="info">
+                    <span class="name">Sunburst Diamond Ring</span>
+                    <span class="price">₹38,450</span>
+                </div>
+            </div>
+            <div class="opt-b-grid">
+                <div>
+                    <img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/bundle-diamond-stud-earrings.jpg" alt="">
+                    <p class="product-name">V-stack Diamond Studs</p>
+                    <p class="product-price">₹18,900</p>
+                </div>
+                <div>
+                    <img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-top-cutout.png" alt="">
+                    <p class="product-name">Petite Solitaire Band</p>
+                    <p class="product-price">₹31,200</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTION C -->
+    <div class="option-block">
+        <div class="option-label">
+            <div class="badge">C</div>
+            <div><h2>Numbered Ranking</h2><p>Editorial ranked list with large numbers. Communicates popularity.</p></div>
+        </div>
+        <div class="option-content">
+            <div class="section-title font-display">Most Gifted</div>
+            <div class="section-sub">Top picks our customers love to gift</div>
+            <div class="opt-c-list">
+                <div class="opt-c-item">
+                    <div class="opt-c-rank">1</div>
+                    <img class="opt-c-img" src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-cutout.png" alt="">
+                    <div class="opt-c-info">
+                        <div class="name">Sunburst Diamond Ring</div>
+                        <div class="price">₹38,450</div>
+                        <div class="meta">Gifted 240+ times this month</div>
+                    </div>
+                </div>
+                <div class="opt-c-item">
+                    <div class="opt-c-rank">2</div>
+                    <img class="opt-c-img" src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/bundle-diamond-stud-earrings.jpg" alt="">
+                    <div class="opt-c-info">
+                        <div class="name">V-stack Diamond Studs</div>
+                        <div class="price">₹18,900</div>
+                        <div class="meta">Gifted 180+ times this month</div>
+                    </div>
+                </div>
+                <div class="opt-c-item">
+                    <div class="opt-c-rank">3</div>
+                    <img class="opt-c-img" src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-top-cutout.png" alt="">
+                    <div class="opt-c-info">
+                        <div class="name">Petite Solitaire Band</div>
+                        <div class="price">₹31,200</div>
+                        <div class="meta">Gifted 120+ times this month</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTION D -->
+    <div class="option-block">
+        <div class="option-label">
+            <div class="badge">D</div>
+            <div><h2>Large Cards with Badges</h2><p>Grid with "Most Gifted" tags. Bold & direct.</p></div>
+        </div>
+        <div class="option-content">
+            <div class="section-title font-display">Most Gifted</div>
+            <div class="section-sub">Top picks our customers love to gift</div>
+            <div class="opt-d-grid">
+                <div class="opt-d-card">
+                    <div class="opt-d-badge">MOST GIFTED</div>
+                    <img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-cutout.png" alt="">
+                    <p class="name">Sunburst Diamond Ring</p>
+                    <p class="price">₹38,450</p>
+                </div>
+                <div class="opt-d-card">
+                    <div class="opt-d-badge">BESTSELLER</div>
+                    <img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/bundle-diamond-stud-earrings.jpg" alt="">
+                    <p class="name">V-stack Diamond Studs</p>
+                    <p class="price">₹18,900</p>
+                </div>
+                <div class="opt-d-card">
+                    <div class="opt-d-badge">FAN FAVOURITE</div>
+                    <img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-top-cutout.png" alt="">
+                    <p class="name">Petite Solitaire Band</p>
+                    <p class="price">₹31,200</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMPLETE THE SET (fixed, no scroll) -->
+    <div class="option-block">
+        <div class="option-label">
+            <div class="badge" style="background:#2563eb">✓</div>
+            <div><h2>Complete the Set (Fixed)</h2><p>2-3 products, no scroll, all visible at once</p></div>
+        </div>
+        <div class="option-content">
+            <div class="section-title font-display">Complete the Set</div>
+            <div class="section-sub">Pieces that pair perfectly with your selection</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+                <div>
+                    <img class="product-img" src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/bundle-diamond-stud-earrings.jpg" alt="">
+                    <p class="product-name">V-stack Diamond Studs</p>
+                    <p class="product-price">₹18,900</p>
+                </div>
+                <div>
+                    <img class="product-img" src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/gleam-ring-top-cutout.png" alt="">
+                    <p class="product-name">Petite Solitaire Band</p>
+                    <p class="product-price">₹31,200</p>
+                </div>
+                <div>
+                    <img class="product-img" src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_1.jpg" alt="">
+                    <p class="product-name">Stackable Twin Band</p>
+                    <p class="product-price">₹27,650</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
