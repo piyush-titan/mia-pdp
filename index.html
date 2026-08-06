@@ -573,7 +573,7 @@
             scroll-snap-type: x mandatory; scroll-padding-left: 16px;
         }
         .reco-scroll::-webkit-scrollbar { display: none; }
-        .reco-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 12px 16px 4px; justify-items: center; justify-content: center; }
+        .reco-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 12px 16px 4px; }
         .reco-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 16px 4px; }
         .reco-grid-2col .reco-card { min-width: 0; max-width: none; }
         .reco-grid .reco-card { min-width: 0; max-width: none; }
@@ -644,7 +644,9 @@
         .stores-section { padding: 24px 16px; margin: 0 0 0; }
         .stores-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; text-align: center; margin-bottom: 4px; }
         .stores-sub { font-size: 11px; color: #777; text-align: center; margin-bottom: 20px; }
-        .stores-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .stores-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .stores-view-more { display: block; width: 100%; margin-top: 16px; padding: 12px; border-radius: 100px; font-size: 13px; font-weight: 700; color: #D14A61; background: #fdf2f4; border: none; cursor: pointer; text-align: center; transition: all 0.2s; }
+        .stores-view-more:active { background: #fce4ec; }
         .store-tile {
             background: #fff; border-radius: 16px; padding: 16px;
             border: 1px solid #f0e8ea;
@@ -656,7 +658,7 @@
         .store-meta span { display: block; }
         .store-timings { font-size: 10px; font-weight: 600; color: #22C55E; background: rgba(34,197,94,0.08); padding: 3px 8px; border-radius: 100px; display: inline-block; }
         .store-tile-ctas { display: flex; gap: 8px; margin-top: 4px; }
-        .store-btn { flex: 1; padding: 8px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.2s; border: none; }
+        .store-btn { flex: 1; padding: 8px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.2s; border: none; white-space: nowrap; }
         .store-btn-primary { background: #D14A61; color: #fff; }
         .store-btn-primary:active { background: #b03a50; }
         .store-btn-secondary { background: #fff; color: #D14A61; border: 1.5px solid #D14A61; }
@@ -801,6 +803,7 @@
             .below-fold .faq-section { margin: 0; border-radius: 0; padding: 48px 0 80px; background: transparent; border: none; border-top: 1px solid #f0e8ea; }
             .below-fold .stores-section { margin: 0; padding: 48px 0; background: transparent; border-top: 1px solid #f0e8ea; }
             .below-fold .stores-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+            .stores-view-more { width: auto; padding: 12px 32px; margin-top: 24px; display: block; margin-left: auto; margin-right: auto; }
             .below-fold #recoSection3 .reco-grid-2col { grid-template-columns: repeat(5, 1fr); gap: 16px; }
 
             /* Reco cards: grid on desktop */
@@ -980,6 +983,9 @@
 
 <div class="bottom-sheet-overlay" id="similarOverlay"></div>
 <div class="bottom-sheet" id="similarSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Similar Products</h3><button class="bs-close" id="similarClose"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="bottom-sheet-body" id="similarBody"></div></div>
+
+<div class="bottom-sheet-overlay" id="allStoresOverlay"></div>
+<div class="bottom-sheet" id="allStoresSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>All Stores</h3><button class="bs-close" id="allStoresClose"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="bottom-sheet-body" id="allStoresBody"></div></div>
 
 <div class="bottom-sheet-overlay" id="buyAllOverlay"></div>
 <div class="bottom-sheet" id="buyAllSheet"><div class="bottom-sheet-handle"></div><div class="bottom-sheet-header"><h3>Choose Sizes</h3><button class="bs-close" id="buyAllClose"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="bottom-sheet-body" id="buyAllBody"></div></div>
@@ -1759,30 +1765,55 @@ function bindWishlist(el) {
 })();
 
 // ===== STORES =====
+var storesData = [
+    { name: "Mia by Tanishq — Connaught Place", address: "Shop 14, Outer Circle, Connaught Place, New Delhi 110001", phone: "+91 11 4356 7890", timings: "Open · Closes 9 PM", lat: 28.6315, lng: 77.2167 },
+    { name: "Mia by Tanishq — Khan Market", address: "15A Khan Market, Rabindra Nagar, New Delhi 110003", phone: "+91 11 2461 3322", timings: "Open · Closes 8:30 PM", lat: 28.6003, lng: 77.2273 },
+    { name: "Mia by Tanishq — Select CityWalk", address: "Level 1, Select CityWalk Mall, Saket, New Delhi 110017", phone: "+91 11 4050 1234", timings: "Open · Closes 10 PM", lat: 28.5274, lng: 77.2192 },
+    { name: "Mia by Tanishq — DLF Promenade", address: "Ground Floor, DLF Promenade, Vasant Kunj, New Delhi 110070", phone: "+91 11 4607 8800", timings: "Open · Closes 10 PM", lat: 28.5215, lng: 77.1580 }
+];
+function buildStoreTile(s) {
+    return '<div class="store-tile">'
+        + '<div class="store-name">' + s.name + '</div>'
+        + '<div class="store-meta"><span>' + s.address + '</span><a href="tel:' + s.phone.replace(/\s/g,'') + '" style="margin-top:4px;color:#D14A61;font-weight:700;text-decoration:underline;display:block">' + s.phone + '</a></div>'
+        + '<span class="store-timings">' + s.timings + '</span>'
+        + '<div class="store-tile-ctas">'
+        + '<button class="store-btn store-btn-primary" onclick="showToast(\'Appointment request sent!\',\'success\')">Book Appointment</button>'
+        + '<button class="store-btn store-btn-secondary" onclick="window.open(\'https://maps.google.com/?q=' + s.lat + ',' + s.lng + '\',\'_blank\')">Get Directions</button>'
+        + '</div></div>';
+}
 (function() {
     var el = document.getElementById("storesSection");
-    var stores = [
-        { name: "Mia by Tanishq — Connaught Place", address: "Shop 14, Outer Circle, Connaught Place, New Delhi 110001", phone: "+91 11 4356 7890", timings: "Open · Closes 9 PM", lat: 28.6315, lng: 77.2167 },
-        { name: "Mia by Tanishq — Khan Market", address: "15A Khan Market, Rabindra Nagar, New Delhi 110003", phone: "+91 11 2461 3322", timings: "Open · Closes 8:30 PM", lat: 28.6003, lng: 77.2273 },
-        { name: "Mia by Tanishq — Select CityWalk", address: "Level 1, Select CityWalk Mall, Saket, New Delhi 110017", phone: "+91 11 4050 1234", timings: "Open · Closes 10 PM", lat: 28.5274, lng: 77.2192 },
-        { name: "Mia by Tanishq — DLF Promenade", address: "Ground Floor, DLF Promenade, Vasant Kunj, New Delhi 110070", phone: "+91 11 4607 8800", timings: "Open · Closes 10 PM", lat: 28.5215, lng: 77.1580 }
-    ];
+    /* mobile: 3 tiles; desktop: 4 tiles — controlled by data-hidden attr + CSS */
+    var isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    var visibleCount = isDesktop ? 4 : 3;
     var h = '<h2 class="stores-title font-display">Find In Store</h2>';
     h += '<p class="stores-sub">Visit a Mia store near you to experience this piece</p>';
     h += '<div class="stores-grid">';
-    stores.forEach(function(s, i) {
-        h += '<div class="store-tile">';
-        h += '<div class="store-name">' + s.name + '</div>';
-        h += '<div class="store-meta"><span>' + s.address + '</span><a href="tel:' + s.phone.replace(/\s/g,'') + '" style="margin-top:4px;color:#D14A61;font-weight:700;text-decoration:underline;display:block">' + s.phone + '</a></div>';
-        h += '<span class="store-timings">' + s.timings + '</span>';
-        h += '<div class="store-tile-ctas">';
-        h += '<button class="store-btn store-btn-primary" onclick="showToast(\'Appointment request sent!\',\'success\')">Book Appointment</button>';
-        h += '<button class="store-btn store-btn-secondary" onclick="window.open(\'https://maps.google.com/?q=' + s.lat + ',' + s.lng + '\',\'_blank\')">Get Directions</button>';
-        h += '</div></div>';
+    storesData.forEach(function(s, i) {
+        var hidden = i >= visibleCount ? ' style="display:none"' : '';
+        h += '<div class="store-tile-wrap"' + hidden + '>' + buildStoreTile(s) + '</div>';
     });
     h += '</div>';
+    h += '<button class="stores-view-more" onclick="openAllStoresSheet()">View More Stores</button>';
     el.innerHTML = h;
 })();
+function openAllStoresSheet() {
+    var body = document.getElementById("allStoresBody");
+    var h = '<div class="stores-grid" style="grid-template-columns:1fr">';
+    storesData.forEach(function(s) { h += buildStoreTile(s); });
+    h += '</div>';
+    body.innerHTML = h;
+    document.getElementById("allStoresOverlay").classList.add("open");
+    document.getElementById("allStoresSheet").classList.add("open");
+}
+document.getElementById("allStoresClose").onclick = function() {
+    document.getElementById("allStoresOverlay").classList.remove("open");
+    document.getElementById("allStoresSheet").classList.remove("open");
+};
+document.getElementById("allStoresOverlay").onclick = function() {
+    document.getElementById("allStoresOverlay").classList.remove("open");
+    document.getElementById("allStoresSheet").classList.remove("open");
+};
 
 // ===== FAQs =====
 (function() {
