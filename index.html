@@ -146,6 +146,9 @@
         .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
         /* ===== PRODUCT HEADER ===== */
+        .collection-name { display: none; }
+        .gallery-find-store { display: none; }
+        .community-inner { display: block; }
         .product-header { padding: 16px 16px 12px; }
         .product-name-row { display: flex; align-items: center; gap: 10px; }
         .product-name {
@@ -683,18 +686,21 @@
             .pdp-layout {
                 max-width: 1320px; margin: 0 auto;
                 display: grid !important;
-                grid-template-columns: 1fr 480px;
+                grid-template-columns: 1fr 440px;
                 gap: 48px;
-                padding: 24px 40px 56px;
+                padding: 24px 40px 48px;
                 align-items: start;
             }
             .below-fold { max-width: 1320px; margin: 0 auto; padding: 0 40px; }
 
-            /* ── Gallery column ── */
+            /* ── Gallery column: flex column so find-store banner follows image ── */
             .pdp-gallery-col {
-                display: block;
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
                 position: sticky; top: 80px;
                 align-self: start;
+                max-height: calc(100vh - 92px);
             }
             .pdp-gallery-col .gallery-section {
                 display: grid;
@@ -703,10 +709,13 @@
                 background: #fff;
                 border-radius: 20px;
                 overflow: hidden;
+                flex: 1;
+                min-height: 0;
             }
             .pdp-gallery-col .gallery-main {
                 grid-column: 2; grid-row: 1;
                 aspect-ratio: 1/1;
+                max-height: 100%;
                 border-radius: 16px;
                 overflow: hidden;
                 position: relative;
@@ -724,8 +733,27 @@
             .pdp-gallery-col .gallery-thumbnails::-webkit-scrollbar { display: none; }
             .pdp-gallery-col .gallery-thumb { width: 64px; height: 64px; flex-shrink: 0; }
 
+            /* ── Gallery find-in-store banner (desktop only) ── */
+            .gallery-find-store {
+                display: block; flex-shrink: 0;
+                padding: 14px 20px;
+                background: linear-gradient(100deg, #F4C2CC 0%, #fdf2f4 60%, #fff 100%);
+                border-radius: 16px;
+                border: 1px solid rgba(209,74,97,0.12);
+                position: relative; overflow: hidden;
+            }
+
+            /* ── Collection name above product title ── */
+            .collection-name {
+                display: block;
+                font-size: 10px; font-weight: 800;
+                letter-spacing: 0.14em; text-transform: uppercase;
+                color: #D14A61; margin-bottom: 6px;
+            }
+
             /* ── Info column ── */
             .pdp-info-col { display: block; padding: 4px 0 80px; overflow: visible; }
+            .pdp-info-col .find-store-section { display: none; }
             .product-header { padding: 0 0 16px; }
             .product-name { font-size: 26px; }
             .key-highlights { margin: 0 0 20px; }
@@ -735,47 +763,60 @@
             .promos-section { margin: 0 0 20px; }
             .gift-section { margin: 0 0 20px; }
             .delivery-section { margin: 0 0 20px; }
-            .find-store-section { margin: 0 0 20px; }
             .exchange-section { margin: 0 0 20px; }
             .prebook-section { margin: 0 0 20px; }
 
-            /* ── Below fold ── */
-            .below-fold .testimonials-section { margin: 0; border-radius: 0; padding: 48px 0; border-top: 1px solid #f0e8ea; }
-            .below-fold .reco-section { margin: 0; padding: 48px 0; border-top: 1px solid #f0e8ea; background: #fff; }
+            /* ── Below fold: blend with #FAFAFA page background ── */
+            .below-fold .testimonials-section { margin: 0; border-radius: 0; padding: 48px 0; background: transparent; border: none; border-top: 1px solid #f0e8ea; }
+            .below-fold .reco-section { margin: 0; padding: 48px 0; background: transparent; border: none; border-top: 1px solid #f0e8ea; }
             .below-fold .reco-section::before { display: none; }
-            .below-fold .community-section { margin: 0; border-radius: 0; padding: 48px 0; border-top: 1px solid #f0e8ea; }
-            .below-fold .faq-section { margin: 0; border-radius: 0; padding: 48px 0 80px; border-top: 1px solid #f0e8ea; background: #fff; }
+            .below-fold .community-section { margin: 0; border-radius: 0; padding: 48px 0; background: transparent; border: none; border-top: 1px solid #f0e8ea; }
+            .below-fold .faq-section { margin: 0; border-radius: 0; padding: 48px 0 80px; background: transparent; border: none; border-top: 1px solid #f0e8ea; }
 
             /* Reco cards: grid on desktop */
             .below-fold .reco-card { min-width: 0 !important; max-width: none; }
             .below-fold .reco-scroll { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; overflow: visible; padding: 12px 0 4px; flex-wrap: unset; }
             .below-fold .reco-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 12px 0 4px; }
             .below-fold .reco-grid-2col { grid-template-columns: repeat(5, 1fr); gap: 16px; padding: 12px 0 4px; }
-            .below-fold .reco-header { padding: 0; text-align: left; }
+            .below-fold .reco-header { padding: 0; text-align: center; }
             .below-fold .reco-title { font-size: 22px; }
-            .below-fold .testimonials-heading { font-size: 24px; text-align: left; }
-            .below-fold .community-heading { font-size: 22px; }
-            .below-fold .faq-title { font-size: 24px; text-align: left; }
+            .below-fold .reco-subtitle { font-size: 13px; }
+            .below-fold .testimonials-heading { font-size: 24px; text-align: center; }
+            .below-fold .testimonials-sub { text-align: center; }
+            .below-fold .community-heading { font-size: 24px; }
+            .below-fold .faq-title { font-size: 24px; text-align: center; }
+
+            /* Community 2-col: ratings left, heading right */
+            .community-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
 
             /* ── Sticky bar ── */
             .sticky-bar { left: 50%; right: auto; transform: translateX(-50%); width: 640px; max-width: none; justify-content: flex-start; gap: 12px; padding: 10px 16px; }
 
-            /* ── Bottom sheets → side panels ── */
+            /* ── Bottom sheets → centered modals ── */
             .bottom-sheet {
-                top: 0; bottom: 0; left: auto; right: 0;
-                width: 440px; max-height: 100vh;
-                border-radius: 24px 0 0 24px;
-                transform: translateX(100%);
-                transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+                top: 50%; left: 50%;
+                bottom: auto; right: auto;
+                width: min(640px, 90vw);
+                max-height: 80vh;
+                border-radius: 20px;
+                padding-bottom: 0;
+                transform: translate(-50%, calc(-50% + 20px));
+                opacity: 0;
+                visibility: hidden;
+                transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.25s, visibility 0.25s;
             }
-            .bottom-sheet.open { transform: translateX(0); }
+            .bottom-sheet.open {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+                visibility: visible;
+            }
             .bottom-sheet-handle { display: none; }
+            .bottom-sheet-body { padding: 0 28px 28px; }
         }
 
         @media (min-width: 1440px) {
-            .pdp-layout { grid-template-columns: 1fr 520px; gap: 56px; }
+            .pdp-layout { grid-template-columns: 1fr 480px; gap: 56px; }
             .sticky-bar { width: 720px; }
-            .bottom-sheet { width: 480px; }
         }
     </style>
 </head>
@@ -812,11 +853,13 @@
     </div>
     <div class="gallery-thumbnails" id="galleryThumbs"></div>
 </section>
+<div class="gallery-find-store" id="galleryFindStoreDesktop"></div>
 </div>
 <div class="pdp-info-col">
 
 <!-- PRODUCT HEADER -->
 <section class="product-header">
+    <div class="collection-name" id="collectionName"></div>
     <div class="product-name-row">
         <h1 class="product-name font-display" id="productName"></h1>
         <div class="action-bar">
@@ -989,6 +1032,7 @@ function showToast(msg, type) {
 // ===== INIT ICONS & BREADCRUMB =====
 document.getElementById("breadcrumbName").textContent = product.name;
 document.getElementById("productName").textContent = product.name;
+document.getElementById("collectionName").textContent = product.subcategory;
 
 // ===== APP NUDGE =====
 document.getElementById("appNudgeClose").onclick = function() { document.getElementById("appNudge").classList.add("hidden"); };
@@ -1507,9 +1551,16 @@ document.getElementById("giftOverlay").onclick = function() { closeSheet("gift")
 
 // ===== FIND IN STORE =====
 (function() {
-    var el = document.getElementById("findStoreSection");
-    el.innerHTML = '<svg class="find-store-bg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l2-4h16l2 4"/><path d="M2 7h20"/><rect x="2" y="7" width="4" height="4" rx="1"/><rect x="6" y="7" width="4" height="4" rx="1"/><rect x="10" y="7" width="4" height="4" rx="1"/><rect x="14" y="7" width="4" height="4" rx="1"/><rect x="18" y="7" width="4" height="4" rx="1"/><path d="M2 11v10h20V11"/><path d="M9 21v-7h6v7"/></svg><div class="find-store-title"><span class="icon-pill"><i data-lucide="map-pin" style="color:#D14A61"></i></span>Find In Store</div><p class="find-store-subtitle">Locate this product at a Mia store near you</p><button class="find-store-cta" id="findStoreCta"><i data-lucide="search" style="color:#fff;width:14px;height:14px"></i>Check Store Availability</button>';
+    function getFindStoreHTML(ctaId) {
+        return '<svg class="find-store-bg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l2-4h16l2 4"/><path d="M2 7h20"/><rect x="2" y="7" width="4" height="4" rx="1"/><rect x="6" y="7" width="4" height="4" rx="1"/><rect x="10" y="7" width="4" height="4" rx="1"/><rect x="14" y="7" width="4" height="4" rx="1"/><rect x="18" y="7" width="4" height="4" rx="1"/><path d="M2 11v10h20V11"/><path d="M9 21v-7h6v7"/></svg><div class="find-store-title"><span class="icon-pill"><i data-lucide="map-pin" style="color:#D14A61"></i></span>Find In Store</div><p class="find-store-subtitle">Locate this product at a Mia store near you</p><button class="find-store-cta" id="' + ctaId + '"><i data-lucide="search" style="color:#fff;width:14px;height:14px"></i>Check Store Availability</button>';
+    }
+    document.getElementById("findStoreSection").innerHTML = getFindStoreHTML("findStoreCta");
     document.getElementById("findStoreCta").onclick = function() { openSheet("store"); renderStoreSheet(); };
+    var galleryEl = document.getElementById("galleryFindStoreDesktop");
+    if (galleryEl) {
+        galleryEl.innerHTML = getFindStoreHTML("galleryFindStoreCta");
+        document.getElementById("galleryFindStoreCta").onclick = function() { openSheet("store"); renderStoreSheet(); };
+    }
 })();
 
 // ===== RECOMMENDATIONS =====
@@ -1647,15 +1698,13 @@ function bindWishlist(el) {
         { label: "Unboxing", pct: 91, color: "#2563eb" },
         { label: "Variety", pct: 86, color: "#059669" }
     ];
-    var h = '<div class="community-heading font-display" style="text-align:center">Why People Love Mia</div>';
-    h += '<p class="community-sub" style="text-align:center">Based on 10,000+ reviews from verified buyers</p>';
-    h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">';
+    var ratingsHtml = '<div class="community-ratings-col">';
     ratings.forEach(function(r) {
-        h += '<div style="text-align:center;padding:14px 8px;border-radius:12px;background:#fff;border:1px solid #f0f0f0"><div style="font-size:20px;font-weight:800;color:#1a1a1a;font-family:Fraunces,serif">' + r.pct + '%</div><div style="margin:8px auto 6px;width:80%;height:5px;border-radius:100px;background:#f0f0f0;overflow:hidden"><div style="height:100%;width:' + r.pct + '%;background:' + r.color + ';border-radius:100px"></div></div><div style="font-size:12px;font-weight:600;color:#555">' + r.label + '</div></div>';
+        ratingsHtml += '<div style="padding:10px 0;display:flex;align-items:center;gap:14px;border-bottom:1px solid #f0e8ea"><div style="font-size:22px;font-weight:800;color:#1a1a1a;font-family:Fraunces,serif;min-width:52px;letter-spacing:-0.5px">' + r.pct + '%</div><div style="flex:1"><div style="font-size:12px;font-weight:600;color:#555;margin-bottom:6px">' + r.label + '</div><div style="height:5px;border-radius:100px;background:#f0e8ea;overflow:hidden"><div style="height:100%;width:' + r.pct + '%;background:' + r.color + ';border-radius:100px"></div></div></div></div>';
     });
-    h += '</div>';
-    h += '<div style="text-align:center"><button class="community-cta" onclick="showToast(\'Opening Mia Stories...\',\'info\')">Explore Mia Stories</button></div>';
-    el.innerHTML = h;
+    ratingsHtml += '</div>';
+    var textHtml = '<div class="community-text-col"><div class="community-heading font-display">Why People Love Mia</div><p class="community-sub">Based on 10,000+ reviews from verified buyers</p><button class="community-cta" onclick="showToast(\'Opening Mia Stories...\',\'info\')">Explore Mia Stories →</button></div>';
+    el.innerHTML = '<div class="community-inner">' + ratingsHtml + textHtml + '</div>';
 })();
 
 // ===== FAQs =====
