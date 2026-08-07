@@ -273,11 +273,11 @@
 
         /* ===== TRUST ELEMENTS ===== */
         .trust-elements {
-            display: flex; flex-direction: row; flex-wrap: nowrap; align-items: stretch; justify-content: center; gap: 8px;
-            padding: 0; margin: 16px 16px;
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 8px; padding: 0; margin: 16px;
         }
         .trust-item {
-            flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             padding: 12px 8px;
             background: #fff; border-radius: 14px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 6px 16px rgba(0,0,0,0.03), inset 0 -2px 3px rgba(0,0,0,0.03), inset 0 2px 3px rgba(255,255,255,0.9);
@@ -638,7 +638,7 @@
         .community-divider { height: 1px; background: #f0f0f0; margin: 16px 0; }
 
         /* ===== LIGHTBOX ===== */
-        .lightbox { position: fixed; inset: 0; z-index: 300; background: #000; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .lightbox { position: fixed; inset: 0; z-index: 300; background: #000; display: none; flex-direction: column; align-items: center; justify-content: center; touch-action: manipulation; }
         .lightbox.open { display: flex; }
         .lightbox-close { position: absolute; top: 16px; right: 16px; z-index: 301; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; }
         .lightbox-close svg { width: 20px; height: 20px; stroke: #fff; stroke-width: 2.5; }
@@ -1184,9 +1184,10 @@ function openLightbox(idx) {
     };
     lb.ontouchend = function(e) {
         if (e.target.closest(".lightbox-close")) return;
-        // Double tap
+        // Double tap (only if tap didn't move much)
         var now = Date.now();
-        if (now - lastTap < 300 && e.changedTouches.length === 1) {
+        var moved = Math.abs(lbCurrentX - lbStartX);
+        if (now - lastTap < 300 && e.changedTouches.length === 1 && moved < 10) {
             scale = scale > 1 ? 1 : 2.5;
             img.style.transform = "scale(" + scale + ")";
             lastTap = 0; return;
