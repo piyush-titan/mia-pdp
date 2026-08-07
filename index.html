@@ -94,6 +94,7 @@
         .gallery-section { position: relative; background: #fff; }
         /* layout wrappers: no effect on mobile */
         .pdp-layout, .pdp-gallery-col, .pdp-info-col { display: contents; }
+        .gallery-trust-desktop { display: none; }
         .similar-float {
             position: absolute; top: 12px; right: 12px; z-index: 15;
             display: flex; align-items: center; gap: 5px;
@@ -273,16 +274,16 @@
 
         /* ===== TRUST ELEMENTS ===== */
         .trust-elements {
-            display: flex; align-items: stretch; justify-content: center; gap: 0;
-            padding: 0; margin: 8px 16px; background: #fff; border-radius: 12px;
-            border: 1px solid #f0f0f0; overflow: hidden;
+            display: flex; align-items: stretch; justify-content: center; gap: 8px;
+            padding: 0; margin: 8px 16px;
         }
         .trust-item {
             flex: 1; display: flex; flex-direction: column; align-items: center;
             justify-content: center; gap: 4px; padding: 12px 8px;
-            border-right: 1px solid #f0f0f0;
+            background: #fff; border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06), inset 0 1px 2px rgba(255,255,255,0.9);
+            border: 1px solid #f0f0f0;
         }
-        .trust-item:last-child { border-right: none; }
         .trust-item img { height: 28px; width: auto; object-fit: contain; }
 
         /* ===== PRICE SECTION ===== */
@@ -946,10 +947,10 @@
 <section class="key-highlights" id="keyHighlightsContainer"></section>
 
 <!-- TRUST ELEMENTS -->
-<section class="trust-elements" style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:stretch">
-    <div class="trust-item" style="flex:1;display:flex;align-items:center;justify-content:center;padding:12px 8px"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwf4347052/images/cart/certificate/bis.svg" alt="BIS Hallmarked" loading="lazy"></div>
-    <div class="trust-item" style="flex:1;display:flex;align-items:center;justify-content:center;padding:12px 8px"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dw27b89fcd/images/cart/certificate/TATA.svg" alt="A TATA Product" loading="lazy"></div>
-    <div class="trust-item" style="flex:1;display:flex;align-items:center;justify-content:center;padding:12px 8px"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwbf1e1df1/images/cart/certificate/1%20YR.svg" alt="1 Year Warranty" loading="lazy"></div>
+<section class="trust-elements">
+    <div class="trust-item"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwf4347052/images/cart/certificate/bis.svg" alt="BIS Hallmarked" loading="lazy"></div>
+    <div class="trust-item"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dw27b89fcd/images/cart/certificate/TATA.svg" alt="A TATA Product" loading="lazy"></div>
+    <div class="trust-item"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwbf1e1df1/images/cart/certificate/1%20YR.svg" alt="1 Year Warranty" loading="lazy"></div>
 </section>
 
 <!-- PRICE SECTION -->
@@ -1073,19 +1074,19 @@ var product = {
 };
 
 var recoProducts = [
-    { name: "Sunburst Diamond Ring",     price: 38450, originalPrice: 45900, image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80" },
-    { name: "V-stack Diamond Studs",     price: 18900, originalPrice: 24500, image: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=400&q=80" },
+    { name: "Sunburst Diamond Ring",     price: 38450, originalPrice: 45900, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
+    { name: "V-stack Diamond Studs",     price: 18900, originalPrice: 24500, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
     { name: "Petite Solitaire Band",     price: 31200, originalPrice: 36800, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
-    { name: "Stackable Twin Band",       price: 27650, originalPrice: 32900, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&q=80" },
-    { name: "Twisted Gold Ring",         price: 22400, originalPrice: null,  image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&q=80" },
-    { name: "Classic Diamond Band",      price: 35600, originalPrice: 42000, image: "https://images.unsplash.com/photo-1608042314453-ae338d9c6279?w=400&q=80" },
-    { name: "Delicate Chain Bracelet",   price: 14200, originalPrice: 17500, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&q=80" },
-    { name: "Minimalist Ear Cuff",       price: 9800,  originalPrice: null,  image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80" },
-    { name: "Layered Gold Necklace",     price: 42500, originalPrice: 49900, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80" },
-    { name: "Halo Diamond Pendant",      price: 28900, originalPrice: 34500, image: "https://images.unsplash.com/photo-1573408301185-9519f94815b3?w=400&q=80" },
-    { name: "Eternity Band Ring",        price: 52300, originalPrice: 61000, image: "https://images.unsplash.com/photo-1589674781759-c21c37956a44?w=400&q=80" },
-    { name: "Cluster Stud Earrings",     price: 16400, originalPrice: 19800, image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400&q=80" },
-    { name: "Dainty Charm Anklet",       price: 11500, originalPrice: null,  image: "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=400&q=80" },
+    { name: "Stackable Twin Band",       price: 27650, originalPrice: 32900, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
+    { name: "Twisted Gold Ring",         price: 22400, originalPrice: null,  image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
+    { name: "Classic Diamond Band",      price: 35600, originalPrice: 42000, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
+    { name: "Delicate Chain Bracelet",   price: 14200, originalPrice: 17500, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
+    { name: "Minimalist Ear Cuff",       price: 9800,  originalPrice: null,  image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
+    { name: "Layered Gold Necklace",     price: 42500, originalPrice: 49900, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
+    { name: "Halo Diamond Pendant",      price: 28900, originalPrice: 34500, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
+    { name: "Eternity Band Ring",        price: 52300, originalPrice: 61000, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
+    { name: "Cluster Stud Earrings",     price: 16400, originalPrice: 19800, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
+    { name: "Dainty Charm Anklet",       price: 11500, originalPrice: null,  image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
     { name: "Marquise Drop Earrings",    price: 33700, originalPrice: 39900, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" }
 ];
 
@@ -1121,11 +1122,28 @@ document.getElementById("collectionName").textContent = product.subcategory;
 document.getElementById("appNudgeClose").onclick = function() { document.getElementById("appNudge").classList.add("hidden"); };
 
 // ===== IMAGE GALLERY =====
+var galZoom = { scale: 1, lastTap: 0, panX: 0, panY: 0, startPanX: 0, startPanY: 0, justDoubleTapped: false };
+function applyGalZoom() {
+    var main = document.getElementById("galleryMain");
+    var imgs = main.querySelectorAll(".gallery-slide img");
+    imgs.forEach(function(img, i) {
+        if (i === state.currentSlide) {
+            img.style.transition = galZoom.scale > 1 ? "none" : "transform 0.25s ease";
+            img.style.transformOrigin = "center center";
+            img.style.transform = galZoom.scale > 1
+                ? "scale(" + galZoom.scale + ") translate(" + galZoom.panX + "px," + galZoom.panY + "px)"
+                : "";
+        } else {
+            img.style.transform = "";
+        }
+    });
+}
 (function() {
     var track = document.getElementById("galleryTrack");
     var thumbs = document.getElementById("galleryThumbs");
     var startX = 0, startY = 0, currentX = 0, isDragging = false, hasMoved = false;
     function render() {
+        galZoom.scale = 1; galZoom.panX = 0; galZoom.panY = 0;
         track.innerHTML = product.images.map(function(src, i) {
             return '<div class="gallery-slide"><img src="' + src + '" alt="View ' + (i+1) + '" draggable="false" loading="' + (i < 2 ? 'eager' : 'lazy') + '"></div>';
         }).join("");
@@ -1137,20 +1155,55 @@ document.getElementById("appNudgeClose").onclick = function() { document.getElem
     render();
     thumbs.addEventListener("click", function(e) { var b = e.target.closest("[data-idx]"); if (b) { state.currentSlide = parseInt(b.dataset.idx); render(); } });
     var main = document.getElementById("galleryMain");
-    main.addEventListener("touchstart", function(e) { startX = e.touches[0].clientX; startY = e.touches[0].clientY; currentX = startX; isDragging = true; hasMoved = false; track.classList.add("dragging"); }, { passive: true });
-    main.addEventListener("touchmove", function(e) { if (!isDragging) return; currentX = e.touches[0].clientX; var diffX = currentX - startX; var diffY = e.touches[0].clientY - startY; if (Math.abs(diffX) > 12 || Math.abs(diffY) > 12) hasMoved = true; if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 5) { track.style.transform = "translateX(" + (-(state.currentSlide * main.offsetWidth) + diffX) + "px)"; } }, { passive: true });
+    main.addEventListener("touchstart", function(e) {
+        if (e.touches.length !== 1) return;
+        startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+        currentX = startX; isDragging = true; hasMoved = false;
+        if (galZoom.scale <= 1) track.classList.add("dragging");
+        galZoom.startPanX = galZoom.panX; galZoom.startPanY = galZoom.panY;
+    }, { passive: true });
+    main.addEventListener("touchmove", function(e) {
+        if (!isDragging || e.touches.length !== 1) return;
+        currentX = e.touches[0].clientX;
+        var diffX = currentX - startX, diffY = e.touches[0].clientY - startY;
+        if (Math.abs(diffX) > 8 || Math.abs(diffY) > 8) hasMoved = true;
+        if (galZoom.scale > 1) {
+            galZoom.panX = galZoom.startPanX + diffX / galZoom.scale;
+            galZoom.panY = galZoom.startPanY + diffY / galZoom.scale;
+            applyGalZoom();
+        } else if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 5) {
+            track.style.transform = "translateX(" + (-(state.currentSlide * main.offsetWidth) + diffX) + "px)";
+        }
+    }, { passive: true });
     main.addEventListener("touchend", function() {
         isDragging = false; track.classList.remove("dragging");
-        var diff = currentX - startX;
-        if (Math.abs(diff) > 50) {
+        if (!hasMoved) {
+            var now = Date.now();
+            if (now - galZoom.lastTap < 450) {
+                // Double tap: toggle zoom
+                galZoom.scale = galZoom.scale > 1 ? 1 : 2.5;
+                if (galZoom.scale === 1) { galZoom.panX = 0; galZoom.panY = 0; }
+                main.style.touchAction = galZoom.scale > 1 ? 'none' : 'pan-y pinch-zoom';
+                applyGalZoom();
+                galZoom.lastTap = 0;
+                galZoom.justDoubleTapped = true;
+                setTimeout(function() { galZoom.justDoubleTapped = false; }, 600);
+            } else {
+                galZoom.lastTap = now;
+                galZoom.justDoubleTapped = false;
+            }
+        } else if (galZoom.scale <= 1) {
+            var diff = currentX - startX;
             if (diff > 50 && state.currentSlide > 0) state.currentSlide--;
             else if (diff < -50 && state.currentSlide < product.images.length - 1) state.currentSlide++;
+            currentX = 0; startX = 0; render();
+        } else {
+            currentX = 0; startX = 0;
         }
-        currentX = 0; startX = 0; render();
     });
-    // Single tap on gallery opens lightbox; hasMoved guards against swipe triggering it
+    // Single tap opens lightbox only when not a double-tap and not zoomed
     main.addEventListener('click', function() {
-        if (!hasMoved) openLightbox(state.currentSlide);
+        if (!hasMoved && !galZoom.justDoubleTapped && galZoom.scale <= 1) openLightbox(state.currentSlide);
     });
 })();
 
