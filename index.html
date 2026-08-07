@@ -273,17 +273,17 @@
 
         /* ===== TRUST ELEMENTS ===== */
         .trust-elements {
-            display: flex; align-items: stretch; justify-content: center; gap: 8px;
+            display: flex; flex-direction: row; flex-wrap: nowrap; align-items: stretch; justify-content: center; gap: 8px;
             padding: 0; margin: 16px 16px;
         }
         .trust-item {
-            flex: 1; display: flex; align-items: center; justify-content: center;
+            flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center;
             padding: 12px 8px;
             background: #fff; border-radius: 14px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 6px 16px rgba(0,0,0,0.03), inset 0 -2px 3px rgba(0,0,0,0.03), inset 0 2px 3px rgba(255,255,255,0.9);
             border: none;
         }
-        .trust-item img { height: 30px; width: 80px; object-fit: contain; }
+        .trust-item img { height: 30px; width: 100%; max-width: 80px; object-fit: contain; }
 
         /* ===== PRICE SECTION ===== */
         .price-section { padding: 16px; margin: 16px 16px; background: linear-gradient(180deg, #FDF2F4, #fff); border-radius: 16px; }
@@ -430,7 +430,7 @@
         }
         .sticky-price { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: #fff; white-space: nowrap; flex-shrink: 0; line-height: 1; text-shadow: 0 1px 6px rgba(0,0,0,0.15); }
         .sticky-product-name { display: none; font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.72); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; letter-spacing: 0.01em; }
-        .sticky-blur-scrim { display: none; }
+        .sticky-blur-scrim { display: none; opacity: 0; transition: opacity 0.3s ease; }
         .buy-now-glow-wrap { position: relative; border-radius: 100px; padding: 2.5px; margin-bottom: 10px; overflow: hidden; }
         .buy-now-glow-wrap::before { content: ''; position: absolute; inset: -60%; aspect-ratio: 1/1; margin: auto; background: conic-gradient(from 0deg, transparent 0%, transparent 88%, #e8819a 94%, #D14A61 97%, #e8819a 100%); animation: glimmer-spin 2s linear infinite; z-index: 0; }
         @keyframes glimmer-spin { to { transform: rotate(360deg); } }
@@ -847,6 +847,7 @@
                 mask-image: linear-gradient(to bottom, transparent 0%, black 45%);
                 z-index: 99;
                 pointer-events: none;
+                opacity: 0; transition: opacity 0.3s ease;
             }
             .btn-sticky-buy-now {
                 display: flex; align-items: center; gap: 8px;
@@ -1161,40 +1162,37 @@ function openLightbox(idx) {
     document.getElementById("lightboxCounter").textContent = (idx + 1) + " / " + product.images.length;
     lb.classList.add("open");
     document.body.style.overflow = "hidden";
-    var lbIdx = idx, scale = 1, lastTap = 0;
+    var lbIdx = idx, scale = 1, lastTap = 0, initDist = 0, lbStartX = 0, lbCurrentX = 0;
 
-    // Double tap to zoom
-    lb.addEventListener("click", function(e) {
-        if (e.target === document.getElementById("lightboxClose") || e.target.closest(".lightbox-close")) return;
-        var now = Date.now();
-        if (now - lastTap < 300) {
-            scale = scale > 1 ? 1 : 2.5;
-            img.style.transform = "scale(" + scale + ")";
-        }
-        lastTap = now;
-    });
-
-    // Pinch to zoom
-    var initDist = 0;
-    lb.addEventListener("touchstart", function(e) {
+    // All touch handling via assignments (no stacking across openLightbox calls)
+    lb.ontouchstart = function(e) {
         if (e.touches.length === 2) {
             initDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        } else if (e.touches.length === 1 && scale <= 1) {
+            lbStartX = e.touches[0].clientX; lbCurrentX = lbStartX;
         }
-    }, { passive: true });
-    lb.addEventListener("touchmove", function(e) {
+    };
+    lb.ontouchmove = function(e) {
         if (e.touches.length === 2) {
             var dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
             scale = Math.min(4, Math.max(1, scale * (dist / initDist)));
             img.style.transform = "scale(" + scale + ")";
             initDist = dist;
+        } else if (e.touches.length === 1) {
+            lbCurrentX = e.touches[0].clientX;
         }
-    }, { passive: true });
-
-    // Swipe in lightbox (single finger, not zoomed)
-    var lbStartX = 0, lbCurrentX = 0;
-    lb.ontouchstart = function(e) { if (e.touches.length === 1 && scale <= 1) lbStartX = e.touches[0].clientX; lbCurrentX = lbStartX; };
-    lb.ontouchmove = function(e) { if (e.touches.length === 1) lbCurrentX = e.touches[0].clientX; };
+    };
     lb.ontouchend = function(e) {
+        if (e.target.closest(".lightbox-close")) return;
+        // Double tap
+        var now = Date.now();
+        if (now - lastTap < 300 && e.changedTouches.length === 1) {
+            scale = scale > 1 ? 1 : 2.5;
+            img.style.transform = "scale(" + scale + ")";
+            lastTap = 0; return;
+        }
+        lastTap = now;
+        // Swipe (single finger, not zoomed)
         if (scale > 1) return;
         var diff = lbCurrentX - lbStartX;
         if (diff > 60 && lbIdx > 0) lbIdx--;
@@ -1958,17 +1956,18 @@ renderStickyBar();
 // Sticky bar visibility - only show when price CTAs are out of view
 (function() {
     var stickyEl = document.getElementById("stickyBar");
+    var scrimEl = document.getElementById("stickyBlurScrim");
     stickyEl.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
     stickyEl.style.transform = 'translateY(120%)';
     stickyEl.style.opacity = '0';
     var stickyShown = false;
     function checkCTAVisibility() {
         var buyBtn = document.getElementById("priceBuyNow");
-        if (!buyBtn) { if (!stickyShown) { stickyEl.style.transform = 'translateY(0)'; stickyEl.style.opacity = '1'; stickyShown = true; } return; }
+        if (!buyBtn) { if (!stickyShown) { stickyEl.style.transform = 'translateY(0)'; stickyEl.style.opacity = '1'; scrimEl.style.opacity = '1'; stickyShown = true; } return; }
         var rect = buyBtn.getBoundingClientRect();
         var inView = rect.top < window.innerHeight && rect.bottom > 0;
-        if (inView && stickyShown) { stickyEl.style.transform = 'translateY(120%)'; stickyEl.style.opacity = '0'; stickyShown = false; }
-        else if (!inView && !stickyShown) { stickyEl.style.transform = 'translateY(0)'; stickyEl.style.opacity = '1'; stickyShown = true; }
+        if (inView && stickyShown) { stickyEl.style.transform = 'translateY(120%)'; stickyEl.style.opacity = '0'; scrimEl.style.opacity = '0'; stickyShown = false; }
+        else if (!inView && !stickyShown) { stickyEl.style.transform = 'translateY(0)'; stickyEl.style.opacity = '1'; scrimEl.style.opacity = '1'; stickyShown = true; }
     }
     window.addEventListener('scroll', checkCTAVisibility, { passive: true });
     setTimeout(checkCTAVisibility, 500);
