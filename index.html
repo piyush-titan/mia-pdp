@@ -1831,17 +1831,17 @@ function buildStoreTile(s) {
     el.innerHTML = h;
 })();
 function openAllStoresSheet() {
-    if (window.matchMedia("(min-width: 1024px)").matches) {
-        /* desktop: accordion expand inline */
+    if (window.matchMedia("(min-width:1024px)").matches) {
         var btn = document.getElementById("storesViewMoreBtn");
-        var hidden = document.querySelectorAll("#storesGrid .accordion-hidden");
+        var allTiles = document.querySelectorAll("#storesGrid .store-tile-wrap");
         var isExpanded = btn.dataset.expanded === "1";
-        hidden.forEach(function(el) { el.style.display = isExpanded ? "none" : ""; });
+        allTiles.forEach(function(el, i) {
+            if (i >= 4) el.style.display = isExpanded ? "none" : "block";
+        });
         btn.dataset.expanded = isExpanded ? "0" : "1";
         btn.textContent = isExpanded ? "View More Stores" : "View Less";
         return;
     }
-    /* mobile: bottom sheet */
     var body = document.getElementById("allStoresBody");
     var h = '<div class="stores-grid" style="grid-template-columns:1fr">';
     storesData.forEach(function(s) { h += buildStoreTile(s); });
