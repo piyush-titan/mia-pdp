@@ -1,1018 +1,588 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mia PDP — Edge Cases & Use Cases</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
-    <style>
-        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Albert Sans',sans-serif;background:#f5f5f5;color:#1a1a1a;min-height:100vh}
-        .font-display{font-family:'Fraunces',serif}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Edge Cases — Product Highlights & Delivery & Availability</title>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Albert Sans', sans-serif; background: #f4f4f4; color: #43323a; min-width: 1280px; }
 
-        /* Navigation */
-        .nav-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;gap:16px}
-        .nav-back{width:36px;height:36px;border-radius:50%;border:1px solid #eee;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff}
-        .nav-back:hover{border-color:#D14A61}
-        .nav-title{font-size:16px;font-weight:700}
-        .nav-subtitle{font-size:11px;color:#777;margin-top:2px}
+.page-header { background: #fff; border-bottom: 1px solid #e8e8e8; padding: 20px 40px; display: flex; align-items: baseline; gap: 16px; position: sticky; top: 0; z-index: 10; }
+.page-title  { font-size: 18px; font-weight: 800; color: #1a1a1a; }
+.page-sub    { font-size: 13px; color: #888; }
 
-        /* Menu screen */
-        .menu-screen{max-width:420px;margin:0 auto;padding:24px 16px}
-        .menu-header{text-align:center;margin-bottom:32px}
-        .menu-header h1{font-size:24px;font-weight:600;font-family:'Fraunces',serif;color:#D14A61;margin-bottom:4px}
-        .menu-header p{font-size:13px;color:#777}
-        .menu-grid{display:flex;flex-direction:column;gap:12px}
-        .menu-item{background:#fff;border-radius:16px;padding:18px 20px;border:1px solid #f0f0f0;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.2s}
-        .menu-item:hover{border-color:#D14A61;transform:translateY(-2px);box-shadow:0 8px 24px rgba(209,74,97,0.08)}
-        .menu-item.active{border-color:#D14A61;background:#FDF2F4}
-        .menu-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-        .menu-text{flex:1}
-        .menu-text h3{font-size:14px;font-weight:700;margin-bottom:2px}
-        .menu-text p{font-size:11px;color:#777}
-        .menu-arrow{color:#ccc;font-size:18px}
-        .menu-item:hover .menu-arrow{color:#D14A61}
-        .menu-badge{font-size:9px;font-weight:800;padding:3px 8px;border-radius:100px;background:#D14A61;color:#fff;margin-left:auto}
-        .menu-item.disabled{opacity:0.5;pointer-events:none}
-        .menu-item.disabled .menu-badge{background:#ccc}
+.section-header { padding: 32px 40px 16px; display: flex; align-items: center; gap: 12px; }
+.section-label  { font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #D14A61; background: #fdf2f4; padding: 4px 12px; border-radius: 100px; }
+.section-title  { font-size: 20px; font-weight: 800; color: #1a1a1a; }
 
-        /* Case viewer */
-        .case-screen{display:none;max-width:420px;margin:0 auto;padding:24px 16px}
-        .case-screen.active{display:block}
-        .case-tabs{display:flex;gap:8px;margin-bottom:24px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch}
-        .case-tabs::-webkit-scrollbar{display:none}
-        .case-tab{padding:8px 16px;border-radius:100px;border:1.5px solid #eee;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;flex-shrink:0;background:#fff}
-        .case-tab.active{border-color:#D14A61;background:#FDF2F4;color:#D14A61}
-        .case-tab:hover{border-color:#D14A61}
+.cases-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; padding: 0 40px 8px; }
+.case-wrap  { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
+.case-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #888; padding: 12px 16px 10px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.tag { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 100px; white-space: nowrap; }
+.tag-normal  { background: #f0fdf4; color: #166534; }
+.tag-error   { background: #fef2f2; color: #991b1b; }
+.tag-warn    { background: #fffbeb; color: #78350f; }
+.tag-info    { background: #eff6ff; color: #1e40af; }
+.tag-loading { background: #f5f3ff; color: #4c1d95; }
+.case-body  { padding: 16px; }
+.divider    { height: 1px; background: #f0e8ea; margin: 32px 40px 0; }
 
-        /* Phone frame for previews */
-        .phone-frame{background:#fff;border-radius:24px;border:1px solid #e5e5e5;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,0.06);position:relative;overflow:hidden}
-        .phone-frame::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:100px;height:4px;background:#e5e5e5;border-radius:0 0 4px 4px}
-        .case-label{margin-top:16px;padding:12px 16px;border-radius:12px;background:#f9fafb;border:1px solid #f0f0f0}
-        .case-label h4{font-size:12px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-        .case-label p{font-size:11px;color:#777;line-height:1.5}
-        .case-label .tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:800;letter-spacing:0.5px}
-        .tag-success{background:#f0fdf4;color:#166534}
-        .tag-error{background:#fef2f2;color:#991b1b}
-        .tag-warning{background:#fffbeb;color:#92400e}
-        .tag-info{background:#eff6ff;color:#1e40af}
+/* ── Key Highlights (exact copy from index.html) ── */
+.key-highlights { border-radius: 20px; background: #fffdfd; box-shadow: 0 6px 20px -10px rgba(67,50,58,0.3); border: 1px solid #fae6e9; overflow: hidden; }
+.hl-area        { padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+.metal-box      { background: #fff; border-bottom: 1px solid #f0e8ea; padding: 8px 14px 12px; text-align: center; line-height: 1.25; }
+.metal-lbl      { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: #b83e53; }
+.metal-row      { display: flex; align-items: baseline; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.metal-karat    { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+.metal-desc     { font-size: 15px; font-weight: 600; color: #43323a; }
+.metal-net      { font-size: 11px; color: #a08c92; }
+.metal-net strong { font-weight: 600; color: #43323a; }
+.sec-grid       { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; row-gap: 8px; padding: 0 2px; }
+.sec-grid.cols-1 { grid-template-columns: 1fr; }
+.sec-cell       { border-left: 2px solid #f4ced5; padding-left: 10px; line-height: 1.25; }
+.sec-lbl        { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: #a08c92; }
+.sec-val        { font-size: 13px; font-weight: 600; color: #43323a; }
+.shimmer-gold   { background: linear-gradient(90deg,#6b4c10 0%,#b8860b 20%,#d4a843 35%,#f5e07a 50%,#d4a843 65%,#b8860b 80%,#6b4c10 100%); background-size: 300% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer-gold 4s linear infinite; }
+.shimmer-silver { background: linear-gradient(90deg,#3a3a3a 0%,#7a7a7a 20%,#b0b0b0 35%,#e8e8e8 50%,#b0b0b0 65%,#7a7a7a 80%,#3a3a3a 100%); background-size: 300% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer-silver 4s linear infinite; }
+@keyframes shimmer-gold   { 0% { background-position:200% center } 100% { background-position:-200% center } }
+@keyframes shimmer-silver { 0% { background-position:200% center } 100% { background-position:-200% center } }
+.cta-wrap { padding: 0 10px 10px; }
+.view-full-details-btn { display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%; padding: 10px 14px; font-size: 12px; font-weight: 700; color: #D14A61; border: 1px solid #f4ced5; border-radius: 100px; background: rgba(255,255,255,0.85); box-shadow: 0 2px 8px rgba(209,74,97,0.08); cursor: pointer; font-family: inherit; }
+.view-full-details-btn svg { width: 13px; height: 13px; stroke: #D14A61; flex-shrink: 0; transition: transform 0.3s; }
+.view-full-details-btn.open svg { transform: rotate(45deg); }
+.full-details-panel { display: grid; grid-template-rows: 0fr; background: #fff; transition: grid-template-rows 0.35s ease-in-out; }
+.full-details-panel.open { grid-template-rows: 1fr; border-top: 1px solid #f0e8ea; }
+.full-details-inner { overflow: hidden; padding: 0; }
+.full-details-panel.open .full-details-inner { padding: 0 12px; display: block; }
+.acc-group { padding: 12px 0; border-bottom: 1px solid #f0e8ea; }
+.acc-group:last-child { border-bottom: none; padding-bottom: 4px; }
+.acc-group-title { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; }
+.acc-rows { display: flex; flex-direction: column; }
+.acc-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 5px 0; border-bottom: 1px solid #f7f3f4; }
+.acc-row:last-child { border-bottom: none; }
+.acc-row-label { font-size: 12px; color: #a08c92; }
+.acc-row-value { font-size: 12px; font-weight: 600; color: #43323a; text-align: right; }
+.acc-rows-2col { display: grid; grid-template-columns: 1fr 1fr; }
+.acc-rows-2col .acc-row { flex-direction: column; align-items: flex-start; gap: 2px; border-bottom: 1px solid #f7f3f4; border-right: none; }
+.acc-rows-2col .acc-row.full { grid-column: 1/-1; flex-direction: row; justify-content: space-between; align-items: center; }
+.acc-rows-2col .acc-row-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #a08c92; }
+.acc-rows-2col .acc-row.full .acc-row-label { font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: 0; }
+.acc-rows-2col .acc-row-value { font-size: 12px; font-weight: 600; color: #43323a; }
+.acc-rows-2col .acc-row.full .acc-row-value { text-align: right; }
+.acc-desc-text { font-size: 12px; line-height: 1.7; color: #6d565e; }
 
-        /* ====== DELIVERY SECTION STYLES (replicated from PDP) ====== */
-        .delivery-section{padding:16px;background:#fff;border-radius:16px;border:1px solid #f0f0f0}
-        .delivery-title{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-        .icon-pill{padding:5px 8px;border-radius:100px;background:#FDF2F4;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-        .pincode-row{display:flex;gap:8px;margin-bottom:12px}
-        .pincode-input{flex:1;padding:12px 14px;border-radius:100px;border:1.5px solid #D14A61;font-size:14px;font-weight:500;outline:none;font-family:inherit}
-        .pincode-input::placeholder{color:#bbb}
-        .pincode-check-btn{padding:12px 20px;border-radius:100px;font-size:12px;font-weight:700;background:#D14A61;color:#fff;white-space:nowrap;border:none;cursor:pointer}
-        .delivery-result{display:none;padding:12px;border-radius:12px;background:#f0fdf4;border:1px solid rgba(34,197,94,0.15)}
-        .delivery-result.show{display:flex;align-items:flex-start;gap:8px}
-        .delivery-result.error{background:#fef2f2;border:1px solid rgba(239,68,68,0.15)}
-        .delivery-result .result-icon{width:18px;height:18px;flex-shrink:0;margin-top:1px}
-        .delivery-result p{font-size:12px;color:#166534;line-height:1.5}
-        .delivery-result.error p{color:#991b1b}
-        .delivery-badges{margin-top:12px;position:relative}
-        .delivery-badges-grid{display:flex;justify-content:space-between;gap:8px}
-        .delivery-badge{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:600;color:#9f1239;padding:10px 4px;border-radius:12px;background:#fff5f7;flex:1;text-align:center;line-height:1.3}
-        .delivery-badge svg{width:16px;height:16px;flex-shrink:0}
-        /* spacing between stacked cases */
-        .case-content{margin-bottom:32px}
-        .case-content:last-child{margin-bottom:0}
-        /* country selector (delivery edge case) */
-        .ec-country-wrap{position:relative;flex-shrink:0}
-        .ec-country-btn{display:flex;align-items:center;gap:4px;padding:11px 10px;border-radius:100px;border:1.5px solid #D14A61;background:#fff;cursor:pointer;white-space:nowrap}
-        .ec-cflag{font-size:16px;line-height:1}
-        .ec-ccode{font-size:11px;font-weight:700;color:#1a1a1a}
-        .ec-country-btn svg{width:9px;height:9px;stroke:#aaa;stroke-width:2.5;fill:none}
-        .ec-country-dropdown{background:#fff;border-radius:14px;border:1px solid #f0e8ea;box-shadow:0 8px 24px rgba(0,0,0,0.14);max-height:260px;overflow-y:auto;width:220px;scrollbar-width:none}
-        .ec-country-dropdown::-webkit-scrollbar{display:none}
-        .ec-coption{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:12px;border-bottom:1px solid #faf4f5}
-        .ec-coption:last-child{border-bottom:none}
-        .ec-coption.ec-selected{background:#fdf2f4;color:#D14A61;font-weight:700}
-        .ec-coption.ec-hover{background:#fdf2f4}
-        .ec-coflag{font-size:17px;line-height:1;flex-shrink:0}
-    </style>
+/* ── Delivery section ── */
+.delivery-section { background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; padding: 16px; }
+.delivery-title   { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.icon-pill        { width: 28px; height: 28px; border-radius: 8px; background: #fdf2f4; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.pincode-row      { display: flex; gap: 8px; margin-bottom: 12px; }
+.pincode-input    { flex: 1; padding: 12px 14px; border-radius: 100px; border: 1.5px solid #D14A61; font-size: 14px; font-weight: 500; outline: none; font-family: inherit; }
+.pincode-input::placeholder { color: #bbb; }
+.pincode-input:focus { border-color: #b03a50; }
+.pincode-input.invalid { border-color: #ef4444; }
+.pincode-check-btn { padding: 12px 20px; border-radius: 100px; font-size: 12px; font-weight: 700; background: #D14A61; color: #fff; white-space: nowrap; border: none; cursor: pointer; font-family: inherit; }
+.pincode-check-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.delivery-result  { display: none; padding: 12px; border-radius: 12px; background: #f0fdf4; border: 1px solid rgba(34,197,94,0.15); margin-bottom: 12px; }
+.delivery-result.show  { display: flex; align-items: flex-start; gap: 8px; }
+.delivery-result.error { background: #fef2f2; border: 1px solid rgba(239,68,68,0.15); }
+.delivery-result.loading { background: #fafafa; border: 1px solid #f0f0f0; align-items: center; gap: 10px; }
+.result-icon { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
+.delivery-result p { font-size: 12px; color: #166534; line-height: 1.5; }
+.delivery-result.error p { color: #991b1b; }
+.delivery-result.loading p { color: #888; }
+.delivery-badges-grid { display: flex; justify-content: space-between; gap: 8px; }
+.delivery-badge { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; color: #9f1239; padding: 10px 4px; border-radius: 12px; background: #fff5f7; flex: 1; text-align: center; line-height: 1.3; border: none; }
+.delivery-badge i { width: 16px; height: 16px; color: #D14A61; flex-shrink: 0; }
+.input-hint { font-size: 11px; color: #ef4444; margin: -8px 0 10px 4px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner { width: 18px; height: 18px; border: 2px solid #f0f0f0; border-top-color: #D14A61; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+/* country selector — exact copy from index.html */
+.country-selector-wrap { position: relative; flex-shrink: 0; }
+.country-selector-btn { display: flex; align-items: center; gap: 4px; padding: 11px 10px; border-radius: 100px; border: 1.5px solid #D14A61; background: #fff; cursor: pointer; white-space: nowrap; font-family: inherit; }
+.country-flag-el { font-size: 16px; line-height: 1; }
+.country-code-el { font-size: 11px; font-weight: 700; color: #1a1a1a; }
+.country-selector-btn svg { width: 9px; height: 9px; stroke: #aaa; stroke-width: 2.5; }
+.country-dropdown { display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 300; background: #fff; border-radius: 14px; border: 1px solid #f0e8ea; box-shadow: 0 8px 24px rgba(0,0,0,0.14); max-height: 260px; overflow-y: auto; min-width: 220px; scrollbar-width: none; }
+.country-dropdown::-webkit-scrollbar { display: none; }
+.country-dropdown.open { display: block; }
+.country-option { display: flex; align-items: center; gap: 10px; padding: 11px 14px; font-size: 12px; cursor: pointer; border-bottom: 1px solid #faf4f5; transition: background 0.12s; }
+.country-option:last-child { border-bottom: none; }
+.country-option:hover { background: #fdf2f4; }
+.country-option.selected { background: #fdf2f4; color: #D14A61; font-weight: 700; }
+.co-flag { font-size: 18px; line-height: 1; flex-shrink: 0; }
+</style>
 </head>
 <body>
 
-<!-- ===== MENU SCREEN ===== -->
-<div id="menuScreen">
-    <div class="menu-screen" style="display:block">
-        <div class="menu-header">
-            <h1>Mia PDP Edge Cases</h1>
-            <p>Section-wise use cases & edge case previews</p>
-        </div>
-        <div class="menu-grid">
-            <div class="menu-item active" onclick="showSection('highlights')">
-                <div class="menu-icon" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd)">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                </div>
-                <div class="menu-text">
-                    <h3>Key Highlights</h3>
-                    <p>Gold, silver, diamond, stones, categories</p>
-                </div>
-                <span class="menu-badge">4</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            
-            <div class="menu-item active" onclick="showSection('delivery')">
-                <div class="menu-icon" style="background:linear-gradient(135deg,#FDF2F4,#fecdd3)">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                </div>
-                <div class="menu-text">
-                    <h3>Delivery Section</h3>
-                    <p>Pincode check, delivery estimates, errors</p>
-                </div>
-                <span class="menu-badge">4</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-item active" onclick="showSection('ribbon')">
-                <div class="menu-icon" style="background:linear-gradient(135deg,#fef3cd,#fde68a)">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                </div>
-                <div class="menu-text">
-                    <h3>Ribbon Tag</h3>
-                    <p>Gold, pink, purple variants + long text</p>
-                </div>
-                <span class="menu-badge">4</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-item active" onclick="showSection('similar')">
-                <div class="menu-icon" style="background:linear-gradient(135deg,#f5f3ff,#ddd6fe)">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                </div>
-                <div class="menu-text">
-                    <h3>Show Similar</h3>
-                    <p>API error empty state</p>
-                </div>
-                <span class="menu-badge">1</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-item active" onclick="showSection('header')">
-                <div class="menu-icon" style="background:linear-gradient(135deg,#f0fdf4,#bbf7d0)">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
-                </div>
-                <div class="menu-text">
-                    <h3>Product Header</h3>
-                    <p>Long name, spacing edge cases</p>
-                </div>
-                <span class="menu-badge">2</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-item active" onclick="showSection('price')">
-                <div class="menu-icon" style="background:linear-gradient(135deg,#FDF2F4,#fecdd3)">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                </div>
-                <div class="menu-text">
-                    <h3>Price Section</h3>
-                    <p>Discount types, no prebook layout</p>
-                </div>
-                <span class="menu-badge">2</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-item active" onclick="showSection('sizeguide')">
-                <div class="menu-icon" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe)">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><line x1="2" y1="12" x2="22" y2="12"/><path d="M6 8v8M10 10v4M14 10v4M18 8v8"/></svg>
-                </div>
-                <div class="menu-text">
-                    <h3>Size Guides</h3>
-                    <p>Rings, bangles, bracelets, anklets, chains</p>
-                </div>
-                <span class="menu-badge">7</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-item active" onclick="showSection('exchange')">
-                <div class="menu-icon" style="background:linear-gradient(135deg,#fffbeb,#fde68a)">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/></svg>
-                </div>
-                <div class="menu-text">
-                    <h3>Exchange Gold</h3>
-                    <p>Inline validation, final result screens</p>
-                </div>
-                <span class="menu-badge">3</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-item disabled">
-                <div class="menu-icon" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe)">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                </div>
-                <div class="menu-text">
-                    <h3>Coupons Section</h3>
-                    <p>Applied, expired, invalid states</p>
-                </div>
-                <span class="menu-badge">Soon</span>
-                <span class="menu-arrow">›</span>
-            </div>
-        </div>
-    </div>
+<div class="page-header">
+  <span class="page-title">Edge Cases</span>
+  <span class="page-sub">Product Highlights &nbsp;·&nbsp; Delivery &amp; Availability &nbsp;·&nbsp; Desktop (1280px+)</span>
 </div>
 
-<!-- ===== DELIVERY SECTION CASES ===== -->
-<div id="deliveryScreen" style="display:none">
-    <div class="nav-header">
-        <div class="nav-back" onclick="showMenu()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        </div>
-        <div>
-            <div class="nav-title">Delivery Section</div>
-            <div class="nav-subtitle">Edge cases & use cases</div>
-        </div>
-    </div>
-    <div class="case-screen active">
-
-        <!-- Case 1: Successful delivery -->
-        <div class="case-content" id="case-delivery-success">
-            <div class="phone-frame">
-                <div class="delivery-section">
-                    <div class="delivery-title">
-                        <span class="icon-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
-                        Delivery & Availability
-                    </div>
-                    <div class="pincode-row">
-                        <div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div>
-                        <input type="tel" class="pincode-input" value="400001" readonly>
-                        <button class="pincode-check-btn">Check</button>
-                    </div>
-                    <div class="delivery-result show">
-                        <svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
-                        <p>
-                            <span style="font-size:11px;color:#555">Delivering to <strong style="color:#1a1a1a">Mumbai, Maharashtra</strong></span><br>
-                            <strong style="font-size:13px">Estimated Delivery: 14th July</strong>
-                        </p>
-                    </div>
-                    <div class="delivery-badges">
-                        <div class="delivery-badges-grid">
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div>
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div>
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="case-label">
-                <h4><span class="tag tag-success">HAPPY PATH</span> Delivery Available</h4>
-                <p>User enters valid serviceable pincode (400001). Shows detected city/state, estimated delivery date in clean single-date format. Dark green check icon.</p>
-            </div>
-        </div>
-
-        <!-- Case 2: Not serviceable -->
-        <div class="case-content" id="case-delivery-error">
-            <div class="phone-frame">
-                <div class="delivery-section">
-                    <div class="delivery-title">
-                        <span class="icon-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
-                        Delivery & Availability
-                    </div>
-                    <div class="pincode-row">
-                        <div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div>
-                        <input type="tel" class="pincode-input" value="793108" readonly>
-                        <button class="pincode-check-btn">Check</button>
-                    </div>
-                    <div class="delivery-result show error">
-                        <svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="#991b1b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-                        <p>
-                            <strong>Oops! We can't deliver here yet 😔</strong><br>
-                            <span style="font-size:11px;color:#991b1b">This pincode isn't serviceable right now. Try a nearby one or check back later!</span>
-                        </p>
-                    </div>
-                    <div class="delivery-badges">
-                        <div class="delivery-badges-grid">
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div>
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div>
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="case-label">
-                <h4><span class="tag tag-error">ERROR STATE</span> Not Serviceable</h4>
-                <p>User enters a pincode that isn't serviceable. Red background box with X icon. Friendly gen-z tone copy. Toast shows error.</p>
-            </div>
-        </div>
-
-        <!-- Case 3: Empty state -->
-        <div class="case-content" id="case-delivery-empty">
-            <div class="phone-frame">
-                <div class="delivery-section">
-                    <div class="delivery-title">
-                        <span class="icon-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
-                        Delivery & Availability
-                    </div>
-                    <div class="pincode-row">
-                        <div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div>
-                        <input type="tel" class="pincode-input" placeholder="Enter pincode" readonly>
-                        <button class="pincode-check-btn">Check</button>
-                    </div>
-                    <div class="delivery-badges">
-                        <div class="delivery-badges-grid">
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div>
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div>
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="case-label">
-                <h4><span class="tag tag-info">DEFAULT</span> Empty / Initial State</h4>
-                <p>No pincode entered yet. Input is empty with placeholder. No delivery result shown. Only trust ticker badges visible below.</p>
-            </div>
-        </div>
-
-        <!-- Case 4: Invalid input -->
-        <div class="case-content" id="case-delivery-invalid">
-            <div class="phone-frame">
-                <div class="delivery-section">
-                    <div class="delivery-title">
-                        <span class="icon-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
-                        Delivery & Availability
-                    </div>
-                    <div class="pincode-row">
-                        <div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div>
-                        <input type="tel" class="pincode-input" value="400" readonly style="border-color:#EF4444">
-                        <button class="pincode-check-btn">Check</button>
-                    </div>
-                    <div style="padding:8px 12px;border-radius:8px;background:#fef2f2;margin-bottom:12px;display:flex;align-items:center;gap:6px">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                        <span style="font-size:11px;color:#991b1b;font-weight:600">Please enter a valid 6-digit pincode</span>
-                    </div>
-                    <div class="delivery-badges">
-                        <div class="delivery-badges-grid">
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div>
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div>
-                            <div class="delivery-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="case-label">
-                <h4><span class="tag tag-warning">VALIDATION</span> Invalid Pincode</h4>
-                <p>User enters less than 6 digits or non-numeric characters. Input border turns red, inline error message shown. Input only accepts numbers (non-numeric chars stripped).</p>
-            </div>
-        </div>
-
-        <!-- Case 5: Country dropdown open -->
-        <div class="case-content" id="case-delivery-country-dropdown">
-            <div class="phone-frame" style="display:flex;justify-content:center;padding:20px 16px">
-                <div class="ec-country-dropdown">
-                    <div class="ec-coption ec-selected"><span class="ec-coflag">🇮🇳</span><span>India (IN)</span></div>
-                    <div class="ec-coption ec-hover"><span class="ec-coflag">🇦🇪</span><span>UAE (UAE)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇩🇪</span><span>Germany (DE)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇸🇦</span><span>Saudi Arabia (KSA)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇳🇱</span><span>Netherlands (NL)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇲🇾</span><span>Malaysia (MY)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇰🇪</span><span>Kenya (KE)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇷🇴</span><span>Romania (RO)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇪🇸</span><span>Spain (ES)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇵🇹</span><span>Portugal (PT)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇶🇦</span><span>Qatar (QA)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇮🇹</span><span>Italy (IT)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇴🇲</span><span>Oman (OM)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇰🇼</span><span>Kuwait (KW)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇧🇭</span><span>Bahrain (BH)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇿🇦</span><span>South Africa (ZA)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇨🇦</span><span>Canada (CA)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇳🇿</span><span>New Zealand (NZ)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇦🇺</span><span>Australia (AU)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇸🇬</span><span>Singapore (SG)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇺🇸</span><span>USA (US)</span></div>
-                    <div class="ec-coption"><span class="ec-coflag">🇬🇧</span><span>United Kingdom (UK)</span></div>
-                </div>
-            </div>
-            <div class="case-label">
-                <h4><span class="tag tag-info">INTERACTION</span> Country Dropdown Open</h4>
-                <p>User taps the country selector pill (🇮🇳 IN ▾). Dropdown opens below showing all 22 countries — flag emoji + full name + code. India is selected (pink highlight). UAE row shows hover state. Dropdown scrolls if list exceeds max-height.</p>
-            </div>
-        </div>
-    </div>
+<!-- ═══════════ MODULE 1 — PRODUCT HIGHLIGHTS ═══════════ -->
+<div class="section-header">
+  <span class="section-label">Module 1</span>
+  <span class="section-title">Product Highlights</span>
 </div>
+
+<div class="cases-row" id="highlightsCases"></div><!-- /cases-row highlights -->
+
+<div class="divider"></div>
+
+<!-- ═══════════ MODULE 2 — DELIVERY & AVAILABILITY ═══════════ -->
+<div class="section-header">
+  <span class="section-label">Module 2</span>
+  <span class="section-title">Delivery &amp; Availability</span>
+</div>
+
+<div class="cases-row" style="padding-bottom:48px">
+
+  <!-- 1. Default empty -->
+  <div class="case-wrap">
+    <div class="case-label">Default — empty, no pincode entered <span class="tag tag-normal">Default</span></div>
+    <div class="case-body">
+      <div class="delivery-section">
+        <div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="width:14px;height:14px;color:#D14A61"></i></span>Delivery &amp; Availability</div>
+        <div class="pincode-row">
+          <input type="tel" class="pincode-input" placeholder="Enter pincode" maxlength="6">
+          <button class="pincode-check-btn">Check</button>
+        </div>
+        <div class="delivery-badges-grid">
+          <div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div>
+          <div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div>
+          <div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Serviceable result -->
+  <div class="case-wrap">
+    <div class="case-label">Valid pincode — serviceable, delivery date shown <span class="tag tag-normal">Success</span></div>
+    <div class="case-body">
+      <div class="delivery-section">
+        <div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="width:14px;height:14px;color:#D14A61"></i></span>Delivery &amp; Availability</div>
+        <div class="pincode-row">
+          <input type="tel" class="pincode-input" value="400001" maxlength="6">
+          <button class="pincode-check-btn">Check</button>
+        </div>
+        <div class="delivery-result show">
+          <svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+          <p><strong style="font-size:13px">Estimated Delivery: 14th Aug</strong><br>Mumbai, Maharashtra</p>
+        </div>
+        <div class="delivery-badges-grid">
+          <div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div>
+          <div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div>
+          <div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Not serviceable -->
+  <div class="case-wrap">
+    <div class="case-label">Valid pincode — not serviceable <span class="tag tag-error">Error</span></div>
+    <div class="case-body">
+      <div class="delivery-section">
+        <div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="width:14px;height:14px;color:#D14A61"></i></span>Delivery &amp; Availability</div>
+        <div class="pincode-row">
+          <input type="tel" class="pincode-input" value="795003" maxlength="6">
+          <button class="pincode-check-btn">Check</button>
+        </div>
+        <div class="delivery-result show error">
+          <svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="#991b1b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          <p><strong>Oops! We can't deliver here yet 😔</strong><br><span style="font-size:11px;color:#991b1b">This pincode isn't serviceable right now.</span></p>
+        </div>
+        <div class="delivery-badges-grid">
+          <div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div>
+          <div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div>
+          <div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Incomplete input -->
+  <div class="case-wrap">
+    <div class="case-label">Incomplete pincode — fewer than 6 digits <span class="tag tag-warn">Validation</span></div>
+    <div class="case-body">
+      <div class="delivery-section">
+        <div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="width:14px;height:14px;color:#D14A61"></i></span>Delivery &amp; Availability</div>
+        <div class="pincode-row">
+          <input type="tel" class="pincode-input invalid" value="4001" maxlength="6">
+          <button class="pincode-check-btn">Check</button>
+        </div>
+        <p style="font-size:11px;color:#ef4444;margin:-8px 0 10px 4px">Please enter a valid 6-digit pincode</p>
+        <div class="delivery-badges-grid">
+          <div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div>
+          <div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div>
+          <div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Loading state -->
+  <div class="case-wrap">
+    <div class="case-label">Checking pincode — loading / in-progress <span class="tag tag-loading">Loading</span></div>
+    <div class="case-body">
+      <div class="delivery-section">
+        <div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="width:14px;height:14px;color:#D14A61"></i></span>Delivery &amp; Availability</div>
+        <div class="pincode-row">
+          <input type="tel" class="pincode-input" value="110001" maxlength="6">
+          <button class="pincode-check-btn" disabled>Checking…</button>
+        </div>
+        <div class="delivery-result show loading">
+          <div class="spinner"></div>
+          <p>Checking serviceability for 110001…</p>
+        </div>
+        <div class="delivery-badges-grid">
+          <div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div>
+          <div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div>
+          <div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. International — postal code -->
+  <div class="case-wrap">
+    <div class="case-label">International visitor — postal / ZIP code mode <span class="tag tag-info">Intl</span></div>
+    <div class="case-body">
+      <div class="delivery-section">
+        <div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="width:14px;height:14px;color:#D14A61"></i></span>Delivery &amp; Availability</div>
+        <div class="pincode-row">
+          <input type="text" class="pincode-input" placeholder="Enter postal code">
+          <button class="pincode-check-btn">Check</button>
+        </div>
+        <div class="delivery-badges-grid">
+          <div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div>
+          <div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div>
+          <div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. International — city / area mode -->
+  <div class="case-wrap">
+    <div class="case-label">International visitor — city / area input mode <span class="tag tag-info">Intl</span></div>
+    <div class="case-body">
+      <div class="delivery-section">
+        <div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="width:14px;height:14px;color:#D14A61"></i></span>Delivery &amp; Availability</div>
+        <div class="pincode-row">
+          <input type="text" class="pincode-input" placeholder="Enter city / area">
+          <button class="pincode-check-btn">Check</button>
+        </div>
+        <div class="delivery-badges-grid">
+          <div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div>
+          <div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div>
+          <div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Country selector — dropdown open (India selected) -->
+  <div class="case-wrap">
+    <div class="case-label">Country selector — dropdown open, India selected <span class="tag tag-normal">Default</span></div>
+    <div class="case-body">
+      <div class="delivery-section">
+        <div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="width:14px;height:14px;color:#D14A61"></i></span>Delivery &amp; Availability</div>
+        <div class="pincode-row">
+          <div class="country-selector-wrap">
+            <button class="country-selector-btn" type="button">
+              <span class="country-flag-el">🇮🇳</span>
+              <span class="country-code-el">IN</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="country-dropdown open">
+              <div class="country-option selected"><span class="co-flag">🇮🇳</span><span>India (IN)</span></div>
+              <div class="country-option"><span class="co-flag">🇦🇪</span><span>UAE (UAE)</span></div>
+              <div class="country-option"><span class="co-flag">🇩🇪</span><span>Germany (DE)</span></div>
+              <div class="country-option"><span class="co-flag">🇸🇦</span><span>Saudi Arabia (KSA)</span></div>
+              <div class="country-option"><span class="co-flag">🇺🇸</span><span>USA (US)</span></div>
+              <div class="country-option"><span class="co-flag">🇬🇧</span><span>United Kingdom (UK)</span></div>
+              <div class="country-option"><span class="co-flag">🇸🇬</span><span>Singapore (SG)</span></div>
+              <div class="country-option"><span class="co-flag">🇦🇺</span><span>Australia (AU)</span></div>
+            </div>
+          </div>
+          <input type="tel" class="pincode-input" placeholder="Enter pincode" maxlength="6">
+          <button class="pincode-check-btn">Check</button>
+        </div>
+        <div class="delivery-badges-grid">
+          <div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div>
+          <div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div>
+          <div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Country selector — non-India (UAE, no postal code) -->
+  <div class="case-wrap">
+    <div class="case-label">Country selector — UAE selected, no postal code <span class="tag tag-info">No postal</span></div>
+    <div class="case-body">
+      <div class="delivery-section">
+        <div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="width:14px;height:14px;color:#D14A61"></i></span>Delivery &amp; Availability</div>
+        <div class="pincode-row">
+          <div class="country-selector-wrap">
+            <button class="country-selector-btn" type="button">
+              <span class="country-flag-el">🇦🇪</span>
+              <span class="country-code-el">UAE</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+          <input type="text" class="pincode-input" placeholder="Enter city / area">
+          <button class="pincode-check-btn">Check</button>
+        </div>
+        <div class="delivery-badges-grid">
+          <div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div>
+          <div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div>
+          <div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. Country selector — non-India (Germany, postal code mode) -->
+  <div class="case-wrap">
+    <div class="case-label">Country selector — Germany, postal code mode + result <span class="tag tag-normal">Intl success</span></div>
+    <div class="case-body">
+      <div class="delivery-section">
+        <div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="width:14px;height:14px;color:#D14A61"></i></span>Delivery &amp; Availability</div>
+        <div class="pincode-row">
+          <div class="country-selector-wrap">
+            <button class="country-selector-btn" type="button">
+              <span class="country-flag-el">🇩🇪</span>
+              <span class="country-code-el">DE</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+          <input type="tel" class="pincode-input" value="10115">
+          <button class="pincode-check-btn">Check</button>
+        </div>
+        <div class="delivery-result show">
+          <svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+          <p><strong style="font-size:13px">Estimated Delivery: 14th Aug</strong><br>Berlin, Germany</p>
+        </div>
+        <div class="delivery-badges-grid">
+          <div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div>
+          <div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div>
+          <div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Recovery — error then success -->
+  <div class="case-wrap">
+    <div class="case-label">Re-check — corrected pincode succeeds after prior error <span class="tag tag-normal">Recovery</span></div>
+    <div class="case-body">
+      <div class="delivery-section">
+        <div class="delivery-title"><span class="icon-pill"><i data-lucide="truck" style="width:14px;height:14px;color:#D14A61"></i></span>Delivery &amp; Availability</div>
+        <div class="pincode-row">
+          <input type="tel" class="pincode-input" value="560001" maxlength="6">
+          <button class="pincode-check-btn">Check</button>
+        </div>
+        <div class="delivery-result show">
+          <svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+          <p><strong style="font-size:13px">Estimated Delivery: 16th Aug</strong><br>Bengaluru, Karnataka</p>
+        </div>
+        <div class="delivery-badges-grid">
+          <div class="delivery-badge"><i data-lucide="package"></i>Free<br>Shipping</div>
+          <div class="delivery-badge"><i data-lucide="refresh-cw"></i>Lifetime<br>Exchange</div>
+          <div class="delivery-badge"><i data-lucide="undo-2"></i>30-Day<br>Returns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /cases-row delivery -->
 
 <script>
-function showSection(section) {
-    document.getElementById('menuScreen').style.display = 'none';
-    document.getElementById(section + 'Screen').style.display = 'block';
+// ── Same variants as highlights.html (mobile edge cases) ──
+var variants = [
+  {
+    title: "18K Rose Gold — Full",
+    effect: "5 attrs · Diamonds + Gemstone + Occasion",
+    product: {
+      designCode: "JWL-8472-RG", karatage: "18K", metal: "Gold", metalColour: "Rose",
+      metalWeight: "4.50 g", grossWeight: "5.20 g", occasion: "Engagement", style: "Vintage Halo",
+      diamonds:  { clarity: "VS-SI", weight: "0.10 g", count: 24, shape: "Round", colour: "G-H", carat: "0.50 ct" },
+      gemstones: { count: 1, shape: "Oval", weight: "0.60 g" }
+    }
+  },
+  {
+    title: "925 Silver — 4 attrs",
+    effect: "Diamonds · Occasion · No gemstone",
+    product: {
+      designCode: "JWL-2231-SL", karatage: "925", metal: "Silver", metalColour: "Rhodium Plated",
+      metalWeight: "6.10 g", grossWeight: "7.00 g", occasion: "Anniversary", style: "Classic Solitaire",
+      diamonds:  { clarity: "SI", weight: "0.08 g", count: 12, shape: "Round", colour: "H-I", carat: "0.25 ct" },
+      gemstones: null
+    }
+  },
+  {
+    title: "14KT White Gold — 3 attrs",
+    effect: "Diamonds only · No occasion · No gemstone",
+    product: {
+      designCode: "JWL-5519-WG", karatage: "14KT", metal: "Gold", metalColour: "White",
+      metalWeight: "3.20 g", grossWeight: "3.85 g", occasion: null, style: "Eternity Band",
+      diamonds:  { clarity: "VVS", weight: "0.15 g", count: 36, shape: "Round", colour: "F-G", carat: "0.75 ct" },
+      gemstones: null
+    }
+  },
+  {
+    title: "18KT Rose & White Gold — 3 attrs",
+    effect: "Gemstone only · No diamonds · No occasion",
+    product: {
+      designCode: "JWL-7734-DT", karatage: "18KT", metal: "Gold", metalColour: "Rose & White",
+      metalWeight: "5.80 g", grossWeight: "6.50 g", occasion: null, style: "Two-Tone Contemporary",
+      diamonds:  null,
+      gemstones: { count: 1, shape: "Pear", weight: "1.20 g" }
+    }
+  },
+  {
+    title: "22KT Yellow Gold — 2 attrs",
+    effect: "Minimal · No stones · No occasion",
+    product: {
+      designCode: "JWL-1102-YG", karatage: "22KT", metal: "Gold", metalColour: "Yellow",
+      metalWeight: "8.20 g", grossWeight: "8.20 g", occasion: null, style: "Plain Band",
+      diamonds: null, gemstones: null
+    }
+  },
+  {
+    title: "9KT Yellow Gold — 3 attrs",
+    effect: "Gemstones · No diamonds · No occasion",
+    product: {
+      designCode: "JWL-0983-YG", karatage: "9KT", metal: "Gold", metalColour: "Yellow",
+      metalWeight: "2.10 g", grossWeight: "2.80 g", occasion: null, style: "Cluster Ring",
+      diamonds:  null,
+      gemstones: { count: 3, shape: "Round", weight: "0.90 g" }
+    }
+  },
+  {
+    title: "22KT Yellow & White Gold — 4 attrs",
+    effect: "Diamonds · Occasion · Dual tone",
+    product: {
+      designCode: "JWL-3356-YW", karatage: "22KT", metal: "Gold", metalColour: "Yellow & White",
+      metalWeight: "6.40 g", grossWeight: "7.10 g", occasion: "Wedding", style: "Dual Tone Bangle",
+      diamonds:  { clarity: "SI", weight: "0.06 g", count: 18, shape: "Round", colour: "G-H", carat: "0.30 ct" },
+      gemstones: null
+    }
+  },
+  {
+    title: "18K Rose Gold — All details",
+    effect: "5 attrs · No animation",
+    product: {
+      designCode: "JWL-9001-RG", karatage: "18K", metal: "Gold", metalColour: "Rose",
+      metalWeight: "4.80 g", grossWeight: "5.60 g", occasion: "Engagement", style: "Floral Halo",
+      diamonds:  { clarity: "VVS-VS", weight: "0.12 g", count: 30, shape: "Round", colour: "F-G", carat: "0.60 ct" },
+      gemstones: { count: 1, shape: "Cushion", weight: "0.75 g" }
+    }
+  }
+];
+
+function buildHighlights(el, p) {
+  var isGold = p.metal.toLowerCase() === 'gold';
+  var shimmer = isGold ? 'shimmer-gold' : 'shimmer-silver';
+  var attrs = [];
+  if (p.diamonds)  attrs.push(['Diamonds',  p.diamonds.count + ' \u00b7 ' + p.diamonds.carat]);
+  if (p.gemstones) attrs.push(['Gemstone',  p.gemstones.count + ' \u00b7 ' + p.gemstones.shape]);
+  if (p.occasion)  attrs.push(['Occasion',  p.occasion]);
+  attrs.push(['Gross Wt.', p.grossWeight]);
+
+  var cells = attrs.map(function(a) {
+    return '<div class="sec-cell"><div class="sec-lbl">' + a[0] + '</div><div class="sec-val">' + a[1] + '</div></div>';
+  }).join('');
+
+  el.innerHTML =
+    '<div class="metal-box">' +
+      '<div class="metal-lbl">Metal</div>' +
+      '<div class="metal-row">' +
+        '<span class="metal-karat ' + shimmer + '">' + p.karatage + '</span>' +
+        '<span class="metal-desc">' + p.metalColour + ' ' + p.metal + '</span>' +
+        '<span class="metal-net">\u00b7 Net <strong>' + p.metalWeight + '</strong></span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="sec-grid' + (attrs.length === 1 ? ' cols-1' : '') + '">' + cells + '</div>';
 }
-function showMenu() {
-    document.querySelectorAll('[id$="Screen"]').forEach(function(el) { el.style.display = 'none'; });
-    document.getElementById('menuScreen').style.display = 'block';
+
+function buildAccordion(inner, p) {
+  var groups = [
+    {
+      title: 'General Details',
+      rows: [
+        p.designCode && ['Design Code', p.designCode],
+        ['Gross Weight', p.grossWeight],
+        p.occasion    && ['Occasion',    p.occasion],
+        p.style       && ['Style',       p.style]
+      ].filter(Boolean)
+    },
+    {
+      title: p.metal + ' Details',
+      rows: [['Purity', p.karatage], ['Weight', p.metalWeight], ['Colour', p.metalColour]]
+    },
+    p.diamonds && {
+      title: 'Diamond Details',
+      rows: [['Clarity', p.diamonds.clarity], ['Weight', p.diamonds.weight],
+             ['Count', String(p.diamonds.count)], ['Shape', p.diamonds.shape], ['Colour', p.diamonds.colour]]
+    },
+    p.gemstones && {
+      title: 'Gemstone Details',
+      rows: [['Count', String(p.gemstones.count)], ['Shape', p.gemstones.shape], ['Weight', p.gemstones.weight]]
+    }
+  ].filter(Boolean);
+
+  inner.innerHTML = groups.map(function(g) {
+    return '<div class="acc-group">' +
+      '<div class="acc-group-title">' + g.title + '</div>' +
+      '<div class="acc-rows">' +
+        g.rows.map(function(r) {
+          return '<div class="acc-row"><span class="acc-row-label">' + r[0] + '</span><span class="acc-row-value">' + r[1] + '</span></div>';
+        }).join('') +
+      '</div></div>';
+  }).join('');
 }
-function showCase(section, caseName, clickedTab) {
-    var screen = document.getElementById(section + 'Screen');
-    screen.querySelectorAll('.case-tab').forEach(function(t) { t.classList.remove('active'); });
-    clickedTab.classList.add('active');
-    screen.querySelectorAll('.case-content').forEach(function(c) { c.style.display = 'none'; });
-    var target = document.getElementById('case-' + section + '-' + caseName);
-    if (target) target.style.display = 'block';
-}
-</script>
-<!-- ===== KEY HIGHLIGHTS SECTION CASES ===== -->
-<div id="highlightsScreen" style="display:none">
-    <div class="nav-header">
-        <div class="nav-back" onclick="showMenu()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        </div>
-        <div>
-            <div class="nav-title">Key Highlights</div>
-            <div class="nav-subtitle">Edge cases & use cases</div>
-        </div>
-    </div>
-    <div class="case-screen active" style="background:#fff;">
-        <div class="case-content" id="case-highlights-c1">
-            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-1"></div></div>
-            <div class="case-label"><h4><span class="tag tag-warning">5 Attrs</span> 18K Rose Gold — Full</h4><p>Diamonds + Gemstone + Occasion + Gross Wt. All 4 attrs in 2×2 sec-grid.</p></div>
-        </div>
-        <div class="case-content" id="case-highlights-c2">
-            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-2"></div></div>
-            <div class="case-label"><h4><span class="tag tag-success">4 Attrs</span> 925 Silver — Silver shimmer</h4><p>Silver karat shimmer. Diamonds + Occasion + Gross Wt.</p></div>
-        </div>
-        <div class="case-content" id="case-highlights-c3">
-            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-3"></div></div>
-            <div class="case-label"><h4><span class="tag tag-info">3 Attrs</span> 14KT White Gold — Diamond only</h4><p>No occasion, no gemstone. Diamond + Gross Wt. side by side.</p></div>
-        </div>
-        <div class="case-content" id="case-highlights-c4">
-            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-4"></div></div>
-            <div class="case-label"><h4><span class="tag tag-info">3 Attrs</span> 18KT Rose &amp; White — Gemstone only</h4><p>No diamonds, no occasion. Gemstone + Gross Wt.</p></div>
-        </div>
-        <div class="case-content" id="case-highlights-c5">
-            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-5"></div></div>
-            <div class="case-label"><h4><span class="tag tag-error">2 Attrs</span> 22KT Yellow Gold — Minimal</h4><p>No stones, no occasion. Only Gross Wt. below metal — single col.</p></div>
-        </div>
-        <div class="case-content" id="case-highlights-c6">
-            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-6"></div></div>
-            <div class="case-label"><h4><span class="tag tag-info">3 Attrs</span> 9KT Yellow Gold — Multi-gemstone</h4><p>3 gemstones, no diamonds, no occasion.</p></div>
-        </div>
-        <div class="case-content" id="case-highlights-c7">
-            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-7"></div></div>
-            <div class="case-label"><h4><span class="tag tag-success">4 Attrs</span> 22KT Yellow &amp; White — Dual tone</h4><p>Two-tone metal colour. Diamond + Occasion + Gross Wt.</p></div>
-        </div>
-        <div class="case-content" id="case-highlights-c8">
-            <div class="phone-frame" style="background:#f5f5f5;"><div id="hl-case-8"></div></div>
-            <div class="case-label"><h4><span class="tag tag-warning">5 Attrs</span> 18K Rose Gold — Alt full</h4><p>Same 5-attr layout, different product. No breathing animation.</p></div>
-        </div>
 
-    </div>
-</div>
-<style>
-        /* ===== KEY HIGHLIGHTS V9 ===== */
-        .key-highlights {
-            margin: 0; border-radius: 20px;
-            background: #fffdfd;
-            box-shadow: 0 6px 20px -10px rgba(67,50,58,0.3);
-            border: 1px solid #fae6e9;
-            overflow: hidden;
-        }
-        .hl-area { padding: 10px; display: flex; flex-direction: column; gap: 10px; }
-        .metal-box {
-            background: #fff;
-            border: none;
-            border-bottom: 1px solid #f0e8ea;
-            border-radius: 0;
-            padding: 8px 14px 12px;
-            text-align: center; line-height: 1.25;
-        }
-        .metal-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: #b83e53; }
-        .metal-row { display: flex; align-items: baseline; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-        .metal-karat { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
-        .metal-desc  { font-size: 15px; font-weight: 600; color: #43323a; }
-        .metal-net   { font-size: 11px; color: #a08c92; }
-        .metal-net strong { font-weight: 600; color: #43323a; }
-        .sec-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; row-gap: 8px; }
-        .sec-grid.cols-1 { grid-template-columns: 1fr; }
-        .sec-cell { border-left: 2px solid #f4ced5; padding-left: 10px; line-height: 1.25; }
-        .sec-lbl  { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: #a08c92; }
-        .sec-val  { font-size: 13px; font-weight: 600; color: #43323a; }
-        .shimmer-gold {
-            background: linear-gradient(90deg, #6b4c10 0%, #b8860b 20%, #d4a843 35%, #f5e07a 50%, #d4a843 65%, #b8860b 80%, #6b4c10 100%);
-            background-size: 300% auto;
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer-gold 4s linear infinite;
-        }
-        .shimmer-silver {
-            background: linear-gradient(90deg, #3a3a3a 0%, #7a7a7a 20%, #b0b0b0 35%, #e8e8e8 50%, #b0b0b0 65%, #7a7a7a 80%, #3a3a3a 100%);
-            background-size: 300% auto;
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer-silver 4s linear infinite;
-        }
-        @keyframes shimmer-gold   { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
-        @keyframes shimmer-silver { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
-        .cta-wrap { padding: 0 10px 10px; }
-        .view-full-details-btn {
-            display: flex; align-items: center; justify-content: space-between; gap: 6px;
-            width: 100%; padding: 10px 14px;
-            font-size: 12px; font-weight: 700; color: #D14A61;
-            border: 1px solid #f4ced5; border-radius: 100px;
-            background: rgba(255,255,255,0.85);
-            box-shadow: 0 2px 8px rgba(209,74,97,0.08);
-        }
-        .view-full-details-btn svg { width: 13px; height: 13px; stroke: #D14A61; flex-shrink: 0; }
-        .case-screen-wrap { margin-top: 24px; }
-</style>
-<script>
-function renderHighlightsCase(cfg) {
-    var isGold     = !!cfg.gold;
-    var shimmer    = isGold ? 'shimmer-gold' : 'shimmer-silver';
-    var karatage   = isGold ? cfg.gold.purity : (cfg.silver ? cfg.silver.purity : '');
-    var metalColour = isGold ? cfg.gold.colour + ' Gold' : 'Silver';
-    var metalWeight = isGold ? cfg.gold.weight : (cfg.silver ? cfg.silver.weight : '');
-
-    var attrs = [];
-    if (cfg.diamond)  attrs.push(['Diamonds', cfg.diamond.shape + ' \u00b7 ' + cfg.diamond.weight]);
-    if (cfg.gemstone) attrs.push(['Gemstone', cfg.gemstone.count + ' \u00b7 ' + cfg.gemstone.name.split(',')[0].trim()]);
-    if (cfg.occasion) attrs.push(['Occasion', cfg.occasion]);
-    attrs.push(['Gross Wt.', cfg.grossWeight]);
-
-    var secGrid = '<div class="sec-grid' + (attrs.length === 1 ? ' cols-1' : '') + '">' +
-        attrs.map(function(a) {
-            return '<div class="sec-cell"><div class="sec-lbl">' + a[0] + '</div><div class="sec-val">' + a[1] + '</div></div>';
-        }).join('') + '</div>';
-
-    return '<div class="key-highlights">' +
-        '<div class="hl-area">' +
-            '<div class="metal-box">' +
-                '<div class="metal-lbl">Metal</div>' +
-                '<div class="metal-row">' +
-                    '<span class="metal-karat ' + shimmer + '">' + karatage + '</span>' +
-                    '<span class="metal-desc">' + metalColour + '</span>' +
-                    '<span class="metal-net">\u00b7 Net <strong>' + metalWeight + '</strong></span>' +
-                '</div>' +
-            '</div>' +
-            secGrid +
+var container = document.getElementById('highlightsCases');
+variants.forEach(function(v, i) {
+  var wrap = document.createElement('div');
+  wrap.className = 'case-wrap';
+  wrap.innerHTML =
+    '<div class="case-label">' + v.title + '<span class="tag tag-info">' + v.effect + '</span></div>' +
+    '<div class="case-body">' +
+      '<div class="key-highlights">' +
+        '<div class="hl-area"><div id="hl-' + i + '"></div></div>' +
+        '<div class="full-details-panel" id="panel-' + i + '"><div class="full-details-inner" id="inner-' + i + '"></div></div>' +
+        '<div class="cta-wrap">' +
+          '<button class="view-full-details-btn" data-idx="' + i + '">' +
+            '<span>View Full Product Details</span>' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+          '</button>' +
         '</div>' +
-        '<div class="cta-wrap"><button class="view-full-details-btn"><span>View Full Product Details</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>' +
+      '</div>' +
     '</div>';
-}
-</script>
-<script>document.addEventListener("DOMContentLoaded", function() {
-    var cases = [
-        // 1: 18K Rose Gold — Full (5 attrs)
-        { gold: { purity: "18K", colour: "Rose", weight: "4.50 g" },
-          diamond: { shape: "Round", weight: "0.50 ct" },
-          gemstone: { count: "1", name: "Ruby", weight: "0.60 g" },
-          occasion: "Engagement", grossWeight: "5.20 g" },
-        // 2: 925 Silver — 4 attrs
-        { silver: { purity: "925", weight: "6.10 g" },
-          diamond: { shape: "Round", weight: "0.25 ct" },
-          occasion: "Anniversary", grossWeight: "7.00 g" },
-        // 3: 14KT White Gold — Diamond only, no occasion
-        { gold: { purity: "14KT", colour: "White", weight: "3.20 g" },
-          diamond: { shape: "Round", weight: "0.75 ct" },
-          grossWeight: "3.85 g" },
-        // 4: 18KT Rose & White — Gemstone only, no diamond, no occasion
-        { gold: { purity: "18KT", colour: "Rose & White", weight: "5.80 g" },
-          gemstone: { count: "1", name: "Ruby", weight: "1.20 g" },
-          grossWeight: "6.50 g" },
-        // 5: 22KT Yellow Gold — Minimal, no stones, no occasion
-        { gold: { purity: "22KT", colour: "Yellow", weight: "8.20 g" },
-          grossWeight: "8.20 g" },
-        // 6: 9KT Yellow Gold — Multi-gemstone, no diamond, no occasion
-        { gold: { purity: "9KT", colour: "Yellow", weight: "2.10 g" },
-          gemstone: { count: "3", name: "Ruby", weight: "0.90 g" },
-          grossWeight: "2.80 g" },
-        // 7: 22KT Yellow & White — Dual tone, diamond + occasion
-        { gold: { purity: "22KT", colour: "Yellow & White", weight: "6.40 g" },
-          diamond: { shape: "Round", weight: "0.30 ct" },
-          occasion: "Wedding", grossWeight: "7.10 g" },
-        // 8: 18K Rose Gold — Alt full (5 attrs, no animation)
-        { gold: { purity: "18K", colour: "Rose", weight: "4.80 g" },
-          diamond: { shape: "Round", weight: "0.60 ct" },
-          gemstone: { count: "1", name: "Ruby", weight: "0.75 g" },
-          occasion: "Engagement", grossWeight: "5.60 g" }
-    ];
-    cases.forEach(function(cfg, i) {
-        document.getElementById("hl-case-" + (i + 1)).innerHTML = renderHighlightsCase(cfg);
-    });
+  container.appendChild(wrap);
+  buildHighlights(document.getElementById('hl-' + i), v.product);
+  buildAccordion(document.getElementById('inner-' + i), v.product);
 });
+
+document.getElementById('highlightsCases').addEventListener('click', function(e) {
+  var btn = e.target.closest('.view-full-details-btn');
+  if (!btn) return;
+  var idx   = btn.dataset.idx;
+  var panel = document.getElementById('panel-' + idx);
+  var isOpen = panel.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  btn.querySelector('span').textContent = isOpen ? 'Hide Product Details' : 'View Full Product Details';
+});
+
+lucide.createIcons();
 </script>
-
-<!-- ===== RIBBON TAG CASES ===== -->
-<div id="ribbonScreen" style="display:none">
-<div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Ribbon Tag</div><div class="nav-subtitle">Colour variants & edge cases</div></div></div>
-<div class="case-screen active">
-
-<style>
-.ribbon-demo{position:relative;background:#f5f5f5;border-radius:16px;aspect-ratio:3/4;overflow:hidden;max-width:200px;margin:0 auto}
-.ribbon-demo img{width:100%;height:100%;object-fit:cover}
-.product-tag{position:absolute;top:12px;left:12px;z-index:2;padding:7px 12px;font-size:8px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;-webkit-clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));white-space:nowrap}
-.product-tag.tag-gold{background:linear-gradient(135deg,#b8860b,#f5d77a);color:#5c3d0a}
-.product-tag.tag-pink{background:linear-gradient(135deg,#D14A61,#f9a8b8);color:#fff}
-.product-tag.tag-purple{background:linear-gradient(135deg,#7c3aed,#c4b5fd);color:#fff}
-.product-tag.tag-long{white-space:normal;max-width:140px;line-height:1.4}
-</style>
-<div class="case-content" id="case-ribbon-gold">
-<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_1.jpg" alt=""><span class="product-tag tag-gold">New Arrival</span></div></div>
-<div class="case-label"><h4><span class="tag tag-warning">GOLD</span> Gold Gradient Tag</h4><p>Used for premium / price-led offers like gold value discounts. Warm, luxe feel.</p></div>
-</div>
-<div class="case-content" id="case-ribbon-pink">
-<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_2.jpg" alt=""><span class="product-tag tag-pink">Bestseller</span></div></div>
-<div class="case-label"><h4><span class="tag tag-error">PINK</span> Pink Gradient Tag</h4><p>Used for editorial / trending tags like Bestseller, Fan Favourite, Most Loved.</p></div>
-</div>
-<div class="case-content" id="case-ribbon-purple">
-<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_3.jpg" alt=""><span class="product-tag tag-purple">Limited Edition</span></div></div>
-<div class="case-label"><h4><span class="tag tag-info">PURPLE</span> Purple Gradient Tag</h4><p>Used for special / exclusive tags like Limited Edition, New Design, Just Dropped.</p></div>
-</div>
-<div class="case-content" id="case-ribbon-long">
-<div class="phone-frame" style="background:#eee;padding:24px"><div class="ribbon-demo"><img src="https://vinitsingh-del.github.io/mia-gleam-play-enhanced/assets/mia-gleam-play/2812FPL_4.jpg" alt=""><span class="product-tag tag-gold tag-long">40% off on Making Charges</span></div></div>
-<div class="case-label"><h4><span class="tag tag-warning">EDGE CASE</span> Long Tag Text</h4><p>"40% off on Making Charges" — text wraps to 2 lines. Clip-path maintains arrow shape. Max-width prevents overflow out of the card frame.</p></div>
-</div>
-</div>
-</div>
-
-<!-- ===== SHOW SIMILAR ERROR CASE ===== -->
-<div id="similarScreen" style="display:none">
-<div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Show Similar</div><div class="nav-subtitle">API failure empty state</div></div></div>
-<div class="case-screen active">
-
-<div class="case-content" id="case-similar-error">
-<div class="phone-frame">
-<div style="padding:24px;text-align:center">
-<div style="width:72px;height:72px;border-radius:20px;background:#f5f3ff;border:1px solid #ddd6fe;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
-<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round"><path d="M9.5 3H5a2 2 0 0 0-2 2v4m6.5-6 10 10m-10-10v4a2 2 0 0 1-2 2H3m18-6v14a2 2 0 0 1-2 2h-4M3 7l4 4m0 0 4 4"/></svg>
-</div>
-<p style="font-size:18px;font-weight:700;font-family:'Fraunces',serif;color:#1a1a1a;margin-bottom:6px">No vibes found 😮‍💨</p>
-<p style="font-size:12px;color:#777;line-height:1.6;margin-bottom:20px">Our servers are having a moment rn.<br>Tap below to try again — we got you fr.</p>
-<button style="padding:10px 28px;border-radius:100px;font-size:13px;font-weight:700;color:#7c3aed;background:#f5f3ff;border:1.5px solid #ddd6fe;cursor:pointer">Try Again ✨</button>
-</div>
-</div>
-<div class="case-label"><h4><span class="tag tag-error">ERROR STATE</span> API Failure</h4><p>Shown when the similar products API returns no results or fails. Gen-Z friendly copy, soft purple illustration bg. Retry CTA matches section colour.</p></div>
-</div>
-</div>
-</div>
-
-<!-- ===== PRODUCT HEADER CASES ===== -->
-<div id="headerScreen" style="display:none">
-<div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Product Header</div><div class="nav-subtitle">Long name & spacing edge cases</div></div></div>
-<div class="case-screen active">
-
-<style>
-.hdr-demo{background:#fff;border-radius:16px;border:1px solid #f0f0f0;overflow:hidden}
-.hdr-name-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:12px 16px 6px}
-.hdr-name{font-family:'Fraunces',serif;font-size:20px;font-weight:500;color:#1a1a1a;line-height:1.3;flex:1}
-.hdr-actions{display:flex;gap:8px;flex-shrink:0;padding-top:2px}
-.hdr-action-btn{width:38px;height:38px;border-radius:50%;border:1px solid #f0f0f0;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 6px rgba(0,0,0,0.08),0 2px 12px rgba(0,0,0,0.04)}
-.hdr-action-btn svg{width:17px;height:17px;stroke:#D14A61;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.hdr-sku{font-size:10px;color:#999;padding:0 16px 8px}
-.hdr-highlights-gap{height:12px;background:#f9f9f9;border-top:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;margin:8px 0}
-.hdr-highlights-placeholder{padding:12px 16px;font-size:11px;color:#aaa;text-align:center;border:1px dashed #e5e5e5;margin:0 16px;border-radius:12px}
-</style>
-<div class="case-content" id="case-header-normal">
-<div class="phone-frame"><div class="hdr-demo">
-<div class="hdr-name-row"><span class="hdr-name">Gleam Play Diamond Ring</span><div class="hdr-actions"><button class="hdr-action-btn"><svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 1.5C10.5 3.5 9.26 3 7.5 3a5.5 5.5 0 0 0-5.5 5.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button><button class="hdr-action-btn"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button></div></div>
-<div class="hdr-sku">Design Code: 2812FPL</div>
-<div class="hdr-highlights-gap"></div>
-<div class="hdr-highlights-placeholder">↑ Key Highlights Section ↑</div>
-</div></div>
-<div class="case-label"><h4><span class="tag tag-success">NORMAL</span> Short Product Name</h4><p>3–4 word name. Name and action icons comfortably fit in one line. Spacing below name to Key Highlights is 12px gap + section divider.</p></div>
-</div>
-<div class="case-content" id="case-header-long">
-<div class="phone-frame"><div class="hdr-demo">
-<div class="hdr-name-row"><span class="hdr-name">Ornate Kundan Polki Diamond & Emerald Studded 22 KT Gold Mangalsutra Necklace</span><div class="hdr-actions"><button class="hdr-action-btn"><svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 1.5C10.5 3.5 9.26 3 7.5 3a5.5 5.5 0 0 0-5.5 5.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button><button class="hdr-action-btn"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button></div></div>
-<div class="hdr-sku">Design Code: 2812FPL</div>
-<div class="hdr-highlights-gap"></div>
-<div class="hdr-highlights-placeholder">↑ Key Highlights Section ↑</div>
-</div></div>
-<div class="case-label"><h4><span class="tag tag-warning">EDGE CASE</span> Very Long Product Name</h4><p>Multi-line name wraps naturally. Action buttons stay pinned to top-right with flex-shrink:0. Consistent 12px gap before highlights is maintained regardless of name length.</p></div>
-</div>
-</div>
-</div>
-
-<!-- ===== PRICE SECTION CASES ===== -->
-<div id="priceScreen" style="display:none">
-<div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Price Section</div><div class="nav-subtitle">With Pre-Book vs Without</div></div></div>
-<div class="case-screen active">
-
-<style>
-/* Shared price section styles matching PDP */
-.ec-price{background:linear-gradient(180deg,#FDF2F4,#fff);border-radius:16px;padding:16px;font-family:'Albert Sans',sans-serif}
-.ec-price-main{display:flex;align-items:baseline;gap:8px;margin-bottom:2px}
-.ec-price-current{font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:#1a1a1a}
-.ec-price-original{font-size:14px;color:#aaa;text-decoration:line-through}
-.ec-price-badge{font-size:11px;font-weight:700;color:#22C55E;background:rgba(34,197,94,0.08);padding:2px 8px;border-radius:100px}
-.ec-price-tax{font-size:10px;color:#777;margin-bottom:12px}
-.ec-breakup-btn{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#f9fafb;border-radius:10px;border:1px solid #f0f0f0;font-size:12px;font-weight:700;color:#D14A61;margin-bottom:12px}
-.ec-pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.ec-pill{padding:7px 14px;border-radius:100px;font-size:10px;font-weight:600;border:1.5px solid #e0e0e0;background:#fff;color:#555}
-.ec-pill.active{border-color:#D14A61;background:#FDF2F4;color:#D14A61}
-.ec-section-label{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;margin-bottom:8px}
-.ec-divider{height:1px;background:#f0f0f0;margin:12px 0}
-.ec-coupon-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
-.ec-gift-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-top:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0}
-.ec-toggle{width:40px;height:22px;border-radius:100px;background:#e5e5e5;position:relative;flex-shrink:0}
-.ec-toggle::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:2px;left:2px;box-shadow:0 1px 4px rgba(0,0,0,0.15)}
-.ec-btn-buy{width:100%;padding:12px;border-radius:100px;font-size:14px;font-weight:700;color:#D14A61;background:#fce4ec;border:none;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px}
-.ec-btn-buy b{font-weight:700}
-.ec-cta-row{display:flex;gap:10px}
-.ec-btn-prebook{flex:1;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#5c3d0a;background:linear-gradient(135deg,#f5d77a,#e8c252,#f5d77a);border:none}
-.ec-btn-bag{flex:1;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#fff;background:#D14A61;border:none;display:flex;align-items:center;justify-content:center;gap:5px}
-.ec-btn-bag svg{width:13px;height:13px;stroke:#fff}
-.ec-btn-buy-60{flex:3;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#D14A61;background:#fce4ec;border:none;display:flex;align-items:center;justify-content:center;gap:6px}
-.ec-btn-bag-40{flex:2;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#fff;background:#D14A61;border:none;display:flex;align-items:center;justify-content:center;gap:5px}
-.ec-leaf{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:12px;font-size:10px;font-weight:600;color:#166534}
-.ec-delivery{margin-top:14px;padding-top:14px;border-top:1px solid #f0f0f0}
-.ec-delivery-title{font-size:13px;font-weight:700;color:#1a1a1a;display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.ec-pincode-row{display:flex;gap:8px;margin-bottom:10px}
-.ec-pincode-input{flex:1;padding:10px 14px;border-radius:100px;border:1.5px solid #D14A61;font-size:13px;font-weight:500;outline:none}
-.ec-pincode-btn{padding:10px 18px;border-radius:100px;font-size:12px;font-weight:700;background:#D14A61;color:#fff;border:none}
-.ec-trust-grid{display:flex;justify-content:space-between;gap:8px}
-.ec-trust-badge{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:600;color:#9f1239;padding:10px 4px;border-radius:12px;background:#fff5f7;flex:1;text-align:center;line-height:1.3}
-.ec-trust-badge svg{width:16px;height:16px;flex-shrink:0}
-</style>
-
-<!-- Case 1: Full pricing section WITH Pre-Book -->
-<div class="case-content" id="case-price-withprebook">
-<div class="phone-frame"><div class="ec-price">
-<div class="ec-price-main"><span class="ec-price-current">₹43,293</span><span class="ec-price-original">₹52,990</span><span class="ec-price-badge">18% off</span></div>
-<div class="ec-price-tax">Inclusive of all taxes</div>
-<div class="ec-breakup-btn"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="10" y1="9" x2="10" y2="21"/></svg>Price Breakup</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-<div class="ec-section-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Choose Weight</div>
-<div class="ec-pill-row"><span class="ec-pill active">1.975 g</span><span class="ec-pill">2.101 g</span></div>
-<div class="ec-section-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"><line x1="2" y1="12" x2="22" y2="12"/><path d="M6 8v8M10 10v4M14 10v4M18 8v8"/></svg>Choose Size</div>
-<div class="ec-pill-row"><span class="ec-pill">14.00 MM</span><span class="ec-pill active">16.40 MM</span><span class="ec-pill">17.00 MM</span><span class="ec-pill">17.30 MM</span><span class="ec-pill">18.10 MM</span><span class="ec-pill">18.90 MM</span></div>
-<div class="ec-divider"></div>
-<!-- Coupons mini -->
-<div class="ec-coupon-row"><span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>Available Coupons</span><span style="font-size:10px;font-weight:700;color:#D14A61;background:#FDF2F4;padding:3px 10px;border-radius:100px">MIA500</span></div>
-<!-- Make it a Gift -->
-<div class="ec-gift-row"><span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M20 12v10H4V12"/><rect x="2" y="7" width="20" height="5" rx="1"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>Make it a Gift</span><div class="ec-toggle"></div></div>
-<!-- CTAs - WITH Pre-Book -->
-<div style="margin-top:14px">
-<button class="ec-btn-buy"><b>Buy Now</b><span style="display:inline-flex;align-items:center;gap:3px"><span style="font-size:10px;font-weight:800;color:#5f259f;background:#f3e8ff;padding:2px 5px;border-radius:4px">पे</span><svg viewBox="0 0 48 48" width="16" height="16"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg><svg viewBox="0 0 32 20" width="18" height="12"><circle cx="12.5" cy="10" r="8" fill="#EB001B"/><circle cx="19.5" cy="10" r="8" fill="#F79E1B"/><path d="M16 4.2a8 8 0 000 11.6 8 8 0 000-11.6z" fill="#FF5F00"/></svg></span></button>
-<div class="ec-cta-row"><button class="ec-btn-prebook">Pre-Book Now</button><button class="ec-btn-bag"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button></div>
-</div>
-<div class="ec-leaf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><path d="M17 8C8 10 5.9 16.17 3.82 19.97M9.5 4.5C9.5 4.5 10.5 6 10.5 9.5C10.5 10.5 9.5 12.5 7.5 14"/></svg>100% Recycled Gold for a Greener World</div>
-<!-- Delivery -->
-<div class="ec-delivery">
-<div class="ec-delivery-title"><span style="padding:5px 8px;border-radius:100px;background:#FDF2F4;display:flex;align-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>Delivery &amp; Availability</div>
-<div class="ec-pincode-row"><div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div><input class="ec-pincode-input" placeholder="Enter pincode" type="tel"><button class="ec-pincode-btn">Check</button></div>
-<div class="ec-trust-grid"><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div></div>
-</div>
-</div></div>
-<div class="case-label"><h4><span class="tag tag-success">WITH PRE-BOOK</span> Full Pricing Section</h4><p>Complete pricing section: price + breakup, weight/size selectors, coupon, gift toggle, Buy Now (full-width) + Pre-Book + Add to Bag row, eco text, delivery checker with trust badges.</p></div>
-</div>
-
-<!-- Case 2: Full pricing section WITHOUT Pre-Book (60-40 split) -->
-<div class="case-content" id="case-price-noprebook">
-<div class="phone-frame"><div class="ec-price">
-<div class="ec-price-main"><span class="ec-price-current">₹43,293</span><span class="ec-price-original">₹52,990</span><span class="ec-price-badge">18% off</span></div>
-<div class="ec-price-tax">Inclusive of all taxes</div>
-<div class="ec-breakup-btn"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="10" y1="9" x2="10" y2="21"/></svg>Price Breakup</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-<div class="ec-section-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Choose Weight</div>
-<div class="ec-pill-row"><span class="ec-pill active">1.975 g</span><span class="ec-pill">2.101 g</span></div>
-<div class="ec-section-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"><line x1="2" y1="12" x2="22" y2="12"/><path d="M6 8v8M10 10v4M14 10v4M18 8v8"/></svg>Choose Size</div>
-<div class="ec-pill-row"><span class="ec-pill">14.00 MM</span><span class="ec-pill active">16.40 MM</span><span class="ec-pill">17.00 MM</span><span class="ec-pill">17.30 MM</span><span class="ec-pill">18.10 MM</span><span class="ec-pill">18.90 MM</span></div>
-<div class="ec-divider"></div>
-<div class="ec-coupon-row"><span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>Available Coupons</span><span style="font-size:10px;font-weight:700;color:#D14A61;background:#FDF2F4;padding:3px 10px;border-radius:100px">MIA500</span></div>
-<div class="ec-gift-row"><span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M20 12v10H4V12"/><rect x="2" y="7" width="20" height="5" rx="1"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>Make it a Gift</span><div class="ec-toggle"></div></div>
-<!-- CTAs - WITHOUT Pre-Book: 60-40 split -->
-<div style="margin-top:14px;display:flex;gap:10px">
-<button class="ec-btn-buy-60"><b>Buy Now</b><span style="display:inline-flex;align-items:center;gap:3px"><span style="font-size:10px;font-weight:800;color:#5f259f;background:#f3e8ff;padding:2px 5px;border-radius:4px">पे</span><svg viewBox="0 0 48 48" width="16" height="16"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg><svg viewBox="0 0 32 20" width="18" height="12"><circle cx="12.5" cy="10" r="8" fill="#EB001B"/><circle cx="19.5" cy="10" r="8" fill="#F79E1B"/><path d="M16 4.2a8 8 0 000 11.6 8 8 0 000-11.6z" fill="#FF5F00"/></svg></span></button>
-<button class="ec-btn-bag-40"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>
-</div>
-<div class="ec-leaf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><path d="M17 8C8 10 5.9 16.17 3.82 19.97M9.5 4.5C9.5 4.5 10.5 6 10.5 9.5C10.5 10.5 9.5 12.5 7.5 14"/></svg>100% Recycled Gold for a Greener World</div>
-<div class="ec-delivery">
-<div class="ec-delivery-title"><span style="padding:5px 8px;border-radius:100px;background:#FDF2F4;display:flex;align-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>Delivery &amp; Availability</div>
-<div class="ec-pincode-row"><div class="ec-country-wrap"><button class="ec-country-btn"><span class="ec-cflag">🇮🇳</span><span class="ec-ccode">IN</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div><input class="ec-pincode-input" placeholder="Enter pincode" type="tel"><button class="ec-pincode-btn">Check</button></div>
-<div class="ec-trust-grid"><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>Free<br>Shipping</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Lifetime<br>Exchange</div><div class="ec-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>30-Day<br>Returns</div></div>
-</div>
-</div></div>
-<div class="case-label"><h4><span class="tag tag-info">NO PRE-BOOK</span> Buy Now 60% · Add to Bag 40%</h4><p>Pre-booking is disabled. Buy Now (flex:3, ~60%) and Add to Bag (flex:2, ~40%) share a single row with payment badges on Buy Now. No second CTA row needed.</p></div>
-</div>
-</div>
-</div>
-
-<!-- ===== SIZE GUIDE CASES ===== -->
-<div id="sizeguideScreen" style="display:none">
-<div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Size Guides</div><div class="nav-subtitle">Per jewellery category</div></div></div>
-<div class="case-screen active">
-
-<style>
-.sg-table{width:100%;border-collapse:collapse;font-size:12px}
-.sg-table th{text-align:left;padding:8px 6px;font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid #f0f0f0}
-.sg-table td{padding:9px 6px;border-bottom:1px solid #f8f8f8;color:#1a1a1a}
-.sg-table td:first-child{font-weight:700;color:#D14A61;font-size:13px;font-family:'Fraunces',serif}
-.sg-section-label{font-size:10px;font-weight:700;color:#777;text-transform:uppercase;letter-spacing:0.5px;padding:12px 0 6px}
-.sg-note{font-size:10px;color:#777;line-height:1.6;padding:10px;background:#f9fafb;border-radius:10px;margin-top:12px}
-</style>
-<div class="case-content" id="case-sizeguide-ring">
-<div class="phone-frame">
-<p style="font-size:11px;color:#555;margin-bottom:12px">Wrap a thread around your finger base, measure in mm, and match with Inner Diameter below.</p>
-<table class="sg-table">
-<thead><tr><th>Code</th><th>Inner Dia (mm)</th><th>Circumference (mm)</th></tr></thead>
-<tbody>
-<tr><td>A</td><td>Adjustable</td><td>—</td></tr>
-<tr><td>G</td><td>14.4</td><td>45</td></tr>
-<tr><td>H</td><td>14.8</td><td>47</td></tr>
-<tr><td>I</td><td>15.2</td><td>48</td></tr>
-<tr><td>J</td><td>15.6</td><td>49</td></tr>
-<tr><td>K</td><td>16.0</td><td>50</td></tr>
-<tr><td>L</td><td>16.4</td><td>52</td></tr>
-<tr><td>M</td><td>16.8</td><td>53</td></tr>
-<tr><td>N</td><td>17.2</td><td>54</td></tr>
-<tr><td>O</td><td>17.6</td><td>55</td></tr>
-<tr><td>P</td><td>18.0</td><td>57</td></tr>
-<tr><td>Q</td><td>18.4</td><td>58</td></tr>
-<tr><td>R</td><td>18.8</td><td>59</td></tr>
-<tr><td>S</td><td>19.1</td><td>60</td></tr>
-<tr><td>T</td><td>19.5</td><td>61</td></tr>
-<tr><td>U</td><td>19.9</td><td>63</td></tr>
-<tr><td>V</td><td>20.3</td><td>64</td></tr>
-<tr><td>W</td><td>20.7</td><td>65</td></tr>
-<tr><td>X</td><td>21.1</td><td>66</td></tr>
-<tr><td>Y</td><td>21.5</td><td>68</td></tr>
-<tr><td>Z</td><td>21.9</td><td>69</td></tr>
-</tbody></table>
-<div class="sg-note">Tolerance: ±0.15 mm. Sizes B–F (12.4–14 mm) available for Kids.</div>
-</div>
-<div class="case-label"><h4><span class="tag tag-info">FINGER RING</span> Size Code + Inner Dia + Circumference</h4><p>Source: Titan JD IMS/IPD/QAL/QP/026 Rev.16</p></div>
-</div>
-<div class="case-content" id="case-sizeguide-bangle">
-<div class="phone-frame">
-<p style="font-size:11px;color:#555;margin-bottom:12px">Measure the widest part of your hand (knuckles) in mm when fingers are together. Choose the closest size.</p>
-<table class="sg-table">
-<thead><tr><th>Code</th><th>Round (mm)</th><th>Square (mm)</th><th>Oval</th></tr></thead>
-<tbody>
-<tr><td>K</td><td>38</td><td>38</td><td>42×52</td></tr>
-<tr><td>L</td><td>40</td><td>40</td><td>47×57</td></tr>
-<tr><td>M</td><td>42</td><td>42</td><td>53×60</td></tr>
-<tr><td>N</td><td>50</td><td>50</td><td>42×52</td></tr>
-<tr><td>O</td><td>52.5</td><td>52.5</td><td>47×57</td></tr>
-<tr><td>P</td><td>55</td><td>55</td><td>53×60</td></tr>
-<tr><td>Q</td><td>57.5</td><td>57.5</td><td>50×59</td></tr>
-<tr><td>R</td><td>60</td><td>60</td><td>50×56</td></tr>
-<tr><td>S</td><td>62.5</td><td>62.5</td><td>55×60</td></tr>
-<tr><td>T</td><td>65</td><td>65</td><td>30×40</td></tr>
-<tr><td>U</td><td>67.5</td><td>67.5</td><td>—</td></tr>
-<tr><td>V</td><td>70</td><td>70</td><td>—</td></tr>
-<tr><td>W</td><td>72.5</td><td>72.5</td><td>—</td></tr>
-<tr><td>X</td><td>75</td><td>75</td><td>—</td></tr>
-<tr><td>Y</td><td>80</td><td>80</td><td>—</td></tr>
-<tr><td>Z</td><td>80+</td><td>80+</td><td>—</td></tr>
-</tbody></table>
-<div class="sg-note">Tolerance: ±1.20 mm. Oval sizes are listed as width×height in mm.</div>
-</div>
-<div class="case-label"><h4><span class="tag tag-info">BANGLE</span> Round / Square / Oval Diameter</h4><p>Source: Titan JD IMS/IPD/QAL/QP/026 Rev.16</p></div>
-</div>
-<div class="case-content" id="case-sizeguide-bracelet">
-<div class="phone-frame">
-<p style="font-size:11px;color:#555;margin-bottom:12px">Measure the circumference of your wrist just below the wrist bone. Length is end-to-end in cm.</p>
-<table class="sg-table">
-<thead><tr><th>Code</th><th>Length (cm)</th><th>Fits Wrist Up To</th></tr></thead>
-<tbody>
-<tr><td>K</td><td>15</td><td>14 cm</td></tr>
-<tr><td>L</td><td>16</td><td>15 cm</td></tr>
-<tr><td>M</td><td>17</td><td>16 cm</td></tr>
-<tr><td>N</td><td>18</td><td>17 cm</td></tr>
-<tr><td>O</td><td>19</td><td>18 cm</td></tr>
-<tr><td>P</td><td>20</td><td>19 cm</td></tr>
-<tr><td>Q</td><td>21</td><td>20 cm</td></tr>
-<tr><td>R</td><td>22</td><td>21 cm</td></tr>
-<tr><td>S</td><td>23</td><td>22 cm</td></tr>
-<tr><td>T</td><td>24</td><td>23 cm</td></tr>
-</tbody></table>
-<div class="sg-note">Tolerance: ±0.50 cm. Standard ladies bracelet is 17–18 cm.</div>
-</div>
-<div class="case-label"><h4><span class="tag tag-info">BRACELET</span> Length in CM</h4><p>Source: Titan JD IMS/IPD/QAL/QP/026 Rev.16</p></div>
-</div>
-<div class="case-content" id="case-sizeguide-anklet">
-<div class="phone-frame">
-<p style="font-size:11px;color:#555;margin-bottom:12px">Measure circumference around the ankle bone. Length is end-to-end in cm.</p>
-<table class="sg-table">
-<thead><tr><th>Code</th><th>Length (cm)</th><th>Fits Ankle Up To</th></tr></thead>
-<tbody>
-<tr><td>K</td><td>22</td><td>21 cm</td></tr>
-<tr><td>L</td><td>23</td><td>22 cm</td></tr>
-<tr><td>M</td><td>24</td><td>23 cm</td></tr>
-<tr><td>N</td><td>25</td><td>24 cm</td></tr>
-<tr><td>O</td><td>26</td><td>25 cm</td></tr>
-<tr><td>P</td><td>27</td><td>26 cm</td></tr>
-<tr><td>Q</td><td>28</td><td>27 cm</td></tr>
-<tr><td>R</td><td>29</td><td>28 cm</td></tr>
-<tr><td>S</td><td>30</td><td>29 cm</td></tr>
-<tr><td>T</td><td>31</td><td>30 cm</td></tr>
-</tbody></table>
-<div class="sg-note">Tolerance: ±0.50 cm. Most anklets are adjustable — check product listing.</div>
-</div>
-<div class="case-label"><h4><span class="tag tag-info">ANKLET</span> Length in CM</h4><p>Source: Titan JD IMS/IPD/QAL/QP/026 Rev.16</p></div>
-</div>
-<div class="case-content" id="case-sizeguide-necklace">
-<div class="phone-frame">
-<p style="font-size:11px;color:#555;margin-bottom:12px">Length is measured end-to-end for gold jewellery, or 1st O-ring to lock for studded jewellery.</p>
-<table class="sg-table">
-<thead><tr><th>Length (inches)</th><th>Type</th></tr></thead>
-<tbody>
-<tr><td style="font-weight:600;color:#1a1a1a;font-family:inherit">12–14"</td><td>Choker</td></tr>
-<tr><td style="font-weight:600;color:#1a1a1a;font-family:inherit">15–16"</td><td>Necklet</td></tr>
-<tr><td style="font-weight:600;color:#1a1a1a;font-family:inherit">16.5–18.5"</td><td>Necklace</td></tr>
-<tr><td style="font-weight:600;color:#1a1a1a;font-family:inherit">18.5–20"</td><td>Lariat</td></tr>
-<tr><td style="font-weight:600;color:#1a1a1a;font-family:inherit">20–22"</td><td>Mini Haram</td></tr>
-<tr><td style="font-weight:600;color:#1a1a1a;font-family:inherit">22–24"</td><td>Haram</td></tr>
-<tr><td style="font-weight:600;color:#1a1a1a;font-family:inherit">24–26"</td><td>Long Haram</td></tr>
-<tr><td style="font-weight:600;color:#1a1a1a;font-family:inherit">&gt;26"</td><td>Extra Long Haram</td></tr>
-</tbody></table>
-<div class="sg-note">Tolerance: ±1.00". These are general category names. Exact length is listed on the product.</div>
-</div>
-<div class="case-label"><h4><span class="tag tag-info">NECKLACE</span> Length in Inches with Type Name</h4><p>Source: Titan JD IMS/IPD/QAL/QP/026 Rev.16</p></div>
-</div>
-<div class="case-content" id="case-sizeguide-chain">
-<div class="phone-frame">
-<p style="font-size:11px;color:#555;margin-bottom:12px">Chain and Mangalsutra length is measured end-to-end in cm.</p>
-<table class="sg-table">
-<thead><tr><th>Code</th><th>Length (cm)</th><th>Type</th></tr></thead>
-<tbody>
-<tr><td>K</td><td>38</td><td>Short</td></tr>
-<tr><td>L</td><td>40</td><td>Short</td></tr>
-<tr><td>M</td><td>42</td><td>Medium</td></tr>
-<tr><td>N</td><td>50</td><td>Medium</td></tr>
-<tr><td>O</td><td>52.5</td><td>Medium</td></tr>
-<tr><td>P</td><td>55</td><td>Long</td></tr>
-<tr><td>Q</td><td>57.5</td><td>Long</td></tr>
-<tr><td>R</td><td>60</td><td>Long</td></tr>
-<tr><td>S</td><td>62.5</td><td>Long</td></tr>
-<tr><td>T</td><td>65</td><td>Extra Long</td></tr>
-<tr><td>U</td><td>67.5</td><td>Extra Long</td></tr>
-<tr><td>V</td><td>70</td><td>Extra Long</td></tr>
-</tbody></table>
-<div class="sg-note">Tolerance: ±1.20 cm. Mangalsutra length is typically 45–55 cm for daily wear.</div>
-</div>
-<div class="case-label"><h4><span class="tag tag-info">CHAIN / MANGALSUTRA</span> Length in CM</h4><p>Source: Titan JD IMS/IPD/QAL/QP/026 Rev.16</p></div>
-</div>
-</div>
-</div>
-
-<!-- ===== EXCHANGE GOLD CASES ===== -->
-<div id="exchangeScreen" style="display:none">
-<div class="nav-header"><div class="nav-back" onclick="showMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div><div class="nav-title">Exchange Gold</div><div class="nav-subtitle">Validation & final screens</div></div></div>
-<div class="case-screen active">
-
-<style>
-.exch-demo{background:#fff;border-radius:16px;border:1px solid #f0f0f0;padding:16px}
-.exch-field{margin-bottom:14px}
-.exch-label{font-size:11px;font-weight:600;color:#555;margin-bottom:5px}
-.exch-input-wrap{position:relative}
-.exch-input{width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid #e0e0e0;font-size:13px;font-weight:500;color:#1a1a1a;font-family:'Albert Sans',sans-serif;box-sizing:border-box}
-.exch-input.err{border-color:#EF4444;background:#fef2f2}
-.exch-inline-err{font-size:10px;color:#EF4444;font-weight:600;margin-top:4px;display:flex;align-items:center;gap:4px}
-.exch-inline-err svg{width:10px;height:10px;stroke:#EF4444;flex-shrink:0}
-.exch-result-box{padding:14px;border-radius:14px;text-align:center;margin-bottom:10px}
-.exch-result-val{font-family:'Fraunces',serif;font-size:24px;font-weight:700}
-.exch-breakdown{border-radius:14px;overflow:hidden;border:1px solid #f0f0f0;margin-bottom:10px}
-.exch-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #f5f5f5;font-size:12px}
-.exch-row:last-child{border-bottom:none}
-.exch-row.total{border-top:2px solid #f0f0f0;font-weight:700;font-size:13px}
-</style>
-<div class="case-content" id="case-exchange-validation">
-<div class="phone-frame"><div class="exch-demo">
-<p style="font-size:11px;color:#777;margin-bottom:14px">Enter your old gold details to get exchange value.</p>
-<div class="exch-field">
-<div class="exch-label">Weight (grams)</div>
-<div class="exch-input-wrap"><input class="exch-input err" type="number" placeholder="Enter weight" value=""></div>
-<div class="exch-inline-err"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Please enter a valid weight (min 0.5g)</div>
-</div>
-<div class="exch-field">
-<div class="exch-label">Your Name</div>
-<div class="exch-input-wrap"><input class="exch-input err" type="text" placeholder="Enter your name" value="A"></div>
-<div class="exch-inline-err"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Name must be at least 2 characters</div>
-</div>
-<div class="exch-field">
-<div class="exch-label">Mobile Number</div>
-<div class="exch-input-wrap"><input class="exch-input err" type="tel" placeholder="10-digit number" value="98765"></div>
-<div class="exch-inline-err"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter a valid 10-digit mobile number</div>
-</div>
-</div></div>
-<div class="case-label"><h4><span class="tag tag-error">VALIDATION</span> Inline Field Errors</h4><p>Errors appear directly below each field as small red text — no toast/nudge on top of screen. Input border turns red. Each field validates independently.</p></div>
-</div>
-<div class="case-content" id="case-exchange-lesser">
-<div class="phone-frame"><div class="exch-demo">
-<div class="exch-result-box" style="background:#fffbeb"><p style="font-size:10px;color:#92400e;margin-bottom:4px">Your Gold Exchange Value (22 KT · 2.5g)</p><div class="exch-result-val" style="color:#b8860b">₹18,550</div></div>
-<div class="exch-breakdown">
-<div class="exch-row"><span style="color:#555">Product Price</span><span style="font-weight:700">₹43,293</span></div>
-<div class="exch-row"><span style="color:#555">Exchange Value</span><span style="font-weight:700;color:#b8860b">− ₹18,550</span></div>
-<div class="exch-row total" style="background:#FDF2F4"><span style="color:#D14A61">You Pay*</span><span style="color:#D14A61;font-family:'Fraunces',serif;font-size:18px">₹24,743</span></div>
-</div>
-<p style="font-size:9px;color:#999;text-align:center;line-height:1.5;margin-bottom:12px">*Approximate. Final exchange price based on purity testing at store.</p>
-<button style="width:100%;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#fff;background:linear-gradient(135deg,#D14A61,#b03a50);border:none">Find Stores Near You</button>
-</div></div>
-<div class="case-label"><h4><span class="tag tag-warning">EXCHANGE &lt; PRICE</span> Pay Remaining Amount</h4><p>Exchange value (₹18,550) is less than product price (₹43,293). "You Pay" shows the difference. User needs to pay additional at store.</p></div>
-</div>
-<div class="case-content" id="case-exchange-greater">
-<div class="phone-frame"><div class="exch-demo">
-<div class="exch-result-box" style="background:#fffbeb"><p style="font-size:10px;color:#92400e;margin-bottom:4px">Your Gold Exchange Value (22 KT · 8g)</p><div class="exch-result-val" style="color:#b8860b">₹59,360</div></div>
-<div class="exch-breakdown">
-<div class="exch-row"><span style="color:#555">Product Price</span><span style="font-weight:700">₹43,293</span></div>
-<div class="exch-row"><span style="color:#555">Exchange Value</span><span style="font-weight:700;color:#b8860b">− ₹59,360</span></div>
-<div class="exch-row total" style="background:#f0fdf4"><span style="color:#166534">You Pay*</span><span style="color:#166534;font-family:'Fraunces',serif;font-size:18px">₹0</span></div>
-</div>
-<div style="margin:12px 0;padding:12px;border-radius:12px;background:#f0fdf4;border:1px solid rgba(34,197,94,0.2);text-align:center">
-<p style="font-size:12px;font-weight:700;color:#166534;margin-bottom:4px">🎉 Your gold covers this piece!</p>
-<p style="font-size:11px;color:#555;line-height:1.6">You have <strong>₹16,067</strong> remaining credit. Pick another piece from Mia — it's on your gold! ✨</p>
-</div>
-<p style="font-size:9px;color:#999;text-align:center;line-height:1.5;margin-bottom:12px">*Approximate. Final exchange price based on purity testing at store.</p>
-<button style="width:100%;padding:12px;border-radius:100px;font-size:13px;font-weight:700;color:#fff;background:linear-gradient(135deg,#D14A61,#b03a50);border:none">Find Stores Near You</button>
-</div></div>
-<div class="case-label"><h4><span class="tag tag-success">EXCHANGE &gt; PRICE</span> Fully Covered + Remaining Credit</h4><p>Exchange value (₹59,360) exceeds product price. You Pay shows ₹0 (green). Remaining credit (₹16,067) shown with CTA to pick another piece.</p></div>
-</div>
-</div>
-</div>
 </body>
 </html>
