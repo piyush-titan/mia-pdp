@@ -273,17 +273,17 @@
 
         /* ===== TRUST ELEMENTS ===== */
         .trust-elements {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 8px; padding: 0; margin: 16px;
+            display: flex; align-items: stretch; justify-content: center; gap: 0;
+            padding: 0; margin: 8px 16px; background: #fff; border-radius: 12px;
+            border: 1px solid #f0f0f0; overflow: hidden;
         }
         .trust-item {
-            display: flex; align-items: center; justify-content: center;
-            padding: 12px 8px;
-            background: #fff; border-radius: 14px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 6px 16px rgba(0,0,0,0.03), inset 0 -2px 3px rgba(0,0,0,0.03), inset 0 2px 3px rgba(255,255,255,0.9);
-            border: none;
+            flex: 1; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; gap: 4px; padding: 12px 8px;
+            border-right: 1px solid #f0f0f0;
         }
-        .trust-item img { height: 30px; width: 100%; max-width: 80px; object-fit: contain; }
+        .trust-item:last-child { border-right: none; }
+        .trust-item img { height: 28px; width: auto; object-fit: contain; }
 
         /* ===== PRICE SECTION ===== */
         .price-section { padding: 16px; margin: 16px 16px; background: linear-gradient(180deg, #FDF2F4, #fff); border-radius: 16px; }
@@ -1155,60 +1155,75 @@ document.getElementById("appNudgeClose").onclick = function() { document.getElem
 })();
 
 // ===== LIGHTBOX =====
+var lbState = { idx: 0, scale: 1, lastTap: 0, initDist: 0, startX: 0, currentX: 0 };
+
 function openLightbox(idx) {
     var lb = document.getElementById("lightbox");
     var img = document.getElementById("lightboxImg");
     img.src = product.images[idx];
+    img.style.transform = "scale(1)";
     document.getElementById("lightboxCounter").textContent = (idx + 1) + " / " + product.images.length;
     lb.classList.add("open");
     document.body.style.overflow = "hidden";
-    var lbIdx = idx, scale = 1, lastTap = 0, initDist = 0, lbStartX = 0, lbCurrentX = 0;
+    lbState.idx = idx;
+    lbState.scale = 1;
+    lbState.lastTap = 0;
+}
 
-    // All touch handling via assignments (no stacking across openLightbox calls)
-    lb.ontouchstart = function(e) {
-        if (e.touches.length === 2) {
-            initDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-        } else if (e.touches.length === 1 && scale <= 1) {
-            lbStartX = e.touches[0].clientX; lbCurrentX = lbStartX;
+// All lightbox handlers set up once — no stacking on reopen
+(function() {
+    var lb = document.getElementById("lightbox");
+    var img = document.getElementById("lightboxImg");
+
+    // Double tap to zoom via click event
+    lb.addEventListener("click", function(e) {
+        if (e.target.closest(".lightbox-close")) return;
+        var now = Date.now();
+        if (now - lbState.lastTap < 300) {
+            lbState.scale = lbState.scale > 1 ? 1 : 2.5;
+            img.style.transform = "scale(" + lbState.scale + ")";
         }
-    };
-    lb.ontouchmove = function(e) {
+        lbState.lastTap = now;
+    });
+
+    // Pinch to zoom
+    lb.addEventListener("touchstart", function(e) {
+        if (e.touches.length === 2) {
+            lbState.initDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        } else if (e.touches.length === 1) {
+            lbState.startX = e.touches[0].clientX;
+            lbState.currentX = lbState.startX;
+        }
+    }, { passive: true });
+    lb.addEventListener("touchmove", function(e) {
         if (e.touches.length === 2) {
             var dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-            scale = Math.min(4, Math.max(1, scale * (dist / initDist)));
-            img.style.transform = "scale(" + scale + ")";
-            initDist = dist;
+            lbState.scale = Math.min(4, Math.max(1, lbState.scale * (dist / lbState.initDist)));
+            img.style.transform = "scale(" + lbState.scale + ")";
+            lbState.initDist = dist;
         } else if (e.touches.length === 1) {
-            lbCurrentX = e.touches[0].clientX;
+            lbState.currentX = e.touches[0].clientX;
         }
-    };
-    lb.ontouchend = function(e) {
-        if (e.target.closest(".lightbox-close")) return;
-        // Double tap (only if tap didn't move much)
-        var now = Date.now();
-        var moved = Math.abs(lbCurrentX - lbStartX);
-        if (now - lastTap < 300 && e.changedTouches.length === 1 && moved < 10) {
-            scale = scale > 1 ? 1 : 2.5;
-            img.style.transform = "scale(" + scale + ")";
-            lastTap = 0; return;
-        }
-        lastTap = now;
-        // Swipe (single finger, not zoomed)
-        if (scale > 1) return;
-        var diff = lbCurrentX - lbStartX;
-        if (diff > 60 && lbIdx > 0) lbIdx--;
-        else if (diff < -60 && lbIdx < product.images.length - 1) lbIdx++;
-        img.src = product.images[lbIdx];
-        document.getElementById("lightboxCounter").textContent = (lbIdx + 1) + " / " + product.images.length;
-        scale = 1; img.style.transform = "scale(1)";
-    };
-}
-document.getElementById("lightboxClose").addEventListener("click", function(e) {
-    e.stopPropagation();
-    document.getElementById("lightbox").classList.remove("open");
-    document.getElementById("lightboxImg").style.transform = "scale(1)";
-    document.body.style.overflow = "";
-});
+    }, { passive: true });
+
+    // Swipe to navigate (single finger, not zoomed)
+    lb.addEventListener("touchend", function(e) {
+        if (lbState.scale > 1) return;
+        var diff = lbState.currentX - lbState.startX;
+        if (diff > 60 && lbState.idx > 0) lbState.idx--;
+        else if (diff < -60 && lbState.idx < product.images.length - 1) lbState.idx++;
+        img.src = product.images[lbState.idx];
+        document.getElementById("lightboxCounter").textContent = (lbState.idx + 1) + " / " + product.images.length;
+        lbState.scale = 1; img.style.transform = "scale(1)";
+    });
+
+    document.getElementById("lightboxClose").addEventListener("click", function(e) {
+        e.stopPropagation();
+        document.getElementById("lightbox").classList.remove("open");
+        img.style.transform = "scale(1)";
+        document.body.style.overflow = "";
+    });
+})();
 
 // ===== WISHLIST =====
 var wishBtn = document.getElementById("wishlistBtn");
