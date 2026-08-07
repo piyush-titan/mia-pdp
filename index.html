@@ -1122,7 +1122,7 @@ document.getElementById("collectionName").textContent = product.subcategory;
 document.getElementById("appNudgeClose").onclick = function() { document.getElementById("appNudge").classList.add("hidden"); };
 
 // ===== IMAGE GALLERY =====
-var galZoom = { scale: 1, lastTap: 0, panX: 0, panY: 0, startPanX: 0, startPanY: 0, justDoubleTapped: false };
+var galZoom = { scale: 1, lastTap: 0, panX: 0, panY: 0, startPanX: 0, startPanY: 0, tapX: 0, tapY: 0, justDoubleTapped: false };
 function applyGalZoom() {
     var main = document.getElementById("galleryMain");
     var imgs = main.querySelectorAll(".gallery-slide img");
@@ -1161,6 +1161,9 @@ function applyGalZoom() {
         currentX = startX; isDragging = true; hasMoved = false;
         if (galZoom.scale <= 1) track.classList.add("dragging");
         galZoom.startPanX = galZoom.panX; galZoom.startPanY = galZoom.panY;
+        // Record tap position relative to gallery for zoom-to-point
+        var r = main.getBoundingClientRect();
+        galZoom.tapX = startX - r.left; galZoom.tapY = startY - r.top;
     }, { passive: true });
     main.addEventListener("touchmove", function(e) {
         if (!isDragging || e.touches.length !== 1) return;
@@ -1180,10 +1183,17 @@ function applyGalZoom() {
         if (!hasMoved) {
             var now = Date.now();
             if (now - galZoom.lastTap < 450) {
-                // Double tap: toggle zoom
+                // Double tap: toggle zoom, centered on tap point
                 clearTimeout(tapTimer);
                 galZoom.scale = galZoom.scale > 1 ? 1 : 2.5;
-                if (galZoom.scale === 1) { galZoom.panX = 0; galZoom.panY = 0; }
+                if (galZoom.scale === 1) {
+                    galZoom.panX = 0; galZoom.panY = 0;
+                } else {
+                    // Translate so tapped point stays in place: pan = (tapPos - center) * (1-S)/S
+                    var S = galZoom.scale, W = main.offsetWidth, H = main.offsetHeight;
+                    galZoom.panX = (galZoom.tapX - W / 2) * (1 - S) / S;
+                    galZoom.panY = (galZoom.tapY - H / 2) * (1 - S) / S;
+                }
                 main.style.touchAction = galZoom.scale > 1 ? 'none' : 'pan-y pinch-zoom';
                 applyGalZoom();
                 galZoom.lastTap = 0;
