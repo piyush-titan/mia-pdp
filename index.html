@@ -946,10 +946,10 @@
 <section class="key-highlights" id="keyHighlightsContainer"></section>
 
 <!-- TRUST ELEMENTS -->
-<section class="trust-elements">
-    <div class="trust-item"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwf4347052/images/cart/certificate/bis.svg" alt="BIS Hallmarked" loading="lazy"></div>
-    <div class="trust-item"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dw27b89fcd/images/cart/certificate/TATA.svg" alt="A TATA Product" loading="lazy"></div>
-    <div class="trust-item"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwbf1e1df1/images/cart/certificate/1%20YR.svg" alt="1 Year Warranty" loading="lazy"></div>
+<section class="trust-elements" style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:stretch">
+    <div class="trust-item" style="flex:1;display:flex;align-items:center;justify-content:center;padding:12px 8px"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwf4347052/images/cart/certificate/bis.svg" alt="BIS Hallmarked" loading="lazy"></div>
+    <div class="trust-item" style="flex:1;display:flex;align-items:center;justify-content:center;padding:12px 8px"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dw27b89fcd/images/cart/certificate/TATA.svg" alt="A TATA Product" loading="lazy"></div>
+    <div class="trust-item" style="flex:1;display:flex;align-items:center;justify-content:center;padding:12px 8px"><img src="https://www.miabytanishq.com/on/demandware.static/-/Sites-Mia-Library/default/dwbf1e1df1/images/cart/certificate/1%20YR.svg" alt="1 Year Warranty" loading="lazy"></div>
 </section>
 
 <!-- PRICE SECTION -->
@@ -1179,11 +1179,13 @@ function openLightbox(idx) {
     lb.addEventListener("click", function(e) {
         if (e.target.closest(".lightbox-close")) return;
         var now = Date.now();
-        if (now - lbState.lastTap < 300) {
+        if (now - lbState.lastTap < 500) {
             lbState.scale = lbState.scale > 1 ? 1 : 2.5;
             img.style.transform = "scale(" + lbState.scale + ")";
+            lbState.lastTap = 0;
+        } else {
+            lbState.lastTap = now;
         }
-        lbState.lastTap = now;
     });
 
     // Pinch to zoom
