@@ -816,6 +816,7 @@
             .below-fold .reco-card { min-width: 0 !important; max-width: none; }
             .below-fold .reco-scroll { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; overflow: visible; padding: 12px 0 4px; flex-wrap: unset; }
             .below-fold .reco-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 12px 0 4px; }
+            .below-fold #recoSection1 .reco-grid { grid-template-columns: repeat(3, minmax(0,220px)); justify-content: center; }
             .below-fold .reco-grid-2col { grid-template-columns: repeat(5, 1fr); gap: 16px; padding: 12px 0 4px; }
             .below-fold .reco-header { padding: 0; text-align: center; }
             .below-fold .reco-title { font-size: 22px; color: #9f1239; }
@@ -1029,12 +1030,12 @@ var product = {
     description: "A slim V-profile diamond ring that stacks easily and catches light from every angle. Crafted in 14 KT yellow gold with 15 natural diamonds, designed for daily wear with a comfort-fit band.",
     grossWeight: "1.975 g",
     images: [
-        "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80",
-        "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80",
-        "https://images.unsplash.com/photo-1573408301185-9519f94815b3?w=800&q=80",
-        "https://images.unsplash.com/photo-1589674781759-c21c37956a44?w=800&q=80",
+        "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80",
+        "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800&q=80",
         "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800&q=80",
-        "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800&q=80"
+        "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80",
+        "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80",
+        "https://images.unsplash.com/photo-1608042314453-ae338d9c6279?w=800&q=80"
     ],
     gold: { purity: "14 KT", weight: "1.950 g", colour: "Yellow" },
     diamond: { type: "Natural", count: 15, weight: "0.124 Ct", clarity: "I2", colour: "GH", shape: "Round", setting: "Prong" },
@@ -1070,20 +1071,20 @@ var product = {
 };
 
 var recoProducts = [
-    { name: "Sunburst Diamond Ring",     price: 38450, originalPrice: 45900, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&q=80" },
-    { name: "V-stack Diamond Studs",     price: 18900, originalPrice: 24500, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80" },
-    { name: "Petite Solitaire Band",     price: 31200, originalPrice: 36800, image: "https://images.unsplash.com/photo-1573408301185-9519f94815b3?w=400&q=80" },
-    { name: "Stackable Twin Band",       price: 27650, originalPrice: 32900, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&q=80" },
-    { name: "Twisted Gold Ring",         price: 22400, originalPrice: null,  image: "https://images.unsplash.com/photo-1589674781759-c21c37956a44?w=400&q=80" },
-    { name: "Classic Diamond Band",      price: 35600, originalPrice: 42000, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
-    { name: "Delicate Chain Bracelet",   price: 14200, originalPrice: 17500, image: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=400&q=80" },
-    { name: "Minimalist Ear Cuff",       price: 9800,  originalPrice: null,  image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400&q=80" },
+    { name: "Sunburst Diamond Ring",     price: 38450, originalPrice: 45900, image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80" },
+    { name: "V-stack Diamond Studs",     price: 18900, originalPrice: 24500, image: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=400&q=80" },
+    { name: "Petite Solitaire Band",     price: 31200, originalPrice: 36800, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" },
+    { name: "Stackable Twin Band",       price: 27650, originalPrice: 32900, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&q=80" },
+    { name: "Twisted Gold Ring",         price: 22400, originalPrice: null,  image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&q=80" },
+    { name: "Classic Diamond Band",      price: 35600, originalPrice: 42000, image: "https://images.unsplash.com/photo-1608042314453-ae338d9c6279?w=400&q=80" },
+    { name: "Delicate Chain Bracelet",   price: 14200, originalPrice: 17500, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&q=80" },
+    { name: "Minimalist Ear Cuff",       price: 9800,  originalPrice: null,  image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80" },
     { name: "Layered Gold Necklace",     price: 42500, originalPrice: 49900, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80" },
-    { name: "Halo Diamond Pendant",      price: 28900, originalPrice: 34500, image: "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=400&q=80" },
-    { name: "Eternity Band Ring",        price: 52300, originalPrice: 61000, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&q=80" },
-    { name: "Cluster Stud Earrings",     price: 16400, originalPrice: 19800, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80" },
-    { name: "Dainty Charm Anklet",       price: 11500, originalPrice: null,  image: "https://images.unsplash.com/photo-1573408301185-9519f94815b3?w=400&q=80" },
-    { name: "Marquise Drop Earrings",    price: 33700, originalPrice: 39900, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&q=80" }
+    { name: "Halo Diamond Pendant",      price: 28900, originalPrice: 34500, image: "https://images.unsplash.com/photo-1573408301185-9519f94815b3?w=400&q=80" },
+    { name: "Eternity Band Ring",        price: 52300, originalPrice: 61000, image: "https://images.unsplash.com/photo-1589674781759-c21c37956a44?w=400&q=80" },
+    { name: "Cluster Stud Earrings",     price: 16400, originalPrice: 19800, image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400&q=80" },
+    { name: "Dainty Charm Anklet",       price: 11500, originalPrice: null,  image: "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=400&q=80" },
+    { name: "Marquise Drop Earrings",    price: 33700, originalPrice: 39900, image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&q=80" }
 ];
 
 // ===== STATE =====
