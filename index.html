@@ -1141,7 +1141,7 @@ function applyGalZoom() {
 (function() {
     var track = document.getElementById("galleryTrack");
     var thumbs = document.getElementById("galleryThumbs");
-    var startX = 0, startY = 0, currentX = 0, isDragging = false, hasMoved = false;
+    var startX = 0, startY = 0, currentX = 0, isDragging = false, hasMoved = false, tapTimer = null;
     function render() {
         galZoom.scale = 1; galZoom.panX = 0; galZoom.panY = 0;
         track.innerHTML = product.images.map(function(src, i) {
@@ -1181,6 +1181,7 @@ function applyGalZoom() {
             var now = Date.now();
             if (now - galZoom.lastTap < 450) {
                 // Double tap: toggle zoom
+                clearTimeout(tapTimer);
                 galZoom.scale = galZoom.scale > 1 ? 1 : 2.5;
                 if (galZoom.scale === 1) { galZoom.panX = 0; galZoom.panY = 0; }
                 main.style.touchAction = galZoom.scale > 1 ? 'none' : 'pan-y pinch-zoom';
@@ -1201,9 +1202,12 @@ function applyGalZoom() {
             currentX = 0; startX = 0;
         }
     });
-    // Single tap opens lightbox only when not a double-tap and not zoomed
+    // Wait 400ms for potential double-tap before opening lightbox
     main.addEventListener('click', function() {
-        if (!hasMoved && !galZoom.justDoubleTapped && galZoom.scale <= 1) openLightbox(state.currentSlide);
+        if (hasMoved || galZoom.justDoubleTapped || galZoom.scale > 1) return;
+        var idx = state.currentSlide;
+        clearTimeout(tapTimer);
+        tapTimer = setTimeout(function() { openLightbox(idx); }, 400);
     });
 })();
 
