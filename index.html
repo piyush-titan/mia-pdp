@@ -652,7 +652,8 @@
         .stores-sub { font-size: 11px; color: #777; text-align: center; margin-bottom: 20px; }
         .stores-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
         .stores-view-more { display: block; width: 100%; margin-top: 16px; padding: 12px; border-radius: 100px; font-size: 13px; font-weight: 700; color: #D14A61; background: #fdf2f4; border: none; cursor: pointer; text-align: center; transition: all 0.2s; }
-        .stores-view-more:active { background: #fce4ec; }
+        .store-tile-wrap { transition: none; }
+        .store-tile-wrap.accordion-hidden { display: none; }
         .store-tile {
             background: #fff; border-radius: 16px; padding: 16px;
             border: 1px solid #f0e8ea;
@@ -1810,21 +1811,29 @@ function buildStoreTile(s) {
 }
 (function() {
     var el = document.getElementById("storesSection");
-    /* mobile: 3 tiles; desktop: 4 tiles — controlled by data-hidden attr + CSS */
-    var isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-    var visibleCount = isDesktop ? 4 : 3;
     var h = '<h2 class="stores-title font-display">Find In Store</h2>';
     h += '<p class="stores-sub">Visit a Mia store near you to experience this piece</p>';
-    h += '<div class="stores-grid">';
+    h += '<div class="stores-grid" id="storesGrid">';
     storesData.forEach(function(s, i) {
-        var hidden = i >= visibleCount ? ' style="display:none"' : '';
-        h += '<div class="store-tile-wrap"' + hidden + '>' + buildStoreTile(s) + '</div>';
+        var hidden = i >= 3 ? ' class="store-tile-wrap accordion-hidden"' : ' class="store-tile-wrap"';
+        h += '<div' + hidden + '>' + buildStoreTile(s) + '</div>';
     });
     h += '</div>';
-    h += '<button class="stores-view-more" onclick="openAllStoresSheet()">View More Stores</button>';
+    h += '<button class="stores-view-more" id="storesViewMoreBtn" onclick="openAllStoresSheet()">View More Stores</button>';
     el.innerHTML = h;
 })();
 function openAllStoresSheet() {
+    if (window.matchMedia("(min-width: 1024px)").matches) {
+        /* desktop: accordion expand inline */
+        var btn = document.getElementById("storesViewMoreBtn");
+        var hidden = document.querySelectorAll("#storesGrid .accordion-hidden");
+        var isExpanded = btn.dataset.expanded === "1";
+        hidden.forEach(function(el) { el.style.display = isExpanded ? "none" : ""; });
+        btn.dataset.expanded = isExpanded ? "0" : "1";
+        btn.textContent = isExpanded ? "View More Stores" : "View Less";
+        return;
+    }
+    /* mobile: bottom sheet */
     var body = document.getElementById("allStoresBody");
     var h = '<div class="stores-grid" style="grid-template-columns:1fr">';
     storesData.forEach(function(s) { h += buildStoreTile(s); });
