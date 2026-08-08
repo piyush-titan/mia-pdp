@@ -113,6 +113,47 @@ body { font-family: 'Albert Sans', sans-serif; background: #f4f4f4; color: #4332
 .country-option:hover { background: #fdf2f4; }
 .country-option.selected { background: #fdf2f4; color: #D14A61; font-weight: 700; }
 .co-flag { font-size: 18px; line-height: 1; flex-shrink: 0; }
+/* ── Sticky CTA + Size-Weight Dropdown ── */
+.ec-phone { width: 375px; background: #f7f3f4; border-radius: 16px; overflow: hidden; position: relative; padding-bottom: 80px; min-height: 340px; }
+.ec-sticky {
+    position: absolute; bottom: 14px; left: 10px; right: 10px;
+    padding: 13px 12px 13px 18px;
+    background: linear-gradient(105deg, #c93d56 0%, #D14A61 40%, #e0607a 100%);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(209,74,97,0.35), 0 2px 8px rgba(0,0,0,0.08);
+    display: flex; align-items: center; gap: 10px;
+}
+.ec-sticky-price { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: #fff; white-space: nowrap; flex-shrink: 0; line-height: 1; text-shadow: 0 1px 6px rgba(0,0,0,0.15); }
+.ec-sticky-name { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.72); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; letter-spacing: 0.01em; }
+.ec-size-trigger {
+    display: flex; align-items: center; gap: 4px;
+    padding: 7px 10px 7px 12px; border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.4); font-size: 10px; font-weight: 600;
+    color: rgba(255,255,255,0.95); background: rgba(255,255,255,0.2); white-space: nowrap; flex-shrink: 0;
+}
+.ec-size-trigger svg { width: 10px; height: 10px; stroke: rgba(255,255,255,0.8); stroke-width: 2.5; }
+.ec-add-bag {
+    padding: 11px 18px; border-radius: 100px; font-size: 12px; font-weight: 700;
+    color: #D14A61; background: #fff; white-space: nowrap; flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12); display: flex; align-items: center; gap: 5px;
+}
+.ec-dropdown {
+    position: absolute; bottom: 74px; left: 50%; transform: translateX(-50%);
+    width: calc(100% - 20px);
+    background: #fff; border-radius: 16px; border: 1px solid #f0f0f0;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.10); overflow: hidden;
+}
+.ec-dd-title { padding: 12px 16px 8px; font-size: 11px; font-weight: 700; color: #777; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1px solid #f0f0f0; font-family: 'Albert Sans', sans-serif; }
+.ec-dd-item {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; padding: 13px 16px; text-align: left;
+    font-size: 13px; font-weight: 500; color: #1a1a1a;
+    border-bottom: 1px solid #f5f5f5; font-family: 'Albert Sans', sans-serif; background: none;
+}
+.ec-dd-item:last-child { border-bottom: none; }
+.ec-dd-item.active { color: #D14A61; font-weight: 700; background: #FDF2F4; }
+.ec-dd-item.oos { color: #bbb; font-style: italic; }
+.ec-dd-notify { font-size: 10px; font-weight: 600; color: #D14A61; font-style: normal; }
 </style>
 </head>
 <body>
@@ -403,6 +444,216 @@ body { font-family: 'Albert Sans', sans-serif; background: #f4f4f4; color: #4332
 
 </div><!-- /cases-row delivery -->
 
+
+<div class="divider"></div>
+
+<!-- ═══════════ MODULE 3 — STICKY CTA SIZE & WEIGHT SELECTOR ═══════════ -->
+<div class="section-header">
+  <span class="section-label">Module 3</span>
+  <span class="section-title">Sticky CTA — Size &amp; Weight Selector</span>
+</div>
+
+<div class="cases-row" style="padding-bottom:48px;grid-template-columns:repeat(auto-fill,minmax(420px,1fr))">
+
+  <!-- 1. Default open — size selected -->
+  <div class="case-wrap">
+    <div class="case-label">Default open — size &amp; weight selected <span class="tag tag-normal">Default</span></div>
+    <div class="case-body" style="padding:0">
+      <div class="ec-phone">
+        <div class="ec-dropdown">
+          <div style="display:flex;border-bottom:1px solid #f0f0f0">
+            <div style="flex:1;border-right:1px solid #f0f0f0">
+              <div class="ec-dd-title">Size</div>
+              <button class="ec-dd-item oos">14.00 MM <span class="ec-dd-notify">Notify Me</span></button>
+              <button class="ec-dd-item active">16.40 MM</button>
+              <button class="ec-dd-item">17.00 MM</button>
+              <button class="ec-dd-item">17.30 MM</button>
+              <button class="ec-dd-item">18.10 MM</button>
+              <button class="ec-dd-item oos">18.90 MM <span class="ec-dd-notify">Notify Me</span></button>
+            </div>
+            <div style="flex:1">
+              <div class="ec-dd-title">Weight</div>
+              <button class="ec-dd-item active">1.975 g</button>
+              <button class="ec-dd-item">2.101 g</button>
+            </div>
+          </div>
+        </div>
+        <div class="ec-sticky">
+          <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+            <span class="ec-sticky-name">Gleam Play Diamond Ring</span>
+            <span class="ec-sticky-price">₹43,293</span>
+          </div>
+          <span style="flex:1"></span>
+          <button class="ec-size-trigger">16.40MM · 1.975g <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 9 12 15 6 9"/></svg></button>
+          <button class="ec-add-bag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. OOS size at top — Notify Me label visible -->
+  <div class="case-wrap">
+    <div class="case-label">OOS size highlighted — Notify Me label <span class="tag tag-warn">Edge</span></div>
+    <div class="case-body" style="padding:0">
+      <div class="ec-phone">
+        <div class="ec-dropdown">
+          <div style="display:flex;border-bottom:1px solid #f0f0f0">
+            <div style="flex:1;border-right:1px solid #f0f0f0">
+              <div class="ec-dd-title">Size</div>
+              <button class="ec-dd-item oos">14.00 MM <span class="ec-dd-notify">Notify Me</span></button>
+              <button class="ec-dd-item oos">16.40 MM <span class="ec-dd-notify">Notify Me</span></button>
+              <button class="ec-dd-item active">17.00 MM</button>
+              <button class="ec-dd-item">17.30 MM</button>
+              <button class="ec-dd-item">18.10 MM</button>
+              <button class="ec-dd-item oos">18.90 MM <span class="ec-dd-notify">Notify Me</span></button>
+            </div>
+            <div style="flex:1">
+              <div class="ec-dd-title">Weight</div>
+              <button class="ec-dd-item active">1.975 g</button>
+              <button class="ec-dd-item">2.101 g</button>
+            </div>
+          </div>
+        </div>
+        <div class="ec-sticky">
+          <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+            <span class="ec-sticky-name">Gleam Play Diamond Ring</span>
+            <span class="ec-sticky-price">₹43,293</span>
+          </div>
+          <span style="flex:1"></span>
+          <button class="ec-size-trigger">17.00MM · 1.975g <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 9 12 15 6 9"/></svg></button>
+          <button class="ec-add-bag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. All sizes OOS -->
+  <div class="case-wrap">
+    <div class="case-label">All sizes out of stock <span class="tag tag-error">Error</span></div>
+    <div class="case-body" style="padding:0">
+      <div class="ec-phone">
+        <div class="ec-dropdown">
+          <div style="display:flex;border-bottom:1px solid #f0f0f0">
+            <div style="flex:1;border-right:1px solid #f0f0f0">
+              <div class="ec-dd-title">Size</div>
+              <button class="ec-dd-item oos">14.00 MM <span class="ec-dd-notify">Notify Me</span></button>
+              <button class="ec-dd-item oos">16.40 MM <span class="ec-dd-notify">Notify Me</span></button>
+              <button class="ec-dd-item oos">17.00 MM <span class="ec-dd-notify">Notify Me</span></button>
+              <button class="ec-dd-item oos">17.30 MM <span class="ec-dd-notify">Notify Me</span></button>
+              <button class="ec-dd-item oos">18.10 MM <span class="ec-dd-notify">Notify Me</span></button>
+              <button class="ec-dd-item oos">18.90 MM <span class="ec-dd-notify">Notify Me</span></button>
+            </div>
+            <div style="flex:1">
+              <div class="ec-dd-title">Weight</div>
+              <button class="ec-dd-item">1.975 g</button>
+              <button class="ec-dd-item">2.101 g</button>
+            </div>
+          </div>
+        </div>
+        <div class="ec-sticky">
+          <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+            <span class="ec-sticky-name">Gleam Play Diamond Ring</span>
+            <span class="ec-sticky-price">₹43,293</span>
+          </div>
+          <span style="flex:1"></span>
+          <button class="ec-size-trigger" style="color:rgba(255,255,255,0.5)">Select size <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 9 12 15 6 9"/></svg></button>
+          <button class="ec-add-bag" style="opacity:0.45;pointer-events:none">Add to Bag</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Second weight selected -->
+  <div class="case-wrap">
+    <div class="case-label">Second weight selected — price updates <span class="tag tag-info">Variant</span></div>
+    <div class="case-body" style="padding:0">
+      <div class="ec-phone">
+        <div class="ec-dropdown">
+          <div style="display:flex;border-bottom:1px solid #f0f0f0">
+            <div style="flex:1;border-right:1px solid #f0f0f0">
+              <div class="ec-dd-title">Size</div>
+              <button class="ec-dd-item oos">14.00 MM <span class="ec-dd-notify">Notify Me</span></button>
+              <button class="ec-dd-item active">16.40 MM</button>
+              <button class="ec-dd-item">17.00 MM</button>
+              <button class="ec-dd-item">17.30 MM</button>
+              <button class="ec-dd-item">18.10 MM</button>
+              <button class="ec-dd-item oos">18.90 MM <span class="ec-dd-notify">Notify Me</span></button>
+            </div>
+            <div style="flex:1">
+              <div class="ec-dd-title">Weight</div>
+              <button class="ec-dd-item">1.975 g</button>
+              <button class="ec-dd-item active">2.101 g</button>
+            </div>
+          </div>
+        </div>
+        <div class="ec-sticky">
+          <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+            <span class="ec-sticky-name">Gleam Play Diamond Ring</span>
+            <span class="ec-sticky-price">₹46,150</span>
+          </div>
+          <span style="flex:1"></span>
+          <button class="ec-size-trigger">16.40MM · 2.101g <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 9 12 15 6 9"/></svg></button>
+          <button class="ec-add-bag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Single weight option -->
+  <div class="case-wrap">
+    <div class="case-label">Single weight option only <span class="tag tag-info">Variant</span></div>
+    <div class="case-body" style="padding:0">
+      <div class="ec-phone">
+        <div class="ec-dropdown">
+          <div style="display:flex;border-bottom:1px solid #f0f0f0">
+            <div style="flex:1;border-right:1px solid #f0f0f0">
+              <div class="ec-dd-title">Size</div>
+              <button class="ec-dd-item oos">14.00 MM <span class="ec-dd-notify">Notify Me</span></button>
+              <button class="ec-dd-item active">16.40 MM</button>
+              <button class="ec-dd-item">17.00 MM</button>
+              <button class="ec-dd-item">17.30 MM</button>
+              <button class="ec-dd-item">18.10 MM</button>
+              <button class="ec-dd-item oos">18.90 MM <span class="ec-dd-notify">Notify Me</span></button>
+            </div>
+            <div style="flex:1">
+              <div class="ec-dd-title">Weight</div>
+              <button class="ec-dd-item active">1.975 g</button>
+            </div>
+          </div>
+        </div>
+        <div class="ec-sticky">
+          <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+            <span class="ec-sticky-name">Gleam Play Diamond Ring</span>
+            <span class="ec-sticky-price">₹43,293</span>
+          </div>
+          <span style="flex:1"></span>
+          <button class="ec-size-trigger">16.40MM · 1.975g <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 9 12 15 6 9"/></svg></button>
+          <button class="ec-add-bag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Sticky bar closed (no dropdown) -->
+  <div class="case-wrap">
+    <div class="case-label">Sticky bar — dropdown closed (resting state) <span class="tag tag-normal">Default</span></div>
+    <div class="case-body" style="padding:0">
+      <div class="ec-phone" style="min-height:120px;padding-bottom:80px">
+        <div class="ec-sticky">
+          <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+            <span class="ec-sticky-name">Gleam Play Diamond Ring</span>
+            <span class="ec-sticky-price">₹43,293</span>
+          </div>
+          <span style="flex:1"></span>
+          <button class="ec-size-trigger">16.40MM · 1.975g <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+          <button class="ec-add-bag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D14A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>Add to Bag</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /cases-row module 3 -->
+
 <script>
 // ── Same variants as highlights.html (mobile edge cases) ──
 var variants = [
@@ -573,6 +824,7 @@ variants.forEach(function(v, i) {
 });
 
 document.getElementById('highlightsCases').addEventListener('click', function(e) {
+
   var btn = e.target.closest('.view-full-details-btn');
   if (!btn) return;
   var idx   = btn.dataset.idx;
